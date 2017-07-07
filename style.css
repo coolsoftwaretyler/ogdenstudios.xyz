@@ -417,12 +417,13 @@ input, textarea {
 	padding:10px;
 	margin-top:3px;
 	font-size:0.9em;
-	color:#3a3a3a;
+	color:#5C5652;
+	font-family: Verdana, sans-serif;
 }
 
 textarea {
 	height:213px;
-	background:url(images/textarea-bg.jpg) right no-repeat #efefef;
+	
 }
 
 input:focus, textarea:focus {
@@ -432,10 +433,10 @@ input:focus, textarea:focus {
 #submit {
     width:127px;
     height:38px;
-    text-indent:-9999px;
     border:none;
     margin-top:20px;
-    cursor:pointer;
+    cursor:pointer; 
+	color: #5C5652;
 }
 
 	#submit:hover {
