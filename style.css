@@ -407,6 +407,7 @@ label {
 form {
     margin:0 auto;
     width:459px;
+	max-width: 100%;
 }
 
 input, textarea {
