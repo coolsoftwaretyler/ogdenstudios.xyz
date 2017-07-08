@@ -413,6 +413,7 @@ form {
 input, textarea {
 	width:439px;
 	height:27px;
+	max-width: 100%;
 	background:#efefef;
 	border:1px solid #dedede;
 	padding:10px;
