@@ -401,9 +401,9 @@ hr {
 label {
     display:block;
     margin-top:20px;
-	margin-left:25px;
     letter-spacing:2px;
 	float: left;
+	color: #5C5652;
 }
 
 form {
@@ -413,7 +413,7 @@ form {
 }
 
 input, textarea {
-	width:439px;
+	width:100%;
 	height:27px;
 	max-width: 100%;
 	background:#efefef;
