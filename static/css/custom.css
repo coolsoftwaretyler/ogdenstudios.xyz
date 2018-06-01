@@ -15,6 +15,10 @@ header {
   color: #decbb7;,
 }
 
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+color: #decbb7;
+}
+
 .navbar-default .navbar-brand:focus {
   color: #f7f0f5;
 }
@@ -36,5 +40,13 @@ h2, p{
 }
 
 #contact h2, input {
+  color: #f7f0f5;
+}
+
+.img-responsive {
+  max-width: 100%;
+}
+
+.form-control, label {
   color: #f7f0f5;
 }
