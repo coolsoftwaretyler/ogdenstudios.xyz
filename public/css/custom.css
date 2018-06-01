@@ -23,7 +23,7 @@ header {
   max-width: 250px;
 }
 
-#portfolio, #about {
+#portfolio, #about, #contact {
   background: #5dae62;
 }
 
@@ -31,10 +31,6 @@ h2, p{
   color: #5c5552;
 }
 
-#contact {
-  background: #5c5552;
-}
-
-#contact h2, input {
-  color: #f7f0f5;
+.form-group {
+  background-color: #f7f0f5;
 }
