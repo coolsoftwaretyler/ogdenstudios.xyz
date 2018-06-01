@@ -1,0 +1,32 @@
+header {
+  background: #5dae62;
+  color: #5c5552;
+}
+
+.navbar {
+  background: #5c5552;
+}
+
+.navbar-default .navbar-brand {
+  color: #f7f0f5;
+}
+
+.navbar-default .navbar-brand:hover {
+  color: #decbb7;,
+}
+
+.navbar-default .navbar-brand:focus {
+  color: #f7f0f5;
+}
+
+.img-responsive {
+  max-width: 250px;
+}
+
+#portfolio, #about, #contact {
+  background: #5dae62;
+}
+
+h2, p{
+  color: #5c5552;
+}

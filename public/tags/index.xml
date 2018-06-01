@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Ogden Studios</title>
+    <link>https://ogdenstudios.xyz/tags/</link>
+    <description>Recent content in Tags on Ogden Studios</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 11 Feb 2018 12:41:05 -0500</lastBuildDate>
+    
+	<atom:link href="https://ogdenstudios.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Atlassian Ecosystem</title>
+      <link>https://ogdenstudios.xyz/tags/atlassian-ecosystem/</link>
+      <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
+      
+      <guid>https://ogdenstudios.xyz/tags/atlassian-ecosystem/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Bamboo</title>
+      <link>https://ogdenstudios.xyz/tags/bamboo/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ogdenstudios.xyz/tags/bamboo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Bash/Shell</title>
+      <link>https://ogdenstudios.xyz/tags/bash/shell/</link>
+      <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
+      
+      <guid>https://ogdenstudios.xyz/tags/bash/shell/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Bosh</title>
+      <link>https://ogdenstudios.xyz/tags/bosh/</link>
+      <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
+      
+      <guid>https://ogdenstudios.xyz/tags/bosh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Devops</title>
+      <link>https://ogdenstudios.xyz/tags/devops/</link>
+      <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
+      
+      <guid>https://ogdenstudios.xyz/tags/devops/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Docker</title>
+      <link>https://ogdenstudios.xyz/tags/docker/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ogdenstudios.xyz/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Java</title>
+      <link>https://ogdenstudios.xyz/tags/java/</link>
+      <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
+      
+      <guid>https://ogdenstudios.xyz/tags/java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Javascript</title>
+      <link>https://ogdenstudios.xyz/tags/javascript/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ogdenstudios.xyz/tags/javascript/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Jquery</title>
+      <link>https://ogdenstudios.xyz/tags/jquery/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ogdenstudios.xyz/tags/jquery/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Json</title>
+      <link>https://ogdenstudios.xyz/tags/json/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ogdenstudios.xyz/tags/json/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Monit</title>
+      <link>https://ogdenstudios.xyz/tags/monit/</link>
+      <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
+      
+      <guid>https://ogdenstudios.xyz/tags/monit/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Node.Js</title>
+      <link>https://ogdenstudios.xyz/tags/node.js/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ogdenstudios.xyz/tags/node.js/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>https://ogdenstudios.xyz/tags/python/</link>
+      <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
+      
+      <guid>https://ogdenstudios.xyz/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rest Apis</title>
+      <link>https://ogdenstudios.xyz/tags/rest-apis/</link>
+      <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
+      
+      <guid>https://ogdenstudios.xyz/tags/rest-apis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Xml/Xslt</title>
+      <link>https://ogdenstudios.xyz/tags/xml/xslt/</link>
+      <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
+      
+      <guid>https://ogdenstudios.xyz/tags/xml/xslt/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
