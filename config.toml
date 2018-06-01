@@ -38,7 +38,7 @@ theme = "hugo-freelancer-theme"
 
     [params.header]
         # Copy your own image into './static/img/'' if you wish
-        image = "OgdenLogo.jpg"
+        image = "ogden-transparent.png"
         name = "Ogden Studios"
         subtitle = "We build practical solutions for pragmatic people."
 
