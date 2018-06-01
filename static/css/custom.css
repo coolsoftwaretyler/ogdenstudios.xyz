@@ -23,12 +23,8 @@ color: #decbb7;
   color: #f7f0f5;
 }
 
-.img-responsive {
-  max-width: 250px;
-}
-
 #portfolio, #about {
-  background: #5dae62;
+  background: rgb(93,174,98);
 }
 
 h2, p{

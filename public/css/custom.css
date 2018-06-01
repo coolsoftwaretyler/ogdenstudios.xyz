@@ -15,22 +15,34 @@ header {
   color: #decbb7;,
 }
 
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+color: #decbb7;
+}
+
 .navbar-default .navbar-brand:focus {
   color: #f7f0f5;
 }
 
-.img-responsive {
-  max-width: 250px;
-}
-
-#portfolio, #about, #contact {
-  background: #5dae62;
+#portfolio, #about {
+  background: rgb(93,174,98);
 }
 
 h2, p{
   color: #5c5552;
 }
 
-.form-group {
-  background-color: #f7f0f5;
+#contact {
+  background: #5c5552;
+}
+
+#contact h2, input {
+  color: #f7f0f5;
+}
+
+.img-responsive {
+  max-width: 100%;
+}
+
+.form-control, label {
+  color: #f7f0f5;
 }
