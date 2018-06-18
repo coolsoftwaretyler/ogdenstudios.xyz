@@ -330,6 +330,10 @@ section.success a.active {
     color: #fff;
 }
 
+.btn-outline:hover, .btn-outline:focus, .btn-outline:active, .btn-outline.active {
+	color: #353d2f;
+}
+
 form .row:first-child .floating-label-form-group {
     border-top: 1px solid #eee;
 }
