@@ -60,7 +60,7 @@ theme = "hugo-freelancer-theme"
     [params.about]
         title = "What We Do"
         # The about text is splitted into a left and right column
-        left = "You need a website that works. No fancy bells and whistles. Just solutions. We can do that. Contact us for a free consultation."
+        left = "You need a website that works. No fancy bells and whistles. Just solutions. Contact us for a free consultation."
         right = ""
 
     [params.contact]
