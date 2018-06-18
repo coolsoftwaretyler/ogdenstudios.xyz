@@ -53,4 +53,10 @@ How internet stuff works.
 
 Servers are just computers that allow incoming and outgoing connections.
 In the server is usually some technology to do server-side stuff.
-Servers, after doing their server-side stuff, send that info to whoever was requesting it, and then the rest happens on eahc person's computer. 
+Servers, after doing their server-side stuff, send that info to whoever was requesting it, and then the rest happens on eahc person's computer.
+
+One of the best things about code, which may seem to obvious to a professional, but can take time for a newcomer to get to: code is *meant* to be copy and pasted, reused, modified. What I'm getting at there is that you shouldn't be afraid to just copy your codebase to another environment and mess with it. Yes, you shouldn't touch production code, but don't let your fear of the production codebase stop you from digging into it and mucking around.
+
+I've found the best way to learn quickly is to start with a general plan: figure out what problem you're solving, and have a rough idea of how you're going to solve it. This will point you towards the first step. But once you're on the path, instead of worrying about all the things you have to do, tackle each sub-problem on its own. Learn one thing at a time. While you learn to fix each individual problem (like: "How do I center a heading in a bootstrap row?") - find the answer to that question, and do your best to learn what's happening one layer of abstraction lower. (Give an example here)
+
+It took me an embarrasingly long time to figure out the value of backups and development environments. That's right. When I first started, I would just crack open the production website and make changes. Live. It's a terrifying thought now, but I bet plenty of you are still doing that, and you spend hours agonizing over small changes and wondering if they'll take the whole thing down. Let's talk about backups, development environments, and version control. 
