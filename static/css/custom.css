@@ -19,6 +19,11 @@ header {
 color: #decbb7;
 }
 
+.navbar-default .navbar-nav > .active > a:focus {
+  background-color: #5c5552;
+  color: #decbb7;
+}
+
 .navbar-default .navbar-brand:focus {
   color: #f7f0f5;
 }
