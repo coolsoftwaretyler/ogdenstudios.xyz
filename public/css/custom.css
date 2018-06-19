@@ -19,6 +19,17 @@ header {
 color: #decbb7;
 }
 
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+  background-color: #5c5552;
+}
+a, a:hover, a:focus, a:active, a.active {
+  color: #fff;
+}
+.navbar-default .navbar-nav > .active > a:focus {
+  background-color: #5c5552;
+  color: #decbb7;
+}
+
 .navbar-default .navbar-brand:focus {
   color: #f7f0f5;
 }
@@ -45,4 +56,9 @@ h2, p{
 
 .form-control, label {
   color: #f7f0f5;
+}
+
+.btn-success, .btn-success:hover {
+  background-color: #5dae62;
+  border-color: #5dae62;
 }

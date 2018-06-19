@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <base href="{{ .Site.BaseURL }}">
+    <title> {{ .Site.Title }} </title>
+
+    <link rel="canonical" href="{{ .Permalink }}">
+    {{ if .RSSLink }}<link href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Title }}" />{{ end }}
+
+    <!-- Local Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <!-- Custom CSS - Mostly Bootstrap Overrides -->
+    <link rel="stylesheet" href="css/custom.css">
+
+</head>
+<body lang="en">

@@ -44,3 +44,19 @@ title = "Ogden Studios"
             [[params.footer.social.networks]]
                 icon = "fa-facebook"
                 link=  "//facebook.com/ogdenstudios"
+
+[[menu.main]]
+  name = "Portfolio"
+  weight = 100
+  identifier = "portfolio"
+  url = "/portfolio/"
+[[menu.main]]
+  name = "Pricing"
+  identifier = "pricing"
+  weight = 200
+  url = "/pricing/"
+[[menu.main]]
+  name = "Blog"
+  identifier = "blog"
+  weight = 300
+  url = "/blog/"
