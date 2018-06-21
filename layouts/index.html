@@ -1,31 +1,54 @@
-{{partial "header.html" .}}
-{{ partial "nav.html" .}}
-<div class = "container">
+{{partial "header.html" .}} {{ partial "nav.html" .}}
+<div class="container">
   <!-- Hero image row -->
-  <div class = "row bg-success">
-    <div class = "col">
-      <img class = "img-fluid margin-center" src = "img/brand/ogden-transparent.png">
+  <div class="row bg-success">
+    <div class="col">
+      <img class="img-fluid margin-center" src="img/brand/ogden-transparent.png">
     </div>
   </div>
-  <div class = "row bg-success">
-    <div class = "col">
+  <div class="row bg-success">
+    <div class="col">
       <h2 class="margin-center text-center text-secondary">We build practical solutions for pragmatic people.</h2>
+    </div>
+  </div>
+  <div class="row bg-secondary">
+    <div class="col">
+      <span class="margin-center text-center text-light">What brought you here today?</span>
+    </div>
+  </div>
+  <div class="row bg-secondary">
+    <div class="col-lg-4">
+      <div class="card"  >
+        <div class="card-body">
+          <h5 class="card-title">My website is broken</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="card-link">Card link</a>
+          <a href="#" class="card-link">Another link</a>
+        </div>
       </div>
     </div>
-    <div class = "row bg-secondary">
-      <div class = "col">
-        <span class = "margin-center text-center text-light">What brought you here today?</span>
+    <div class="col-lg-4">
+      <div class="card"  >
+        <div class="card-body">
+          <h5 class="card-title">I need a new website</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="card-link">Card link</a>
+          <a href="#" class="card-link">Another link</a>
+        </div>
       </div>
     </div>
-    <div class = "row bg-secondary">
-      <div class = "col-4">
-        My website is broken
+    <div class="col-lg-4">
+      <div class="card"  >
+        <div class="card-body">
+          <h5 class="card-title">I don't know what I need</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="card-link">Card link</a>
+          <a href="#" class="card-link">Another link</a>
+        </div>
       </div>
-      <div class = "col-4">
-        I need a new website
-      </div>
-      <div class = "col-4">
-        I don't know what I need/Something else
-      </div>
-</div>
-{{partial "footer.html" .}}
+    </div>
+  </div>
+  {{partial "footer.html" .}}
