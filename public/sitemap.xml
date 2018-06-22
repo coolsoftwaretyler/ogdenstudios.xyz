@@ -3,7 +3,31 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://ogdenstudios.xyz/</loc>
+  </url>
+  
+  <url>
     <loc>https://ogdenstudios.xyz/blog/ohshit/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ogdenstudios.xyz/help/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ogdenstudios.xyz/portfolio/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ogdenstudios.xyz/pricing/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ogdenstudios.xyz/repairs/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ogdenstudios.xyz/websites/</loc>
   </url>
   
   <url>
@@ -13,16 +37,6 @@
   
   <url>
     <loc>https://ogdenstudios.xyz/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ogdenstudios.xyz/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ogdenstudios.xyz/skills/</loc>
     <priority>0</priority>
   </url>
   
