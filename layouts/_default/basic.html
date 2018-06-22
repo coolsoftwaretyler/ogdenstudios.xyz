@@ -7,6 +7,9 @@ body {
 <div class = "container-fluid">
   <div class = "row bg-info">
     <div class= "col">
+      {{ .Content }}
     </div>
   </div>
 </div>
+
+{{ partial "footer.html" .}}
