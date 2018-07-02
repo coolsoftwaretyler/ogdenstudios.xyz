@@ -61,4 +61,6 @@ I've found the best way to learn quickly is to start with a general plan: figure
 
 It took me an embarrasingly long time to figure out the value of backups and development environments. That's right. When I first started, I would just crack open the production website and make changes. Live. It's a terrifying thought now, but I bet plenty of you are still doing that, and you spend hours agonizing over small changes and wondering if they'll take the whole thing down. Let's talk about backups, development environments, and version control.
 
-If you jump in to the code and think "oh man maybe i'll make this quick change" - you're wrong. There's no such thing as a quick change. Don't do it. It will never be quick. 
+If you jump in to the code and think "oh man maybe i'll make this quick change" - you're wrong. There's no such thing as a quick change. Don't do it. It will never be quick.
+
+The best thing about learning terms for thigns isn't memorizing all the jargon - i'ts knowing the right questions to ask. Sometimes you just want to say "I wanna move that thingy to the left" - and if you don't know it's called a modal or a nvabar, you can't ask the question. Just knowing what you're working with will often solve question asking problems.
