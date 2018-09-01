@@ -9,10 +9,10 @@ theme = "hugo-resume"
     address = "Denver, CO"
     phone = "203-695-3299"
     contactNote = "Web Design and Development"
-    profileImage = "img/TechChat.png"
+    profileImage = "img/OgdenLogo.jpg"
     email = "tyler@ogdenstudios.xyz"
     description = "We build practical solutions for pragmatic people."
-    favicon = "images/favicon.ico"
+    favicon = "img/favicon.ico"
     # what sections
     showSkills = true
     showProjects = true
