@@ -1,20 +1,32 @@
 [
     {
-        "role":"Boss man",
-        "company":"Current Company LTD",
-        "summary":"Led in development of fast paced software teams.",
-        "range":"February 2016 - Present"
+        "role":"Systems Administrator",
+        "company":"Students for Sensible Drug Policy",
+        "summary":"Managed full stack digital assets: servers, databases, back-end software, front-end UI.",
+        "range":"April 2018 - Present"
     },
     {
-        "role":"Developer",
-        "company":"Current Company LTD",
-        "summary":"Expedited the synergies of collaborative agile tooling.",
-        "range":"March 2014 - February 2016"
+        "role":"Regional Outreach Coordinator",
+        "company":"Students for Sensible Drug Policy",
+        "summary":"Oversaw SSDP chapters in the Heartland, Midwest, and Mountain regions and performed basic web content administration.",
+        "range":"July 2015 - April 2018"
     },
     {
-        "role":"Developer",
-        "company":"Previous Company Inc.",
-        "summary":"Implemented continuous devops pipelines automationing",
-        "range":"February 2013 - March 2014"
+        "role":"Mobile Development Intern",
+        "company":"Cigna",
+        "summary":"Designed internal website to explain and justify the implementation of DevOps in the mobile development department.",
+        "range":"September 2013 - January 2014"
+    },
+    {
+        "role":"Electrical Engineering Intern",
+        "company":"Sealed Air",
+        "summary":"Embedded systems programming using .NET micro framework, prototyping and documenting industrial-grade packaging machinery",
+        "range":"May 2012 - August 2013"
+    },
+    {
+        "role":"Technical Assistant",
+        "company":"Center for 21st Century Skills",
+        "summary":"Developed an iOS Application to assist with field research on public education",
+        "range":"May 2011 - May 2012"
     }
 ]
