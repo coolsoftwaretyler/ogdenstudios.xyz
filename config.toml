@@ -1,7 +1,7 @@
 baseURL = "/"
 languageCode = "en-us"
 title = "Ogden Studios"
-theme = "hugo-resume"
+theme = "resume"
 
 [params]
     firstName = "Ogden"
