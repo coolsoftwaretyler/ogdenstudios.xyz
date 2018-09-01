@@ -1,62 +1,50 @@
-# Site settings
-
-baseurl = "https://ogdenstudios.xyz/"
+baseURL = "https://example.com/"
 languageCode = "en-us"
-title = "Ogden Studios"
+title = "Eddie Webb"
+theme = "hugo-resume"
 
 [params]
+    firstName = "Eddie"
+    lastName = "Webb"
+    address = "Rollinsford, NH"
+    phone = "1-555-555-1234"
+    contactNote = "Dev Tools Engineer"
+    profileImage = "img/TechChat.png"
+    email = "email@domain.com"
+    description = "Software Platform Engineer with experience leveraging agile, DevOps, and CI/CD to manage large scale distributed platforms both on prem and in public cloud."
+    favicon = "images/favicon.ico"
+    # what sections
+    showSkills = true
+    showProjects = true
+    showOpenSource = true
+    showPublications = true
+    showExperience = true
+    showEducation = true
 
-    name = "Ogden Studios"
-    description = "We build practical solutions for pragmatic people."
+    showQr = true
 
-    # Custom assets
-    custom_css = ['css/custom.css']
-    custom_js  = []
+[[params.handles]]
+    name = "LinkedIn"
+    link = "https://www.linkedin.com/in/edwardwebb/"
 
-    [params.navigation]
-        brand = "Ogden Studios"
 
-    [params.header]
-        # Copy your own image into './static/img/'' if you wish
-        image = "ogden-transparent.png"
-        name = "Ogden Studios"
-        subtitle = "We build practical solutions for pragmatic people."
+[[params.handles]]
+    name = "GitHub"
+    link = "https://github.com/eddiewebb/"
 
-    [params.about]
-        title = "What We Do"
-        # The about text is splitted into a left and right column
-        left = "You need a website that works. No fancy bells and whistles. Just solutions. Contact us for a free consultation."
-        right = ""
+[[params.handles]]
+    name = "Bitbucket"
+    link = "https://bitbucket.org/eddiewebb/"
 
-      [params.footer.social]
-          title = "Around the web"
-          # All icons using Fontawesome's icon font. Look at fortawesome.github.io/Font-Awesome/icons/
-          # for more icons. The icons are represented by their corresponding
-          # CSS class.
-          [[params.footer.social.networks]]
-              icon = "fa-github"
-              link = "//github.com/ogdenstudios"
+[[params.handles]]
+    name = "Stack Overflow"
+    link = "https://stackoverflow.com/users/story/82880"
+    icon = "stack-overflow"
 
-          [[params.footer.social.networks]]
-              icon = "fa-twitter"
-              link=  "//twitter.com/ogdenstudios"
+[[params.handles]]
+    name = "Keybase"
+    link = "https://keybase.io/edwardawebb"
+    icon = "key"
 
-            [[params.footer.social.networks]]
-                icon = "fa-facebook"
-                link=  "//facebook.com/ogdenstudios"
-
-[[menu.main]]
-  name = "Portfolio"
-  weight = 100
-  identifier = "portfolio"
-  url = "/portfolio/"
-[[menu.main]]
-  name = "Pricing"
-  identifier = "pricing"
-  weight = 200
-  url = "/pricing/"
-[[menu.main]]
-  name = "Blog"
-  identifier = "blog"
-  weight = 300
-  url = "/blog/"
+[params.google.analytics]
+    trackerID = "XX-123446-01"
