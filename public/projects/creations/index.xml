@@ -1,41 +1,50 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Creations on Eddie Webb</title>
-    <link>https://example.com/projects/creations/</link>
-    <description>Recent content in Creations on Eddie Webb</description>
+    <title>Creations on Ogden Studios</title>
+    <link>/projects/creations/</link>
+    <description>Recent content in Creations on Ogden Studios</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 11 Feb 2018 12:41:05 -0500</lastBuildDate>
     
-	<atom:link href="https://example.com/projects/creations/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/projects/creations/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>BOSH release for Bamboo &amp; Remote Agents</title>
-      <link>https://example.com/projects/creations/bosh-agents/</link>
+      <title>SSDP Website Rebuild</title>
+      <link>/projects/creations/ssdp-rebuild/</link>
       <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
       
-      <guid>https://example.com/projects/creations/bosh-agents/</guid>
-      <description>BOSH (Bosh Outer SHell) &amp;ldquo;&amp;hellip; is an open source tool for release engineering, deployment, lifecycle management, and monitoring of distributed systems.&amp;rdquo; And it&amp;rsquo;s amazingly powerful. This examples uses BOSH to provision an Alassian vendor app running on JDK along with the support Postgres database and agents to support it. The releases manages the health of services and will automatically provision, start/stop processes across the various services.</description>
+      <guid>/projects/creations/ssdp-rebuild/</guid>
+      <description>Students for Sensible Drug Policy had an extremely bloated and broken WordPress installation. An outside firm had come in and done an absolutely horrendous job with the site&amp;rsquo;s redesign, and afterwards we were unsure what to do. At the moment, I&amp;rsquo;m working on migrating us from WordPress to a headless CMS with a Hugo static site generator. here</description>
     </item>
     
     <item>
-      <title>Atlassian Marketplace Plugins</title>
-      <link>https://example.com/projects/creations/marketplace/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <title>SSDP Chapter Activity Tracker</title>
+      <link>/projects/creations/ssdp-cat/</link>
+      <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
       
-      <guid>https://example.com/projects/creations/marketplace/</guid>
-      <description>Multiple plugins used by thousands of teams that provide enhanced functionality of Atlassian’s core products (primarily JIRA and Bamboo) to enrich CI/CD capabilities, DevOps automation, or productivity. Functionality spans user interface, web services and persistence.</description>
+      <guid>/projects/creations/ssdp-cat/</guid>
+      <description>Students for Sensible Drug Policy had an extremely bloated and broken WordPress installation. An outside firm had come in and done an absolutely horrendous job with the site&amp;rsquo;s redesign, and afterwards we were unsure what to do. At the moment, I&amp;rsquo;m working on migrating us from WordPress to a headless CMS with a Hugo static site generator.</description>
     </item>
     
     <item>
-      <title>Docker image for Bitbucket CI/CD Pipelines  &#34;shipit&#34;</title>
-      <link>https://example.com/projects/creations/docker-marketplace/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <title>THC Staffing Group</title>
+      <link>/projects/creations/tsg/</link>
+      <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
       
-      <guid>https://example.com/projects/creations/docker-marketplace/</guid>
-      <description>Provides required dependencies and additional utilities to simplify and codify the process of building, testing and delivering Atlassian plugins all the way to the live marketplace. Executes integration/AUT level tests against all stated compatible versions for the productUploads generated artifact to Atlassian marketplaceProvides corresponding metadata indicating version, release notes, and compatibility</description>
+      <guid>/projects/creations/tsg/</guid>
+      <description>Students for Sensible Drug Policy had an extremely bloated and broken WordPress installation. An outside firm had come in and done an absolutely horrendous job with the site&amp;rsquo;s redesign, and afterwards we were unsure what to do. At the moment, I&amp;rsquo;m working on migrating us from WordPress to a headless CMS with a Hugo static site generator. here</description>
+    </item>
+    
+    <item>
+      <title>The Atwater Group</title>
+      <link>/projects/creations/atwater/</link>
+      <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
+      
+      <guid>/projects/creations/atwater/</guid>
+      <description>Students for Sensible Drug Policy had an extremely bloated and broken WordPress installation. An outside firm had come in and done an absolutely horrendous job with the site&amp;rsquo;s redesign, and afterwards we were unsure what to do. At the moment, I&amp;rsquo;m working on migrating us from WordPress to a headless CMS with a Hugo static site generator. here</description>
     </item>
     
   </channel>
