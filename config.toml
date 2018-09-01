@@ -15,7 +15,7 @@ theme = "resume"
     favicon = "img/favicon.ico"
     # what sections
     showSkills = true
-    showProjects = true
+    showProjects = false
     showOpenSource = false
     showPublications = false
     showExperience = true
