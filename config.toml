@@ -1,50 +1,35 @@
-baseURL = "https://example.com/"
+baseURL = "/"
 languageCode = "en-us"
-title = "Eddie Webb"
+title = "Ogden Studios"
 theme = "hugo-resume"
 
 [params]
-    firstName = "Eddie"
-    lastName = "Webb"
-    address = "Rollinsford, NH"
-    phone = "1-555-555-1234"
-    contactNote = "Dev Tools Engineer"
+    firstName = "Ogden"
+    lastName = "Studios"
+    address = "Denver, CO"
+    phone = "203-695-3299"
+    contactNote = "Web Design and Development"
     profileImage = "img/TechChat.png"
-    email = "email@domain.com"
-    description = "Software Platform Engineer with experience leveraging agile, DevOps, and CI/CD to manage large scale distributed platforms both on prem and in public cloud."
+    email = "tyler@ogdenstudios.xyz"
+    description = "We build practical solutions for pragmatic people."
     favicon = "images/favicon.ico"
     # what sections
     showSkills = true
     showProjects = true
-    showOpenSource = true
-    showPublications = true
+    showOpenSource = false
+    showPublications = false
     showExperience = true
     showEducation = true
 
-    showQr = true
+    showQr = false
 
 [[params.handles]]
     name = "LinkedIn"
-    link = "https://www.linkedin.com/in/edwardwebb/"
-
+    link = "https://www.linkedin.com/in/tylerwilliamsct/"
 
 [[params.handles]]
     name = "GitHub"
-    link = "https://github.com/eddiewebb/"
-
-[[params.handles]]
-    name = "Bitbucket"
-    link = "https://bitbucket.org/eddiewebb/"
-
-[[params.handles]]
-    name = "Stack Overflow"
-    link = "https://stackoverflow.com/users/story/82880"
-    icon = "stack-overflow"
-
-[[params.handles]]
-    name = "Keybase"
-    link = "https://keybase.io/edwardawebb"
-    icon = "key"
+    link = "https://github.com/ogdenstudios/"
 
 [params.google.analytics]
-    trackerID = "XX-123446-01"
+    trackerID = "UA-82629571-2"

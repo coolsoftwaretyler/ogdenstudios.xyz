@@ -1,6 +1,6 @@
 ---
-title: "Home"
-date: 2018-02-10T18:56:13-05:00
+title: "Ogden Studios"
+date: 2018-08-31T18:56:13-05:00
 sitemap:
   priority : 1.0
 
@@ -9,4 +9,4 @@ outputs:
 - rss
 - json
 ---
-<p>Proven Software Platform Engineer with experience leveraging agile, DevOps, and CI/CD to manage large scale distributed platforms both on prem and in public cloud.</p>
+<p>We build practical solutions for pragmatic people</p>
