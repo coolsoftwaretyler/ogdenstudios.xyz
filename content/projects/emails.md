@@ -10,3 +10,5 @@
   "featured":true,
   "weight": 60
 }
+
+I design and implement SSDP Email blasts using the MailJet Markup Language, converting it to HTML, and managing our email service provider.

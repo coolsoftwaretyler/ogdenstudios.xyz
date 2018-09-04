@@ -9,4 +9,6 @@
   "fact": "",
   "featured":true,
   "weight": 60
-} 
+}
+
+I provide some basic tech support and web administration for Dr. Frank Lucido's WordPress installation.
