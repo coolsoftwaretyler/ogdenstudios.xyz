@@ -9,4 +9,4 @@ outputs:
 - rss
 - json
 ---
-<p>I'm Tyler Williams, Principal Developer at Ogden Studios. I build practical solutions for pragmatic people</p>
+<p>I'm Tyler Williams, Principal Developer at Ogden Studios. I build practical solutions for pragmatic people.</p>

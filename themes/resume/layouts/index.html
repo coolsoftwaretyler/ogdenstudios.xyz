@@ -4,7 +4,7 @@
        {{ partial "portfolio/skills.html" . }}
    {{ end }}
    {{ if .Site.Params.showProjects }}
-      {{ with .Site.GetPage "section" "projects/creations" }}
+      {{ with .Site.GetPage "section" "projects" }}
          {{ .Scratch.Add "sectionId" "projects" }}
          {{ partial "sectionSummary" . }}
       {{ end }}
