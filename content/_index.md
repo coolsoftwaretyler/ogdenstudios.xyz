@@ -1,6 +1,6 @@
 ---
 title: "Ogden Studios"
-date: 2018-08-31T18:56:13-05:00
+date: "2018-09-04T18:56:13-05:00"
 sitemap:
   priority : 1.0
 
@@ -9,4 +9,5 @@ outputs:
 - rss
 - json
 ---
-<p>We build practical solutions for pragmatic people</p>
+
+<p>I'm Tyler Williams, Principal Developer at Ogden Studios. I build practical solutions for pragmatic people.</p>
