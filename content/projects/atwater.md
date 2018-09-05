@@ -4,11 +4,11 @@
   "image": "",
   "link": "https://theatwatergroup.com",
   "image": "",
-  "description": "The Atwater Group offers proofreading and editing services - all at affordable rates, and we built a custom site for them using the Hugo static site generator and Netlify.",
+  "description": "The Atwater Group offers proofreading and editing services - all at affordable rates. We built a custom site for them using the Hugo static site generator and Netlify.",
   "tags": ["DevOps","Hugo", "Headless CMS", "HTML", "CSS", "JavaScript", "Bootstrap", "Netlify"],
   "fact": "",
   "featured":true,
   "weight": 30
 }
 
-The Atwater Group offers proofreading and editing services - all at affordable rates, and we built a custom site for them using the Hugo static site generator and Netlify. You can view the code [here](https://github.com/ogdenstudios/atwater)
+The Atwater Group offers proofreading and editing services - all at affordable rates. We built a custom site for them using the Hugo static site generator and Netlify. You can view the code [here](https://github.com/ogdenstudios/atwater)
