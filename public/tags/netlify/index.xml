@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Netlify on Ogden Studios</title>
+    <link>/tags/netlify/</link>
+    <description>Recent content in Netlify on Ogden Studios</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 11 Feb 2018 12:41:05 -0500</lastBuildDate>
+    
+	<atom:link href="/tags/netlify/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The Atwater Group</title>
+      <link>/projects/atwater/</link>
+      <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
+      
+      <guid>/projects/atwater/</guid>
+      <description>The Atwater Group offers proofreading and editing services - all at affordable rates. We built a custom site for them using the Hugo static site generator and Netlify. You can view the code here</description>
+    </item>
+    
+  </channel>
+</rss>

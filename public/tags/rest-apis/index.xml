@@ -12,39 +12,22 @@
     
     
     <item>
-      <title>SSDP Chapter Activity Tracker</title>
-      <link>/projects/creations/ssdp-cat/</link>
+      <title>Students for Sensible Drug Policy</title>
+      <link>/projects/ssdp/</link>
       <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
       
-      <guid>/projects/creations/ssdp-cat/</guid>
-      <description>Students for Sensible Drug Policy had an extremely bloated and broken WordPress installation. An outside firm had come in and done an absolutely horrendous job with the site&amp;rsquo;s redesign, and afterwards we were unsure what to do. At the moment, I&amp;rsquo;m working on migrating us from WordPress to a headless CMS with a Hugo static site generator.</description>
-    </item>
-    
-    <item>
-      <title>SSDP Website Rebuild</title>
-      <link>/projects/creations/ssdp-rebuild/</link>
-      <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
-      
-      <guid>/projects/creations/ssdp-rebuild/</guid>
-      <description>Students for Sensible Drug Policy had an extremely bloated and broken WordPress installation. An outside firm had come in and done an absolutely horrendous job with the site&amp;rsquo;s redesign, and afterwards we were unsure what to do. At the moment, I&amp;rsquo;m working on migrating us from WordPress to a headless CMS with a Hugo static site generator. here</description>
+      <guid>/projects/ssdp/</guid>
+      <description>Students for Sensible Drug Policy maintained an in-house WordPress website from about 2012-2016. From 2015-2016, I was in charge of maintaining the blog posts, users, and updates of that WordPress installation. Over the 2015-2016 program year, the organization hired a third party contractor to redesign and rebuild our website, and the results were ultimately unsatisfactory.
+After some initial security and usability problems with the final product, I was able to get the site to a stable state.</description>
     </item>
     
     <item>
       <title>THC Staffing Group</title>
-      <link>/projects/creations/tsg/</link>
+      <link>/projects/tsg/</link>
       <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
       
-      <guid>/projects/creations/tsg/</guid>
-      <description>Students for Sensible Drug Policy had an extremely bloated and broken WordPress installation. An outside firm had come in and done an absolutely horrendous job with the site&amp;rsquo;s redesign, and afterwards we were unsure what to do. At the moment, I&amp;rsquo;m working on migrating us from WordPress to a headless CMS with a Hugo static site generator. here</description>
-    </item>
-    
-    <item>
-      <title>The Atwater Group</title>
-      <link>/projects/creations/atwater/</link>
-      <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
-      
-      <guid>/projects/creations/atwater/</guid>
-      <description>Students for Sensible Drug Policy had an extremely bloated and broken WordPress installation. An outside firm had come in and done an absolutely horrendous job with the site&amp;rsquo;s redesign, and afterwards we were unsure what to do. At the moment, I&amp;rsquo;m working on migrating us from WordPress to a headless CMS with a Hugo static site generator. here</description>
+      <guid>/projects/tsg/</guid>
+      <description>THC Staffing Group is an organization dedicated to closing the gap between America’s rapidly growing cannabis industry and diverse, qualified employment candidates. For the past year, I&amp;rsquo;ve provided copy-editing, WordPress maintenance, WCAG AA compliance work, and a full rebuild for them. The current website is their legacy WordPress installation while we develop a full rebuild using Hugo. You can find the rebuild repository here and view progress at https://tsg.netlify.com</description>
     </item>
     
   </channel>

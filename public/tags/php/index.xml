@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Php on Ogden Studios</title>
+    <link>/tags/php/</link>
+    <description>Recent content in Php on Ogden Studios</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 11 Feb 2018 12:41:05 -0500</lastBuildDate>
+    
+	<atom:link href="/tags/php/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>SSDP Chapter Activity Tracker</title>
+      <link>/projects/cat/</link>
+      <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
+      
+      <guid>/projects/cat/</guid>
+      <description>The SSDP Chapter Activity Tracker (CAT) is an online interface for SSDP chapters to log the activities they are engaging in. When chapters log activity on the CAT, they earn CAT points. CAT points can be spent on SSDP materials, conference registrations, and other items that help support their work. The CAT is a way to earn resources (that would otherwise cost money) by logging activism and giving us a deeper insight in how our chapters do their work.</description>
+    </item>
+    
+    <item>
+      <title>Students for Sensible Drug Policy</title>
+      <link>/projects/ssdp/</link>
+      <pubDate>Sun, 11 Feb 2018 12:41:05 -0500</pubDate>
+      
+      <guid>/projects/ssdp/</guid>
+      <description>Students for Sensible Drug Policy maintained an in-house WordPress website from about 2012-2016. From 2015-2016, I was in charge of maintaining the blog posts, users, and updates of that WordPress installation. Over the 2015-2016 program year, the organization hired a third party contractor to redesign and rebuild our website, and the results were ultimately unsatisfactory.
+After some initial security and usability problems with the final product, I was able to get the site to a stable state.</description>
+    </item>
+    
+  </channel>
+</rss>

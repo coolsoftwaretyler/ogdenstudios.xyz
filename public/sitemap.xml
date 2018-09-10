@@ -3,29 +3,62 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/projects/creations/ssdp-rebuild/</loc>
+    <loc>/projects/ssdp/</loc>
     <lastmod>2018-02-11T12:41:05-05:00</lastmod>
   </url>
   
   <url>
-    <loc>/projects/creations/</loc>
+    <loc>/projects/</loc>
     <lastmod>2018-02-11T12:41:05-05:00</lastmod>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/projects/creations/ssdp-cat/</loc>
+    <loc>/projects/cat/</loc>
     <lastmod>2018-02-11T12:41:05-05:00</lastmod>
   </url>
   
   <url>
-    <loc>/projects/creations/tsg/</loc>
+    <loc>/projects/atwater/</loc>
     <lastmod>2018-02-11T12:41:05-05:00</lastmod>
   </url>
   
   <url>
-    <loc>/projects/creations/atwater/</loc>
+    <loc>/projects/tsg/</loc>
     <lastmod>2018-02-11T12:41:05-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/projects/twid/</loc>
+    <lastmod>2018-02-11T12:41:05-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/projects/lucido/</loc>
+    <lastmod>2018-02-11T12:41:05-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/projects/emails/</loc>
+    <lastmod>2018-02-11T12:41:05-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2018-08-31T18:56:13-05:00</lastmod>
+    <priority>1</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/accessibility/</loc>
+    <lastmod>2018-02-11T12:41:05-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/audio-editing/</loc>
+    <lastmod>2018-02-11T12:41:05-05:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -47,6 +80,18 @@
   
   <url>
     <loc>/tags/devops/</loc>
+    <lastmod>2018-02-11T12:41:05-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/drupal/</loc>
+    <lastmod>2018-02-11T12:41:05-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/email/</loc>
     <lastmod>2018-02-11T12:41:05-05:00</lastmod>
     <priority>0</priority>
   </url>
@@ -76,14 +121,27 @@
   </url>
   
   <url>
-    <loc>/</loc>
+    <loc>/tags/mjml/</loc>
     <lastmod>2018-02-11T12:41:05-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/projects/</loc>
-    <priority>0.9</priority>
+    <loc>/tags/netlify/</loc>
+    <lastmod>2018-02-11T12:41:05-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/php/</loc>
+    <lastmod>2018-02-11T12:41:05-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/podcasting/</loc>
+    <lastmod>2018-02-11T12:41:05-05:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -98,7 +156,25 @@
   </url>
   
   <url>
+    <loc>/tags/seo/</loc>
+    <lastmod>2018-02-11T12:41:05-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/sql/</loc>
+    <lastmod>2018-02-11T12:41:05-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/</loc>
+    <lastmod>2018-02-11T12:41:05-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/web-administration/</loc>
     <lastmod>2018-02-11T12:41:05-05:00</lastmod>
     <priority>0</priority>
   </url>
