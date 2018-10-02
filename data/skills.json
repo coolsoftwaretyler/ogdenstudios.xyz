@@ -1,7 +1,7 @@
 [
   {
       "grouping":"Front End Languages and Frameworks",
-      "skills":[ "HTML","CSS","JavaScript", "Bootstrap", "Hugo"]
+      "skills":[ "HTML","CSS","JavaScript", "React", "Bootstrap", "Hugo"]
   },{
       "grouping":"Back End Languages and Frameworks",
       "skills":[ "Python","Flask","PHP","Ruby", "Rails", "RESTful APIs"]
@@ -12,6 +12,6 @@
   },
   {
     "grouping":"Tools",
-      "skills":[ "Linux", "bash", "zsh", "GitHub", "Adobe Suite", "Google Suite"]
+      "skills":[ "Linux", "bash", "zsh", "git", "Adobe Suite", "Google Suite"]
   }
 ]
