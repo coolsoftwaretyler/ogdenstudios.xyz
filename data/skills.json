@@ -4,14 +4,14 @@
       "skills":[ "HTML5","CSS3","JavaScript", "React", "Bootstrap", "Hugo"]
   },{
       "grouping":"Back End Languages and Frameworks",
-      "skills":[ "Python","Flask","PHP","Ruby", "Rails", "RESTful APIs"]
+      "skills":[ "Python","PHP","Ruby", "Rails", "Flask", "RESTful APIs"]
   },
   {
       "grouping":"Web Administration",
-      "skills":[ "Apache","MySQL","Wordpress", "Drupal", "Certified NationBuilder Developer"]
+      "skills":[ "MySQL","Wordpress", "Drupal","Apache", "Certified NationBuilder Developer"]
   },
   {
     "grouping":"Tools",
-      "skills":[ "Linux", "bash", "zsh", "git", "Adobe Suite", "Google Suite"]
+      "skills":[ "Linux", "git", "bash", "Adobe Suite", "Google Suite"]
   }
 ]
