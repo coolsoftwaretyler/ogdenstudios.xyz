@@ -1,7 +1,7 @@
 [
   {
       "grouping":"Front End Languages and Frameworks",
-      "skills":[ "HTML","CSS","JavaScript", "React", "Bootstrap", "Hugo"]
+      "skills":[ "HTML5","CSS3","JavaScript", "React", "Bootstrap", "Hugo"]
   },{
       "grouping":"Back End Languages and Frameworks",
       "skills":[ "Python","Flask","PHP","Ruby", "Rails", "RESTful APIs"]
