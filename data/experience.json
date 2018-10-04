@@ -1,15 +1,9 @@
 [
     {
-        "role":"Systems Administrator",
+        "role":"Website Administrator",
         "company":"Students for Sensible Drug Policy",
-        "summary":"Managed full stack digital assets: servers, databases, back-end software, front-end UI.",
-        "range":"April 2018 - Present"
-    },
-    {
-        "role":"Regional Outreach Coordinator/Web Content Administrator",
-        "company":"Students for Sensible Drug Policy",
-        "summary":"Oversaw SSDP chapters in the Heartland, Midwest, and Mountain regions and performed basic web content administration.",
-        "range":"July 2015 - April 2018"
+        "summary":"Migrated legacy WordPress site to a headless CMS with a Hugo front end to address performance, security, and maintenance concerns. Updated website to meet WCAG 2.0 AA standards. Deployed and documented full stack for the updated website using Ubuntu 18.04, Nginx, and Passenger. Built Chapter Activity Tracker, a Ruby on Rails app which allows student chapters to update national headquarters about their activities on campus. Became a Certified NationBuilder Developer to create internal productivity applications on top of NationBuilder API using Python, PHP, and Ruby scripting. Maintained legacy WordPress and Drupal web properties.",
+        "range":"July 2015 - Present"
     },
     {
         "role":"Mobile Development Intern",
