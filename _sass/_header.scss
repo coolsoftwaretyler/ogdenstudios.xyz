@@ -1,0 +1,25 @@
+.site-header {
+    background: $color__light-green;
+    padding: 1em;
+}
+
+.site-nav {
+    .page-link {
+        color: $color__white;
+        line-height: 100px;
+        &:hover {
+            text-decoration: none;
+        }
+        @media all and (max-width: 600px){
+            line-height: 1;
+        }
+    }
+}
+
+.nav-brand {
+    max-width: 100px;
+}
+.site-nav, .nav-trigger {
+    background: $color__light-green;
+}
+

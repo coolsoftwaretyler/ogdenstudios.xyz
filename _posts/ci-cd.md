@@ -1,0 +1,1 @@
+Blog post about why I love continuous integration and continuous deployment

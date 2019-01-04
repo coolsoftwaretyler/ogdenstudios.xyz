@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-01-04T15:20:17-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Ogden Studios</title><subtitle>Practical solutions for pragmatic people</subtitle><entry><title type="html">We heard you like chatbots - so we built a chatbot generator.</title><link href="http://localhost:4000/artifical/intelligence/machine/learning/chatbots/2018/12/19/building-a-chatbot-generator.html" rel="alternate" type="text/html" title="We heard you like chatbots - so we built a chatbot generator." /><published>2018-12-19T10:40:37-07:00</published><updated>2018-12-19T10:40:37-07:00</updated><id>http://localhost:4000/artifical/intelligence/machine/learning/chatbots/2018/12/19/building-a-chatbot-generator</id><content type="html" xml:base="http://localhost:4000/artifical/intelligence/machine/learning/chatbots/2018/12/19/building-a-chatbot-generator.html">&lt;p&gt;Taylor and I have talked about collaborating on a machine learning project for some time, despite my lack of knowledge about machine learning.&lt;/p&gt;
+
+&lt;p&gt;We wanted our project to do something useful for the general public.&lt;/p&gt;
+
+&lt;h2 id=&quot;first-ideas&quot;&gt;First ideas&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Build a fantasy football predictor&lt;/li&gt;
+  &lt;li&gt;Build a chatbot based on the chat logs from our facebook messenger.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
+
+&lt;p&gt;[https://medium.com/analytics-vidhya/building-a-simple-chatbot-in-python-using-nltk-7c8c8215ac6e]&lt;/p&gt;
+
+&lt;h2 id=&quot;github&quot;&gt;GitHub&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/ogdenstudios/chatbot-generator&quot;&gt;Frontend&lt;/a&gt;
+&lt;a href=&quot;https://github.com/taytayp/chatbot-backend&quot;&gt;Backend&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Types of chatbots:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Rule based
+  Bot answers questions based on some rules i’ts been trained on 
+  Rules can be simple or complex, although bots tend to fail to manage complex queries.&lt;/li&gt;
+  &lt;li&gt;Self learning 
+  These bots use machine learning
+  Can be either:
+    &lt;ul&gt;
+      &lt;li&gt;Retrieval based 
+  uses some heuristic to select a response from a library of predefined responses
+  Uses message/context to select best response 
+  Could use dialog tree, all conversation, variables (like a username). Can use rule based decision trees or machine learning classifiers&lt;/li&gt;
+      &lt;li&gt;Generative
+        &lt;ul&gt;
+          &lt;li&gt;generate answers and not always replies with one of the answers from a pre defineed set. They are more intelligent as they can take word by word from the query and generate the answer.&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;[NLTK] - a platform for building python programs to work with human language data.&lt;/p&gt;
+
+&lt;p&gt;Easy to use interfacses with a ton of resources for language processing libraries&lt;/p&gt;
+
+&lt;p&gt;Terms to know:&lt;/p&gt;
+
+&lt;p&gt;classification
+tokenization
+stemming
+tagging
+parsing
+semantic rasoning&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Install NLTK 
+ PREREQ: command line 
+ PREREQ: virtual env
+ REPREQ: package managers, pip&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;NLTK and Machine Learning algorithms require a &lt;em&gt;numerical feature vector&lt;/em&gt; to perform the task.&lt;/p&gt;
+
+&lt;p&gt;We need to pre process data to make it ideal.&lt;/p&gt;
+
+&lt;p&gt;Convert the entire text into uppecase or lowercase, so different cased words don’t get treated differently.&lt;/p&gt;
+
+&lt;p&gt;Tokenization: convert normal text strings into a list of word we actually want
+    sentence tokenizer can be used to find the list of sentences and word tokenizer can be used to find the list of words in trings.&lt;/p&gt;
+
+&lt;p&gt;Remove noise (everything that isn’t a standard number or letter)&lt;/p&gt;
+
+&lt;p&gt;REmove stop words (common words that are of little value inselecting what the user wants)&lt;/p&gt;
+
+&lt;p&gt;Stemming: reducing inflected (or derived) words to their stem - base or root form. I.e. “stems” “stemming” “stemmed” and “stemtization” results in “stem”&lt;/p&gt;
+
+&lt;p&gt;Lemmatization: variant of stemming. Stemming can sometimes create on existent words, but lemmas are actual words. “better” and “goood” are in the same lemma and are considered the same.&lt;/p&gt;
+
+&lt;p&gt;Bag of words&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;after preprocessing, we transform textinto a vector (or array) of numbers. The bag-of-words is a representation of text that describes the occurrence of words witin a document. Involves:&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;vocab of known words&lt;/li&gt;
+      &lt;li&gt;a measure of th epresence of known words&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The order or structure of the words is discarded and the model is only concerned with whether the known words occur in the docuemtn. Not where they occur in the document.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;the principle here is that documents are similar if they have similar content, regardless of structure. We can learn something about the meaning of a document from its cnotent alone.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For example, a dictionary with the words&lt;/p&gt;
+
+&lt;p&gt;{Learning, is, the, not, great} and vectorize text “learning is great”, we get the vector: (1, 1, 0, 0, 1)&lt;/p&gt;
+
+&lt;p&gt;TF-IDF approach&lt;/p&gt;
+
+&lt;p&gt;Bag of words problem: highly frequent words dominate the document with a larger score, but might not contain as much informational content. It also gives more weight to longer documents than shorter documents.&lt;/p&gt;
+
+&lt;p&gt;We could rescale the frequency of words by how often they appear in all documents - words like “the” that are also common across all documents are penalized.&lt;/p&gt;
+
+&lt;p&gt;This approach is called &lt;strong&gt;Term Fequency Inerse Document Frequency&lt;/strong&gt; or &lt;strong&gt;TF-IDF&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;TF = (number of times term te appears in a document) / (number of terms in the document)&lt;/p&gt;
+
+&lt;p&gt;IDF= 1 + log(N/n), where N is the number of documents and n is the number of docuemtns a term t has appear in.&lt;/p&gt;
+
+&lt;p&gt;You can use Tf-IDF in scikit learn as:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;from sklearn.feature_extraction.text import TfidfVectorizer&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Cosine similarity&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;TF-IDF is a transofrmation applied ot texts to get two real-valued vectorsi n vector space. Then we can obtain the cosine similarity of any pair of vectorys by taking their dot product and dividing that by the product of their norms.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;That gives us the cosine of the angle between the vectors. Cosine similarity is a meausure of similarity between any two documents d1 and d2.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Cosine similarity (d1, d2) = Dot product(d1, d2) /&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;d1&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;*&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;d2&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;On to practical building, so here are some notes about that:&lt;/p&gt;
+
+&lt;p&gt;understand creating files, creating python files and how that’s a way of talking to the computer in a way it understands.&lt;/p&gt;
+
+&lt;p&gt;import statements inp ython&lt;/p&gt;
+
+&lt;p&gt;had to troubleshoot errors: how to do that&lt;/p&gt;
+
+&lt;p&gt;used io to open instead of just open()&lt;/p&gt;
+
+&lt;p&gt;Understand dicts, arrays, etc.&lt;/p&gt;
+
+&lt;p&gt;It’d be good to show the fully completed file, or where to put things like the function definitions and import statements.&lt;/p&gt;
+
+&lt;p&gt;Learning how to learn.&lt;/p&gt;
+
+&lt;p&gt;Go through and annotate all the code.&lt;/p&gt;
+
+&lt;p&gt;Troubleshooting errors&lt;/p&gt;</content><author><name></name></author><summary type="html">Taylor and I have talked about collaborating on a machine learning project for some time, despite my lack of knowledge about machine learning.</summary></entry></feed>
