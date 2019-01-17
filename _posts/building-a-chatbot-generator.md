@@ -130,3 +130,9 @@ Learning how to learn.
 Go through and annotate all the code. 
 
 Troubleshooting errors 
+
+We tried figuring things out using the k-cluster algorithm, because it seemed good for unsupervised learning 
+
+But if you give k-clusters a bunch of words, you don't really get anything, because words don't have distance vectors. 
+
+Which led us to Levenshtein Distance - so we can calculate a quantifiable metric between strings and maybe feed that to k-clusters. 
