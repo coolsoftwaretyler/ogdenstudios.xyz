@@ -1,3 +1,8 @@
+---
+layout: post
+title:  "Deploy a Rails 6 app to Amazon EC2"
+---
+
 Sources: 
 https://medium.com/@manishyadavv/how-to-deploy-ruby-on-rails-apps-on-aws-ec2-7ce55bb955fa
 
@@ -813,3 +818,7 @@ Awesome, now check it out at your Amazon IP address.
 Head back to your EC2 Resource console, and find the value listed under Public DNS (IPv4) - then paste that into your browser. 
 
 You should be good to go! Congrats! You did it!
+
+Let's set up a domain name for our server 
+Capistrano 
+Build the app

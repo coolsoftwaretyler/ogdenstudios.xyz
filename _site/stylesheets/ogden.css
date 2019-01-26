@@ -1,13 +1,9 @@
-html,
-body {
-  background-color: #f7f0f5 !important;
-  color: #5c5552; }
-
 h1 {
   text-transform: uppercase; }
 
 .site-header {
   background: #6ba368;
+  border-top: none;
   padding: 1em; }
 
 .site-nav .page-link {
