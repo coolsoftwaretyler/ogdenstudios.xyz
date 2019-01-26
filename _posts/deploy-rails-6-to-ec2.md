@@ -479,5 +479,298 @@ cd ~/trackerr
 bundle install 
 yarn
 RAILS_ENV=production bundle exec rake db:create 
-rake db:migrate RAILS_ENV production
+RAILS_ENV=production rake db:migrate 
 ```
+
+You'll notice we set RAILS_ENV to production there twice. We don't want to have to do that every time (or worse - forget we have to do that everytime). So let's add it to our bash profile. 
+
+```
+# EC2 - as trackerr-user 
+cd ~
+vim .bashrc
+```
+
+And add `export RAILS_ENV="production"` to the bottom of your file. 
+
+Go ahead and restart bash by running `bash`. Now check your env variables with `printenv` and make sure RAILS_ENV="production"
+
+Now we need to configure Unicorn and Nginx, we'll be following the guide at [https://www.digitalocean.com/community/tutorials/how-to-deploy-a-rails-app-with-unicorn-and-nginx-on-ubuntu-14-04] from the **Install Unicorn** section down. 
+
+This is a great example of making changes to our app on a local machine and having them take effect on the server. 
+
+We need to add the unicorn gem to our gemfile, so on your local machine, add a gemfile group for production. I like to put it under the block that reads something like: 
+
+```
+group :test do
+...
+end
+```
+
+- I then add: 
+
+```
+group :production do
+    gem 'unicorn'
+end
+```
+
+And since we're loading unicorn specifically in production, it pays to be explicit about when to load puma (the default server set up in rails 6). 
+
+I move the `gem 'puma', '~> 3.11'` line to the block which looks like: 
+
+```
+group: development, :test do
+    ...
+end
+```
+
+Now check that there aren't any errors in development, and run 
+
+```
+# Local machine - in project folder
+bundle install
+rails s
+```
+
+Make sure your new gemfile didn't throw any errors, and that Puma still boots up on your development machine. 
+
+If that's in order, let's configure Unicorn in anticipation of running it on the server. 
+
+On your development machine, add a file to the rails app at `config/unicorn.rb`
+
+For now, let's just use the standard config DigitalOcean lists: 
+
+```
+# set path to application
+app_dir = File.expand_path("../..", __FILE__)
+shared_dir = "#{app_dir}/shared"
+working_directory app_dir
+
+
+# Set unicorn options
+worker_processes 2
+preload_app true
+timeout 30
+
+# Set up socket location
+listen "#{shared_dir}/sockets/unicorn.sock", :backlog => 64
+
+# Logging
+stderr_path "#{shared_dir}/log/unicorn.stderr.log"
+stdout_path "#{shared_dir}/log/unicorn.stdout.log"
+
+# Set master PID location
+pid "#{shared_dir}/pids/unicorn.pid"
+```
+
+Save the file. 
+
+We set up the file to point to some folders which don't exist yet, so let's make those. 
+
+Make three new folders in the root of your app. So for me, I'm going to create 
+
+`trackerr/shared/pids`
+
+`trackerr/shared/sockets`
+
+`trackerr/shared/log`
+
+Now I've got the gemfile and required folders set up for Unicorn to run, and it's in my repository, so I'm going to push it up to GitHub and pull it down to EC2. 
+
+So let's run: 
+
+```
+# Local machine - in Trackerr project
+git add .
+git commit -m "add unicorn setup"
+git push 
+```
+
+To get these changes on the server, run: 
+
+```
+# EC2 - as trackerr-user 
+cd ~/trackerr
+git pull
+```
+
+Depending on how you manage git, empty folders might not make it into source control, so you can just re-make those shared folders by running: 
+
+```
+# EC2 - as trackerr-user 
+cd ~/trackerr
+mkdir -p shared/
+```
+
+Now run a `bundle install` (this may take a bit, Unicorn is somewhat big).
+
+Next, we'll need to create a Unicorn Init Script **on the EC2 server** - it allows us to start and stop Unicorn, and ensure that it starts on boot. 
+
+```
+# EC2 - as trackerr-user
+sudo vim /etc/init.d/unicorn_trackerr
+```
+
+You'll want to copy this verbatim, but change the lines 
+
+`USER="trackerr-user"`
+
+and 
+
+`APP_NAME="trackerr"`
+
+To your user and app name. 
+
+```
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          unicorn
+# Required-Start:    $all
+# Required-Stop:     $all
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts the unicorn app server
+# Description:       starts unicorn using start-stop-daemon
+### END INIT INFO
+
+set -e
+
+USAGE="Usage: $0 <start|stop|restart|upgrade|rotate|force-stop>"
+
+# app settings
+USER="trackerr-user"
+APP_NAME="trackerr"
+APP_ROOT="/home/$USER/$APP_NAME"
+ENV="production"
+
+# environment settings
+PATH="/home/$USER/.rbenv/shims:/home/$USER/.rbenv/bin:$PATH"
+CMD="cd $APP_ROOT && bundle exec unicorn -c config/unicorn.rb -E $ENV -D"
+PID="$APP_ROOT/shared/pids/unicorn.pid"
+OLD_PID="$PID.oldbin"
+
+# make sure the app exists
+cd $APP_ROOT || exit 1
+
+sig () {
+  test -s "$PID" && kill -$1 `cat $PID`
+}
+
+oldsig () {
+  test -s $OLD_PID && kill -$1 `cat $OLD_PID`
+}
+
+case $1 in
+  start)
+    sig 0 && echo >&2 "Already running" && exit 0
+    echo "Starting $APP_NAME"
+    su - $USER -c "$CMD"
+    ;;
+  stop)
+    echo "Stopping $APP_NAME"
+    sig QUIT && exit 0
+    echo >&2 "Not running"
+    ;;
+  force-stop)
+    echo "Force stopping $APP_NAME"
+    sig TERM && exit 0
+    echo >&2 "Not running"
+    ;;
+  restart|reload|upgrade)
+    sig USR2 && echo "reloaded $APP_NAME" && exit 0
+    echo >&2 "Couldn't reload, starting '$CMD' instead"
+    $CMD
+    ;;
+  rotate)
+    sig USR1 && echo rotated logs OK && exit 0
+    echo >&2 "Couldn't rotate logs" && exit 1
+    ;;
+  *)
+    echo >&2 $USAGE
+    exit 1
+    ;;
+esac
+```
+
+Update the script's permissions and enable Unicorn to start on boot:
+
+```
+#EC2 - as trackerr-user
+sudo chmod 755 /etc/init.d/unicorn_trackerr
+sudo update-rc.d unicorn_trackerr defaults
+```
+
+We can finally start unicorn by running: 
+
+```
+# EC2 - as trackerr-user
+sudo service unicorn_trackerr start
+```
+
+Now Unicorn is running, but we can't access it from the internet at large until we configure Nginx
+
+Set up NGINX 
+
+We're going to install and configure Nginx on our server now. 
+
+Head back to your home directory and install nginx. 
+
+```
+# EC2 - as trackerr-user
+cd ~
+sudo apt-get install nginx
+```
+
+Next, let's configure the default server block: 
+
+```
+# EC2 - as trackerr-user 
+sudo vim /etc/nginx/sites-available/default
+```
+
+Add the following, but replace the username and application name with yours.
+
+```
+upstream app {
+    # Path to Unicorn SOCK file, as defined previously
+    server unix:/home/trackerr-user/trackerr/shared/sockets/unicorn.sock fail_timeout=0;
+}
+
+server {
+    listen 80;
+    server_name localhost;
+
+    root /home/trackerr-user/trackerr/public;
+
+    try_files $uri/index.html $uri @app;
+
+    location @app {
+        proxy_pass http://app;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+    }
+
+    error_page 500 502 503 504 /500.html;
+    client_max_body_size 4G;
+    keepalive_timeout 10;
+}
+```
+
+Save and exit. This configures Nginx as a reverse proxy, so HTTP requests get forwarded to the Unicorn application server via a Unix socket. Feel free to make any changes as you see fit.
+
+Restart Nginx: 
+
+```
+# EC2 - as trackerr-user 
+sudo service nginx restart 
+```
+
+go check it out at your amazon IP 
+
+I didn't precompile assets, is that the problem? 
+
+- Problem was I just APPENDED the nginx config, didn't remove default config. 
+
+Still getting an error, but this one comes from rails at least!
