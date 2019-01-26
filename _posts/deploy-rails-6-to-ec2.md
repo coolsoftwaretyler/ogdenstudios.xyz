@@ -73,7 +73,48 @@ git remote add origin git@github.com:<YOUR ADDRESS HERE>
 git push -u origin master 
 ```
 
-Voila, you've got a Rails 6 project installed on your machine and checked in to your GitHub. Up next, we'll set up an EC2 instance, configure it a bit, and then launch this barebones app to it. 
+Voila, you've got a Rails 6 project installed on your machine and checked in to your GitHub. 
+
+In order for the rest of this to work, you'll need to set up a root path in your configuration, along with a controller and a view. 
+
+You can use the rails controller generator, if you like [link to that], or you can add it manually. 
+
+Personally, I like to start with `pages_controller.rb` - define a method, 
+
+```
+# pages_controller.rb
+class PagesController < ApplicationController
+    def index
+    end
+end 
+```
+
+And a corresponding view 
+
+```
+# index.html.erb
+You did it! Great job! 
+```
+
+In your `config/routes` file
+
+```
+# routes.rb 
+root "pages#index"
+```
+
+Add your changes and push them up to git 
+
+```
+# On your local machine, in project directory 
+git add .
+git commit -m "add home page"
+git push 
+```
+
+Now your app is just about ready for the server. 
+
+Up next, we'll set up an EC2 instance, configure it a bit, and then launch this barebones app to it. 
 
 Go to Amazon AWS Console 
 
@@ -646,7 +687,7 @@ ENV="production"
 
 # environment settings
 PATH="/home/$USER/.rbenv/shims:/home/$USER/.rbenv/bin:$PATH"
-CMD="cd $APP_ROOT && bundle exec unicorn -c config/unicorn.rb -E $ENV -D"
+CMD="cd $APP_ROOT && /home/trackerr-user/.rbenv/shims/bundle exec unicorn -c config/unicorn.rb -E production -D"
 PID="$APP_ROOT/shared/pids/unicorn.pid"
 OLD_PID="$PID.oldbin"
 
@@ -767,10 +808,8 @@ Restart Nginx:
 sudo service nginx restart 
 ```
 
-go check it out at your amazon IP 
+Awesome, now check it out at your Amazon IP address. 
 
-I didn't precompile assets, is that the problem? 
+Head back to your EC2 Resource console, and find the value listed under Public DNS (IPv4) - then paste that into your browser. 
 
-- Problem was I just APPENDED the nginx config, didn't remove default config. 
-
-Still getting an error, but this one comes from rails at least!
+You should be good to go! Congrats! You did it!
