@@ -8,9 +8,34 @@ https://medium.com/@manishyadavv/how-to-deploy-ruby-on-rails-apps-on-aws-ec2-7ce
 
 https://groups.google.com/forum/#!msg/rubyonrails-talk/IsOAQIB5Dkw/8BnbFbKBCwAJ
 
-First you need to get rails 6 
+## Why I wrote this blog post 
 
-I'm going to use my actual commands and project names, so you may have to do some swapping based on your platform and use cases. 
+I've been building Rails apps for some time, now. On some projects, I've been fortunate enough to have a DevOps team to take care of production deploys to AWS. For smaller, personal projects, I've been mostly relying on Heroku to deploy. 
+
+I love Heroku, they make an excellent product and it's great for quick prototypes and small hobby servers. But for some more involved projects, the cost and lack of control don't work for me. I figured it was time to start managing my own infrastructure. 
+
+I decided to learn how to deploy to EC2, and wrote this blog along the way. 
+
+Additionally, the Ruby on Rails 6 beta just came out, and I wanted to spin up a demo project and check it out.
+
+## Who should read this blog post 
+
+This blog posts assumes some prior knowledge of Ruby on Rails. I learned what I know from: 
+
+- The Michael Hartl Tutorial
+- Those hour long build videos 
+
+It also assumes knowledge of command line interfaces, SSH, and git. Here are some good places to start for that:
+
+- CLI tutorial
+- SSH tutorial
+- Git Tutorial 
+
+## How this blog post works
+
+I'm going to use my actual commands and project names. I'm developing using zsh, Visual Studio Code, and a MacBook Pro, so you may have to do some swapping based on your platform and use cases. 
+
+## Get Rails 6
 
 Get the latest rails gem(s).
 
@@ -18,6 +43,8 @@ Get the latest rails gem(s).
 # Any terminal 
 gem install rails --pre 
 ```
+
+## Create a Rails 6 project 
 
 Then you need to make a new project with the Rails 6 beta 
 
@@ -47,9 +74,11 @@ Check that it works
 rails s
 ```
 
-Nice, it works (include screenshot 1)
+You should see something like: 
 
-This is my favorite place for an init commit in git. It's fresh, it's new, it works. I haven't broken anything yet. Let's make the initial commit. 
+![Rails 6 Default Index Screenshot](/img/rails-6-ec2-tutorial-1/rails-6-success.png)
+ 
+Nice, it works. This is my favorite place for an init commit in git: It's fresh, it's new, it works. I haven't broken anything yet. Let's make the initial commit. 
 
 ```
 # trackerr/
@@ -57,21 +86,23 @@ git add .
 git commit -m "init commit"
 ```
 
-I use GitHub for my repositories, so YMMV, but I like to get this checked into GitHub ASAP. 
+## Push to GitHub (or other similar platform).
 
-[Link to how to make a github repo]
+I use GitHub for my repositories, so YMMV, but I'd like to get this fresh Rails project checked into GitHub ASAP. 
 
-GitHub.com 
-Plus button
-New Repository 
-Name it `trackerr`
-Add a description `Full Suite State Legislation Tracker`
-I'll keep it public, because I love open source. 
-Don't initialize the repo, you've already got one on your machine. 
-Follow their instructions for pushing an existing repo from command line 
+[Here's the GitHub doc for creating a new repository](https://help.github.com/articles/create-a-repo/), or you can follow along below: 
 
-I use SSH keys for my GitHub access, here's a good guide on how
-[Insert GitHub SSH guide]
+1. Go to <a href="https://github.com" target="_blank" rel="noopener noreffer">https://github.com</a> 
+2. Sign in or sign up. 
+3. Click the plus sign button
+4. Click **New Repository**
+5. Name it **trackerr** (or whatever you'd like to name your project).
+6. Add a description. For my project, that description is: **Full Suite State Legislation Tracker**
+7. [Now GitHub allows unlimited private repos](https://techcrunch.com/2019/01/07/github-free-users-now-get-unlimited-private-repositories/), but I'll keep it public, because I love open source. 
+8. Don't initialize the repo, you've already got one on your machine. 
+9. Follow the on-page instructions for pushing an existing repo from command line 
+
+I use SSH keys for my GitHub access, and setting that up is beyond the scope of this blog post, but [here is a good guide on how to do that](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/).
 
 ```
 git remote add origin git@github.com:<YOUR ADDRESS HERE>
@@ -80,14 +111,23 @@ git push -u origin master
 
 Voila, you've got a Rails 6 project installed on your machine and checked in to your GitHub. 
 
-In order for the rest of this to work, you'll need to set up a root path in your configuration, along with a controller and a view. 
+## Get the sample page ready
 
-You can use the rails controller generator, if you like [link to that], or you can add it manually. 
+In order for your Rails app to actually work on the EC2 instance, you'll need to set up a root path in your configuration, and a corresponding controller and view. 
 
-Personally, I like to start with `pages_controller.rb` - define a method, 
+You can use the [rails controller generator, if you like](https://guides.rubyonrails.org/command_line.html), or you can add it manually. Since this blog post doesn't cover testing or assets or any of the other nice rails magic created in the controller generators, I'm going to just manually add the bare minimum here.
+
+In your `config/routes`
 
 ```
-# pages_controller.rb
+# config/routes.rb 
+root "pages#index"
+```
+
+In your `app/controllers`
+
+```
+# app/controllers/pages_controller.rb
 class PagesController < ApplicationController
     def index
     end
@@ -97,15 +137,8 @@ end
 And a corresponding view 
 
 ```
-# index.html.erb
-You did it! Great job! 
-```
-
-In your `config/routes` file
-
-```
-# routes.rb 
-root "pages#index"
+# app/views/pages/index.html.erb
+<h1>You did it! Great job!</h1>
 ```
 
 Add your changes and push them up to git 
@@ -117,13 +150,13 @@ git commit -m "add home page"
 git push 
 ```
 
-Now your app is just about ready for the server. 
+Now your very barebones Rails 6 app is just about ready to live on a server. 
 
-Up next, we'll set up an EC2 instance, configure it a bit, and then launch this barebones app to it. 
+## Set up your Amazon EC2 Instance
 
 Go to Amazon AWS Console 
 
-`https://console.aws.amazon.com/console/home?region=us-east-1`
+<a href="https://console.aws.amazon.com/" target="_blank" rel="noopener norefferer">https://console.aws.amazon.com/</a>
 
 Sign in, or sign up. 
 
@@ -133,13 +166,13 @@ In the dropdown menu, select **EC2** under the **Compute** menu.
 
 On this new page, click **Launch Instance**. 
 
-Since we're all about bleeding edge tech, let's choose the **Ubuntu Server 18.04 LTS (HVM), SSD Volume Type**. 
+Choose the **Ubuntu Server 18.04 LTS (HVM), SSD Volume Type**. 
 
 Click the **Select** button. 
 
-Since this is a starter project, I"m going to choose the t2.micro instance, eligible for the free tier. 
+Since this is a starter project, I'm going to choose the t2.micro instance, eligible for the free tier. 
 
-Click **Next: Configure Instance** - nothing to change here, unless you want to. 
+Click **Next: Configure Instance Details** - nothing to change here, unless you want to. 
 
 Click **Next: Add Storage** - I'm going to keep the defaults here, as well, since this is really just a proof of concept kind of thing. 
 
@@ -150,9 +183,17 @@ Click **Next: Configure Security Group**
 1. Select the **Create a new security group** radio button 
 2. There's already an SSH open on port 22 to 0.0.0.0/0
     - Amazon will tell you this is insecure, and they're right. This allows people to connect via SSH from anywhere on the internet. If you have the ability to lock down your own IP address, you should choose a restricted SSH set, and limit it to your IP. I won't go into that, and for now we aren't setting up anything sensitive enough to really go wrong here. 
-3. Next, add a new rule. Here's what I chose: 
-    - Image of port selection. 
-    - Keeping this open to the world is desired behavior - you want anyone to be able to access your site, once it's up. 
+3. Next, add a new rule. Here's what I created: 
+
+    ![Image depicting Amazon EC2 sample security group](/img/rails-6-ec2-tutorial-1/ec2-security-group.png) 
+    
+Security rule settings: 
+- Type: `Custom TCP`
+- Protocol: `TCP`
+- Port Range: `80`
+- Source: `Custom: 0.0.0.0/0`
+
+Keeping port 80 open to the world is desired behavior - you want anyone to be able to access your site once it's live. 
 
 Click **Review and Launch** 
 

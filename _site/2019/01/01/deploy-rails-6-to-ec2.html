@@ -9,13 +9,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Sources: https://medium.com/@manishyadavv/how-to-deploy-ruby-on-rails-apps-on-aws-ec2-7ce55bb955fa" />
 <meta property="og:description" content="Sources: https://medium.com/@manishyadavv/how-to-deploy-ruby-on-rails-apps-on-aws-ec2-7ce55bb955fa" />
-<link rel="canonical" href="http://localhost:4000/2019/01/25/deploy-rails-6-to-ec2.html" />
-<meta property="og:url" content="http://localhost:4000/2019/01/25/deploy-rails-6-to-ec2.html" />
+<link rel="canonical" href="http://localhost:4000/2019/01/01/deploy-rails-6-to-ec2.html" />
+<meta property="og:url" content="http://localhost:4000/2019/01/01/deploy-rails-6-to-ec2.html" />
 <meta property="og:site_name" content="Ogden Studios" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2019-01-25T00:00:00-07:00" />
+<meta property="article:published_time" content="2019-01-01T00:00:00-07:00" />
 <script type="application/ld+json">
-{"headline":"Deploy a Rails 6 app to Amazon EC2","dateModified":"2019-01-25T00:00:00-07:00","datePublished":"2019-01-25T00:00:00-07:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/01/25/deploy-rails-6-to-ec2.html"},"url":"http://localhost:4000/2019/01/25/deploy-rails-6-to-ec2.html","description":"Sources: https://medium.com/@manishyadavv/how-to-deploy-ruby-on-rails-apps-on-aws-ec2-7ce55bb955fa","@type":"BlogPosting","@context":"http://schema.org"}</script>
+{"headline":"Deploy a Rails 6 app to Amazon EC2","dateModified":"2019-01-01T00:00:00-07:00","datePublished":"2019-01-01T00:00:00-07:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/01/01/deploy-rails-6-to-ec2.html"},"url":"http://localhost:4000/2019/01/01/deploy-rails-6-to-ec2.html","description":"Sources: https://medium.com/@manishyadavv/how-to-deploy-ruby-on-rails-apps-on-aws-ec2-7ce55bb955fa","@type":"BlogPosting","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css">
   <link rel="stylesheet" href="/stylesheets/ogden.css">
@@ -49,7 +49,7 @@
   <header class="post-header">
     <h1 class="post-title p-name" itemprop="name headline">Deploy a Rails 6 app to Amazon EC2</h1>
     <p class="post-meta">
-      <time class="dt-published" datetime="2019-01-25T00:00:00-07:00" itemprop="datePublished">Jan 25, 2019
+      <time class="dt-published" datetime="2019-01-01T00:00:00-07:00" itemprop="datePublished">Jan 1, 2019
       </time></p>
   </header>
 
@@ -59,15 +59,46 @@ https://medium.com/@manishyadavv/how-to-deploy-ruby-on-rails-apps-on-aws-ec2-7ce
 
 <p>https://groups.google.com/forum/#!msg/rubyonrails-talk/IsOAQIB5Dkw/8BnbFbKBCwAJ</p>
 
-<p>First you need to get rails 6</p>
+<h2 id="why-i-wrote-this-blog-post">Why I wrote this blog post</h2>
 
-<p>I’m going to use my actual commands and project names, so you may have to do some swapping based on your platform and use cases.</p>
+<p>I’ve been building Rails apps for some time, now. On some projects, I’ve been fortunate enough to have a DevOps team to take care of production deploys to AWS. For smaller, personal projects, I’ve been mostly relying on Heroku to deploy.</p>
+
+<p>I love Heroku, they make an excellent product and it’s great for quick prototypes and small hobby servers. But for some more involved projects, the cost and lack of control don’t work for me. I figured it was time to start managing my own infrastructure.</p>
+
+<p>I decided to learn how to deploy to EC2, and wrote this blog along the way.</p>
+
+<p>Additionally, the Ruby on Rails 6 beta just came out, and I wanted to spin up a demo project and check it out.</p>
+
+<h2 id="who-should-read-this-blog-post">Who should read this blog post</h2>
+
+<p>This blog posts assumes some prior knowledge of Ruby on Rails. I learned what I know from:</p>
+
+<ul>
+  <li>The Michael Hartl Tutorial</li>
+  <li>Those hour long build videos</li>
+</ul>
+
+<p>It also assumes knowledge of command line interfaces, SSH, and git. Here are some good places to start for that:</p>
+
+<ul>
+  <li>CLI tutorial</li>
+  <li>SSH tutorial</li>
+  <li>Git Tutorial</li>
+</ul>
+
+<h2 id="how-this-blog-post-works">How this blog post works</h2>
+
+<p>I’m going to use my actual commands and project names. I’m developing using zsh, Visual Studio Code, and a MacBook Pro, so you may have to do some swapping based on your platform and use cases.</p>
+
+<h2 id="get-rails-6">Get Rails 6</h2>
 
 <p>Get the latest rails gem(s).</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Any terminal 
 gem install rails --pre 
 </code></pre></div></div>
+
+<h2 id="create-a-rails-6-project">Create a Rails 6 project</h2>
 
 <p>Then you need to make a new project with the Rails 6 beta</p>
 
@@ -93,30 +124,36 @@ bundle install
 rails s
 </code></pre></div></div>
 
-<p>Nice, it works (include screenshot 1)</p>
+<p>You should see something like:</p>
 
-<p>This is my favorite place for an init commit in git. It’s fresh, it’s new, it works. I haven’t broken anything yet. Let’s make the initial commit.</p>
+<p><img src="/img/rails-6-ec2-tutorial-1/rails-6-success.png" alt="Rails 6 Default Index Screenshot" /></p>
+
+<p>Nice, it works. This is my favorite place for an init commit in git: It’s fresh, it’s new, it works. I haven’t broken anything yet. Let’s make the initial commit.</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># trackerr/
 git add . 
 git commit -m "init commit"
 </code></pre></div></div>
 
-<p>I use GitHub for my repositories, so YMMV, but I like to get this checked into GitHub ASAP.</p>
+<h2 id="push-to-github-or-other-similar-platform">Push to GitHub (or other similar platform).</h2>
 
-<p>[Link to how to make a github repo]</p>
+<p>I use GitHub for my repositories, so YMMV, but I’d like to get this fresh Rails project checked into GitHub ASAP.</p>
 
-<p>GitHub.com 
-Plus button
-New Repository 
-Name it <code class="highlighter-rouge">trackerr</code>
-Add a description <code class="highlighter-rouge">Full Suite State Legislation Tracker</code>
-I’ll keep it public, because I love open source. 
-Don’t initialize the repo, you’ve already got one on your machine. 
-Follow their instructions for pushing an existing repo from command line</p>
+<p><a href="https://help.github.com/articles/create-a-repo/">Here’s the GitHub doc for creating a new repository</a>, or you can follow along below:</p>
 
-<p>I use SSH keys for my GitHub access, here’s a good guide on how
-[Insert GitHub SSH guide]</p>
+<ol>
+  <li>Go to <a href="https://github.com" target="_blank" rel="noopener noreffer">https://github.com</a></li>
+  <li>Sign in or sign up.</li>
+  <li>Click the plus sign button</li>
+  <li>Click <strong>New Repository</strong></li>
+  <li>Name it <strong>trackerr</strong> (or whatever you’d like to name your project).</li>
+  <li>Add a description. For my project, that description is: <strong>Full Suite State Legislation Tracker</strong></li>
+  <li><a href="https://techcrunch.com/2019/01/07/github-free-users-now-get-unlimited-private-repositories/">Now GitHub allows unlimited private repos</a>, but I’ll keep it public, because I love open source.</li>
+  <li>Don’t initialize the repo, you’ve already got one on your machine.</li>
+  <li>Follow the on-page instructions for pushing an existing repo from command line</li>
+</ol>
+
+<p>I use SSH keys for my GitHub access, and setting that up is beyond the scope of this blog post, but <a href="https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/">here is a good guide on how to do that</a>.</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote add origin git@github.com:&lt;YOUR ADDRESS HERE&gt;
 git push -u origin master 
@@ -124,13 +161,21 @@ git push -u origin master
 
 <p>Voila, you’ve got a Rails 6 project installed on your machine and checked in to your GitHub.</p>
 
-<p>In order for the rest of this to work, you’ll need to set up a root path in your configuration, along with a controller and a view.</p>
+<h2 id="get-the-sample-page-ready">Get the sample page ready</h2>
 
-<p>You can use the rails controller generator, if you like [link to that], or you can add it manually.</p>
+<p>In order for your Rails app to actually work on the EC2 instance, you’ll need to set up a root path in your configuration, and a corresponding controller and view.</p>
 
-<p>Personally, I like to start with <code class="highlighter-rouge">pages_controller.rb</code> - define a method,</p>
+<p>You can use the <a href="https://guides.rubyonrails.org/command_line.html">rails controller generator, if you like</a>, or you can add it manually. Since this blog post doesn’t cover testing or assets or any of the other nice rails magic created in the controller generators, I’m going to just manually add the bare minimum here.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># pages_controller.rb
+<p>In your <code class="highlighter-rouge">config/routes</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># config/routes.rb 
+root "pages#index"
+</code></pre></div></div>
+
+<p>In your <code class="highlighter-rouge">app/controllers</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># app/controllers/pages_controller.rb
 class PagesController &lt; ApplicationController
     def index
     end
@@ -139,14 +184,8 @@ end
 
 <p>And a corresponding view</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># index.html.erb
-You did it! Great job! 
-</code></pre></div></div>
-
-<p>In your <code class="highlighter-rouge">config/routes</code> file</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># routes.rb 
-root "pages#index"
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># app/views/pages/index.html.erb
+&lt;h1&gt;You did it! Great job!&lt;/h1&gt;
 </code></pre></div></div>
 
 <p>Add your changes and push them up to git</p>
@@ -157,13 +196,13 @@ git commit -m "add home page"
 git push 
 </code></pre></div></div>
 
-<p>Now your app is just about ready for the server.</p>
+<p>Now your very barebones Rails 6 app is just about ready to live on a server.</p>
 
-<p>Up next, we’ll set up an EC2 instance, configure it a bit, and then launch this barebones app to it.</p>
+<h2 id="set-up-your-amazon-ec2-instance">Set up your Amazon EC2 Instance</h2>
 
 <p>Go to Amazon AWS Console</p>
 
-<p><code class="highlighter-rouge">https://console.aws.amazon.com/console/home?region=us-east-1</code></p>
+<p><a href="https://console.aws.amazon.com/" target="_blank" rel="noopener norefferer">https://console.aws.amazon.com/</a></p>
 
 <p>Sign in, or sign up.</p>
 
@@ -173,13 +212,13 @@ git push
 
 <p>On this new page, click <strong>Launch Instance</strong>.</p>
 
-<p>Since we’re all about bleeding edge tech, let’s choose the <strong>Ubuntu Server 18.04 LTS (HVM), SSD Volume Type</strong>.</p>
+<p>Choose the <strong>Ubuntu Server 18.04 LTS (HVM), SSD Volume Type</strong>.</p>
 
 <p>Click the <strong>Select</strong> button.</p>
 
-<p>Since this is a starter project, I”m going to choose the t2.micro instance, eligible for the free tier.</p>
+<p>Since this is a starter project, I’m going to choose the t2.micro instance, eligible for the free tier.</p>
 
-<p>Click <strong>Next: Configure Instance</strong> - nothing to change here, unless you want to.</p>
+<p>Click <strong>Next: Configure Instance Details</strong> - nothing to change here, unless you want to.</p>
 
 <p>Click <strong>Next: Add Storage</strong> - I’m going to keep the defaults here, as well, since this is really just a proof of concept kind of thing.</p>
 
@@ -194,13 +233,22 @@ git push
       <li>Amazon will tell you this is insecure, and they’re right. This allows people to connect via SSH from anywhere on the internet. If you have the ability to lock down your own IP address, you should choose a restricted SSH set, and limit it to your IP. I won’t go into that, and for now we aren’t setting up anything sensitive enough to really go wrong here.</li>
     </ul>
   </li>
-  <li>Next, add a new rule. Here’s what I chose:
-    <ul>
-      <li>Image of port selection.</li>
-      <li>Keeping this open to the world is desired behavior - you want anyone to be able to access your site, once it’s up.</li>
-    </ul>
+  <li>
+    <p>Next, add a new rule. Here’s what I created:</p>
+
+    <p><img src="/img/rails-6-ec2-tutorial-1/ec2-security-group.png" alt="Image depicting Amazon EC2 sample security group" /></p>
   </li>
 </ol>
+
+<p>Security rule settings:</p>
+<ul>
+  <li>Type: <code class="highlighter-rouge">Custom TCP</code></li>
+  <li>Protocol: <code class="highlighter-rouge">TCP</code></li>
+  <li>Port Range: <code class="highlighter-rouge">80</code></li>
+  <li>Source: <code class="highlighter-rouge">Custom: 0.0.0.0/0</code></li>
+</ul>
+
+<p>Keeping port 80 open to the world is desired behavior - you want anyone to be able to access your site once it’s live.</p>
 
 <p>Click <strong>Review and Launch</strong></p>
 
@@ -827,7 +875,7 @@ sudo service nginx restart
 Capistrano 
 Build the app</p>
 
-  </div><a class="u-url" href="/2019/01/25/deploy-rails-6-to-ec2.html" hidden></a>
+  </div><a class="u-url" href="/2019/01/01/deploy-rails-6-to-ec2.html" hidden></a>
 </article>
 
       </div>

@@ -1,17 +1,48 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-01-25T20:23:04-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Ogden Studios</title><subtitle>Practical solutions for pragmatic people</subtitle><entry><title type="html">Deploy a Rails 6 app to Amazon EC2</title><link href="http://localhost:4000/2019/01/25/deploy-rails-6-to-ec2.html" rel="alternate" type="text/html" title="Deploy a Rails 6 app to Amazon EC2" /><published>2019-01-25T00:00:00-07:00</published><updated>2019-01-25T00:00:00-07:00</updated><id>http://localhost:4000/2019/01/25/deploy-rails-6-to-ec2</id><content type="html" xml:base="http://localhost:4000/2019/01/25/deploy-rails-6-to-ec2.html">&lt;p&gt;Sources: 
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-01-28T11:07:15-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Ogden Studios</title><subtitle>Practical solutions for pragmatic people</subtitle><entry><title type="html">Deploy a Rails 6 app to Amazon EC2</title><link href="http://localhost:4000/2019/01/01/deploy-rails-6-to-ec2.html" rel="alternate" type="text/html" title="Deploy a Rails 6 app to Amazon EC2" /><published>2019-01-01T00:00:00-07:00</published><updated>2019-01-01T00:00:00-07:00</updated><id>http://localhost:4000/2019/01/01/deploy-rails-6-to-ec2</id><content type="html" xml:base="http://localhost:4000/2019/01/01/deploy-rails-6-to-ec2.html">&lt;p&gt;Sources: 
 https://medium.com/@manishyadavv/how-to-deploy-ruby-on-rails-apps-on-aws-ec2-7ce55bb955fa&lt;/p&gt;
 
 &lt;p&gt;https://groups.google.com/forum/#!msg/rubyonrails-talk/IsOAQIB5Dkw/8BnbFbKBCwAJ&lt;/p&gt;
 
-&lt;p&gt;First you need to get rails 6&lt;/p&gt;
+&lt;h2 id=&quot;why-i-wrote-this-blog-post&quot;&gt;Why I wrote this blog post&lt;/h2&gt;
 
-&lt;p&gt;I’m going to use my actual commands and project names, so you may have to do some swapping based on your platform and use cases.&lt;/p&gt;
+&lt;p&gt;I’ve been building Rails apps for some time, now. On some projects, I’ve been fortunate enough to have a DevOps team to take care of production deploys to AWS. For smaller, personal projects, I’ve been mostly relying on Heroku to deploy.&lt;/p&gt;
+
+&lt;p&gt;I love Heroku, they make an excellent product and it’s great for quick prototypes and small hobby servers. But for some more involved projects, the cost and lack of control don’t work for me. I figured it was time to start managing my own infrastructure.&lt;/p&gt;
+
+&lt;p&gt;I decided to learn how to deploy to EC2, and wrote this blog along the way.&lt;/p&gt;
+
+&lt;p&gt;Additionally, the Ruby on Rails 6 beta just came out, and I wanted to spin up a demo project and check it out.&lt;/p&gt;
+
+&lt;h2 id=&quot;who-should-read-this-blog-post&quot;&gt;Who should read this blog post&lt;/h2&gt;
+
+&lt;p&gt;This blog posts assumes some prior knowledge of Ruby on Rails. I learned what I know from:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The Michael Hartl Tutorial&lt;/li&gt;
+  &lt;li&gt;Those hour long build videos&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It also assumes knowledge of command line interfaces, SSH, and git. Here are some good places to start for that:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;CLI tutorial&lt;/li&gt;
+  &lt;li&gt;SSH tutorial&lt;/li&gt;
+  &lt;li&gt;Git Tutorial&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how-this-blog-post-works&quot;&gt;How this blog post works&lt;/h2&gt;
+
+&lt;p&gt;I’m going to use my actual commands and project names. I’m developing using zsh, Visual Studio Code, and a MacBook Pro, so you may have to do some swapping based on your platform and use cases.&lt;/p&gt;
+
+&lt;h2 id=&quot;get-rails-6&quot;&gt;Get Rails 6&lt;/h2&gt;
 
 &lt;p&gt;Get the latest rails gem(s).&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Any terminal 
 gem install rails --pre 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;create-a-rails-6-project&quot;&gt;Create a Rails 6 project&lt;/h2&gt;
 
 &lt;p&gt;Then you need to make a new project with the Rails 6 beta&lt;/p&gt;
 
@@ -37,30 +68,36 @@ bundle install
 rails s
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Nice, it works (include screenshot 1)&lt;/p&gt;
+&lt;p&gt;You should see something like:&lt;/p&gt;
 
-&lt;p&gt;This is my favorite place for an init commit in git. It’s fresh, it’s new, it works. I haven’t broken anything yet. Let’s make the initial commit.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/rails-6-ec2-tutorial-1/rails-6-success.png&quot; alt=&quot;Rails 6 Default Index Screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Nice, it works. This is my favorite place for an init commit in git: It’s fresh, it’s new, it works. I haven’t broken anything yet. Let’s make the initial commit.&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# trackerr/
 git add . 
 git commit -m &quot;init commit&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;I use GitHub for my repositories, so YMMV, but I like to get this checked into GitHub ASAP.&lt;/p&gt;
+&lt;h2 id=&quot;push-to-github-or-other-similar-platform&quot;&gt;Push to GitHub (or other similar platform).&lt;/h2&gt;
 
-&lt;p&gt;[Link to how to make a github repo]&lt;/p&gt;
+&lt;p&gt;I use GitHub for my repositories, so YMMV, but I’d like to get this fresh Rails project checked into GitHub ASAP.&lt;/p&gt;
 
-&lt;p&gt;GitHub.com 
-Plus button
-New Repository 
-Name it &lt;code class=&quot;highlighter-rouge&quot;&gt;trackerr&lt;/code&gt;
-Add a description &lt;code class=&quot;highlighter-rouge&quot;&gt;Full Suite State Legislation Tracker&lt;/code&gt;
-I’ll keep it public, because I love open source. 
-Don’t initialize the repo, you’ve already got one on your machine. 
-Follow their instructions for pushing an existing repo from command line&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://help.github.com/articles/create-a-repo/&quot;&gt;Here’s the GitHub doc for creating a new repository&lt;/a&gt;, or you can follow along below:&lt;/p&gt;
 
-&lt;p&gt;I use SSH keys for my GitHub access, here’s a good guide on how
-[Insert GitHub SSH guide]&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Go to &lt;a href=&quot;https://github.com&quot; target=&quot;_blank&quot; rel=&quot;noopener noreffer&quot;&gt;https://github.com&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Sign in or sign up.&lt;/li&gt;
+  &lt;li&gt;Click the plus sign button&lt;/li&gt;
+  &lt;li&gt;Click &lt;strong&gt;New Repository&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Name it &lt;strong&gt;trackerr&lt;/strong&gt; (or whatever you’d like to name your project).&lt;/li&gt;
+  &lt;li&gt;Add a description. For my project, that description is: &lt;strong&gt;Full Suite State Legislation Tracker&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://techcrunch.com/2019/01/07/github-free-users-now-get-unlimited-private-repositories/&quot;&gt;Now GitHub allows unlimited private repos&lt;/a&gt;, but I’ll keep it public, because I love open source.&lt;/li&gt;
+  &lt;li&gt;Don’t initialize the repo, you’ve already got one on your machine.&lt;/li&gt;
+  &lt;li&gt;Follow the on-page instructions for pushing an existing repo from command line&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I use SSH keys for my GitHub access, and setting that up is beyond the scope of this blog post, but &lt;a href=&quot;https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/&quot;&gt;here is a good guide on how to do that&lt;/a&gt;.&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git remote add origin git@github.com:&amp;lt;YOUR ADDRESS HERE&amp;gt;
 git push -u origin master 
@@ -68,13 +105,21 @@ git push -u origin master
 
 &lt;p&gt;Voila, you’ve got a Rails 6 project installed on your machine and checked in to your GitHub.&lt;/p&gt;
 
-&lt;p&gt;In order for the rest of this to work, you’ll need to set up a root path in your configuration, along with a controller and a view.&lt;/p&gt;
+&lt;h2 id=&quot;get-the-sample-page-ready&quot;&gt;Get the sample page ready&lt;/h2&gt;
 
-&lt;p&gt;You can use the rails controller generator, if you like [link to that], or you can add it manually.&lt;/p&gt;
+&lt;p&gt;In order for your Rails app to actually work on the EC2 instance, you’ll need to set up a root path in your configuration, and a corresponding controller and view.&lt;/p&gt;
 
-&lt;p&gt;Personally, I like to start with &lt;code class=&quot;highlighter-rouge&quot;&gt;pages_controller.rb&lt;/code&gt; - define a method,&lt;/p&gt;
+&lt;p&gt;You can use the &lt;a href=&quot;https://guides.rubyonrails.org/command_line.html&quot;&gt;rails controller generator, if you like&lt;/a&gt;, or you can add it manually. Since this blog post doesn’t cover testing or assets or any of the other nice rails magic created in the controller generators, I’m going to just manually add the bare minimum here.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# pages_controller.rb
+&lt;p&gt;In your &lt;code class=&quot;highlighter-rouge&quot;&gt;config/routes&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# config/routes.rb 
+root &quot;pages#index&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In your &lt;code class=&quot;highlighter-rouge&quot;&gt;app/controllers&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# app/controllers/pages_controller.rb
 class PagesController &amp;lt; ApplicationController
     def index
     end
@@ -83,14 +128,8 @@ end
 
 &lt;p&gt;And a corresponding view&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# index.html.erb
-You did it! Great job! 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;In your &lt;code class=&quot;highlighter-rouge&quot;&gt;config/routes&lt;/code&gt; file&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# routes.rb 
-root &quot;pages#index&quot;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# app/views/pages/index.html.erb
+&amp;lt;h1&amp;gt;You did it! Great job!&amp;lt;/h1&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Add your changes and push them up to git&lt;/p&gt;
@@ -101,13 +140,13 @@ git commit -m &quot;add home page&quot;
 git push 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Now your app is just about ready for the server.&lt;/p&gt;
+&lt;p&gt;Now your very barebones Rails 6 app is just about ready to live on a server.&lt;/p&gt;
 
-&lt;p&gt;Up next, we’ll set up an EC2 instance, configure it a bit, and then launch this barebones app to it.&lt;/p&gt;
+&lt;h2 id=&quot;set-up-your-amazon-ec2-instance&quot;&gt;Set up your Amazon EC2 Instance&lt;/h2&gt;
 
 &lt;p&gt;Go to Amazon AWS Console&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;https://console.aws.amazon.com/console/home?region=us-east-1&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://console.aws.amazon.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener norefferer&quot;&gt;https://console.aws.amazon.com/&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Sign in, or sign up.&lt;/p&gt;
 
@@ -117,13 +156,13 @@ git push
 
 &lt;p&gt;On this new page, click &lt;strong&gt;Launch Instance&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;Since we’re all about bleeding edge tech, let’s choose the &lt;strong&gt;Ubuntu Server 18.04 LTS (HVM), SSD Volume Type&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Choose the &lt;strong&gt;Ubuntu Server 18.04 LTS (HVM), SSD Volume Type&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;Click the &lt;strong&gt;Select&lt;/strong&gt; button.&lt;/p&gt;
 
-&lt;p&gt;Since this is a starter project, I”m going to choose the t2.micro instance, eligible for the free tier.&lt;/p&gt;
+&lt;p&gt;Since this is a starter project, I’m going to choose the t2.micro instance, eligible for the free tier.&lt;/p&gt;
 
-&lt;p&gt;Click &lt;strong&gt;Next: Configure Instance&lt;/strong&gt; - nothing to change here, unless you want to.&lt;/p&gt;
+&lt;p&gt;Click &lt;strong&gt;Next: Configure Instance Details&lt;/strong&gt; - nothing to change here, unless you want to.&lt;/p&gt;
 
 &lt;p&gt;Click &lt;strong&gt;Next: Add Storage&lt;/strong&gt; - I’m going to keep the defaults here, as well, since this is really just a proof of concept kind of thing.&lt;/p&gt;
 
@@ -138,13 +177,22 @@ git push
       &lt;li&gt;Amazon will tell you this is insecure, and they’re right. This allows people to connect via SSH from anywhere on the internet. If you have the ability to lock down your own IP address, you should choose a restricted SSH set, and limit it to your IP. I won’t go into that, and for now we aren’t setting up anything sensitive enough to really go wrong here.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;Next, add a new rule. Here’s what I chose:
-    &lt;ul&gt;
-      &lt;li&gt;Image of port selection.&lt;/li&gt;
-      &lt;li&gt;Keeping this open to the world is desired behavior - you want anyone to be able to access your site, once it’s up.&lt;/li&gt;
-    &lt;/ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Next, add a new rule. Here’s what I created:&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;/img/rails-6-ec2-tutorial-1/ec2-security-group.png&quot; alt=&quot;Image depicting Amazon EC2 sample security group&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
+
+&lt;p&gt;Security rule settings:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Type: &lt;code class=&quot;highlighter-rouge&quot;&gt;Custom TCP&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Protocol: &lt;code class=&quot;highlighter-rouge&quot;&gt;TCP&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Port Range: &lt;code class=&quot;highlighter-rouge&quot;&gt;80&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Source: &lt;code class=&quot;highlighter-rouge&quot;&gt;Custom: 0.0.0.0/0&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Keeping port 80 open to the world is desired behavior - you want anyone to be able to access your site once it’s live.&lt;/p&gt;
 
 &lt;p&gt;Click &lt;strong&gt;Review and Launch&lt;/strong&gt;&lt;/p&gt;
 
