@@ -3,33 +3,31 @@ layout: post
 title:  "Deploy a Rails 6 app to Amazon EC2"
 ---
 
-Sources: 
-https://medium.com/@manishyadavv/how-to-deploy-ruby-on-rails-apps-on-aws-ec2-7ce55bb955fa
-
-https://groups.google.com/forum/#!msg/rubyonrails-talk/IsOAQIB5Dkw/8BnbFbKBCwAJ
-
 ## Why I wrote this blog post 
 
-I've been building Rails apps for some time, now. On some projects, I've been fortunate enough to have a DevOps team to take care of production deploys to AWS. For smaller, personal projects, I've been mostly relying on Heroku to deploy. 
+I've been building Rails apps for some time now. On some projects, I've been fortunate enough to have a DevOps team to take care of production deploys to AWS. For smaller, personal projects, I've been mostly relying on [Heroku](https://heroku.com) to deploy. 
 
 I love Heroku, they make an excellent product and it's great for quick prototypes and small hobby servers. But for some more involved projects, the cost and lack of control don't work for me. I figured it was time to start managing my own infrastructure. 
 
 I decided to learn how to deploy to EC2, and wrote this blog along the way. 
 
-Additionally, the Ruby on Rails 6 beta just came out, and I wanted to spin up a demo project and check it out.
+Additionally, the [Ruby on Rails 6 beta](https://edgeguides.rubyonrails.org/6_0_release_notes.html) just came out, and I wanted to spin up a demo project and check it out.
 
 ## Who should read this blog post 
 
 This blog posts assumes some prior knowledge of Ruby on Rails. I learned what I know from: 
 
-- The Michael Hartl Tutorial
-- Those hour long build videos 
+[The Michael Hartl Tutorial](https://www.railstutorial.org/book)
+
+[12 Rails Apps in 12 Weeks by Mackenzie Childs](https://www.youtube.com/watch?v=7-1HCWbu7iU&list=PL23ZvcdS3XPLNdRYB_QyomQsShx59tpc-) 
 
 It also assumes knowledge of command line interfaces, SSH, and git. Here are some good places to start for that:
 
-- CLI tutorial
-- SSH tutorial
-- Git Tutorial 
+[Getting around the Command Line](https://www.davidbaumgold.com/tutorials/command-line/)
+
+[What is SSH?](http://blog.robertelder.org/what-is-ssh/)
+
+[Try Git](http://try.github.io/) 
 
 ## How this blog post works
 
@@ -185,7 +183,7 @@ Click **Next: Configure Security Group**
     - Amazon will tell you this is insecure, and they're right. This allows people to connect via SSH from anywhere on the internet. If you have the ability to lock down your own IP address, you should choose a restricted SSH set, and limit it to your IP. I won't go into that, and for now we aren't setting up anything sensitive enough to really go wrong here. 
 3. Next, add a new rule. Here's what I created: 
 
-    ![Image depicting Amazon EC2 sample security group](/img/rails-6-ec2-tutorial-1/ec2-security-group.png) 
+![Image depicting Amazon EC2 sample security group](/img/rails-6-ec2-tutorial-1/ec2-security-group.png) 
     
 Security rule settings: 
 - Type: `Custom TCP`
@@ -205,7 +203,7 @@ Name it. I'm naming mine *trackerr-key-pair*
 
 Click **Download Key Pair**. 
 
-    - Image of key pair dialogue. 
+![Image depicting Amazon EC2 Key Pair Dialogue](/img/rails-6-ec2-tutorial-1/key-pair-dialogue.png) 
 
 Save the file. 
 
@@ -217,15 +215,16 @@ I like to name my EC2 instances. If you click on the link provided by Amazon poi
 
 Under the **Name** column, you can click the pencil icon to edit its name. I chose *Trackerr*. Here's what my Resource Groups look like after that. 
 
-    - Image of resource groups. 
+![Image depicting Amazon EC2 Resource Groups](/img/rails-6-ec2-tutorial-1/resource-groups.png) 
+
 
 Great! Now you've got a Rails App on your machine and in GitHub, and you have a plain EC2 instance running on AWS. It's almost time to marry them together. 
 
-Before we get to that, though, let's set up access to the server to make it convenient to check in on. 
+Before we get to that, though, let's set up convenient access to the server. 
 
-First, find that `.pem` key file you downloaded from Amazon. I'm on a Mac + FireFox, so mine ended up in ~/Downloads 
+First, find that `.pem` key file you downloaded from Amazon. I'm on a Mac + FireFox, so mine ended up in `~/Downloads` 
 
-I personally like to keep these kinds of files in ~/server-keys - which may or may not be great SecOps. I guess one day I'll find out. 
+I personally like to keep these kinds of files in `~/server-keys` - which may or may not be great SecOps. I guess one day I'll find out. 
 
 So go ahead and make a folder called `server-keys` (or whatever you like) and drop it in your home directory (or wherever you like). 
 
@@ -238,11 +237,9 @@ chmod 400 trackerr-key-pair.pem
 
 Then you'll want to connect to your instance using its Public DNS. 
 
-The command looks like `ssh -i "tracker-key-pair.pem" ubuntu@some-dns.computer.amazon.aws` (not the actual address). 
+The command looks like `ssh -i "tracker-key-pair.pem" ubuntu@some-dns.computer.amazon.aws` (not my actual address). 
 
-If you need a more specific command for your keypair name and DNS address, click the **Connect** button in the Amazon Resource Groups panel. Seen here. 
-
-    - Connect panel button. 
+If you need a more specific command for your keypair name and DNS address, click the **Connect** button in the Amazon Resource Groups panel.  
 
 Make sure that all works. If so, you're in good shape. At this point you: 
 
@@ -250,21 +247,19 @@ Make sure that all works. If so, you're in good shape. At this point you:
 2. Have an Amazon EC2 instance running
 3. Have SSH access to your Amazon EC2 instance. 
 
-Let's make that SSH access even more convenient by setting up an alias. I use [zsh](link here), so I'm going to open up my .zshrc file. 
+Let's make that SSH access even more convenient by setting up an alias. I use [zsh and oh-my-zsh](https://medium.com/swlh/power-up-your-terminal-using-oh-my-zsh-iterm2-c5a03f73a9fb), so I'm going to open up my .zshrc file. 
 
 In command line: 
 
 `vim ~/.zshrc`
 
-I'm not great with VIM, but I'm learning, and I love it. You can edit this file using any text editor you like. 
+I'm not great with [VIM](https://www.openvim.com/), but I'm learning, and I love it. You can edit this file using any text editor you like. 
 
-Everyone's zsh config is going to be different. Towards the bottom of my file, I'm going to add: 
+Everyone's config is going to be different. Towards the bottom of my file, I'm going to add: 
 
 `alias ssh_trackerr="ssh -i ~/server-keys/trackerr-key-pair.pem ubuntu@my-server-dns.something.com";`
 
 With the correct address in it. 
-
-If you want to know how to do that VIM, check out [link], and if you want to know what's up with different shell configurations, check out [link]. 
 
 Once you write and save to the zsh (or whatever shell) config, restart your shell. For me, it's just: 
 
@@ -284,13 +279,9 @@ And I'm in.
 
 Excellent, most of the pre-reqs are out of the way now. 
 
-Let's start getting our server ready to serve up a rails app. 
+Let's start get our server ready to serve up a rails app. 
 
-I'm going to sandbox our rails app under a specific user account. I'll need the user to have sudo privileges, so I'll create a new sudo user 
-
-[https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart]
-
-Run 
+I'm going to sandbox our rails app under a specific user account. I'll need the user to have sudo privileges, so I'll create a new sudo user by following [these instructions](https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart). You can follow along there or with this blog post.
 
 ```
 # Local machine 
@@ -299,29 +290,29 @@ ssh_trackerr
 sudo adduser trackerr-user
 ```
 
-You'll be given some prompts. First is for a new UNIX password. This will be the user's password. Make it good, and I'd recommend using a password manager (Like KeePass2) to store it (or even generate it for you)
+You'll be given some prompts. First is for a new UNIX password. This will be the user's password. Make it good, and I'd recommend using a password manager (Like [KeePass2](https://keepass.info/help/base/firststeps.html)) to generate and store it for you.
 
-Confirm the password, and I leave the info prompts blank. 
+Confirm the password. You can leave the next prompts blank if you like, or fill in the information asked of you. I'm leaving them blank. 
 
 Next we'll need to use `usermod` command to add them to the sudo group 
 
 ```
 # EC2
-sudo usermod -aG sudo trackerr-user
+ubuntu$ sudo usermod -aG sudo trackerr-user
 ```
 
 Test it out to make sure this works as expected. Use `su` to switch to the new user. 
 
 ```
 # EC2 
-su - trackerr-user 
+ubuntu$ su - trackerr-user 
 ```
 
 Now test that you can run sudo commands with something innocuous like 
 
 ``` 
-# EC2 - as trackerr-user 
-sudo apt-get update 
+# EC2
+trackerr-user$ sudo apt-get update 
 ```
 
 You'll be prompted for that password again, enter it, and you should be good to go. 
@@ -333,71 +324,71 @@ I'll be following the instructions at https://www.digitalocean.com/community/tut
 Update the package list 
 
 ```
-# EC2 - as trackerr-user
-sudo apt update
+# EC2
+trackerr-user$ sudo apt update
 ```
 
 Run the upgrades you can (not in DigitalOcean guide, but not a bad idea)
 
 ``` 
-# EC2- as trackerr-user
-sudo apt upgrade 
+# EC2
+trackerr-user$ sudo apt upgrade 
 ```
 
 Then install the dependencies required to install Ruby: 
 
 ```
-# EC2 - as trackerr-user 
-sudo apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm5 libgdbm-dev
+# EC2 
+trackerr-user$ sudo apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm5 libgdbm-dev
 ```
 
 Once those dependencies install, install rbenv. Clone the rbenv repo: 
 
 ```
-# EC2- as trackerr-user 
-git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+# EC2
+trackerr-user$ git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 ```
 
 then, add ~/.rbenv/bin to your $PATH so you can use its CLI. 
 
 ```
-# EC2 - as trackerr-user 
-echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+# EC2 
+trackerr-user$ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
 ```
 
-Add this command to your bash profile so you can load rbenv automatically, as well. 
+Add this command to your bash profile so you can load rbenv automatically. 
 
 ```
-# EC2 - as trackerr-user 
-echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+# EC2
+trackerr-user$ echo 'eval "$(rbenv init -)"' >> ~/.bashrc
 ```
 
 Restart bash to get those changes to apply. 
 
 ```
-# EC2- as trackerr-user 
-source ~/.bashrc 
+# EC2
+trackerr-user$ source ~/.bashrc 
 ```
 
 Then we'll install the ruby-build plugin to add `rbenv install` which simplifies the install process for new Ruby versions (which we will surely need for Rails 6)
 
 ``` 
-# EC2 - as trackerr-user 
-git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+# EC2 
+trackerr-user$ git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 ```
 
 Now you'll be able to see all the available ruby versions with this command: 
 
 ``` 
-# EC2 - as trackerr-user 
-rbenv install -l
+# EC2
+trackerr-user$ rbenv install -l
 ``` 
 
 For Rails 6, we need Ruby 2.5.0 or newer. At the time of writing, Rails 6 sets it at 2.5.1
 
 ```
-# EC2 - as trackerr-user 
-rbenv install 2.5.1
+# EC2 
+trackerr-user$ rbenv install 2.5.1
 ```
 
 The installation may take some time. This is a good spot to make some coffee. 
@@ -405,29 +396,29 @@ The installation may take some time. This is a good spot to make some coffee.
 Up next, set your global default ruby version using 
 
 ```
-# EC2 - as trackerr-user 
-rbenv global 2.5.1
+# EC2 
+trackerr-user$ rbenv global 2.5.1
 ```
 
 You can check with 
 
 ```
-# EC2 - as trackerr-user 
-ruby -v
+# EC2 
+trackerr-user$ ruby -v
 ```
 
 Now we need to configure our ability to work with gems. First, let's turn off local documentation generation by setting our ~/.gemrc to turn off that feature. 
 
 ```
-# EC2 - as trackerr-user 
-echo "gem: --no-document" > ~/.gemrc
+# EC2 
+trackerr-user$ echo "gem: --no-document" > ~/.gemrc
 ```
 
 Install bundler, which we'll use often. 
 
 ```
-# EC2 - as trackerr-user 
-gem install bundler 
+# EC2 
+trackerr-user$ gem install bundler 
 ```
 
 Alright, this next part will feel somewhat familiar. We're going to go ahead and install Rails 6, *but this time, on the EC2 server*. 
@@ -435,55 +426,59 @@ Alright, this next part will feel somewhat familiar. We're going to go ahead and
 So again: 
 
 ```
-# EC2 - as trackerr-user 
-gem install rails --pre 
+# EC2
+trackerr-user$ gem install rails --pre 
 ```
 
 Since we installed a gem (Rails) which provides commands (which Rails does, and many other gems), we need to `rehash` our rbenv. Do this every time you install a **gem that installs commands**. You do not need to do this for gems without command line interfaces. 
 
 ```
-# EC2 - as trackerr-user 
-rbenv rehash
+# EC2 
+trackerr-user$ rbenv rehash
 ```
 
-Install a Javascript Runtime
+## Install a Javascript Runtime on EC2
 
 The Rails Asset Pipeline requires JavaScript runtime, so let's get Node.js
 
 ```
-# EC2 - as trackerr-user 
-sudo add-apt-repository ppa:chris-lea/node.js
+# EC2
+trackerr-user$ sudo add-apt-repository ppa:chris-lea/node.js
 ```
 
 Then update apt-get and install the Node.js package:
 
 ```
-# EC2 - as trackerr-user 
-sudo apt-get update
-sudo apt-get install nodejs
+# EC2 
+trackerr-user$ sudo apt-get update
+trackerr-user$ sudo apt-get install nodejs
 ```
 
-With Node installed, we'll want to download the [yarn] package manager, as it's what Rails 6 default to. 
+## Install a Node package manager 
+
+With Node installed, we'll want to download the [yarn](https://yarnpkg.com/en/) package manager, since Rails 6 uses it by default. 
 
 ```
-#EC2 - as trackerr-user 
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt-get update
-sudo apt-get install yarn
+# EC2
+trackerr-user$ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+trackerr-user$ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+trackerr-user$ sudo apt-get update
+trackerr-user$ sudo apt-get install yarn
 ```
 
-For the purposes of this test, we're going to use SQLite3 as a database, to avoid having to deal with postgres in our sandbox. This is a free tier EC2 instance and the Rails 6 beta, so I can't imagine your target here is to set up a production-level app which requires a serious database. If it is, you're probably more qualified than I am to write about setting up the database. 
+For the purposes of this test, we're going to use SQLite3 as a database, to avoid having to deal with postgres in our sandbox. This is a free tier EC2 instance and the Rails 6 beta, so I can't imagine your target here is to set up a production-level app which requires a serious database. When we beef up the application in future blog posts, we'll include information about setting up production-ready databases. **Do not use SQLite as a production database**.
+
+## Install your Rails App on EC2
 
 Now let's get our project! 
 
-If you're using SSH keys to access your GitHub account, you'll need to set up those credentials on your server. You can do this by following the guide at [https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/]
+If you're using SSH keys to access your GitHub account, you'll need to set up those credentials on your server. You can do this by following the guide at [here](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/), or you can follow along with me. 
 
 Basically, you'll run: 
 
 ```
-# EC2 - as trackerr-user 
-ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+# EC2
+trackerr-user$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 ```
 
 You'll be prompted for a file to save the key in, choose **Enter** to select the default location. 
@@ -501,8 +496,8 @@ Click **Add SSH Key** and confirm your password at the prompt.
 On your EC2 instance, from the folder above where you want your rails app to live, run: 
 
 ```
-# EC2 - as trackerr-user, in home directory 
-git clone git@github.com:<YOUR REPO HERE> trackerr
+# EC2
+trackerr-user$ git clone git@github.com:<YOUR REPO HERE> trackerr
 ```
 
 Now you can change into the project directory and do some set up. 
@@ -514,7 +509,7 @@ You'll have to set up master.key. Master.key is a nifty credentials setup from R
 Since we control this server, we can manually add the file ourselves. 
 
 ```
-# EC2 - as trackerr-user
+# EC2
 cd ~/trackerr/config
 vim master.key
 ```
@@ -863,3 +858,9 @@ You should be good to go! Congrats! You did it!
 Let's set up a domain name for our server 
 Capistrano 
 Build the app
+
+## Sources 
+
+[https://medium.com/@manishyadavv/how-to-deploy-ruby-on-rails-apps-on-aws-ec2-7ce55bb955fa](https://medium.com/@manishyadavv/how-to-deploy-ruby-on-rails-apps-on-aws-ec2-7ce55bb955fa)
+
+[https://groups.google.com/forum/#!msg/rubyonrails-talk/IsOAQIB5Dkw/8BnbFbKBCwAJ](https://groups.google.com/forum/#!msg/rubyonrails-talk/IsOAQIB5Dkw/8BnbFbKBCwAJ)

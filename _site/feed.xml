@@ -1,34 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-01-28T11:07:15-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Ogden Studios</title><subtitle>Practical solutions for pragmatic people</subtitle><entry><title type="html">Deploy a Rails 6 app to Amazon EC2</title><link href="http://localhost:4000/2019/01/01/deploy-rails-6-to-ec2.html" rel="alternate" type="text/html" title="Deploy a Rails 6 app to Amazon EC2" /><published>2019-01-01T00:00:00-07:00</published><updated>2019-01-01T00:00:00-07:00</updated><id>http://localhost:4000/2019/01/01/deploy-rails-6-to-ec2</id><content type="html" xml:base="http://localhost:4000/2019/01/01/deploy-rails-6-to-ec2.html">&lt;p&gt;Sources: 
-https://medium.com/@manishyadavv/how-to-deploy-ruby-on-rails-apps-on-aws-ec2-7ce55bb955fa&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-01-29T13:35:22-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Ogden Studios</title><subtitle>Practical solutions for pragmatic people</subtitle><entry><title type="html">Deploy a Rails 6 app to Amazon EC2</title><link href="http://localhost:4000/2019/01/01/deploy-rails-6-to-ec2.html" rel="alternate" type="text/html" title="Deploy a Rails 6 app to Amazon EC2" /><published>2019-01-01T00:00:00-07:00</published><updated>2019-01-01T00:00:00-07:00</updated><id>http://localhost:4000/2019/01/01/deploy-rails-6-to-ec2</id><content type="html" xml:base="http://localhost:4000/2019/01/01/deploy-rails-6-to-ec2.html">&lt;h2 id=&quot;why-i-wrote-this-blog-post&quot;&gt;Why I wrote this blog post&lt;/h2&gt;
 
-&lt;p&gt;https://groups.google.com/forum/#!msg/rubyonrails-talk/IsOAQIB5Dkw/8BnbFbKBCwAJ&lt;/p&gt;
-
-&lt;h2 id=&quot;why-i-wrote-this-blog-post&quot;&gt;Why I wrote this blog post&lt;/h2&gt;
-
-&lt;p&gt;I’ve been building Rails apps for some time, now. On some projects, I’ve been fortunate enough to have a DevOps team to take care of production deploys to AWS. For smaller, personal projects, I’ve been mostly relying on Heroku to deploy.&lt;/p&gt;
+&lt;p&gt;I’ve been building Rails apps for some time now. On some projects, I’ve been fortunate enough to have a DevOps team to take care of production deploys to AWS. For smaller, personal projects, I’ve been mostly relying on &lt;a href=&quot;https://heroku.com&quot;&gt;Heroku&lt;/a&gt; to deploy.&lt;/p&gt;
 
 &lt;p&gt;I love Heroku, they make an excellent product and it’s great for quick prototypes and small hobby servers. But for some more involved projects, the cost and lack of control don’t work for me. I figured it was time to start managing my own infrastructure.&lt;/p&gt;
 
 &lt;p&gt;I decided to learn how to deploy to EC2, and wrote this blog along the way.&lt;/p&gt;
 
-&lt;p&gt;Additionally, the Ruby on Rails 6 beta just came out, and I wanted to spin up a demo project and check it out.&lt;/p&gt;
+&lt;p&gt;Additionally, the &lt;a href=&quot;https://edgeguides.rubyonrails.org/6_0_release_notes.html&quot;&gt;Ruby on Rails 6 beta&lt;/a&gt; just came out, and I wanted to spin up a demo project and check it out.&lt;/p&gt;
 
 &lt;h2 id=&quot;who-should-read-this-blog-post&quot;&gt;Who should read this blog post&lt;/h2&gt;
 
 &lt;p&gt;This blog posts assumes some prior knowledge of Ruby on Rails. I learned what I know from:&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;The Michael Hartl Tutorial&lt;/li&gt;
-  &lt;li&gt;Those hour long build videos&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.railstutorial.org/book&quot;&gt;The Michael Hartl Tutorial&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=7-1HCWbu7iU&amp;amp;list=PL23ZvcdS3XPLNdRYB_QyomQsShx59tpc-&quot;&gt;12 Rails Apps in 12 Weeks by Mackenzie Childs&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;It also assumes knowledge of command line interfaces, SSH, and git. Here are some good places to start for that:&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;CLI tutorial&lt;/li&gt;
-  &lt;li&gt;SSH tutorial&lt;/li&gt;
-  &lt;li&gt;Git Tutorial&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.davidbaumgold.com/tutorials/command-line/&quot;&gt;Getting around the Command Line&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://blog.robertelder.org/what-is-ssh/&quot;&gt;What is SSH?&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://try.github.io/&quot;&gt;Try Git&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;how-this-blog-post-works&quot;&gt;How this blog post works&lt;/h2&gt;
 
@@ -177,12 +171,10 @@ git push
       &lt;li&gt;Amazon will tell you this is insecure, and they’re right. This allows people to connect via SSH from anywhere on the internet. If you have the ability to lock down your own IP address, you should choose a restricted SSH set, and limit it to your IP. I won’t go into that, and for now we aren’t setting up anything sensitive enough to really go wrong here.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Next, add a new rule. Here’s what I created:&lt;/p&gt;
-
-    &lt;p&gt;&lt;img src=&quot;/img/rails-6-ec2-tutorial-1/ec2-security-group.png&quot; alt=&quot;Image depicting Amazon EC2 sample security group&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
+  &lt;li&gt;Next, add a new rule. Here’s what I created:&lt;/li&gt;
 &lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/rails-6-ec2-tutorial-1/ec2-security-group.png&quot; alt=&quot;Image depicting Amazon EC2 sample security group&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Security rule settings:&lt;/p&gt;
 &lt;ul&gt;
@@ -204,8 +196,7 @@ git push
 
 &lt;p&gt;Click &lt;strong&gt;Download Key Pair&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- Image of key pair dialogue. 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/img/rails-6-ec2-tutorial-1/key-pair-dialogue.png&quot; alt=&quot;Image depicting Amazon EC2 Key Pair Dialogue&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Save the file.&lt;/p&gt;
 
@@ -217,16 +208,15 @@ git push
 
 &lt;p&gt;Under the &lt;strong&gt;Name&lt;/strong&gt; column, you can click the pencil icon to edit its name. I chose &lt;em&gt;Trackerr&lt;/em&gt;. Here’s what my Resource Groups look like after that.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- Image of resource groups. 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/img/rails-6-ec2-tutorial-1/resource-groups.png&quot; alt=&quot;Image depicting Amazon EC2 Resource Groups&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Great! Now you’ve got a Rails App on your machine and in GitHub, and you have a plain EC2 instance running on AWS. It’s almost time to marry them together.&lt;/p&gt;
 
-&lt;p&gt;Before we get to that, though, let’s set up access to the server to make it convenient to check in on.&lt;/p&gt;
+&lt;p&gt;Before we get to that, though, let’s set up convenient access to the server.&lt;/p&gt;
 
-&lt;p&gt;First, find that &lt;code class=&quot;highlighter-rouge&quot;&gt;.pem&lt;/code&gt; key file you downloaded from Amazon. I’m on a Mac + FireFox, so mine ended up in ~/Downloads&lt;/p&gt;
+&lt;p&gt;First, find that &lt;code class=&quot;highlighter-rouge&quot;&gt;.pem&lt;/code&gt; key file you downloaded from Amazon. I’m on a Mac + FireFox, so mine ended up in &lt;code class=&quot;highlighter-rouge&quot;&gt;~/Downloads&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;I personally like to keep these kinds of files in ~/server-keys - which may or may not be great SecOps. I guess one day I’ll find out.&lt;/p&gt;
+&lt;p&gt;I personally like to keep these kinds of files in &lt;code class=&quot;highlighter-rouge&quot;&gt;~/server-keys&lt;/code&gt; - which may or may not be great SecOps. I guess one day I’ll find out.&lt;/p&gt;
 
 &lt;p&gt;So go ahead and make a folder called &lt;code class=&quot;highlighter-rouge&quot;&gt;server-keys&lt;/code&gt; (or whatever you like) and drop it in your home directory (or wherever you like).&lt;/p&gt;
 
@@ -238,12 +228,9 @@ chmod 400 trackerr-key-pair.pem
 
 &lt;p&gt;Then you’ll want to connect to your instance using its Public DNS.&lt;/p&gt;
 
-&lt;p&gt;The command looks like &lt;code class=&quot;highlighter-rouge&quot;&gt;ssh -i &quot;tracker-key-pair.pem&quot; ubuntu@some-dns.computer.amazon.aws&lt;/code&gt; (not the actual address).&lt;/p&gt;
+&lt;p&gt;The command looks like &lt;code class=&quot;highlighter-rouge&quot;&gt;ssh -i &quot;tracker-key-pair.pem&quot; ubuntu@some-dns.computer.amazon.aws&lt;/code&gt; (not my actual address).&lt;/p&gt;
 
-&lt;p&gt;If you need a more specific command for your keypair name and DNS address, click the &lt;strong&gt;Connect&lt;/strong&gt; button in the Amazon Resource Groups panel. Seen here.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- Connect panel button. 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;If you need a more specific command for your keypair name and DNS address, click the &lt;strong&gt;Connect&lt;/strong&gt; button in the Amazon Resource Groups panel.&lt;/p&gt;
 
 &lt;p&gt;Make sure that all works. If so, you’re in good shape. At this point you:&lt;/p&gt;
 
@@ -253,21 +240,19 @@ chmod 400 trackerr-key-pair.pem
   &lt;li&gt;Have SSH access to your Amazon EC2 instance.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;Let’s make that SSH access even more convenient by setting up an alias. I use &lt;a href=&quot;link here&quot;&gt;zsh&lt;/a&gt;, so I’m going to open up my .zshrc file.&lt;/p&gt;
+&lt;p&gt;Let’s make that SSH access even more convenient by setting up an alias. I use &lt;a href=&quot;https://medium.com/swlh/power-up-your-terminal-using-oh-my-zsh-iterm2-c5a03f73a9fb&quot;&gt;zsh and oh-my-zsh&lt;/a&gt;, so I’m going to open up my .zshrc file.&lt;/p&gt;
 
 &lt;p&gt;In command line:&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;vim ~/.zshrc&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;I’m not great with VIM, but I’m learning, and I love it. You can edit this file using any text editor you like.&lt;/p&gt;
+&lt;p&gt;I’m not great with &lt;a href=&quot;https://www.openvim.com/&quot;&gt;VIM&lt;/a&gt;, but I’m learning, and I love it. You can edit this file using any text editor you like.&lt;/p&gt;
 
-&lt;p&gt;Everyone’s zsh config is going to be different. Towards the bottom of my file, I’m going to add:&lt;/p&gt;
+&lt;p&gt;Everyone’s config is going to be different. Towards the bottom of my file, I’m going to add:&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;alias ssh_trackerr=&quot;ssh -i ~/server-keys/trackerr-key-pair.pem ubuntu@my-server-dns.something.com&quot;;&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;With the correct address in it.&lt;/p&gt;
-
-&lt;p&gt;If you want to know how to do that VIM, check out [link], and if you want to know what’s up with different shell configurations, check out [link].&lt;/p&gt;
 
 &lt;p&gt;Once you write and save to the zsh (or whatever shell) config, restart your shell. For me, it’s just:&lt;/p&gt;
 
@@ -285,13 +270,9 @@ ssh_trackerr
 
 &lt;p&gt;Excellent, most of the pre-reqs are out of the way now.&lt;/p&gt;
 
-&lt;p&gt;Let’s start getting our server ready to serve up a rails app.&lt;/p&gt;
+&lt;p&gt;Let’s start get our server ready to serve up a rails app.&lt;/p&gt;
 
-&lt;p&gt;I’m going to sandbox our rails app under a specific user account. I’ll need the user to have sudo privileges, so I’ll create a new sudo user&lt;/p&gt;
-
-&lt;p&gt;[https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart]&lt;/p&gt;
-
-&lt;p&gt;Run&lt;/p&gt;
+&lt;p&gt;I’m going to sandbox our rails app under a specific user account. I’ll need the user to have sudo privileges, so I’ll create a new sudo user by following &lt;a href=&quot;https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart&quot;&gt;these instructions&lt;/a&gt;. You can follow along there or with this blog post.&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Local machine 
 ssh_trackerr 
@@ -299,26 +280,26 @@ ssh_trackerr
 sudo adduser trackerr-user
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;You’ll be given some prompts. First is for a new UNIX password. This will be the user’s password. Make it good, and I’d recommend using a password manager (Like KeePass2) to store it (or even generate it for you)&lt;/p&gt;
+&lt;p&gt;You’ll be given some prompts. First is for a new UNIX password. This will be the user’s password. Make it good, and I’d recommend using a password manager (Like &lt;a href=&quot;https://keepass.info/help/base/firststeps.html&quot;&gt;KeePass2&lt;/a&gt;) to generate and store it for you.&lt;/p&gt;
 
-&lt;p&gt;Confirm the password, and I leave the info prompts blank.&lt;/p&gt;
+&lt;p&gt;Confirm the password. You can leave the next prompts blank if you like, or fill in the information asked of you. I’m leaving them blank.&lt;/p&gt;
 
 &lt;p&gt;Next we’ll need to use &lt;code class=&quot;highlighter-rouge&quot;&gt;usermod&lt;/code&gt; command to add them to the sudo group&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2
-sudo usermod -aG sudo trackerr-user
+ubuntu$ sudo usermod -aG sudo trackerr-user
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Test it out to make sure this works as expected. Use &lt;code class=&quot;highlighter-rouge&quot;&gt;su&lt;/code&gt; to switch to the new user.&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 
-su - trackerr-user 
+ubuntu$ su - trackerr-user 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Now test that you can run sudo commands with something innocuous like&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user 
-sudo apt-get update 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2
+trackerr-user$ sudo apt-get update 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;You’ll be prompted for that password again, enter it, and you should be good to go.&lt;/p&gt;
@@ -329,138 +310,142 @@ sudo apt-get update
 
 &lt;p&gt;Update the package list&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user
-sudo apt update
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2
+trackerr-user$ sudo apt update
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Run the upgrades you can (not in DigitalOcean guide, but not a bad idea)&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2- as trackerr-user
-sudo apt upgrade 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2
+trackerr-user$ sudo apt upgrade 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Then install the dependencies required to install Ruby:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user 
-sudo apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm5 libgdbm-dev
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 
+trackerr-user$ sudo apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm5 libgdbm-dev
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Once those dependencies install, install rbenv. Clone the rbenv repo:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2- as trackerr-user 
-git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2
+trackerr-user$ git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;then, add ~/.rbenv/bin to your $PATH so you can use its CLI.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user 
-echo 'export PATH=&quot;$HOME/.rbenv/bin:$PATH&quot;' &amp;gt;&amp;gt; ~/.bashrc
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 
+trackerr-user$ echo 'export PATH=&quot;$HOME/.rbenv/bin:$PATH&quot;' &amp;gt;&amp;gt; ~/.bashrc
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Add this command to your bash profile so you can load rbenv automatically, as well.&lt;/p&gt;
+&lt;p&gt;Add this command to your bash profile so you can load rbenv automatically.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user 
-echo 'eval &quot;$(rbenv init -)&quot;' &amp;gt;&amp;gt; ~/.bashrc
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2
+trackerr-user$ echo 'eval &quot;$(rbenv init -)&quot;' &amp;gt;&amp;gt; ~/.bashrc
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Restart bash to get those changes to apply.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2- as trackerr-user 
-source ~/.bashrc 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2
+trackerr-user$ source ~/.bashrc 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Then we’ll install the ruby-build plugin to add &lt;code class=&quot;highlighter-rouge&quot;&gt;rbenv install&lt;/code&gt; which simplifies the install process for new Ruby versions (which we will surely need for Rails 6)&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user 
-git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 
+trackerr-user$ git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Now you’ll be able to see all the available ruby versions with this command:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user 
-rbenv install -l
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2
+trackerr-user$ rbenv install -l
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;For Rails 6, we need Ruby 2.5.0 or newer. At the time of writing, Rails 6 sets it at 2.5.1&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user 
-rbenv install 2.5.1
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 
+trackerr-user$ rbenv install 2.5.1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;The installation may take some time. This is a good spot to make some coffee.&lt;/p&gt;
 
 &lt;p&gt;Up next, set your global default ruby version using&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user 
-rbenv global 2.5.1
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 
+trackerr-user$ rbenv global 2.5.1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;You can check with&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user 
-ruby -v
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 
+trackerr-user$ ruby -v
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Now we need to configure our ability to work with gems. First, let’s turn off local documentation generation by setting our ~/.gemrc to turn off that feature.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user 
-echo &quot;gem: --no-document&quot; &amp;gt; ~/.gemrc
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 
+trackerr-user$ echo &quot;gem: --no-document&quot; &amp;gt; ~/.gemrc
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Install bundler, which we’ll use often.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user 
-gem install bundler 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 
+trackerr-user$ gem install bundler 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Alright, this next part will feel somewhat familiar. We’re going to go ahead and install Rails 6, &lt;em&gt;but this time, on the EC2 server&lt;/em&gt;.&lt;/p&gt;
 
 &lt;p&gt;So again:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user 
-gem install rails --pre 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2
+trackerr-user$ gem install rails --pre 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Since we installed a gem (Rails) which provides commands (which Rails does, and many other gems), we need to &lt;code class=&quot;highlighter-rouge&quot;&gt;rehash&lt;/code&gt; our rbenv. Do this every time you install a &lt;strong&gt;gem that installs commands&lt;/strong&gt;. You do not need to do this for gems without command line interfaces.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user 
-rbenv rehash
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 
+trackerr-user$ rbenv rehash
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Install a Javascript Runtime&lt;/p&gt;
+&lt;h2 id=&quot;install-a-javascript-runtime-on-ec2&quot;&gt;Install a Javascript Runtime on EC2&lt;/h2&gt;
 
 &lt;p&gt;The Rails Asset Pipeline requires JavaScript runtime, so let’s get Node.js&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user 
-sudo add-apt-repository ppa:chris-lea/node.js
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2
+trackerr-user$ sudo add-apt-repository ppa:chris-lea/node.js
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Then update apt-get and install the Node.js package:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user 
-sudo apt-get update
-sudo apt-get install nodejs
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 
+trackerr-user$ sudo apt-get update
+trackerr-user$ sudo apt-get install nodejs
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;With Node installed, we’ll want to download the [yarn] package manager, as it’s what Rails 6 default to.&lt;/p&gt;
+&lt;h2 id=&quot;install-a-node-package-manager&quot;&gt;Install a Node package manager&lt;/h2&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#EC2 - as trackerr-user 
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo &quot;deb https://dl.yarnpkg.com/debian/ stable main&quot; | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt-get update
-sudo apt-get install yarn
+&lt;p&gt;With Node installed, we’ll want to download the &lt;a href=&quot;https://yarnpkg.com/en/&quot;&gt;yarn&lt;/a&gt; package manager, since Rails 6 uses it by default.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2
+trackerr-user$ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+trackerr-user$ echo &quot;deb https://dl.yarnpkg.com/debian/ stable main&quot; | sudo tee /etc/apt/sources.list.d/yarn.list
+trackerr-user$ sudo apt-get update
+trackerr-user$ sudo apt-get install yarn
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;For the purposes of this test, we’re going to use SQLite3 as a database, to avoid having to deal with postgres in our sandbox. This is a free tier EC2 instance and the Rails 6 beta, so I can’t imagine your target here is to set up a production-level app which requires a serious database. If it is, you’re probably more qualified than I am to write about setting up the database.&lt;/p&gt;
+&lt;p&gt;For the purposes of this test, we’re going to use SQLite3 as a database, to avoid having to deal with postgres in our sandbox. This is a free tier EC2 instance and the Rails 6 beta, so I can’t imagine your target here is to set up a production-level app which requires a serious database. When we beef up the application in future blog posts, we’ll include information about setting up production-ready databases. &lt;strong&gt;Do not use SQLite as a production database&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;install-your-rails-app-on-ec2&quot;&gt;Install your Rails App on EC2&lt;/h2&gt;
 
 &lt;p&gt;Now let’s get our project!&lt;/p&gt;
 
-&lt;p&gt;If you’re using SSH keys to access your GitHub account, you’ll need to set up those credentials on your server. You can do this by following the guide at [https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/]&lt;/p&gt;
+&lt;p&gt;If you’re using SSH keys to access your GitHub account, you’ll need to set up those credentials on your server. You can do this by following the guide at &lt;a href=&quot;https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/&quot;&gt;here&lt;/a&gt;, or you can follow along with me.&lt;/p&gt;
 
 &lt;p&gt;Basically, you’ll run:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user 
-ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2
+trackerr-user$ ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;You’ll be prompted for a file to save the key in, choose &lt;strong&gt;Enter&lt;/strong&gt; to select the default location.&lt;/p&gt;
@@ -477,8 +462,8 @@ ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;
 
 &lt;p&gt;On your EC2 instance, from the folder above where you want your rails app to live, run:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user, in home directory 
-git clone git@github.com:&amp;lt;YOUR REPO HERE&amp;gt; trackerr
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2
+trackerr-user$ git clone git@github.com:&amp;lt;YOUR REPO HERE&amp;gt; trackerr
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Now you can change into the project directory and do some set up.&lt;/p&gt;
@@ -489,7 +474,7 @@ git clone git@github.com:&amp;lt;YOUR REPO HERE&amp;gt; trackerr
 
 &lt;p&gt;Since we control this server, we can manually add the file ourselves.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 - as trackerr-user
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2
 cd ~/trackerr/config
 vim master.key
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -817,4 +802,10 @@ sudo service nginx restart
 
 &lt;p&gt;Let’s set up a domain name for our server 
 Capistrano 
-Build the app&lt;/p&gt;</content><author><name></name></author><summary type="html">Sources: https://medium.com/@manishyadavv/how-to-deploy-ruby-on-rails-apps-on-aws-ec2-7ce55bb955fa</summary></entry></feed>
+Build the app&lt;/p&gt;
+
+&lt;h2 id=&quot;sources&quot;&gt;Sources&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://medium.com/@manishyadavv/how-to-deploy-ruby-on-rails-apps-on-aws-ec2-7ce55bb955fa&quot;&gt;https://medium.com/@manishyadavv/how-to-deploy-ruby-on-rails-apps-on-aws-ec2-7ce55bb955fa&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://groups.google.com/forum/#!msg/rubyonrails-talk/IsOAQIB5Dkw/8BnbFbKBCwAJ&quot;&gt;https://groups.google.com/forum/#!msg/rubyonrails-talk/IsOAQIB5Dkw/8BnbFbKBCwAJ&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">Why I wrote this blog post</summary></entry></feed>
