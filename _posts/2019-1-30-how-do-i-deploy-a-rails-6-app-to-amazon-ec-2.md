@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "How do I Deploy a Rails 6 app to Amazon EC2?"
-categories: [blog, tutorial, rails, aws]
+tags: [blog, tutorial, rails, aws]
 description: "A step-by-step instruction (with pictures and code snippets) to creating a blank Rails 6 app and deploying it to an Amazon AWS EC2 instance."
 ---
 
