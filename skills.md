@@ -12,6 +12,7 @@ Front End Languages and Frameworks
 - React 
 - Bootstrap 
 - Hugo 
+- Jekyll
 
 Back End Languages and Frameworks
 
@@ -37,3 +38,4 @@ Tools
 - bash 
 - Adobe Suite 
 - Google Suite 
+- Amazon AWS

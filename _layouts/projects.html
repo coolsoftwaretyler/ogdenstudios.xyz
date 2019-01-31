@@ -6,6 +6,7 @@ layout: default
       {%assign ordered_projects = site.projects | sort:"weight"%}
       {% for project in ordered_projects %}
         {% if project.live %}
+        <div class="project">
         <h3>{{project.title | escape }}</h3>
         <p>{{ project.description}}</p>
         <p>Technologies Used:</p>
@@ -22,6 +23,8 @@ layout: default
         {%if project.github%}
         <a href="{{project.github}}" rel="noopener noreferrer" target="_blank"><p>GitHub</p></a>
         {%endif%}
+        </div>
+        <hr />
         {%endif%}
         {% endfor %}
     </ul>
