@@ -1,45 +1,54 @@
 ---
 layout: post
-title:  "Deploy a Rails 6 app to Amazon EC2"
+title:  "How do I Deploy a Rails 6 app to Amazon EC2?"
+categories: [blog, tutorial, rails, aws]
 ---
 
 ## Why I wrote this blog post 
 
 I've been building Rails apps for some time now. On some projects, I've been fortunate enough to have a DevOps team to take care of production deploys to AWS. For smaller, personal projects, I've been mostly relying on [Heroku](https://heroku.com) to deploy. 
 
-I love Heroku, they make an excellent product and it's great for quick prototypes and small hobby servers. But for some more involved projects, the cost and lack of control don't work for me. I figured it was time to start managing my own infrastructure. 
+I love Heroku. They make an excellent product, and it's great for quick prototypes and small hobby servers. But for more involved projects, the cost and lack of control don't work for me. I figured it was time to start managing my own infrastructure. 
 
 I decided to learn how to deploy to EC2, and wrote this blog along the way. 
 
 Additionally, the [Ruby on Rails 6 beta](https://edgeguides.rubyonrails.org/6_0_release_notes.html) just came out, and I wanted to spin up a demo project and check it out.
 
+Seemed like deploying a shiny new Rails 6 project to an EC2 instance is a great way for me to level up, and I figured I could help others do the same and increase my own understanding by writing a blog post. 
+
 ## Who should read this blog post 
 
 This blog posts assumes some prior knowledge of Ruby on Rails. I learned what I know from: 
-
-[The Michael Hartl Tutorial](https://www.railstutorial.org/book)
-
-[12 Rails Apps in 12 Weeks by Mackenzie Childs](https://www.youtube.com/watch?v=7-1HCWbu7iU&list=PL23ZvcdS3XPLNdRYB_QyomQsShx59tpc-) 
+- [The Michael Hartl Tutorial](https://www.railstutorial.org/book)
+- [12 Rails Apps in 12 Weeks by Mackenzie Childs](https://www.youtube.com/watch?v=7-1HCWbu7iU&list=PL23ZvcdS3XPLNdRYB_QyomQsShx59tpc-) 
 
 It also assumes knowledge of command line interfaces, SSH, and git. Here are some good places to start for that:
-
-[Getting around the Command Line](https://www.davidbaumgold.com/tutorials/command-line/)
-
-[What is SSH?](http://blog.robertelder.org/what-is-ssh/)
-
-[Try Git](http://try.github.io/) 
+- [Getting around the Command Line](https://www.davidbaumgold.com/tutorials/command-line/)
+- [What is SSH?](http://blog.robertelder.org/what-is-ssh/)
+- [Try Git](http://try.github.io/) 
 
 ## How this blog post works
 
-I'm going to use my actual commands and project names. I'm developing using zsh, Visual Studio Code, and a MacBook Pro, so you may have to do some swapping based on your platform and use cases. 
+I'll be writing out each step of my process in creating a blank Rails 6 application and deploying it to a barebones EC2 instance. I will focus special attention on the steps that tripped me up as I performed them.
+
+I'm going to use my actual commands, filepaths, and project names. That means you'll likely need to do some substitution as you follow along, depending on your specific use case. 
+
+My environment:
+- MacBook Pro
+- Visual Studio Code 
+- zsh
+
+So let's get started! 
 
 ## Get Rails 6
+
+Assuming you already have ruby, bundler, and rails installed on your local dev machine, because you have some Ruby on Rails experience. 
 
 Get the latest rails gem(s).
 
 ```
-# Any terminal 
-gem install rails --pre 
+# ~
+local$ gem install rails --pre 
 ```
 
 ## Create a Rails 6 project 
@@ -47,46 +56,42 @@ gem install rails --pre
 Then you need to make a new project with the Rails 6 beta 
 
 ```
-# In a terminal, in a directory you want above your project folder 
-rails _6.0.0beta1_ new trackerr
-```
-
-Change into your project directory 
-
-```
-# In a directory above project folder
-cd tracker 
+# ~/dev
+local$ rails _6.0.0beta1_ new trackerr
+local$ cd trackerr
 ```
 
 An initial `bundle install` never hurts
 
 ``` 
-# trackerr/
-bundle install 
+# ~/dev/trackerr
+local$ bundle install 
 ```
 
 Check that it works 
 
 ```
-# trackerr/
-rails s
+# ~/dev/trackerr
+local$ rails s
 ```
 
 You should see something like: 
 
 ![Rails 6 Default Index Screenshot](/img/rails-6-ec2-tutorial-1/rails-6-success.png)
  
-Nice, it works. This is my favorite place for an init commit in git: It's fresh, it's new, it works. I haven't broken anything yet. Let's make the initial commit. 
+Nice, it works. 
+
+This is my favorite place for an init commit in git: It's fresh, it's new, it works. I haven't broken anything yet.
 
 ```
-# trackerr/
-git add . 
-git commit -m "init commit"
+# ~/dev/trackerr
+local$ git add . 
+local$ git commit -m "init commit"
 ```
 
 ## Push to GitHub (or other similar platform).
 
-I use GitHub for my repositories, so YMMV, but I'd like to get this fresh Rails project checked into GitHub ASAP. 
+I use GitHub for my repositories, so YMMV, but I'm going to get this fresh Rails project checked into GitHub ASAP. 
 
 [Here's the GitHub doc for creating a new repository](https://help.github.com/articles/create-a-repo/), or you can follow along below: 
 
@@ -96,15 +101,16 @@ I use GitHub for my repositories, so YMMV, but I'd like to get this fresh Rails 
 4. Click **New Repository**
 5. Name it **trackerr** (or whatever you'd like to name your project).
 6. Add a description. For my project, that description is: **Full Suite State Legislation Tracker**
-7. [Now GitHub allows unlimited private repos](https://techcrunch.com/2019/01/07/github-free-users-now-get-unlimited-private-repositories/), but I'll keep it public, because I love open source. 
+7. [GitHub allows unlimited private repos now](https://techcrunch.com/2019/01/07/github-free-users-now-get-unlimited-private-repositories/), but I'll keep it public, because I love open source. 
 8. Don't initialize the repo, you've already got one on your machine. 
 9. Follow the on-page instructions for pushing an existing repo from command line 
 
 I use SSH keys for my GitHub access, and setting that up is beyond the scope of this blog post, but [here is a good guide on how to do that](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/).
 
 ```
-git remote add origin git@github.com:<YOUR ADDRESS HERE>
-git push -u origin master 
+# ~/dev/trackerr
+local$ git remote add origin git@github.com:<YOUR ADDRESS HERE>
+local$ git push -u origin master 
 ```
 
 Voila, you've got a Rails 6 project installed on your machine and checked in to your GitHub. 
@@ -113,19 +119,19 @@ Voila, you've got a Rails 6 project installed on your machine and checked in to 
 
 In order for your Rails app to actually work on the EC2 instance, you'll need to set up a root path in your configuration, and a corresponding controller and view. 
 
-You can use the [rails controller generator, if you like](https://guides.rubyonrails.org/command_line.html), or you can add it manually. Since this blog post doesn't cover testing or assets or any of the other nice rails magic created in the controller generators, I'm going to just manually add the bare minimum here.
+You can use the [rails controller generator, if you like](https://guides.rubyonrails.org/command_line.html), or you can add it yourself. Since this blog post doesn't cover testing or assets or any of the other nice rails magic created in the controller generators, I'm going to just manually add the bare minimum here.
 
 In your `config/routes`
 
 ```
-# config/routes.rb 
+# ~/dev/trackerr/config/routes.rb 
 root "pages#index"
 ```
 
 In your `app/controllers`
 
 ```
-# app/controllers/pages_controller.rb
+# ~/dev/trackerr/app/controllers/pages_controller.rb
 class PagesController < ApplicationController
     def index
     end
@@ -135,20 +141,20 @@ end
 And a corresponding view 
 
 ```
-# app/views/pages/index.html.erb
+# ~/dev/trackerr/app/views/pages/index.html.erb
 <h1>You did it! Great job!</h1>
 ```
 
 Add your changes and push them up to git 
 
 ```
-# On your local machine, in project directory 
-git add .
-git commit -m "add home page"
-git push 
+# ~/dev/trackerr
+local$ git add .
+local$ git commit -m "add home page"
+local$ git push 
 ```
 
-Now your very barebones Rails 6 app is just about ready to live on a server. 
+Now your barebones Rails 6 app is just about ready to live on a server. 
 
 ## Set up your Amazon EC2 Instance
 
@@ -217,7 +223,6 @@ Under the **Name** column, you can click the pencil icon to edit its name. I cho
 
 ![Image depicting Amazon EC2 Resource Groups](/img/rails-6-ec2-tutorial-1/resource-groups.png) 
 
-
 Great! Now you've got a Rails App on your machine and in GitHub, and you have a plain EC2 instance running on AWS. It's almost time to marry them together. 
 
 Before we get to that, though, let's set up convenient access to the server. 
@@ -232,7 +237,7 @@ You'll need to make your key not publicly viewable. To make sure that's the case
 
 ```
 # ~/server-keys/
-chmod 400 trackerr-key-pair.pem
+local$ chmod 400 trackerr-key-pair.pem
 ```
 
 Then you'll want to connect to your instance using its Public DNS. 
@@ -251,7 +256,10 @@ Let's make that SSH access even more convenient by setting up an alias. I use [z
 
 In command line: 
 
-`vim ~/.zshrc`
+```
+# ~
+local$ vim .zshrc
+```
 
 I'm not great with [VIM](https://www.openvim.com/), but I'm learning, and I love it. You can edit this file using any text editor you like. 
 
@@ -264,15 +272,15 @@ With the correct address in it.
 Once you write and save to the zsh (or whatever shell) config, restart your shell. For me, it's just: 
 
 ```
-# Any directory 
-zsh 
+# ~ 
+local$ zsh 
 ```
 
 Then I can run 
 
 ```
-# Any directory 
-ssh_trackerr
+# ~ 
+local$ ssh_trackerr
 ``` 
 
 And I'm in. 
@@ -284,10 +292,11 @@ Let's start get our server ready to serve up a rails app.
 I'm going to sandbox our rails app under a specific user account. I'll need the user to have sudo privileges, so I'll create a new sudo user by following [these instructions](https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart). You can follow along there or with this blog post.
 
 ```
-# Local machine 
-ssh_trackerr 
-# EC2 Instance 
-sudo adduser trackerr-user
+# local
+local$ ssh_trackerr 
+
+# EC2
+ubuntu$ sudo adduser trackerr-user
 ```
 
 You'll be given some prompts. First is for a new UNIX password. This will be the user's password. Make it good, and I'd recommend using a password manager (Like [KeePass2](https://keepass.info/help/base/firststeps.html)) to generate and store it for you.
@@ -319,7 +328,7 @@ You'll be prompted for that password again, enter it, and you should be good to 
 
 Now that we've sandboxed our rails user, given them sudo access, and updated our apt-get sources, we'll want to install Ruby on Rails so we can run our app. 
 
-I'll be following the instructions at https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rbenv-on-ubuntu-18-04
+I'll be following the instructions [here](https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rbenv-on-ubuntu-18-04) - which you can follow, or you can follow along with me.
 
 Update the package list 
 
@@ -510,20 +519,19 @@ Since we control this server, we can manually add the file ourselves.
 
 ```
 # EC2
-cd ~/trackerr/config
-vim master.key
+trackerr-user$ cd ~/trackerr/config
+trackerr-user$ vim master.key
 ```
 
 On your local machine (where you have a copy of master.key), grab that key, copy it, and put it in the `master.key` file on the server. This will give you access to the secrets file as detailed in the article on master.key
 
-
 ```
-# EC2 - as trackerr-user 
-cd ~/trackerr
-bundle install 
-yarn
-RAILS_ENV=production bundle exec rake db:create 
-rake db:migrate RAILS_ENV production
+# EC2 
+trackerr-user$ cd ~/trackerr
+trackerr-user$ bundle install 
+trackerr-user$ yarn
+trackerr-user$ RAILS_ENV=production bundle exec rake db:create 
+trackerr-user$ RAILS_ENV production rake db:migrate 
 ```
 
 **Note:** I hit a snag here on `bundle install`. When I changed into the directory and ran `bundle install`, I got an error that looked like 
@@ -545,52 +553,53 @@ Or rather, it almost worked. I had forgotten to install sqlite3 on the server as
 So in the same directory, I ran: 
 
 ```
-# EC2 - as trackerr-user 
-sudo apt-get install libsqlite3-dev
+# EC2
+trackerr-user$ sudo apt-get install libsqlite3-dev
 ```
 
 I ran `bundle install` once more, and everything came together. 
 
-I could have re-written this guide, but I wanted to include a common error (I have done this... multiple times) and demonstrate that even people who write guides about web development are not infallible, despite what some folks seem to say. 
+I could have re-written this guide, but I wanted to include a common error (I have made this bundler mistake... multiple times) and demonstrate that even people who write guides about web development are not infallible, despite what some folks seem to say. 
 
-If you've had to troubleshoot like I did, here's what we need to run, now that everything is in the right place: 
+If you've had to troubleshoot like I did, here's a re-cap of the commands you should run now htat you've fixed your errors. Don't worry if you did successfully run these before and are running them again, all of them are fine to duplicate. May as well just give it a go.
 
 ```
-# EC2 - as trackerr-user 
-cd ~/trackerr
-bundle install 
-yarn
-RAILS_ENV=production bundle exec rake db:create 
-RAILS_ENV=production rake db:migrate 
+# EC2
+trackerr-user$ cd ~/trackerr
+trackerr-user$ bundle install 
+trackerr-user$ yarn
+trackerr-user$ RAILS_ENV=production bundle exec rake db:create 
+trackerr-user$ RAILS_ENV=production rake db:migrate 
 ```
 
 You'll notice we set RAILS_ENV to production there twice. We don't want to have to do that every time (or worse - forget we have to do that everytime). So let's add it to our bash profile. 
 
 ```
-# EC2 - as trackerr-user 
-cd ~
-vim .bashrc
+# EC2
+trackerr-user$ vim ~/.bashrc
 ```
 
 And add `export RAILS_ENV="production"` to the bottom of your file. 
 
-Go ahead and restart bash by running `bash`. Now check your env variables with `printenv` and make sure RAILS_ENV="production"
+Go ahead and restart bash by running `bash`. Now check your env variables with `printenv` and make sure `RAILS_ENV="production"` appears somewhere there.
 
-Now we need to configure Unicorn and Nginx, we'll be following the guide at [https://www.digitalocean.com/community/tutorials/how-to-deploy-a-rails-app-with-unicorn-and-nginx-on-ubuntu-14-04] from the **Install Unicorn** section down. 
+Now we need to configure Unicorn and Nginx, we'll be following the guide at [https://www.digitalocean.com/community/tutorials/how-to-deploy-a-rails-app-with-unicorn-and-nginx-on-ubuntu-14-04] from the **Install Unicorn** section down. We don't need the beginning of that article, since we've done much of that already. 
 
 This is a great example of making changes to our app on a local machine and having them take effect on the server. 
 
 We need to add the unicorn gem to our gemfile, so on your local machine, add a gemfile group for production. I like to put it under the block that reads something like: 
 
 ```
+# ~/dev/trackerr/Gemfile
 group :test do
 ...
 end
 ```
 
-- I then add: 
+I then add: 
 
 ```
+# ~/dev/trackerr/Gemfile
 group :production do
     gem 'unicorn'
 end
@@ -601,6 +610,7 @@ And since we're loading unicorn specifically in production, it pays to be explic
 I move the `gem 'puma', '~> 3.11'` line to the block which looks like: 
 
 ```
+# ~/dev/trackerr/Gemfile
 group: development, :test do
     ...
 end
@@ -609,25 +619,25 @@ end
 Now check that there aren't any errors in development, and run 
 
 ```
-# Local machine - in project folder
-bundle install
-rails s
+# ~/dev/trackerr
+local$ bundle install
+local$ rails s
 ```
 
 Make sure your new gemfile didn't throw any errors, and that Puma still boots up on your development machine. 
 
 If that's in order, let's configure Unicorn in anticipation of running it on the server. 
 
-On your development machine, add a file to the rails app at `config/unicorn.rb`
+On your development machine, add a file to the rails app at `~/dev/trackerr/config/unicorn.rb`
 
 For now, let's just use the standard config DigitalOcean lists: 
 
 ```
+# ~/dev/trackerr/config/unicorn.rb
 # set path to application
 app_dir = File.expand_path("../..", __FILE__)
 shared_dir = "#{app_dir}/shared"
 working_directory app_dir
-
 
 # Set unicorn options
 worker_processes 2
@@ -645,9 +655,28 @@ stdout_path "#{shared_dir}/log/unicorn.stdout.log"
 pid "#{shared_dir}/pids/unicorn.pid"
 ```
 
-Save the file. 
+Save the file. Commit it to git: 
 
-We set up the file to point to some folders which don't exist yet, so let's make those. 
+```
+# ~/dev/trackerr
+local$ git add .
+local$ git commit -m "add unicorn configuration"
+local$ git push 
+```
+
+Now I've got the gemfile and required folders set up for Unicorn to run, and it's in my repository. 
+
+You'll notice the second command created some placeholder tx files in our `shared/` folders - this is because 
+
+
+To get these changes on the server, run: 
+```
+# ~/trackerr
+trackerr-user$ cd ~/trackerr
+trackerr-user$ git pull
+```
+
+When we created the Unicorn config, we set up the file to point to some folders which don't exist yet, so let's make those. 
 
 Make three new folders in the root of your app. So for me, I'm going to create 
 
@@ -657,40 +686,20 @@ Make three new folders in the root of your app. So for me, I'm going to create
 
 `trackerr/shared/log`
 
-Now I've got the gemfile and required folders set up for Unicorn to run, and it's in my repository, so I'm going to push it up to GitHub and pull it down to EC2. 
-
-So let's run: 
+By running: 
 
 ```
-# Local machine - in Trackerr project
-git add .
-git commit -m "add unicorn setup"
-git push 
+# ~/trackerr
+trackerr-user$ mkdir -p shared/
 ```
 
-To get these changes on the server, run: 
-
-```
-# EC2 - as trackerr-user 
-cd ~/trackerr
-git pull
-```
-
-Depending on how you manage git, empty folders might not make it into source control, so you can just re-make those shared folders by running: 
-
-```
-# EC2 - as trackerr-user 
-cd ~/trackerr
-mkdir -p shared/
-```
-
-Now run a `bundle install` (this may take a bit, Unicorn is somewhat big).
+Now run a `bundle install` on EC2 (this may take a bit, Unicorn is somewhat big).
 
 Next, we'll need to create a Unicorn Init Script **on the EC2 server** - it allows us to start and stop Unicorn, and ensure that it starts on boot. 
 
 ```
-# EC2 - as trackerr-user
-sudo vim /etc/init.d/unicorn_trackerr
+# EC2 
+trackerr-user$ sudo vim /etc/init.d/unicorn_trackerr
 ```
 
 You'll want to copy this verbatim, but change the lines 
@@ -701,7 +710,7 @@ and
 
 `APP_NAME="trackerr"`
 
-To your user and app name. 
+To your user and app name, if you aren't using `trackerr-user` and `trackerr`, respectively. 
 
 ```
 #!/bin/sh
@@ -778,16 +787,16 @@ esac
 Update the script's permissions and enable Unicorn to start on boot:
 
 ```
-#EC2 - as trackerr-user
-sudo chmod 755 /etc/init.d/unicorn_trackerr
-sudo update-rc.d unicorn_trackerr defaults
+# EC2
+trackerr-user$ sudo chmod 755 /etc/init.d/unicorn_trackerr
+trackerr-user$ sudo update-rc.d unicorn_trackerr defaults
 ```
 
 We can finally start unicorn by running: 
 
 ```
-# EC2 - as trackerr-user
-sudo service unicorn_trackerr start
+# EC2 
+trackerr-user$ sudo service unicorn_trackerr start
 ```
 
 Now Unicorn is running, but we can't access it from the internet at large until we configure Nginx
@@ -799,16 +808,15 @@ We're going to install and configure Nginx on our server now.
 Head back to your home directory and install nginx. 
 
 ```
-# EC2 - as trackerr-user
-cd ~
-sudo apt-get install nginx
+# EC2 
+trackerr-user$ sudo apt-get install nginx
 ```
 
 Next, let's configure the default server block: 
 
 ```
-# EC2 - as trackerr-user 
-sudo vim /etc/nginx/sites-available/default
+# EC2
+trackerr-user$ sudo vim /etc/nginx/sites-available/default
 ```
 
 Add the following, but replace the username and application name with yours.
@@ -840,13 +848,13 @@ server {
 }
 ```
 
-Save and exit. This configures Nginx as a reverse proxy, so HTTP requests get forwarded to the Unicorn application server via a Unix socket. Feel free to make any changes as you see fit.
+Save and exit. This configures Nginx as a reverse proxy, so HTTP requests get forwarded to the Unicorn application server via a Unix socket. Feel free to make any changes as you see fit. **Make sure you overwrite the default config. The first time I did this, I just appended to the file, and I coudln't figure out what was going wrong.**
 
 Restart Nginx: 
 
 ```
-# EC2 - as trackerr-user 
-sudo service nginx restart 
+# EC2
+trackerr-user$ sudo service nginx restart 
 ```
 
 Awesome, now check it out at your Amazon IP address. 
@@ -855,12 +863,11 @@ Head back to your EC2 Resource console, and find the value listed under Public D
 
 You should be good to go! Congrats! You did it!
 
-Let's set up a domain name for our server 
-Capistrano 
-Build the app
+This post has been pretty long, but I hope you found it helpful. Again, this was a pretty limited scope and just covered how to get a new Rails 6 application up and running on a plain Amazon EC2 instance - no more. 
 
-## Sources 
+I'll be documenting the development of the Trackerr app on my blog here, and up next I plan to: 
 
-[https://medium.com/@manishyadavv/how-to-deploy-ruby-on-rails-apps-on-aws-ec2-7ce55bb955fa](https://medium.com/@manishyadavv/how-to-deploy-ruby-on-rails-apps-on-aws-ec2-7ce55bb955fa)
-
-[https://groups.google.com/forum/#!msg/rubyonrails-talk/IsOAQIB5Dkw/8BnbFbKBCwAJ](https://groups.google.com/forum/#!msg/rubyonrails-talk/IsOAQIB5Dkw/8BnbFbKBCwAJ)
+1. Set up an easier way to deploy changes to the app on the server. 
+2. Set up a production-level database for the application. 
+3. Configure the DNS settings for the application. 
+4. Actually build the application. 
