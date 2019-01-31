@@ -1,45 +1,44 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/assets/main.css">
-  <link rel="stylesheet" href="/stylesheets/ogden.css"><!-- Begin Jekyll SEO tag v2.5.0 -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/assets/main.css">
+    <link rel="stylesheet" href="/stylesheets/ogden.css"><!-- Begin Jekyll SEO tag v2.5.0 -->
 <title>How do I Deploy a Rails 6 app to Amazon EC2? | Ogden Studios</title>
 <meta name="generator" content="Jekyll v3.8.5" />
 <meta property="og:title" content="How do I Deploy a Rails 6 app to Amazon EC2?" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="A step-by-step instruction (with pictures and code snippets) to creating a blank Rails 6 app and deploying it to an Amazon AWS EC2 instance." />
-<meta property="og:description" content="A step-by-step instruction (with pictures and code snippets) to creating a blank Rails 6 app and deploying it to an Amazon AWS EC2 instance." />
+<meta name="description" content="A step-by-step tutorial for creating a blank Rails 6 app and deploying it to an Amazon AWS EC2 instance." />
+<meta property="og:description" content="A step-by-step tutorial for creating a blank Rails 6 app and deploying it to an Amazon AWS EC2 instance." />
 <link rel="canonical" href="http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html" />
 <meta property="og:url" content="http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html" />
 <meta property="og:site_name" content="Ogden Studios" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-01-30T00:00:00-07:00" />
 <script type="application/ld+json">
-{"headline":"How do I Deploy a Rails 6 app to Amazon EC2?","dateModified":"2019-01-30T00:00:00-07:00","datePublished":"2019-01-30T00:00:00-07:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html"},"url":"http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html","description":"A step-by-step instruction (with pictures and code snippets) to creating a blank Rails 6 app and deploying it to an Amazon AWS EC2 instance.","@type":"BlogPosting","@context":"http://schema.org"}</script>
+{"headline":"How do I Deploy a Rails 6 app to Amazon EC2?","dateModified":"2019-01-30T00:00:00-07:00","datePublished":"2019-01-30T00:00:00-07:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html"},"url":"http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html","description":"A step-by-step tutorial for creating a blank Rails 6 app and deploying it to an Amazon AWS EC2 instance.","@type":"BlogPosting","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <meta property="og:image" content="http://localhost:4000/img/FacebookBanner.jpg" />
-  <meta content="Ogden Studios" property="og:site_name">
-
-  <meta content="How do I Deploy a Rails 6 app to Amazon EC2?" property="og:title">
-
-
-  <meta content="article" property="og:type">
-
-
-  <meta content="A step-by-step instruction (with pictures and code snippets) to creating a blank Rails 6 app and deploying it to an Amazon AWS EC2 instance." property="og:description">
-
-
-  <meta content="http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html" property="og:url">
-
-
-  <meta content="/img/logo-high-resolution.png" property="og:image">
-  <meta content="/img/OgdenLogo.jpg" property="twitter:image">
-
-  <!-- Google Suite Verification -->
-  <meta name="google-site-verification" content="Ay267gjaK2dbcK9EuGzYKc0xKCC-cNH8tc4D-rc5D2U" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Ogden Studios" /></head>
-<body><header class="site-header" role="banner">
+    <meta content="Ogden Studios" property="og:site_name"> 
+    
+    <meta content="How do I Deploy a Rails 6 app to Amazon EC2?" property="og:title"> 
+     
+    
+    <meta content="article" property="og:type"> 
+     
+    
+    <meta content="A step-by-step tutorial for creating a blank Rails 6 app and deploying it to an Amazon AWS EC2 instance." property="og:description"> 
+     
+    
+    <meta content="http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html" property="og:url"> 
+     
+    
+    <meta content="/img/logo-high-resolution.png" property="og:image">
+    <meta content="/img/OgdenLogo.jpg" property="twitter:image"> 
+    
+    <!-- Google Suite Verification -->
+    <meta name="google-site-verification" content="Ay267gjaK2dbcK9EuGzYKc0xKCC-cNH8tc4D-rc5D2U" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Ogden Studios" /></head><body><header class="site-header" role="banner">
 
   <div class="wrapper"><a class="site-title" rel="author" href="/"><img class="nav-brand" src="/img/ogden-transparent.png"></a><nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
@@ -73,15 +72,13 @@
   <div class="post-content e-content" itemprop="articleBody">
     <h2 id="why-i-wrote-this-blog-post">Why I wrote this blog post</h2>
 
-<p>I’ve been building Rails apps for some time now. On some projects, I’ve been fortunate enough to have a DevOps team to take care of production deploys to AWS. For smaller, personal projects, I’ve been mostly relying on <a href="https://heroku.com">Heroku</a> to deploy.</p>
+<p>I’ve been building Rails apps for some time now. I’ve been mostly relying on <a href="https://heroku.com">Heroku</a> to for my deploys.</p>
 
 <p>I love Heroku. They make an excellent product, and it’s great for quick prototypes and small hobby servers. But for more involved projects, the cost and lack of control don’t work for me. I figured it was time to start managing my own infrastructure.</p>
 
-<p>I decided to learn how to deploy to EC2, and wrote this blog along the way.</p>
-
 <p>Additionally, the <a href="https://edgeguides.rubyonrails.org/6_0_release_notes.html">Ruby on Rails 6 beta</a> just came out, and I wanted to spin up a demo project and check it out.</p>
 
-<p>Seemed like deploying a shiny new Rails 6 project to an EC2 instance is a great way for me to level up, and I figured I could help others do the same and increase my own understanding by writing a blog post.</p>
+<p>Writing the blog post helped me to learn and solidify my understanding of what all goes into taking a Rails 6 beta project from 0 to AWS, and I hope you find it helpful as well.</p>
 
 <h2 id="who-should-read-this-blog-post">Who should read this blog post</h2>
 
@@ -98,28 +95,28 @@
   <li><a href="http://try.github.io/">Try Git</a></li>
 </ul>
 
+<p>This blog should help you if:</p>
+
+<ul>
+  <li>You also want to start moving your projects off Heroku.</li>
+  <li>You have told someone you could move their project off Heroku and on to AWS and you have never done that before.</li>
+  <li>You’ve never done server configuration before, but you’ve got to learn very quickly.</li>
+  <li>You’d like to correct my personal mistakes via blog post.</li>
+</ul>
+
 <h2 id="how-this-blog-post-works">How this blog post works</h2>
 
 <p>I’ll be writing out each step of my process in creating a blank Rails 6 application and deploying it to a barebones EC2 instance. I will focus special attention on the steps that tripped me up as I performed them.</p>
 
 <p>I’m going to use my actual commands, filepaths, and project names. That means you’ll likely need to do some substitution as you follow along, depending on your specific use case.</p>
 
-<p>My environment:</p>
-<ul>
-  <li>MacBook Pro</li>
-  <li>Visual Studio Code</li>
-  <li>zsh</li>
-</ul>
-
 <p>So let’s get started!</p>
 
 <h2 id="get-rails-6">Get Rails 6</h2>
 
-<p>Assuming you already have ruby, bundler, and rails installed on your local dev machine, because you have some Ruby on Rails experience.</p>
+<p>I’m going to assume you already have ruby, bundler, and rails installed on your local dev machine, because you have some Ruby on Rails experience. If that’s the case, all you need to do is get the latest rails gem.</p>
 
-<p>Get the latest rails gem(s).</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~
 local$ gem install rails --pre 
 </code></pre></div></div>
 
@@ -127,20 +124,20 @@ local$ gem install rails --pre
 
 <p>Then you need to make a new project with the Rails 6 beta</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~/dev
 local$ rails _6.0.0beta1_ new trackerr
 local$ cd trackerr
 </code></pre></div></div>
 
 <p>An initial <code class="highlighter-rouge">bundle install</code> never hurts</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~/dev/trackerr
 local$ bundle install 
 </code></pre></div></div>
 
 <p>Check that it works</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~/dev/trackerr
 local$ rails s
 </code></pre></div></div>
 
@@ -152,7 +149,7 @@ local$ rails s
 
 <p>This is my favorite place for an init commit in git: It’s fresh, it’s new, it works. I haven’t broken anything yet.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~/dev/trackerr
 local$ git add . 
 local$ git commit -m "init commit"
 </code></pre></div></div>
@@ -177,7 +174,7 @@ local$ git commit -m "init commit"
 
 <p>I use SSH keys for my GitHub access, and setting that up is beyond the scope of this blog post, but <a href="https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/">here is a good guide on how to do that</a>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~/dev/trackerr
 local$ git remote add origin git@github.com:&lt;YOUR ADDRESS HERE&gt;
 local$ git push -u origin master 
 </code></pre></div></div>
@@ -192,13 +189,13 @@ local$ git push -u origin master
 
 <p>In your <code class="highlighter-rouge">config/routes</code></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr/config/routes.rb 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~/dev/trackerr/config/routes.rb 
 root "pages#index"
 </code></pre></div></div>
 
 <p>In your <code class="highlighter-rouge">app/controllers</code></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr/app/controllers/pages_controller.rb
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~/dev/trackerr/app/controllers/pages_controller.rb
 class PagesController &lt; ApplicationController
     def index
     end
@@ -207,13 +204,13 @@ end
 
 <p>And a corresponding view</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr/app/views/pages/index.html.erb
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~/dev/trackerr/app/views/pages/index.html.erb
 &lt;h1&gt;You did it! Great job!&lt;/h1&gt;
 </code></pre></div></div>
 
 <p>Add your changes and push them up to git</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~/dev/trackerr
 local$ git add .
 local$ git commit -m "add home page"
 local$ git push 
@@ -275,7 +272,7 @@ local$ git push
 
 <p>Confirm everything looks the way you want, and finally click <strong>Launch</strong>.</p>
 
-<p>Amazon will ask you to select an existin gkey pari or create a new key pair. I’m assuming you either haven’t done this before (and therefore have no key pair), or, like me, are trying to set up a fully sandboxed Rails App. So let’s select <em>Create a new key pair</em>.</p>
+<p>Amazon will ask you to select an existing key pari or create a new key pair. I’m assuming you either haven’t done this before (and therefore have no key pair), or, like me, are trying to set up a fully sandboxed Rails App. So let’s select <strong>Create a new key pair</strong>.</p>
 
 <p>Name it. I’m naming mine <em>trackerr-key-pair</em></p>
 
@@ -307,13 +304,13 @@ local$ git push
 
 <p>You’ll need to make your key not publicly viewable. To make sure that’s the case, run</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/server-keys/
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~/server-keys/
 local$ chmod 400 trackerr-key-pair.pem
 </code></pre></div></div>
 
 <p>Then you’ll want to connect to your instance using its Public DNS.</p>
 
-<p>The command looks like <code class="highlighter-rouge">ssh -i "tracker-key-pair.pem" ubuntu@some-dns.computer.amazon.aws</code> (not my actual address).</p>
+<p>The command looks like <code class="highlighter-rouge">ssh -i "tracker-key-pair.pem" ubuntu@some-dns.computer.amazon.aws</code>.</p>
 
 <p>If you need a more specific command for your keypair name and DNS address, click the <strong>Connect</strong> button in the Amazon Resource Groups panel.</p>
 
@@ -329,7 +326,7 @@ local$ chmod 400 trackerr-key-pair.pem
 
 <p>In command line:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~
 local$ vim .zshrc
 </code></pre></div></div>
 
@@ -343,13 +340,13 @@ local$ vim .zshrc
 
 <p>Once you write and save to the zsh (or whatever shell) config, restart your shell. For me, it’s just:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~ 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~ 
 local$ zsh 
 </code></pre></div></div>
 
 <p>Then I can run</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~ 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~ 
 local$ ssh_trackerr
 </code></pre></div></div>
 
@@ -361,10 +358,10 @@ local$ ssh_trackerr
 
 <p>I’m going to sandbox our rails app under a specific user account. I’ll need the user to have sudo privileges, so I’ll create a new sudo user by following <a href="https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart">these instructions</a>. You can follow along there or with this blog post.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~
 local$ ssh_trackerr 
 
-# EC2
+# EC2 ~
 ubuntu$ sudo adduser trackerr-user
 </code></pre></div></div>
 
@@ -374,19 +371,19 @@ ubuntu$ sudo adduser trackerr-user
 
 <p>Next we’ll need to use <code class="highlighter-rouge">usermod</code> command to add them to the sudo group</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 ubuntu$ sudo usermod -aG sudo trackerr-user
 </code></pre></div></div>
 
 <p>Test it out to make sure this works as expected. Use <code class="highlighter-rouge">su</code> to switch to the new user.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 ubuntu$ su - trackerr-user 
 </code></pre></div></div>
 
-<p>Now test that you can run sudo commands with something innocuous like</p>
+<p>Now test that you can run sudo commands by running an <code class="highlighter-rouge">apt-get update</code>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ sudo apt-get update 
 </code></pre></div></div>
 
@@ -398,61 +395,61 @@ trackerr-user$ sudo apt-get update
 
 <p>Update the package list</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ sudo apt update
 </code></pre></div></div>
 
 <p>Run the upgrades you can (not in DigitalOcean guide, but not a bad idea)</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ sudo apt upgrade 
 </code></pre></div></div>
 
 <p>Then install the dependencies required to install Ruby:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ sudo apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm5 libgdbm-dev
 </code></pre></div></div>
 
 <p>Once those dependencies install, install rbenv. Clone the rbenv repo:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 </code></pre></div></div>
 
 <p>then, add ~/.rbenv/bin to your $PATH so you can use its CLI.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' &gt;&gt; ~/.bashrc
 </code></pre></div></div>
 
 <p>Add this command to your bash profile so you can load rbenv automatically.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ echo 'eval "$(rbenv init -)"' &gt;&gt; ~/.bashrc
 </code></pre></div></div>
 
 <p>Restart bash to get those changes to apply.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ source ~/.bashrc 
 </code></pre></div></div>
 
 <p>Then we’ll install the ruby-build plugin to add <code class="highlighter-rouge">rbenv install</code> which simplifies the install process for new Ruby versions (which we will surely need for Rails 6)</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 </code></pre></div></div>
 
 <p>Now you’ll be able to see all the available ruby versions with this command:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ rbenv install -l
 </code></pre></div></div>
 
 <p>For Rails 6, we need Ruby 2.5.0 or newer. At the time of writing, Rails 6 sets it at 2.5.1</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ rbenv install 2.5.1
 </code></pre></div></div>
 
@@ -460,25 +457,25 @@ trackerr-user$ rbenv install 2.5.1
 
 <p>Up next, set your global default ruby version using</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ rbenv global 2.5.1
 </code></pre></div></div>
 
 <p>You can check with</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ ruby -v
 </code></pre></div></div>
 
 <p>Now we need to configure our ability to work with gems. First, let’s turn off local documentation generation by setting our ~/.gemrc to turn off that feature.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ echo "gem: --no-document" &gt; ~/.gemrc
 </code></pre></div></div>
 
 <p>Install bundler, which we’ll use often.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ gem install bundler 
 </code></pre></div></div>
 
@@ -486,13 +483,13 @@ trackerr-user$ gem install bundler
 
 <p>So again:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ gem install rails --pre 
 </code></pre></div></div>
 
 <p>Since we installed a gem (Rails) which provides commands (which Rails does, and many other gems), we need to <code class="highlighter-rouge">rehash</code> our rbenv. Do this every time you install a <strong>gem that installs commands</strong>. You do not need to do this for gems without command line interfaces.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ rbenv rehash
 </code></pre></div></div>
 
@@ -500,13 +497,13 @@ trackerr-user$ rbenv rehash
 
 <p>The Rails Asset Pipeline requires JavaScript runtime, so let’s get Node.js</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ sudo add-apt-repository ppa:chris-lea/node.js
 </code></pre></div></div>
 
 <p>Then update apt-get and install the Node.js package:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ sudo apt-get update
 trackerr-user$ sudo apt-get install nodejs
 </code></pre></div></div>
@@ -515,14 +512,14 @@ trackerr-user$ sudo apt-get install nodejs
 
 <p>With Node installed, we’ll want to download the <a href="https://yarnpkg.com/en/">yarn</a> package manager, since Rails 6 uses it by default.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 trackerr-user$ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 trackerr-user$ sudo apt-get update
 trackerr-user$ sudo apt-get install yarn
 </code></pre></div></div>
 
-<p>For the purposes of this test, we’re going to use SQLite3 as a database, to avoid having to deal with postgres in our sandbox. This is a free tier EC2 instance and the Rails 6 beta, so I can’t imagine your target here is to set up a production-level app which requires a serious database. When we beef up the application in future blog posts, we’ll include information about setting up production-ready databases. <strong>Do not use SQLite as a production database</strong>.</p>
+<p>For the purposes of this test, we’re going to use SQLite3 as a database, to avoid having to deal with postgres in our sandbox. This is a free tier EC2 instance and the Rails 6 beta, so I can’t imagine your target here is to set up a production-level app which requires a serious database. When we beef up the application in future blog posts, we’ll include information about setting up production-ready databases. <strong>Do not use SQLite as a production database</strong>. Later posts in this series will cover upgrading to a production ready database.</p>
 
 <h2 id="install-your-rails-app-on-ec2">Install your Rails App on EC2</h2>
 
@@ -532,7 +529,7 @@ trackerr-user$ sudo apt-get install yarn
 
 <p>Basically, you’ll run:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 </code></pre></div></div>
 
@@ -550,7 +547,7 @@ trackerr-user$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
 <p>On your EC2 instance, from the folder above where you want your rails app to live, run:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ git clone git@github.com:&lt;YOUR REPO HERE&gt; trackerr
 </code></pre></div></div>
 
@@ -562,14 +559,14 @@ trackerr-user$ git clone git@github.com:&lt;YOUR REPO HERE&gt; trackerr
 
 <p>Since we control this server, we can manually add the file ourselves.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ cd ~/trackerr/config
 trackerr-user$ vim master.key
 </code></pre></div></div>
 
 <p>On your local machine (where you have a copy of master.key), grab that key, copy it, and put it in the <code class="highlighter-rouge">master.key</code> file on the server. This will give you access to the secrets file as detailed in the article on master.key</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ cd ~/trackerr
 trackerr-user$ bundle install 
 trackerr-user$ yarn
@@ -594,7 +591,7 @@ trackerr-user$ RAILS_ENV production rake db:migrate
 
 <p>So in the same directory, I ran:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ sudo apt-get install libsqlite3-dev
 </code></pre></div></div>
 
@@ -604,7 +601,7 @@ trackerr-user$ sudo apt-get install libsqlite3-dev
 
 <p>If you’ve had to troubleshoot like I did, here’s a re-cap of the commands you should run now htat you’ve fixed your errors. Don’t worry if you did successfully run these before and are running them again, all of them are fine to duplicate. May as well just give it a go.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ cd ~/trackerr
 trackerr-user$ bundle install 
 trackerr-user$ yarn
@@ -614,7 +611,7 @@ trackerr-user$ RAILS_ENV=production rake db:migrate
 
 <p>You’ll notice we set RAILS_ENV to production there twice. We don’t want to have to do that every time (or worse - forget we have to do that everytime). So let’s add it to our bash profile.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ vim ~/.bashrc
 </code></pre></div></div>
 
@@ -622,13 +619,13 @@ trackerr-user$ vim ~/.bashrc
 
 <p>Go ahead and restart bash by running <code class="highlighter-rouge">bash</code>. Now check your env variables with <code class="highlighter-rouge">printenv</code> and make sure <code class="highlighter-rouge">RAILS_ENV="production"</code> appears somewhere there.</p>
 
-<p>Now we need to configure Unicorn and Nginx, we’ll be following the guide at [https://www.digitalocean.com/community/tutorials/how-to-deploy-a-rails-app-with-unicorn-and-nginx-on-ubuntu-14-04] from the <strong>Install Unicorn</strong> section down. We don’t need the beginning of that article, since we’ve done much of that already.</p>
+<p>Now we need to configure Unicorn and Nginx, we’ll be following the <a href="https://www.digitalocean.com/community/tutorials/how-to-deploy-a-rails-app-with-unicorn-and-nginx-on-ubuntu-14-04">Digital Ocean guide</a> from the <strong>Install Unicorn</strong> section down. We don’t need the beginning of that article, since we’ve done much of that already. Here’s a fun note: <strong>I chose Unicorn because it was part of the first tutorial I found about using Nginx on EC2</strong>. When I was going through my revision process, I realized it might make more sense to run Puma on the app. Instead of re-writing the blog post, I’ll be adding future articles to convert from Unicorn to Puma on this app. I chose this route because everyone makes mistakes like this, and I want to normalize the idea that even people who write tutorials don’t always make logical or optimal decisions, and understanding how to go back and refactor and fix decisions like that is an important skillset for any developer. So let’s move forward with Unicorn for now (it’s also not a huge deal either way, especially for our blank Rails app), and get back to deciding on an app server later on.</p>
 
-<p>This is a great example of making changes to our app on a local machine and having them take effect on the server.</p>
+<p>This will be our first exercise in making changes to our app on a local machine and having them take effect on the server. You’ll see the process is somewhat involved, and may wonder to yourself if there is a better way. Part 2 will cover the solution to this annoying procedure.</p>
 
 <p>We need to add the unicorn gem to our gemfile, so on your local machine, add a gemfile group for production. I like to put it under the block that reads something like:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr/Gemfile
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~/dev/trackerr/Gemfile
 group :test do
 ...
 end
@@ -636,7 +633,7 @@ end
 
 <p>I then add:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr/Gemfile
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~/dev/trackerr/Gemfile
 group :production do
     gem 'unicorn'
 end
@@ -646,7 +643,7 @@ end
 
 <p>I move the <code class="highlighter-rouge">gem 'puma', '~&gt; 3.11'</code> line to the block which looks like:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr/Gemfile
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~/dev/trackerr/Gemfile
 group: development, :test do
     ...
 end
@@ -654,7 +651,7 @@ end
 
 <p>Now check that there aren’t any errors in development, and run</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~/dev/trackerr
 local$ bundle install
 local$ rails s
 </code></pre></div></div>
@@ -667,7 +664,7 @@ local$ rails s
 
 <p>For now, let’s just use the standard config DigitalOcean lists:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr/config/unicorn.rb
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~/dev/trackerr/config/unicorn.rb
 # set path to application
 app_dir = File.expand_path("../..", __FILE__)
 shared_dir = "#{app_dir}/shared"
@@ -691,7 +688,7 @@ pid "#{shared_dir}/pids/unicorn.pid"
 
 <p>Save the file. Commit it to git:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~/dev/trackerr
 local$ git add .
 local$ git commit -m "add unicorn configuration"
 local$ git push 
@@ -702,7 +699,7 @@ local$ git push
 <p>You’ll notice the second command created some placeholder tx files in our <code class="highlighter-rouge">shared/</code> folders - this is because</p>
 
 <p>To get these changes on the server, run:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/trackerr
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># local ~/trackerr
 trackerr-user$ cd ~/trackerr
 trackerr-user$ git pull
 </code></pre></div></div>
@@ -719,7 +716,7 @@ trackerr-user$ git pull
 
 <p>By running:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/trackerr
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~/trackerr
 trackerr-user$ mkdir -p shared/
 </code></pre></div></div>
 
@@ -727,7 +724,7 @@ trackerr-user$ mkdir -p shared/
 
 <p>Next, we’ll need to create a Unicorn Init Script <strong>on the EC2 server</strong> - it allows us to start and stop Unicorn, and ensure that it starts on boot.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~ 
 trackerr-user$ sudo vim /etc/init.d/unicorn_trackerr
 </code></pre></div></div>
 
@@ -765,7 +762,7 @@ trackerr-user$ sudo vim /etc/init.d/unicorn_trackerr
 
 <span class="c"># environment settings</span>
 <span class="nv">PATH</span><span class="o">=</span><span class="s2">"/home/</span><span class="nv">$USER</span><span class="s2">/.rbenv/shims:/home/</span><span class="nv">$USER</span><span class="s2">/.rbenv/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
-<span class="nv">CMD</span><span class="o">=</span><span class="s2">"cd </span><span class="nv">$APP_ROOT</span><span class="s2"> &amp;&amp; /home/trackerr-user/.rbenv/shims/bundle exec unicorn -c config/unicorn.rb -E production -D"</span>
+<span class="nv">CMD</span><span class="o">=</span><span class="s2">"cd </span><span class="nv">$APP_ROOT</span><span class="s2"> &amp;&amp; /home/</span><span class="nv">$USER</span><span class="s2">/.rbenv/shims/bundle exec unicorn -c config/unicorn.rb -E production -D"</span>
 <span class="nv">PID</span><span class="o">=</span><span class="s2">"</span><span class="nv">$APP_ROOT</span><span class="s2">/shared/pids/unicorn.pid"</span>
 <span class="nv">OLD_PID</span><span class="o">=</span><span class="s2">"</span><span class="nv">$PID</span><span class="s2">.oldbin"</span>
 
@@ -814,14 +811,14 @@ oldsig <span class="o">()</span> <span class="o">{</span>
 
 <p>Update the script’s permissions and enable Unicorn to start on boot:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ sudo chmod 755 /etc/init.d/unicorn_trackerr
 trackerr-user$ sudo update-rc.d unicorn_trackerr defaults
 </code></pre></div></div>
 
 <p>We can finally start unicorn by running:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ sudo service unicorn_trackerr start
 </code></pre></div></div>
 
@@ -833,13 +830,13 @@ trackerr-user$ sudo service unicorn_trackerr start
 
 <p>Head back to your home directory and install nginx.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ sudo apt-get install nginx
 </code></pre></div></div>
 
 <p>Next, let’s configure the default server block:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ sudo vim /etc/nginx/sites-available/default
 </code></pre></div></div>
 
@@ -875,7 +872,7 @@ server {
 
 <p>Restart Nginx:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># EC2 ~
 trackerr-user$ sudo service nginx restart 
 </code></pre></div></div>
 
@@ -895,6 +892,10 @@ trackerr-user$ sudo service nginx restart
   <li>Configure the DNS settings for the application.</li>
   <li>Actually build the application.</li>
 </ol>
+
+<p><em>Questions? Comments? Approval? Disapproval? Send it all along to tyler@ogdenstudios.xyz</em></p>
+
+<p>Did you like this post? <a href="https://ko-fi.com/ogdenstudios">Buy me a coffee</a></p>
 
   </div><a class="u-url" href="/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html" hidden></a>
 </article>
