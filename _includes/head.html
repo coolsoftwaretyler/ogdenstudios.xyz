@@ -25,24 +25,12 @@
 {% if page.url %}
   <meta content="{{ site.url }}{{ page.url }}" property="og:url">
 {% endif %}
-{% if page.date %}
-  <meta content="{{ page.date | date_to_xmlschema }}" property="article:published_time">
-  <meta content="{{ site.url }}/about/" property="article:author">
-{% endif %}
 {% if page.image %}
   <meta content="/img/srcset/{{ page.image }}" property="og:image">
+  <meta content="/img/srcset/{{ page.image }}" property="twitter:image">
 {% else %}
   <meta content="/img/logo-high-resolution.png" property="og:image">
-{% endif %}
-{% if page.categories %}
-  {% for category in page.categories limit:1 %}
-  <meta content="{{ category }}" property="article:section">
-  {% endfor %}
-{% endif %}
-{% if page.tags %}
-  {% for tag in page.tags %}
-  <meta content="{{ tag }}" property="article:tag">
-  {% endfor %}
+  <meta content="/img/OgdenLogo.jpg" property="twitter:image">
 {% endif %}
   <!-- Google Suite Verification -->
   <meta name="google-site-verification" content="Ay267gjaK2dbcK9EuGzYKc0xKCC-cNH8tc4D-rc5D2U" />
