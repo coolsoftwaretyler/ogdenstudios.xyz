@@ -872,3 +872,5 @@ I'll be documenting the development of the Trackerr app on my blog here, and up 
 4. Actually build the application. 
 
 *Questions? Comments? Approval? Disapproval? Send it all along to tyler@ogdenstudios.xyz*
+
+Did you like this post? [Buy me a coffee](https://ko-fi.com/ogdenstudios)
