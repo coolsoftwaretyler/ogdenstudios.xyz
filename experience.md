@@ -7,11 +7,11 @@ weight: 20
 
 
 ## Full Stack Web Developer 
-### Digital Globe 
+### Maxar Technologies
 *November 2018 - Present*
 
 - Worked with Maxar Creative team to build Rails applications:
-    - Radiant Solutions 
+    - [Radiant Solutions](http://radiantsolutions.com) 
     - Digital Globe
 
 ## Website Administrator
