@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-01-31T19:57:21-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Ogden Studios</title><subtitle>Practical solutions for pragmatic people</subtitle><entry><title type="html">How do I Deploy a Rails 6 app to Amazon EC2?</title><link href="http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html" rel="alternate" type="text/html" title="How do I Deploy a Rails 6 app to Amazon EC2?" /><published>2019-01-30T00:00:00-07:00</published><updated>2019-01-30T00:00:00-07:00</updated><id>http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2</id><content type="html" xml:base="http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html">&lt;h2 id=&quot;why-i-wrote-this-blog-post&quot;&gt;Why I wrote this blog post&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-02-01T14:49:02-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Ogden Studios</title><subtitle>Practical solutions for pragmatic people</subtitle><entry><title type="html">How do I Deploy a Rails 6 app to Amazon EC2?</title><link href="http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html" rel="alternate" type="text/html" title="How do I Deploy a Rails 6 app to Amazon EC2?" /><published>2019-01-30T00:00:00-07:00</published><updated>2019-01-30T00:00:00-07:00</updated><id>http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2</id><content type="html" xml:base="http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html">&lt;h2 id=&quot;why-i-wrote-this-blog-post&quot;&gt;Why I wrote this blog post&lt;/h2&gt;
 
 &lt;p&gt;I’ve been building Rails apps for some time now. I’ve been mostly relying on &lt;a href=&quot;https://heroku.com&quot;&gt;Heroku&lt;/a&gt; to for my deploys.&lt;/p&gt;
 
@@ -16,10 +16,11 @@
   &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=7-1HCWbu7iU&amp;amp;list=PL23ZvcdS3XPLNdRYB_QyomQsShx59tpc-&quot;&gt;12 Rails Apps in 12 Weeks by Mackenzie Childs&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;It also assumes knowledge of command line interfaces, SSH, and git. Here are some good places to start for that:&lt;/p&gt;
+&lt;p&gt;It also assumes knowledge of command line interfaces, SSH, VIM, and git. Here are some good places to start for that:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.davidbaumgold.com/tutorials/command-line/&quot;&gt;Getting around the Command Line&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;http://blog.robertelder.org/what-is-ssh/&quot;&gt;What is SSH?&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.openvim.com/&quot;&gt;VIM&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;http://try.github.io/&quot;&gt;Try Git&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -36,53 +37,51 @@
 
 &lt;p&gt;I’ll be writing out each step of my process in creating a blank Rails 6 application and deploying it to a barebones EC2 instance. I will focus special attention on the steps that tripped me up as I performed them.&lt;/p&gt;
 
-&lt;p&gt;I’m going to use my actual commands, filepaths, and project names. That means you’ll likely need to do some substitution as you follow along, depending on your specific use case.&lt;/p&gt;
+&lt;p&gt;I’m going to use my actual commands, filepaths, and project names. That means you’ll likely need to do some substitution as you follow along, depending on your specific use case. Each command will be preceded by &lt;code class=&quot;highlighter-rouge&quot;&gt;local$&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;ubuntu$&lt;/code&gt; to denote if you should be in your local terminal, or a shell on your EC2 instance, respectively. At the top of each codeblock is a comment with the working directory or file.&lt;/p&gt;
 
-&lt;p&gt;So let’s get started!&lt;/p&gt;
+&lt;p&gt;By the end of the blog post, you should have a fresh Rails 6 application running on an Amazon EC2 instance, and the ability to push local changes to your server using Capistrano.&lt;/p&gt;
 
-&lt;h2 id=&quot;get-rails-6&quot;&gt;Get Rails 6&lt;/h2&gt;
+&lt;h2 id=&quot;step-1-get-rails-6&quot;&gt;Step 1: Get Rails 6&lt;/h2&gt;
 
 &lt;p&gt;I’m going to assume you already have ruby, bundler, and rails installed on your local dev machine, because you have some Ruby on Rails experience. If that’s the case, all you need to do is get the latest rails gem.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# local ~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
 local$ gem install rails --pre 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;create-a-rails-6-project&quot;&gt;Create a Rails 6 project&lt;/h2&gt;
+&lt;h2 id=&quot;step-2-create-a-rails-6-project&quot;&gt;Step 2: Create a Rails 6 project&lt;/h2&gt;
 
-&lt;p&gt;Then you need to make a new project with the Rails 6 beta&lt;/p&gt;
+&lt;p&gt;Make a new project with the Rails 6 beta&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# local ~/dev
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev
 local$ rails _6.0.0beta1_ new trackerr
 local$ cd trackerr
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;An initial &lt;code class=&quot;highlighter-rouge&quot;&gt;bundle install&lt;/code&gt; never hurts&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# local ~/dev/trackerr
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr
 local$ bundle install 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Check that it works&lt;/p&gt;
+&lt;p&gt;Check that the rails app works&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# local ~/dev/trackerr
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr
 local$ rails s
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;You should see something like:&lt;/p&gt;
+&lt;p&gt;In your browser, you should see something like this at localhost:3000&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/rails-6-ec2-tutorial-1/rails-6-success.png&quot; alt=&quot;Rails 6 Default Index Screenshot&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Nice, it works.&lt;/p&gt;
-
 &lt;p&gt;This is my favorite place for an init commit in git: It’s fresh, it’s new, it works. I haven’t broken anything yet.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# local ~/dev/trackerr
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr
 local$ git add . 
 local$ git commit -m &quot;init commit&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;push-to-github-or-other-similar-platform&quot;&gt;Push to GitHub (or other similar platform).&lt;/h2&gt;
+&lt;h2 id=&quot;step-3-push-to-github-or-other-similar-platform&quot;&gt;Step 3: Push to GitHub (or other similar platform).&lt;/h2&gt;
 
 &lt;p&gt;I use GitHub for my repositories, so YMMV, but I’m going to get this fresh Rails project checked into GitHub ASAP.&lt;/p&gt;
 
@@ -102,28 +101,28 @@ local$ git commit -m &quot;init commit&quot;
 
 &lt;p&gt;I use SSH keys for my GitHub access, and setting that up is beyond the scope of this blog post, but &lt;a href=&quot;https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/&quot;&gt;here is a good guide on how to do that&lt;/a&gt;.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# local ~/dev/trackerr
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr
 local$ git remote add origin git@github.com:&amp;lt;YOUR ADDRESS HERE&amp;gt;
 local$ git push -u origin master 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Voila, you’ve got a Rails 6 project installed on your machine and checked in to your GitHub.&lt;/p&gt;
 
-&lt;h2 id=&quot;get-the-sample-page-ready&quot;&gt;Get the sample page ready&lt;/h2&gt;
+&lt;h2 id=&quot;step-4-get-the-sample-page-ready&quot;&gt;Step 4: Get the sample page ready&lt;/h2&gt;
 
 &lt;p&gt;In order for your Rails app to actually work on the EC2 instance, you’ll need to set up a root path in your configuration, and a corresponding controller and view.&lt;/p&gt;
 
 &lt;p&gt;You can use the &lt;a href=&quot;https://guides.rubyonrails.org/command_line.html&quot;&gt;rails controller generator, if you like&lt;/a&gt;, or you can add it yourself. Since this blog post doesn’t cover testing or assets or any of the other nice rails magic created in the controller generators, I’m going to just manually add the bare minimum here.&lt;/p&gt;
 
-&lt;p&gt;In your &lt;code class=&quot;highlighter-rouge&quot;&gt;config/routes&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;In &lt;code class=&quot;highlighter-rouge&quot;&gt;config/routes&lt;/code&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# local ~/dev/trackerr/config/routes.rb 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr/config/routes.rb 
 root &quot;pages#index&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;In your &lt;code class=&quot;highlighter-rouge&quot;&gt;app/controllers&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;In &lt;code class=&quot;highlighter-rouge&quot;&gt;app/controllers&lt;/code&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# local ~/dev/trackerr/app/controllers/pages_controller.rb
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr/app/controllers/pages_controller.rb
 class PagesController &amp;lt; ApplicationController
     def index
     end
@@ -132,13 +131,13 @@ end
 
 &lt;p&gt;And a corresponding view&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# local ~/dev/trackerr/app/views/pages/index.html.erb
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr/app/views/pages/index.html.erb
 &amp;lt;h1&amp;gt;You did it! Great job!&amp;lt;/h1&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Add your changes and push them up to git&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# local ~/dev/trackerr
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr
 local$ git add .
 local$ git commit -m &quot;add home page&quot;
 local$ git push 
@@ -146,16 +145,17 @@ local$ git push
 
 &lt;p&gt;Now your barebones Rails 6 app is just about ready to live on a server.&lt;/p&gt;
 
-&lt;h2 id=&quot;setup-capistrano&quot;&gt;Setup Capistrano&lt;/h2&gt;
+&lt;h2 id=&quot;step-4-setup-capistrano&quot;&gt;Step 4: Setup Capistrano&lt;/h2&gt;
 
 &lt;p&gt;We’re going to be using &lt;a href=&quot;https://github.com/capistrano/capistrano&quot;&gt;Capistrano&lt;/a&gt; to manage our deploy tasks. I’ll be using information found in &lt;a href=&quot;https://medium.com/@jamesarobbo/deploying-a-rails-app-to-aws-with-passenger-nginx-and-capistrano-for-the-first-time-e8a0aac7da07&quot;&gt;this article&lt;/a&gt; to describe these steps, so feel free to read along with the original article or with this tutorial.&lt;/p&gt;
 
-&lt;p&gt;First, we’ll need to add Capistrano to the application.&lt;/p&gt;
+&lt;p&gt;First, we’ll need to add Capistrano to the application, including some capistrano gems to manage our particular stack.&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr/Gemfile
 gem 'capistrano'
 gem 'capistrano-rails'
 gem 'capistrano-bundler'
+gem 'capistrano-rbenv'
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Run bundle install to check that this worked.&lt;/p&gt;
@@ -186,11 +186,13 @@ cap install STAGES=production
 require &quot;capistrano/bundler&quot;
 require &quot;capistrano/rails/assets&quot;
 require &quot;capistrano/rails/migrations&quot;
+require &quot;capistrano/rbenv&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;I’ll set up my &lt;code class=&quot;highlighter-rouge&quot;&gt;config/deploy.rb&lt;/code&gt; to look like:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr/config/deploy.rb
+set :puma_conf, &quot;/var/www/trackerr/shared/config/puma.rb&quot;
 set :application, 'trackerr' 
 set :repo_url, 'git@github.com:ogdenstudios/trackerr.git'
 set :deploy_to, '/home/ubuntu/trackerr'
@@ -201,7 +203,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 
 &lt;p&gt;We’ll configure &lt;code class=&quot;highlighter-rouge&quot;&gt;config/deploy/production.rb&lt;/code&gt; later, since it requires some EC2 specific information, which we won’t have until we set up the instance. So let’s get to it!&lt;/p&gt;
 
-&lt;h2 id=&quot;set-up-your-amazon-ec2-instance&quot;&gt;Set up your Amazon EC2 Instance&lt;/h2&gt;
+&lt;h2 id=&quot;step-5-set-up-your-amazon-ec2-instance&quot;&gt;Step 5: Set up your Amazon EC2 Instance&lt;/h2&gt;
 
 &lt;p&gt;Go to Amazon AWS Console&lt;/p&gt;
 
@@ -281,13 +283,13 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 
 &lt;p&gt;First, find that &lt;code class=&quot;highlighter-rouge&quot;&gt;.pem&lt;/code&gt; key file you downloaded from Amazon. I’m on a Mac + FireFox, so mine ended up in &lt;code class=&quot;highlighter-rouge&quot;&gt;~/Downloads&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;I personally like to keep these kinds of files in &lt;code class=&quot;highlighter-rouge&quot;&gt;~/server-keys&lt;/code&gt; - which may or may not be great SecOps. I guess one day I’ll find out.&lt;/p&gt;
+&lt;p&gt;I personally like to keep these kinds of files in &lt;code class=&quot;highlighter-rouge&quot;&gt;~/server-keys&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;So go ahead and make a folder called &lt;code class=&quot;highlighter-rouge&quot;&gt;server-keys&lt;/code&gt; (or whatever you like) and drop it in your home directory (or wherever you like).&lt;/p&gt;
 
-&lt;p&gt;You’ll need to make your key not publicly viewable. To make sure that’s the case, run&lt;/p&gt;
+&lt;p&gt;You’ll need to set the permissions on your key so it isn’t publicly viewable. To make sure that’s the case, run:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# local ~/server-keys/
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/server-keys/
 local$ chmod 400 trackerr-key-pair.pem
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -297,23 +299,15 @@ local$ chmod 400 trackerr-key-pair.pem
 
 &lt;p&gt;If you need a more specific command for your keypair name and DNS address, click the &lt;strong&gt;Connect&lt;/strong&gt; button in the Amazon Resource Groups panel.&lt;/p&gt;
 
-&lt;p&gt;Make sure that all works. If so, you’re in good shape. At this point you:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Have a Rails 6 app on your computer/in GitHub.&lt;/li&gt;
-  &lt;li&gt;Have an Amazon EC2 instance running&lt;/li&gt;
-  &lt;li&gt;Have SSH access to your Amazon EC2 instance.&lt;/li&gt;
-&lt;/ol&gt;
+&lt;h2 id=&quot;step-6-configure-easy-access-to-your-ec2-instance&quot;&gt;Step 6: Configure easy access to your EC2 instance&lt;/h2&gt;
 
 &lt;p&gt;Let’s make that SSH access even more convenient by setting up an alias. I use &lt;a href=&quot;https://medium.com/swlh/power-up-your-terminal-using-oh-my-zsh-iterm2-c5a03f73a9fb&quot;&gt;zsh and oh-my-zsh&lt;/a&gt;, so I’m going to open up my .zshrc file.&lt;/p&gt;
 
 &lt;p&gt;In command line:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# local ~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
 local$ vim .zshrc
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;I’m not great with &lt;a href=&quot;https://www.openvim.com/&quot;&gt;VIM&lt;/a&gt;, but I’m learning, and I love it. You can edit this file using any text editor you like.&lt;/p&gt;
 
 &lt;p&gt;Everyone’s config is going to be different. Towards the bottom of my file, I’m going to add:&lt;/p&gt;
 
@@ -323,93 +317,102 @@ local$ vim .zshrc
 
 &lt;p&gt;Once you write and save to the zsh (or whatever shell) config, restart your shell. For me, it’s just:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# local ~ 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~ 
 local$ zsh 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Then I can run&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# local ~ 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~ 
 local$ ssh_trackerr
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;And I’m in. You should see a new shell prompt which looks like &lt;code class=&quot;highlighter-rouge&quot;&gt;ubuntu@ip-xxx-xx-xx-xxx:~$&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;And I’m in. I now see a new shell prompt which looks like &lt;code class=&quot;highlighter-rouge&quot;&gt;ubuntu@ip-xxx-xx-xx-xxx:~$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Now let’s give Capistrano the ability to grab our app from GitHub and deploy. We’ve got all the information we need to configure &lt;code class=&quot;highlighter-rouge&quot;&gt;trackerr/config/deploy/production.rb&lt;/code&gt; (thanks to &lt;a href=&quot;https://stackoverflow.com/questions/12967918/deploy-with-capistrano-using-a-pem-file&quot;&gt;this helpful StackOveflow question&lt;/a&gt;)&lt;/p&gt;
+&lt;h2 id=&quot;step-7-configure-capistrano-production-deploy-tasks&quot;&gt;Step 7: Configure Capistrano Production deploy tasks&lt;/h2&gt;
+
+&lt;p&gt;Now let’s give Capistrano the ability to grab our app from GitHub and deploy. We’ve got all the information we need to configure &lt;code class=&quot;highlighter-rouge&quot;&gt;trackerr/config/deploy/production.rb&lt;/code&gt; (thanks to &lt;a href=&quot;https://stackoverflow.com/questions/12967918/deploy-with-capistrano-using-a-pem-file&quot;&gt;this helpful StackOveflow thread&lt;/a&gt;)&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr/config/deploy/production.rb 
 
-server '3.88.0.162', user: 'ubuntu', roles: %w{web app db}
+server 'your.ip.address.here', user: 'ubuntu', roles: %w{web app db}
 set :ssh_options, { 
   forward_agent: true, 
   auth_methods: %w[publickey],
-  keys: %w[/Users/tylerwilliams/server-keys/trackerr-key-pair.pem]
+  keys: %w[/path/to/your/keypair/keypair-name.pem]
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h2 id=&quot;preparing-the-server&quot;&gt;Preparing the server&lt;/h2&gt;
-
-&lt;p&gt;Before this completely works, we need to prep the server to run the Capistrano tasks.&lt;/p&gt;
+&lt;h2 id=&quot;step-8-preparing-the-server-to-run-capistrano-tasks&quot;&gt;Step 8: Preparing the server to run Capistrano tasks&lt;/h2&gt;
 
 &lt;p&gt;Use your shiny new alias to hop in to the EC2 instance:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;local$ ssh_trackerr
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
+local$ ssh_trackerr
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Create the directory that the app will live in:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ubuntu$ sudo mkdir -p /var/www
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
+ubuntu$ sudo mkdir -p /var/www
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;By default, the ubuntu user doesn’t have access to this directory, so change the ownership:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
+ubuntu$ sudo chown ubuntu /var/www
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Update all existing packages on the server:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ubuntu$ sudo apt-get update &amp;amp;&amp;amp; sudo apt-get -y upgrade
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
+ubuntu$ sudo apt-get update &amp;amp;&amp;amp; sudo apt-get -y upgrade
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Then install the dependencies required to install Ruby:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 ~
-ubuntu$ sudo apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm5 libgdbm-dev
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
+ubuntu$ sudo apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm5 libgdbm-dev libsqlite3-dev
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Once those dependencies install, install rbenv. Clone the rbenv repo:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 ~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
 ubuntu$ git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;then, add ~/.rbenv/bin to your $PATH so you can use its CLI.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 ~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
 ubuntu$ echo 'export PATH=&quot;$HOME/.rbenv/bin:$PATH&quot;' &amp;gt;&amp;gt; ~/.bashrc
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Add this command to your bash profile so you can load rbenv automatically.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 ~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
 ubuntu$ echo 'eval &quot;$(rbenv init -)&quot;' &amp;gt;&amp;gt; ~/.bashrc
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Restart bash to get those changes to apply.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 ~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
 ubuntu$ source ~/.bashrc 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Then we’ll install the ruby-build plugin to add &lt;code class=&quot;highlighter-rouge&quot;&gt;rbenv install&lt;/code&gt; which simplifies the install process for new Ruby versions (which we will surely need for Rails 6)&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 ~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
 ubuntu$ git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Now you’ll be able to see all the available ruby versions with this command:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 ~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
 ubuntu$ rbenv install -l
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;For Rails 6, we need Ruby 2.5.0 or newer. At the time of writing, Rails 6 sets it at 2.5.1&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 ~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
 ubuntu$ rbenv install 2.5.1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -417,49 +420,55 @@ ubuntu$ rbenv install 2.5.1
 
 &lt;p&gt;Up next, set your global default ruby version using&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 ~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
 ubuntu$ rbenv global 2.5.1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;You can check with&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 ~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
 ubuntu$ ruby -v
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Now we need to configure our ability to work with gems. First, let’s turn off local documentation generation by setting our ~/.gemrc to turn off that feature.&lt;/p&gt;
+&lt;p&gt;Now we need to configure our ability to work with gems. First, let’s turn off local documentation generation by adding a setting to our &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.gemrc&lt;/code&gt; file&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 ~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
 ubuntu$ echo &quot;gem: --no-document&quot; &amp;gt; ~/.gemrc
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;install-a-javascript-runtime-on-ec2&quot;&gt;Install a Javascript Runtime on EC2&lt;/h2&gt;
+&lt;p&gt;With our gem process configured, let’s install bundler. This step gave me issues before, and I realized I installed the latest bundler, but Rails 6 generated using 1.17.1. Make sure to specify your version - the version you download on the server should match what’s written in your Gemfile.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
+ubuntu$ gem install bundler -v 1.17.1 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;step-9-install-a-javascript-runtime-on-ec2&quot;&gt;Step 9: Install a Javascript Runtime on EC2&lt;/h2&gt;
 
 &lt;p&gt;The Rails Asset Pipeline requires JavaScript runtime, so let’s get Node.js&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 ~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
 ubuntu$ sudo add-apt-repository ppa:chris-lea/node.js
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Then update apt-get and install the Node.js package:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 ~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
 ubuntu$ sudo apt-get update
 ubuntu$ sudo apt-get install nodejs
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;install-a-node-package-manager&quot;&gt;Install a Node package manager&lt;/h2&gt;
+&lt;h2 id=&quot;step-10-install-a-node-package-manager&quot;&gt;Step 10: Install a Node package manager&lt;/h2&gt;
 
 &lt;p&gt;With Node installed, we’ll want to download the &lt;a href=&quot;https://yarnpkg.com/en/&quot;&gt;yarn&lt;/a&gt; package manager, since Rails 6 uses it by default.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 ~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
 ubuntu$ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 ubuntu$ echo &quot;deb https://dl.yarnpkg.com/debian/ stable main&quot; | sudo tee /etc/apt/sources.list.d/yarn.list
 ubuntu$ sudo apt-get update
 ubuntu$ sudo apt-get install yarn
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;set-up-your-ec2-server-with-your-git-credentials&quot;&gt;Set up your EC2 server with your git credentials&lt;/h2&gt;
+&lt;h2 id=&quot;step-11-set-up-your-ec2-server-with-your-git-credentials&quot;&gt;Step 11: Set up your EC2 server with your git credentials&lt;/h2&gt;
 
 &lt;p&gt;If you’re using SSH keys to access your GitHub account, you’ll need to set up those credentials on your server. You can do this by following the guide at &lt;a href=&quot;https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/&quot;&gt;here&lt;/a&gt;, or you can follow along with me.&lt;/p&gt;
 
@@ -481,34 +490,102 @@ ubuntu$ ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;
 
 &lt;p&gt;Click &lt;strong&gt;Add SSH Key&lt;/strong&gt; and confirm your password at the prompt.&lt;/p&gt;
 
-&lt;h2 id=&quot;set-up-nginx&quot;&gt;Set up NGINX&lt;/h2&gt;
+&lt;h2 id=&quot;step-12-give-your-server-access-to-your-masterkey&quot;&gt;Step 12: Give your server access to your master.key&lt;/h2&gt;
+
+&lt;p&gt;In Rails 5.2+, you have the ability to manage credentials and other secrets using the &lt;code class=&quot;highlighter-rouge&quot;&gt;master.key&lt;/code&gt; file. You can read about this excellent feature &lt;a href=&quot;https://medium.com/cedarcode/rails-5-2-credentials-9b3324851336&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Capistrano requires a bit of extra configuration to get this configuration quite right. You can &lt;a href=&quot;https://waiyanyoon.com/deploying-rails-5-2-applications-with-encrypted-credentials-using-capistrano/&quot;&gt;follow these instructions&lt;/a&gt; or read along with me.&lt;/p&gt;
+
+&lt;p&gt;Copy your local &lt;code class=&quot;highlighter-rouge&quot;&gt;master.key&lt;/code&gt; file to your server at &lt;code class=&quot;highlighter-rouge&quot;&gt;/var/www/trackerr/shared/config/master.key&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;In your application’s &lt;code class=&quot;highlighter-rouge&quot;&gt;config/deploy.rb&lt;/code&gt; file, add:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr/config/deploy.rb 
+set :linked_files, %w{config/master.key}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;step-13-configure-the-puma-application-server&quot;&gt;Step 13: Configure the Puma application server&lt;/h2&gt;
+
+&lt;p&gt;We’ll be using the Puma application server for our rails app since it ships standard with Rails, and it should meet our needs. Capistrano requires some extra configuration for this, as well.&lt;/p&gt;
+
+&lt;p&gt;In your Gemfile:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr/Gemfile
+gem 'capistrano3-puma' 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Add this configuration to your capfile&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr/Capfile
+require 'capistrano/puma'
+install_plugin Capistrano::Puma  # Default puma tasks
+install_plugin Capistrano::Puma::Workers  # if you want to control the workers (in cluster mode)
+install_plugin Capistrano::Puma::Jungle # if you need the jungle tasks
+install_plugin Capistrano::Puma::Monit  # if you need the monit tasks
+install_plugin Capistrano::Puma::Nginx  # if you want to upload a nginx site template
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we’ll want to configure Puma on the server, since our local Puma configuration won’t work for the EC2 instance. On your EC2 server, create a new file at &lt;code class=&quot;highlighter-rouge&quot;&gt;/var/www/trackerr/shared/config/puma.rb&lt;/code&gt;, enter the following:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Change to match your CPU core count
+workers 2
+
+# Min and Max threads per worker
+threads 1, 6
+
+app_dir = File.expand_path(&quot;../..&quot;, __FILE__)
+shared_dir = &quot;#{app_dir}/shared&quot;
+
+# Default to production
+rails_env = ENV['RAILS_ENV'] || &quot;production&quot;
+environment rails_env
+
+# Set up socket location
+bind &quot;unix://#{shared_dir}/sockets/puma.sock&quot;
+
+# Logging
+stdout_redirect &quot;#{shared_dir}/log/puma.stdout.log&quot;, &quot;#{shared_dir}/log/puma.stderr.log&quot;, true
+
+# Set master PID and state locations
+pidfile &quot;#{shared_dir}/pids/puma.pid&quot;
+state_path &quot;#{shared_dir}/pids/puma.state&quot;
+activate_control_app
+
+on_worker_boot do
+  require &quot;active_record&quot;
+  ActiveRecord::Base.connection.disconnect! rescue ActiveRecord::ConnectionNotEstablished
+  ActiveRecord::Base.establish_connection(YAML.load_file(&quot;#{app_dir}/config/database.yml&quot;)[rails_env])
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;step-14-set-up-nginx&quot;&gt;Step 14: Set up NGINX&lt;/h2&gt;
 
 &lt;p&gt;We’re going to install and configure Nginx on our server now.&lt;/p&gt;
 
 &lt;p&gt;Head back to your home directory and install nginx.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 ~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
 ubuntu$ sudo apt-get install nginx
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Next, let’s configure the default server block:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 ~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
 ubuntu$ sudo vim /etc/nginx/sites-available/default
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Add the following, but replace the username and application name with yours.&lt;/p&gt;
+&lt;p&gt;Add the following, but replace the application and path values with yours, if you’ve changed it.&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;upstream app {
-    # Path to Unicorn SOCK file, as defined previously
-    server unix:/home/ubuntu/trackerr/shared/sockets/unicorn.sock fail_timeout=0;
+    # Path to Puma SOCK file, as defined previously
+    server unix:/var/www/trackerr/shared/tmp/sockets/puma.sock fail_timeout=0;
 }
 
 server {
     listen 80;
     server_name localhost;
 
-    root /home/ubuntu/trackerr/public;
+    root /var/www/trackerr/public;
 
     try_files $uri/index.html $uri @app;
 
@@ -525,31 +602,43 @@ server {
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Save and exit. This configures Nginx as a reverse proxy, so HTTP requests get forwarded to the Unicorn application server via a Unix socket. Feel free to make any changes as you see fit. &lt;strong&gt;Make sure you overwrite the default config. The first time I did this, I just appended to the file, and I coudln’t figure out what was going wrong.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Save and exit. This configures Nginx as a reverse proxy, so HTTP requests get forwarded to the application server via a Unix socket. Feel free to make any changes as you see fit. &lt;strong&gt;Make sure you overwrite the default config. The first time I did this, I just appended to the file, and I coudln’t figure out what was going wrong.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Restart Nginx:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# EC2 ~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
 ubuntu$ sudo service nginx restart 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Awesome, now check it out at your Amazon IP address.&lt;/p&gt;
+&lt;h2 id=&quot;step-15-commit-your-local-changes-to-git-and-deploy-to-server&quot;&gt;Step 15: Commit your local changes to git and deploy to server&lt;/h2&gt;
+
+&lt;p&gt;We’re at a place where updates to the master branch of our repo will work correclty in a Capistrano deploy. Here’s how to try it out:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr
+local$ git add .
+local$ git commit -m &quot;update with capistrano configuration&quot;
+local$ git push 
+local$ cap production deploy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;step-16-check-your-work&quot;&gt;Step 16: Check your work!&lt;/h2&gt;
 
 &lt;p&gt;Head back to your EC2 Resource console, and find the value listed under Public DNS (IPv4) - then paste that into your browser.&lt;/p&gt;
 
 &lt;p&gt;You should be good to go! Congrats! You did it!&lt;/p&gt;
 
-&lt;p&gt;This post has been pretty long, but I hope you found it helpful. Again, this was a pretty limited scope and just covered how to get a new Rails 6 application up and running on a plain Amazon EC2 instance - no more.&lt;/p&gt;
+&lt;h2 id=&quot;next-steps&quot;&gt;Next steps:&lt;/h2&gt;
 
-&lt;p&gt;I’ll be documenting the development of the Trackerr app on my blog here, and up next I plan to:&lt;/p&gt;
+&lt;p&gt;You might want to do a few things now that you’ve got the skeleton of your application working:&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;Set up an easier way to deploy changes to the app on the server.&lt;/li&gt;
+  &lt;li&gt;Set up the DNS records&lt;/li&gt;
   &lt;li&gt;Set up a production-level database for the application.&lt;/li&gt;
-  &lt;li&gt;Configure the DNS settings for the application.&lt;/li&gt;
   &lt;li&gt;Actually build the application.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;em&gt;Questions? Comments? Approval? Disapproval? Send it all along to tyler@ogdenstudios.xyz&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;These tasks are outside the scope of this tutorial, but will be covered in future posts, and links added back in.&lt;/p&gt;
 
-&lt;p&gt;Did you like this post? &lt;a href=&quot;https://ko-fi.com/ogdenstudios&quot;&gt;Buy me a coffee&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="blog" /><category term="tutorial" /><category term="rails" /><category term="aws" /><summary type="html">Why I wrote this blog post</summary></entry></feed>
+&lt;p&gt;&lt;em&gt;Questions? Comments? Send them all along to &lt;a href=&quot;mailto:tyler@ogdenstudios.xyz&quot;&gt;tyler@ogdenstudios.xyz&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Did you like this post? &lt;a href=&quot;https://ko-fi.com/ogdenstudios&quot;&gt;Buy me a coffee&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="blog" /><category term="tutorial" /><category term="rails" /><category term="aws" /><category term="capistrano" /><category term="nginx" /><summary type="html">Why I wrote this blog post</summary></entry></feed>
