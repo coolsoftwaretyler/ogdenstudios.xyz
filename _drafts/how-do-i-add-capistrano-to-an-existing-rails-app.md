@@ -93,4 +93,18 @@ no sunc hfile or directory bundle capistrano
 maybe had to add rbenv? gem 'capistrano-rbenv', '~> 2.1'
 
 maybe instead of all that i'll ust log in as trackerr-user
+
+added ssh public key from local to authoirzed hosts int rackerr user directory 
+
+gave trackerr user access to tmp 
+
+error: could not lock config file config: Permission denied
+
+set sudo chown trackerr-user -R trackerr since cap uses sudo to create some files and the user is locked out of them. 
+
+capistrano has a new gem for dealing with master key https://github.com/virgoproz/capistrano-master-key
+
+or this one, rather: https://waiyanyoon.com/deploying-rails-5-2-applications-with-encrypted-credentials-using-capistrano/
+
+
  

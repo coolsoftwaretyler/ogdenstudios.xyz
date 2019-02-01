@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "How do I Deploy a Rails 6 app to Amazon EC2?"
-tags: [blog, tutorial, rails, aws]
-description: "A step-by-step tutorial for creating a blank Rails 6 app and deploying it to an Amazon AWS EC2 instance."
+tags: [blog, tutorial, rails, aws, capistrano, nginx]
+description: "A step-by-step tutorial for creating a blank Rails 6 app and deploying it to an Amazon AWS EC2 instance with Capistrano."
 ---
 
 ## Why I wrote this blog post 
@@ -37,7 +37,9 @@ This blog should help you if:
 
 I'll be writing out each step of my process in creating a blank Rails 6 application and deploying it to a barebones EC2 instance. I will focus special attention on the steps that tripped me up as I performed them.
 
-I'm going to use my actual commands, filepaths, and project names. That means you'll likely need to do some substitution as you follow along, depending on your specific use case. 
+I'm going to use my actual commands, filepaths, and project names. That means you'll likely need to do some substitution as you follow along, depending on your specific use case. At the top of each block of commands, I'll leave a note for the working directory or file you should be in. Each command will be preceded by `local$` or `ubuntu$` to denote if you should be in your local terminal, or a shell on your EC2 instance. If there is no prompt, that means you should be editing this file in a text editor, and it's likely in your codebase on a configuration file on your server. 
+
+By the end of the blog post, you should have a fresh Rails 6 application running on an Amazon EC2 instance, and the ability to push local changes to your server using Capistrano. 
 
 So let's get started! 
 
@@ -46,7 +48,7 @@ So let's get started!
 I'm going to assume you already have ruby, bundler, and rails installed on your local dev machine, because you have some Ruby on Rails experience. If that's the case, all you need to do is get the latest rails gem.
 
 ```
-# local ~
+# ~
 local$ gem install rails --pre 
 ```
 
@@ -55,7 +57,7 @@ local$ gem install rails --pre
 Then you need to make a new project with the Rails 6 beta 
 
 ```
-# local ~/dev
+# ~/dev
 local$ rails _6.0.0beta1_ new trackerr
 local$ cd trackerr
 ```
@@ -63,14 +65,14 @@ local$ cd trackerr
 An initial `bundle install` never hurts
 
 ``` 
-# local ~/dev/trackerr
+# ~/dev/trackerr
 local$ bundle install 
 ```
 
 Check that it works 
 
 ```
-# local ~/dev/trackerr
+# ~/dev/trackerr
 local$ rails s
 ```
 
@@ -83,7 +85,7 @@ Nice, it works.
 This is my favorite place for an init commit in git: It's fresh, it's new, it works. I haven't broken anything yet.
 
 ```
-# local ~/dev/trackerr
+# ~/dev/trackerr
 local$ git add . 
 local$ git commit -m "init commit"
 ```
@@ -107,7 +109,7 @@ I use GitHub for my repositories, so YMMV, but I'm going to get this fresh Rails
 I use SSH keys for my GitHub access, and setting that up is beyond the scope of this blog post, but [here is a good guide on how to do that](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/).
 
 ```
-# local ~/dev/trackerr
+# ~/dev/trackerr
 local$ git remote add origin git@github.com:<YOUR ADDRESS HERE>
 local$ git push -u origin master 
 ```
@@ -123,14 +125,14 @@ You can use the [rails controller generator, if you like](https://guides.rubyonr
 In your `config/routes`
 
 ```
-# local ~/dev/trackerr/config/routes.rb 
+# ~/dev/trackerr/config/routes.rb 
 root "pages#index"
 ```
 
 In your `app/controllers`
 
 ```
-# local ~/dev/trackerr/app/controllers/pages_controller.rb
+# ~/dev/trackerr/app/controllers/pages_controller.rb
 class PagesController < ApplicationController
     def index
     end
@@ -147,7 +149,7 @@ And a corresponding view
 Add your changes and push them up to git 
 
 ```
-# local ~/dev/trackerr
+# ~/dev/trackerr
 local$ git add .
 local$ git commit -m "add home page"
 local$ git push 
@@ -166,6 +168,7 @@ First, we'll need to add Capistrano to the application.
 gem 'capistrano'
 gem 'capistrano-rails'
 gem 'capistrano-bundler'
+gem 'capistrano-rbenv'
 ```
 
 Run bundle install to check that this worked. 
@@ -200,6 +203,7 @@ In the Capfile, uncomment the following lines:
 require "capistrano/bundler"
 require "capistrano/rails/assets"
 require "capistrano/rails/migrations"
+require "capistrano/rbenv"
 ```
 
 I'll set up my `config/deploy.rb` to look like: 
@@ -296,7 +300,7 @@ So go ahead and make a folder called `server-keys` (or whatever you like) and dr
 You'll need to make your key not publicly viewable. To make sure that's the case, run 
 
 ```
-# local ~/server-keys/
+# ~/server-keys/
 local$ chmod 400 trackerr-key-pair.pem
 ```
 
@@ -332,14 +336,14 @@ With the correct address in it.
 Once you write and save to the zsh (or whatever shell) config, restart your shell. For me, it's just: 
 
 ```
-# local ~ 
+# ~ 
 local$ zsh 
 ```
 
 Then I can run 
 
 ```
-# local ~ 
+# ~ 
 local$ ssh_trackerr
 ``` 
 
@@ -350,11 +354,11 @@ Now let's give Capistrano the ability to grab our app from GitHub and deploy. We
 ```
 # ~/dev/trackerr/config/deploy/production.rb 
 
-server '3.88.0.162', user: 'ubuntu', roles: %w{web app db}
+server 'your.ip.address.here', user: 'ubuntu', roles: %w{web app db}
 set :ssh_options, { 
   forward_agent: true, 
   auth_methods: %w[publickey],
-  keys: %w[/Users/tylerwilliams/server-keys/trackerr-key-pair.pem]
+  keys: %w[/path/to/your/keypair/keypair-name.pem]
 }
 ```
 ## Preparing the server
@@ -373,6 +377,12 @@ Create the directory that the app will live in:
 ubuntu$ sudo mkdir -p /var/www
 ```
 
+By default, the ubuntu user doesn't have access to this directory, so change the ownership: 
+
+```
+ubuntu$ sudo chown ubuntu /var/www
+```
+
 Update all existing packages on the server:
 
 ```
@@ -382,56 +392,48 @@ ubuntu$ sudo apt-get update && sudo apt-get -y upgrade
 Then install the dependencies required to install Ruby: 
 
 ```
-# EC2 ~
-ubuntu$ sudo apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm5 libgdbm-dev
+ubuntu$ sudo apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm5 libgdbm-dev libsqlite3-dev
 ```
 
 Once those dependencies install, install rbenv. Clone the rbenv repo: 
 
 ```
-# EC2 ~
 ubuntu$ git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 ```
 
 then, add ~/.rbenv/bin to your $PATH so you can use its CLI. 
 
 ```
-# EC2 ~
 ubuntu$ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
 ```
 
 Add this command to your bash profile so you can load rbenv automatically. 
 
 ```
-# EC2 ~
 ubuntu$ echo 'eval "$(rbenv init -)"' >> ~/.bashrc
 ```
 
 Restart bash to get those changes to apply. 
 
 ```
-# EC2 ~
 ubuntu$ source ~/.bashrc 
 ```
 
 Then we'll install the ruby-build plugin to add `rbenv install` which simplifies the install process for new Ruby versions (which we will surely need for Rails 6)
 
 ``` 
-# EC2 ~
 ubuntu$ git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 ```
 
 Now you'll be able to see all the available ruby versions with this command: 
 
 ``` 
-# EC2 ~
 ubuntu$ rbenv install -l
 ``` 
 
 For Rails 6, we need Ruby 2.5.0 or newer. At the time of writing, Rails 6 sets it at 2.5.1
 
 ```
-# EC2 ~
 ubuntu$ rbenv install 2.5.1
 ```
 
@@ -440,23 +442,26 @@ The installation may take some time. This is a good spot to make some coffee.
 Up next, set your global default ruby version using 
 
 ```
-# EC2 ~
 ubuntu$ rbenv global 2.5.1
 ```
 
 You can check with 
 
 ```
-# EC2 ~
 ubuntu$ ruby -v
 ```
 
 Now we need to configure our ability to work with gems. First, let's turn off local documentation generation by setting our ~/.gemrc to turn off that feature. 
 
 ```
-# EC2 ~
 ubuntu$ echo "gem: --no-document" > ~/.gemrc
 ```
+
+With our gem process configured, let's install bundler 
+
+``` 
+ubuntu$ gem install bundler -v 1.17.1 # Use the version number specified in your app's Gemfile. 
+``` 
 
 ## Install a Javascript Runtime on EC2
 
@@ -510,6 +515,85 @@ Select a title, then paste you rkey into the key field.
 
 Click **Add SSH Key** and confirm your password at the prompt. 
 
+## Give your server access to your master.key
+
+In Rails 5.2+, you have the ability to manage credentials and other secrets using the `master.key` file. You can read about this excellent feature [here](https://medium.com/cedarcode/rails-5-2-credentials-9b3324851336).
+
+Capistrano requires a bit of extra configuration to get this configuration quite right. You can [follow these instructions](https://waiyanyoon.com/deploying-rails-5-2-applications-with-encrypted-credentials-using-capistrano/) or read along with me. 
+
+Copy your local `master.key` file to your server at `/var/www/trackerr/shared/config/master.key`
+
+In your application's `config/deploy.rb` file, add: 
+
+```
+# ~/dev/trackerr/config/deploy.rb 
+set :linked_files, %w{config/master.key}
+```
+
+## Configure the Puma application server
+
+We'll be using the Puma application server for our rails app since it ships standard with Rails, and it should meet our needs. Capistrano requires some extra configuration for this, as well.
+
+In your Gemfile: 
+
+```
+# ~/dev/trackerr/Gemfile
+gem 'capistrano3-puma' 
+```
+
+Add this configuration to your capfile 
+
+```
+# ~/dev/trackerr/Capfile
+require 'capistrano/puma'
+install_plugin Capistrano::Puma  # Default puma tasks
+install_plugin Capistrano::Puma::Workers  # if you want to control the workers (in cluster mode)
+install_plugin Capistrano::Puma::Jungle # if you need the jungle tasks
+install_plugin Capistrano::Puma::Monit  # if you need the monit tasks
+install_plugin Capistrano::Puma::Nginx  # if you want to upload a nginx site template
+```
+
+Now we'll want to configure Puma on the server, since our local Puma configuration isn't great. Create a new file at `/var/www//trackerr/shared/config/puma.rb`, enter the following: 
+
+```
+# trackerr/config/puma.production.rb
+# Change to match your CPU core count
+workers 2
+
+# Min and Max threads per worker
+threads 1, 6
+
+app_dir = File.expand_path("../..", __FILE__)
+shared_dir = "#{app_dir}/shared"
+
+# Default to production
+rails_env = ENV['RAILS_ENV'] || "production"
+environment rails_env
+
+# Set up socket location
+bind "unix://#{shared_dir}/sockets/puma.sock"
+
+# Logging
+stdout_redirect "#{shared_dir}/log/puma.stdout.log", "#{shared_dir}/log/puma.stderr.log", true
+
+# Set master PID and state locations
+pidfile "#{shared_dir}/pids/puma.pid"
+state_path "#{shared_dir}/pids/puma.state"
+activate_control_app
+
+on_worker_boot do
+  require "active_record"
+  ActiveRecord::Base.connection.disconnect! rescue ActiveRecord::ConnectionNotEstablished
+  ActiveRecord::Base.establish_connection(YAML.load_file("#{app_dir}/config/database.yml")[rails_env])
+end
+```
+
+Now tell Capistrano to use that configuration file in its deploy by adding the following to `~/dev/trackerr/deploy.rb`:
+
+```
+set :puma_conf, "/var/www/trackerr/shared/config/puma.rb"
+```
+
 ## Set up NGINX 
 
 We're going to install and configure Nginx on our server now. 
@@ -528,19 +612,19 @@ Next, let's configure the default server block:
 ubuntu$ sudo vim /etc/nginx/sites-available/default
 ```
 
-Add the following, but replace the username and application name with yours.
+Add the following, but replace the application name with yours.
 
 ```
 upstream app {
-    # Path to Unicorn SOCK file, as defined previously
-    server unix:/home/ubuntu/trackerr/shared/sockets/unicorn.sock fail_timeout=0;
+    # Path to Puma SOCK file, as defined previously
+    server unix:/var/www/trackerr/shared/tmp/sockets/puma.sock fail_timeout=0;
 }
 
 server {
     listen 80;
     server_name localhost;
 
-    root /home/ubuntu/trackerr/public;
+    root /var/www/trackerr/public;
 
     try_files $uri/index.html $uri @app;
 
@@ -557,7 +641,7 @@ server {
 }
 ```
 
-Save and exit. This configures Nginx as a reverse proxy, so HTTP requests get forwarded to the Unicorn application server via a Unix socket. Feel free to make any changes as you see fit. **Make sure you overwrite the default config. The first time I did this, I just appended to the file, and I coudln't figure out what was going wrong.**
+Save and exit. This configures Nginx as a reverse proxy, so HTTP requests get forwarded to the application server via a Unix socket. Feel free to make any changes as you see fit. **Make sure you overwrite the default config. The first time I did this, I just appended to the file, and I coudln't figure out what was going wrong.**
 
 Restart Nginx: 
 
@@ -566,20 +650,19 @@ Restart Nginx:
 ubuntu$ sudo service nginx restart 
 ```
 
+Finally, on your local machine, run `cap production deploy`. Watch as the magic happens, Capistrano deploys to your server, and your'e good to go. 
+
 Awesome, now check it out at your Amazon IP address. 
 
 Head back to your EC2 Resource console, and find the value listed under Public DNS (IPv4) - then paste that into your browser. 
 
 You should be good to go! Congrats! You did it!
 
-This post has been pretty long, but I hope you found it helpful. Again, this was a pretty limited scope and just covered how to get a new Rails 6 application up and running on a plain Amazon EC2 instance - no more. 
+Here are some next steps I'll be taking with this application: 
 
-I'll be documenting the development of the Trackerr app on my blog here, and up next I plan to: 
-
-1. Set up an easier way to deploy changes to the app on the server. 
+1. Set up the DNS records
 2. Set up a production-level database for the application. 
-3. Configure the DNS settings for the application. 
-4. Actually build the application. 
+3. Actually build the application. 
 
 *Questions? Comments? Approval? Disapproval? Send it all along to tyler@ogdenstudios.xyz*
 
