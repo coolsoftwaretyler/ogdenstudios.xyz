@@ -1,1 +1,0 @@
-http://blog.scoutapp.com/articles/2017/02/10/which-ruby-app-server-is-right-for-you
