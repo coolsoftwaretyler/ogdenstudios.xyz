@@ -66,8 +66,8 @@ I'll set up my `config/deploy.rb` to look like:
 ```
 # ~/dev/trackerr/config/deploy.rb
 set :application, 'trackerr' 
-set :repo_url, 'git@github.com:ogdenstudios/tracker.git'
-set :deploy_to, '/var/www/trackerr'
+set :repo_url, 'git@github.com:ogdenstudios/trackerr.git'
+set :deploy_to, '/home/trackerr-user/trackerr'
 set :use_sudo, true
 set :branch, 'master'
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
@@ -76,7 +76,21 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 I also need to add settings to the production environment config for Capistrano 
 
 ```
-# !/dev/trackerr/config/deploy/production.rb
-server 'my.ip.address.here', user: 'trackerr-user', roles: %w{web app db}
-set :ssh_options, { forward_agent: true }
+server 'ec2-3-88-162-177.compute-1.amazonaws.com', user: 'ubuntu', roles: %w{web app db}
+set :ssh_options, { 
+    forward_agent: true,
+    auth_methods: ["publickey"],
+    keys: ["/Users/tylerwilliams/server-keys/trackerr-key-pair.pem"]
+}
 ```
+
+Sweet, had to give ubuntu an ssh key on github before cap would work 
+
+Had to give ubuntu user chown access to /home/trackerr-user/trackerr https://askubuntu.com/questions/402980/give-user-write-access-to-folder
+
+no sunc hfile or directory bundle capistrano 
+
+maybe had to add rbenv? gem 'capistrano-rbenv', '~> 2.1'
+
+maybe instead of all that i'll ust log in as trackerr-user
+ 
