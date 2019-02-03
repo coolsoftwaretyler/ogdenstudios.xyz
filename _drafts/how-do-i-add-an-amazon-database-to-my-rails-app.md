@@ -75,6 +75,68 @@ local$ git commit -m "add pg gem and move sqlite3 gem to dev/test"
 local$ git push 
 ```
 
+Now we'll update the database configuration YAML file according to [these specs](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Ruby.rds.html)
+
+```
+# ~/dev/trackerr/config/database.yml
+production:
+  adapter: postgresql
+  encoding: utf8
+  database: <%= Rails.application.credentials[:RDS_DB_NAME] %>
+  username: <%= Rails.application.credentials[:RDS_USERNAME] %>
+  password: <%= Rails.application.credentials[:RDS_PASSWORD] %>
+  host: <%= Rails.application.credentials[:RDS_HOSTNAME] %>
+  port: <%= Rails.application.credentials[:RDS_PORT] %>
+```
+
+You might already have some configuration in your production block, so make sure to overwrite that. 
+
+I'm using the Master.key syntax for the secret variables here. Using Master.key is out of the scope of this article, but you can figure out how to set that [here](https://www.engineyard.com/blog/rails-encrypted-credentials-on-rails-5.2). 
+
+In your values, paste in the name of the database we set up, the username we chose, the password we created. Then 
+
+You won't be able to run capistrano quite yet. You'll need to make sure your EC2 instance has the pre-reqs, first. SSH into your instance (link to the place where we set up the alias). Get the prereqs: 
+
+```
+# ~
+ubuntu$ sudo apt-get install postgresql-client libpq5 libpq-dev
+```
+
+Let's run a capistrano deploy: 
+
+```
+# ~/dev/trackerr
+
+cap production deploy 
+```
+
 ## Step 3: Test our database configuration 
 
 We're going to create Users for our app, and we're going to use [Devise](https://github.com/plataformatec/devise) to do it. I love Devise, although if you've never rolled your own authentication and authorizatio system, you might want to get some experience with that before reaching for this tool. The [Michael Hartl Ruby on Rails tutorial](https://www.railstutorial.org/book/modeling_users) has a great section on just this. 
+
+In your gemfile: 
+
+```
+# ~/dev/trackerr/Gemfile 
+gem 'devise'
+```
+
+Run bundle install and run the generator:
+
+```
+# ~/dev/trackerr
+local$ bundle install 
+local$ rails generate devise:install
+```
+
+Follow instructions to set up the mailer config 
+
+{write here]}
+
+Generate the devise model for users and migrate: 
+Need to adjust to inherit from active record [6.0] in migrate files
+```
+# ~/dev/trackerr
+local$ rails generate devise User 
+local$ rake db:migrate
+```

@@ -15,9 +15,9 @@
 <meta property="og:url" content="http://localhost:4000/2019/02/03/how-do-i-add-an-amazon-database-to-my-rails-app.html" />
 <meta property="og:site_name" content="Ogden Studios" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2019-02-03T14:45:17-07:00" />
+<meta property="article:published_time" content="2019-02-03T15:14:57-07:00" />
 <script type="application/ld+json">
-{"headline":"How do I add an Amazon Database to my Rails app?","dateModified":"2019-02-03T14:45:17-07:00","datePublished":"2019-02-03T14:45:17-07:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/02/03/how-do-i-add-an-amazon-database-to-my-rails-app.html"},"url":"http://localhost:4000/2019/02/03/how-do-i-add-an-amazon-database-to-my-rails-app.html","description":"A step-by-step tutorial for adding Amazon RDS services to your existing rails app running on Amazon EC2","@type":"BlogPosting","@context":"http://schema.org"}</script>
+{"headline":"How do I add an Amazon Database to my Rails app?","dateModified":"2019-02-03T15:14:57-07:00","datePublished":"2019-02-03T15:14:57-07:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/02/03/how-do-i-add-an-amazon-database-to-my-rails-app.html"},"url":"http://localhost:4000/2019/02/03/how-do-i-add-an-amazon-database-to-my-rails-app.html","description":"A step-by-step tutorial for adding Amazon RDS services to your existing rails app running on Amazon EC2","@type":"BlogPosting","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <meta property="og:image" content="http://localhost:4000/img/FacebookBanner.jpg" />
     <meta content="Ogden Studios" property="og:site_name"> 
@@ -66,7 +66,7 @@
   <header class="post-header">
     <h1 class="post-title p-name" itemprop="name headline">How do I add an Amazon Database to my Rails app?</h1>
     <p class="post-meta">
-      <time class="dt-published" datetime="2019-02-03T14:45:17-07:00" itemprop="datePublished">Feb 3, 2019
+      <time class="dt-published" datetime="2019-02-03T15:14:57-07:00" itemprop="datePublished">Feb 3, 2019
       </time></p>
   </header>
 
@@ -137,9 +137,65 @@ local$ git commit -m "add pg gem and move sqlite3 gem to dev/test"
 local$ git push 
 </code></pre></div></div>
 
+<p>Now we’ll update the database configuration YAML file according to <a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Ruby.rds.html">these specs</a></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr/config/database.yml
+production:
+  adapter: postgresql
+  encoding: utf8
+  database: &lt;%= Rails.application.credentials[:RDS_DB_NAME] %&gt;
+  username: &lt;%= Rails.application.credentials[:RDS_USERNAME] %&gt;
+  password: &lt;%= Rails.application.credentials[:RDS_PASSWORD] %&gt;
+  host: &lt;%= Rails.application.credentials[:RDS_HOSTNAME] %&gt;
+  port: &lt;%= Rails.application.credentials[:RDS_PORT] %&gt;
+</code></pre></div></div>
+
+<p>You might already have some configuration in your production block, so make sure to overwrite that.</p>
+
+<p>I’m using the Master.key syntax for the secret variables here. Using Master.key is out of the scope of this article, but you can figure out how to set that <a href="https://www.engineyard.com/blog/rails-encrypted-credentials-on-rails-5.2">here</a>.</p>
+
+<p>In your values, paste in the name of the database we set up, the username we chose, the password we created. Then</p>
+
+<p>You won’t be able to run capistrano quite yet. You’ll need to make sure your EC2 instance has the pre-reqs, first. SSH into your instance (link to the place where we set up the alias). Get the prereqs:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~
+ubuntu$ sudo apt-get install postgresql-client libpq5 libpq-dev
+</code></pre></div></div>
+
+<p>Let’s run a capistrano deploy:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr
+
+cap production deploy 
+</code></pre></div></div>
+
 <h2 id="step-3-test-our-database-configuration">Step 3: Test our database configuration</h2>
 
 <p>We’re going to create Users for our app, and we’re going to use <a href="https://github.com/plataformatec/devise">Devise</a> to do it. I love Devise, although if you’ve never rolled your own authentication and authorizatio system, you might want to get some experience with that before reaching for this tool. The <a href="https://www.railstutorial.org/book/modeling_users">Michael Hartl Ruby on Rails tutorial</a> has a great section on just this.</p>
+
+<p>In your gemfile:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr/Gemfile 
+gem 'devise'
+</code></pre></div></div>
+
+<p>Run bundle install and run the generator:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr
+local$ bundle install 
+local$ rails generate devise:install
+</code></pre></div></div>
+
+<p>Follow instructions to set up the mailer config</p>
+
+<p>{write here]}</p>
+
+<p>Generate the devise model for users and migrate: 
+Need to adjust to inherit from active record [6.0] in migrate files</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr
+local$ rails generate devise User 
+local$ rake db:migrate
+</code></pre></div></div>
 
   </div><a class="u-url" href="/2019/02/03/how-do-i-add-an-amazon-database-to-my-rails-app.html" hidden></a>
 </article>
