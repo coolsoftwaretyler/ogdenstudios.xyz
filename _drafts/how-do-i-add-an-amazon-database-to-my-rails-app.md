@@ -89,7 +89,7 @@ production:
   port: <%= Rails.application.credentials[:RDS_PORT] %>
 ```
 
-You might already have some configuration in your production block, so make sure to overwrite that. 
+You might already have some configuration in your production block, so make sure to overwrite that. You wont RDS_DB_NAME to be postgres, wich tripped me up at first. 
 
 I'm using the Master.key syntax for the secret variables here. Using Master.key is out of the scope of this article, but you can figure out how to set that [here](https://www.engineyard.com/blog/rails-encrypted-credentials-on-rails-5.2). 
 
@@ -140,3 +140,7 @@ Need to adjust to inherit from active record [6.0] in migrate files
 local$ rails generate devise User 
 local$ rake db:migrate
 ```
+
+Add seed files 
+
+Deploy and you're good to go. 
