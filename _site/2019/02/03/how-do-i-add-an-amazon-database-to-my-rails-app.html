@@ -15,9 +15,9 @@
 <meta property="og:url" content="http://localhost:4000/2019/02/03/how-do-i-add-an-amazon-database-to-my-rails-app.html" />
 <meta property="og:site_name" content="Ogden Studios" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2019-02-03T14:33:14-07:00" />
+<meta property="article:published_time" content="2019-02-03T14:45:17-07:00" />
 <script type="application/ld+json">
-{"headline":"How do I add an Amazon Database to my Rails app?","dateModified":"2019-02-03T14:33:14-07:00","datePublished":"2019-02-03T14:33:14-07:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/02/03/how-do-i-add-an-amazon-database-to-my-rails-app.html"},"url":"http://localhost:4000/2019/02/03/how-do-i-add-an-amazon-database-to-my-rails-app.html","description":"A step-by-step tutorial for adding Amazon RDS services to your existing rails app running on Amazon EC2","@type":"BlogPosting","@context":"http://schema.org"}</script>
+{"headline":"How do I add an Amazon Database to my Rails app?","dateModified":"2019-02-03T14:45:17-07:00","datePublished":"2019-02-03T14:45:17-07:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/02/03/how-do-i-add-an-amazon-database-to-my-rails-app.html"},"url":"http://localhost:4000/2019/02/03/how-do-i-add-an-amazon-database-to-my-rails-app.html","description":"A step-by-step tutorial for adding Amazon RDS services to your existing rails app running on Amazon EC2","@type":"BlogPosting","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <meta property="og:image" content="http://localhost:4000/img/FacebookBanner.jpg" />
     <meta content="Ogden Studios" property="og:site_name"> 
@@ -66,7 +66,7 @@
   <header class="post-header">
     <h1 class="post-title p-name" itemprop="name headline">How do I add an Amazon Database to my Rails app?</h1>
     <p class="post-meta">
-      <time class="dt-published" datetime="2019-02-03T14:33:14-07:00" itemprop="datePublished">Feb 3, 2019
+      <time class="dt-published" datetime="2019-02-03T14:45:17-07:00" itemprop="datePublished">Feb 3, 2019
       </time></p>
   </header>
 
@@ -90,6 +90,52 @@
 <p>I decided to choose postgres as a database because it’s a common choice amongst Rails devs. Additionally, it’s waht Heroku uses, and this blog series is loosely a series about migrating rails apps from Heroku to Amazon AWS. I imagine some people may have found this article while trying to do just that, and I want to tailor our choices to make it as informational as possible for that use case.</p>
 
 <h2 id="step-2-configure-our-rails-app-to-connect-to-the-database">Step 2: Configure our rails app to connect to the database</h2>
+
+<p>I’ll be following along the instructions <a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Ruby.rds.html">here</a>.</p>
+
+<p>First we’ll need to set up our Gemfile. We want the production application to use postgres, and our development application to keep using SQLite.</p>
+
+<p>Let’s add a production block to the Gemfile. It should look like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr/Gemfile 
+
+group :production do 
+  gem 'pg'
+end
+</code></pre></div></div>
+
+<p>You can just stick that at the end of the file.</p>
+
+<p>In that same file, find the line which reads <code class="highlighter-rouge">gem 'sqlite3'</code>. It’s likely towards the top of the Gemfile Rails generated.</p>
+
+<p>Move it into the block which starts <code class="highlighter-rouge">group :development, :test do</code>.</p>
+
+<p>So you should now have a development and test block which reads:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~/dev/trackerr/Gemfile
+
+group :development, :test do
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # Use sqlite3 as the database for Active Record
+  gem 'sqlite3'
+end
+</code></pre></div></div>
+
+<p>Run a <code class="highlighter-rouge">bundle install</code> and <code class="highlighter-rouge">rails s</code> to make sure the local environment is still working correctly.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~
+local$ bundle install 
+local$ rails s
+</code></pre></div></div>
+
+<p>If everything looks in order, here’s a great place for a git commit.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ~ 
+local$ git add .
+local$ git commit -m "add pg gem and move sqlite3 gem to dev/test"
+local$ git push 
+</code></pre></div></div>
 
 <h2 id="step-3-test-our-database-configuration">Step 3: Test our database configuration</h2>
 

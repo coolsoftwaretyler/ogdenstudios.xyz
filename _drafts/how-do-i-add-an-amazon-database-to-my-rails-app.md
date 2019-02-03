@@ -25,6 +25,56 @@ I decided to choose postgres as a database because it's a common choice amongst 
 
 ## Step 2: Configure our rails app to connect to the database 
 
+I'll be following along the instructions [here](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Ruby.rds.html).
+
+First we'll need to set up our Gemfile. We want the production application to use postgres, and our development application to keep using SQLite. 
+
+Let's add a production block to the Gemfile. It should look like this: 
+
+```
+# ~/dev/trackerr/Gemfile 
+
+group :production do 
+  gem 'pg'
+end
+```
+
+You can just stick that at the end of the file. 
+
+In that same file, find the line which reads `gem 'sqlite3'`. It's likely towards the top of the Gemfile Rails generated. 
+
+Move it into the block which starts `group :development, :test do`. 
+
+So you should now have a development and test block which reads: 
+
+```
+# ~/dev/trackerr/Gemfile
+
+group :development, :test do
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # Use sqlite3 as the database for Active Record
+  gem 'sqlite3'
+end
+```
+
+Run a `bundle install` and `rails s` to make sure the local environment is still working correctly. 
+
+```
+# ~
+local$ bundle install 
+local$ rails s
+```
+
+If everything looks in order, here's a great place for a git commit. 
+
+```
+# ~ 
+local$ git add .
+local$ git commit -m "add pg gem and move sqlite3 gem to dev/test"
+local$ git push 
+```
+
 ## Step 3: Test our database configuration 
 
 We're going to create Users for our app, and we're going to use [Devise](https://github.com/plataformatec/devise) to do it. I love Devise, although if you've never rolled your own authentication and authorizatio system, you might want to get some experience with that before reaching for this tool. The [Michael Hartl Ruby on Rails tutorial](https://www.railstutorial.org/book/modeling_users) has a great section on just this. 
