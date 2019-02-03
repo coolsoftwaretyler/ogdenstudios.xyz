@@ -678,7 +678,3 @@ You might want to do a few things now that you've got the skeleton of your appli
 3. Actually build the application. 
 
 These tasks are outside the scope of this tutorial, but will be covered in future posts, and links added back in. 
-
-*Questions? Comments? Send them all along to [tyler@ogdenstudios.xyz](mailto:tyler@ogdenstudios.xyz)*
-
-Did you like this post? [Buy me a coffee](https://ko-fi.com/ogdenstudios)
