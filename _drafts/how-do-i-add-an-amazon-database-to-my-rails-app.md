@@ -5,23 +5,45 @@ tags: [blog, tutorial, rails, aws, postgres, RDS]
 description: "A step-by-step tutorial for adding Amazon RDS services to your existing rails app running on Amazon EC2"
 ---
 
-This is a follow up post to my first blog, [How do I deploy a Rails 6 App to Amazon EC2?](https:ogdenstudios.xyz/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html) to add production-ready database capabiities to my Trackerr app. 
+This is a follow up post to my blog titled: [How do I deploy a Rails 6 App to Amazon EC2?](https://ogdenstudios.xyz/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html).  
 
-At the beginning of this tutorial, [Trackerr](https://github.com/ogdenstudios/trackerr) is at `3f100519c9b68d5b625ce3004ec45f46e4a7fe49`, if you're curious to see the code I'm starting from. 
+I'll be continuing to work on the example Trackerr app, and my next step is to add a production-ready database to the application.
 
-To summarize, we've got a blank Rails 6 Beta app with a placeholder route, controller, and view. It's set up with [Capistrano](https://capistranorb.com/) for easy server deploys. It defaults to using SQLite3 as a database, which is fine for development purposes (and I even prefer it over other solutions), but won't stand up to scaling server loads. 
+To summarize part one, we've got a blank Rails 6 Beta app with a placeholder route, controller, and view. It's set up with [Capistrano](https://capistranorb.com/) for easy deploys. It uses SQLite3 as a database, which is fine for development purposes, but won't scale well if the application takes off in popularity. 
 
-This Rails 6 app lives on an Amazon EC2 instance, which makes the Amazon RDS Database instance a natural choice for adding a production database. 
+The Trackerr app lives on an Amazon EC2 instance, which makes the Amazon RDS Database instance a natural choice for adding a production database. 
 
-Here's what we're going to do: 
+This blog post will follow as I:
 
-1) Set up an Amazon RDS database running postgresql
-2) Configure our Rails App to connect to the database 
-3) Test our database configuration by creating Users with the [Devise](https://github.com/plataformatec/devise) gem
+1) Set up an Amazon RDS database instance with postgresql
+2) Configure Trackerr to connect to the database 
+3) Test the database configuration and implementing a user authentication system with [Devise](https://github.com/plataformatec/devise).
 
 ## Step 1: Set up an Amazon RDS database running Postgresql 
 
-I decided to choose postgres as a database because it's a common choice amongst Rails devs. Additionally, it's waht Heroku uses, and this blog series is loosely a series about migrating rails apps from Heroku to Amazon AWS. I imagine some people may have found this article while trying to do just that, and I want to tailor our choices to make it as informational as possible for that use case. 
+I chose postgres as a database system because it's a common choice amongst Rails devs. Additionally, it's the database Heroku uses for their applications, and my intention is to use these blogposts as a guide for migrating away from Heroku as a web host. Using a similar stack to Heroku should help things go smoothly. 
+
+First, [sign in or sign up with Amazon AWS](https://console.aws.amazon.com). 
+
+In the navbar, choose **Services** and then **RDS**. 
+
+On the next page, click on your **DB Instances** link. 
+
+In the RDS instance console, choose **Create Database**. 
+
+At the bottom of the page, you can select an option to **Only enable options eligible for RDS Free Usage Tier**. If you select this option, you'll see PostgreSQL is still available. Select that box. 
+
+You'll be taken to a page titled **Specify DB details**. I kept all the settings default, except the required values at the bottom: 
+
+1. **DB Instance Identifier:** I chose "trackerr-db-0" for this 
+2. **Master username:** I chose a logical username here, but won't list it for security reasons. 
+3. **Master Password:** I used a secure password generator here and stored it in my password manager. 
+
+Take note of these values somewhere secure and convenient (such as a password manager). You'll need them shortly. 
+
+Click **Next** and you'll be taken to the **Configure advanced settings** page. I kept most of these settings default, although you'll want to make sure that **Public accessibility** is set to true, so our EC2 instance can access the database. If we were doing all of our development inside Elastic Beanstalk or a VPC, we could set this to false, but that's not quite how we've set up the project, so this needs to be true to work. 
+
+Click **Create Database** and then **View DB Instance Details**. It can take 20-30 minutes for the database to fully spin up, so keep that in mind as we move on to the next steps, you may need to wait before the necessary information is available. 
 
 ## Step 2: Configure our rails app to connect to the database 
 
