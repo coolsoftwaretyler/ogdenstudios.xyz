@@ -183,7 +183,7 @@ In a later part of this series, we'll dive deeper into a production configuratio
 3. Devise expects a way to display [flash](https://api.rubyonrails.org/classes/ActionDispatch/Flash.html) notices to your views. In `trackerr/app/views/layouts/application.html.erb`, make sure you have the following markup, preferably towards the top of your document:
 
 ```
-# trackerr/app/views/layouts/application.html.erb
+# ~/dev/trackerr/app/views/layouts/application.html.erb
 <% flash.each do |key, value| %>
   <div class="alert alert-<%= key %>"><%= value %></div>
 <% end %>
