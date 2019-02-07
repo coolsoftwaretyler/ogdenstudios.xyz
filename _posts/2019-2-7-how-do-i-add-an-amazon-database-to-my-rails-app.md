@@ -16,7 +16,9 @@ The Trackerr app lives on an Amazon EC2 instance, which makes the Amazon RDS Dat
 This blog post will follow as I:
 
 1) Set up an Amazon RDS database instance with postgresql
+
 2) Configure Trackerr to connect to the database 
+
 3) Test the database configuration and implementing a user authentication system with [Devise](https://github.com/plataformatec/devise).
 
 ## Step 1: Set up an Amazon RDS database running Postgresql 

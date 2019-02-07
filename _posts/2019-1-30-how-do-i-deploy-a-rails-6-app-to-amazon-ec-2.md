@@ -677,4 +677,4 @@ You might want to do a few things now that you've got the skeleton of your appli
 2. [Set up a production-level database for the application](https://ogdenstudios.xyz/2019/02/07/how-do-i-add-an-amazon-database-to-my-rails-app.html) 
 3. Actually build the application. 
 
-These tasks are outside the scope of this tutorial, but will be covered in future posts, and links added back in. 
+These tasks are outside the scope of this tutorial, but are covered in additional blog posts. 
