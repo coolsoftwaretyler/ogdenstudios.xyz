@@ -178,9 +178,16 @@ In a later part of this series, we'll dive deeper into a production configuratio
 
 1. We need to have our root routed to some controller method, which we do from part 1. 
 2. We need to set up the defaults for the Devise mailer. You can do this quickly by adding `config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }` to `config/environments/development.rb`.
-3. [add flash stuff here]
+3. Devise expects a way to display [flash](https://api.rubyonrails.org/classes/ActionDispatch/Flash.html) notices to your views. In `trackerr/app/views/layouts/application.html.erb`, make sure you have the following markup, preferably towards the top of your document:
 
-With that quick (and incomplete) configuration, it's time to generate a devise model for the users. 
+```
+# trackerr/app/views/layouts/application.html.erb
+<% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %>"><%= value %></div>
+<% end %>
+```
+
+With that quick (and incomplete, for now) configuration, it's time to generate a devise model for the users. 
 
 Generate the devise model for users and migrate: 
 Need to adjust to inherit from active record [6.0] in migrate files
@@ -238,4 +245,4 @@ local$ cap production deploy
 local$ cap production deploy:db:seed
 ```
 
-You can visit your sign in page at yourdomain.com/users/sign_in and confirm that it worked. Enter your information and make sure you get a confirmation!
+You can visit your sign in page at yourdomain.com/users/sign_in and confirm that it worked. Enter your information and make sure you get a flash message saying you've successfully signed in!
