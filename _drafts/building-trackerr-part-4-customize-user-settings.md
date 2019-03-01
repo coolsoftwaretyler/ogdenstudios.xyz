@@ -7,8 +7,48 @@ Once a user has an account, direct them to Open States for an API key.
 So we want three options for a home page: 
 
 For someone who is logged out, render the sign/in page. 
+For someone who is logged in but doesn't have an API key set up, render a landing page with instructions on how to get an API key. 
+For someone who is logged in with an API key, render the bill browser. 
 
-So we can set up our `config/routes.rb` file to look like: 
+Let's check this with Test Driven Development! 
+
+We're going to use Rspec as the test suite, and Capybara to test the user functionality. 
+
+We'll be running this test as a [feature spec](https://relishapp.com/rspec/rspec-rails/v/3-8/docs/feature-specs/feature-spec) since it's meant to exercise slices of functionality through an application, and is specifically tied to the external web interface. 
+
+Under the `spec` folder, create a new `features` directory. Then, create a new file called `landing_page_spec.rb`. 
+
+Let's add the skeleton of this file, and we'll fill it out piece by piece. To start, let's re-articulate our requirements as scenarios: 
+
+```
+require "rails_helper"
+
+RSpec.feature "Landing page function", :type => :feature do
+  scenario "User visits home without logging in" do
+  end
+  scenario "User without api key visits home and logs in" do 
+  end
+  scenario "User with api key visits home and logs in" do 
+  end
+end
+```
+
+If you run `rspec spec/features/landing_page_spec.rb` in the project directory, you'll get an output of `3 examples, 0 failures`, since we aren't yet really testing for anything. 
+
+Let's add the first test, for a user visiting the home page without being logged in. It should look like this: 
+
+```
+scenario "User visits home without logging in" do
+    visit "/"
+    expect(page).to have_text("Log in")
+end
+```
+
+Run rspec again and you should see `3 examples, 1 failure`, as your one expectation is now failing. 
+
+Let's fix that and route the root to the devise log in page. 
+
+We can set up our `config/routes.rb` file to look like: 
 
 ```
 Rails.application.routes.draw do
@@ -25,18 +65,29 @@ Rails.application.routes.draw do
 end
 ```
 
-So now, if you fire up a browser and go to [localhost:3000], you'll see the log in page from devise. It comes with a handy link for "sign up" in case the user doesn't yet have an account. 
+Run `rspec spec/features/landing_page_spec.rb` again. You'll see `3 examples, 0 failures` as the Log In page is getting rendered on the root path. You can verify yourself  if you fire up a browser and go to [localhost:3000]. 
 
-Great, that's one use case out of the way: for people who are signed out or not signed up. 
+You'll see the log in page from devise. It comes with a handy link for "sign up" in case the user doesn't yet have an account. 
 
-So let's sign in as our test user: 
+Awesome, that's one test out of the way. Let's go for the second: what happens when a user without an api key visits the home page and logs in. 
 
-Username: tyler@ogdenstudios.xyz
-Password: password 
+In the `user without api key visits home and logs in` scenario, create a spec that looks like: 
 
-And we'll see our `app/views/pages/index.html.erb` file showing up. But right now, it's just an h1 tag and nothing else. We want to check if a user has an API key or not. 
+```
+scenario 'user without api key visits home and logs in' do
+    user = User.create!(email: 'test@ogdenstudios.xyz', password: 'password')
+    visit '/'
+    fill_in 'user_email', with: user.email
+    fill_in 'user_password', with: 'password'
+    click_button 'Log in'
+    expect(page).to have_text('You still need to set up your API key with Open States')
+end
+```
 
-So far, we don't have any place to store an API Key. Let's add that to the user model. But before we do that, let's get some good Test Driven Development in there. 
+If you run the landing page spec again, you should see `3 examples, 1 failure`. Let's fix that failure. 
+
+We want to render a different view based on 
+
 
 We want each user to have a field for an API key, but it won't be required, since new users won't have one yet. 
 
