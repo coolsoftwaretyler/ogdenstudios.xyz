@@ -62,6 +62,14 @@ And we'll see our `app/views/pages/index.html.erb` file showing up. But right no
 
 So far, we don't have any place to store an API Key. Let's add that to the user model. But before we do that, let's get some good Test Driven Development in there. 
 
+We want each user to have a field for an API key, but it won't be required, since new users won't have one yet. 
+
+That means we want to test that if we were to make a new user and provide an email, password, and api_key, that user would be valid, as would a user without an api key. 
+
+So let's create a spec file for users, in `spec/models/user_spec.rb`.
+
+
+
 RSpec setup here
 
 
