@@ -66,12 +66,6 @@ We want each user to have a field for an API key, but it won't be required, sinc
 
 That means we want to test that if we were to make a new user and provide an email, password, and api_key, that user would be valid, as would a user without an api key. 
 
-So let's create a spec file for users, in `spec/models/user_spec.rb`.
-
-
-
-RSpec setup here
-
 
 Open States requires an API key to hit their database. In early prototypes, I had the application using one API key for the entire instance, but since the goal is to service many users, that won't work. I want each user to have their own API key and store it securely in the database. 
 
@@ -215,29 +209,3 @@ If you run `rails t`, you'll find that some more tests have been added and pass 
 Cool, now I want to make sure that we set up a one-to-one relationship between Users and UserSetting objects. Seach user will have one UserSetting, and we'll use UserSetting to store all their site-wide settings. For now, that's just an api_key. 
 
 Let's hit that TDD button one more time. I want to set up a test that 
-
-
-Let's set up tests with [rspec-rails](https://github.com/rspec/rspec-rails). 
-
-Add 
-
-`gem 'rspec-rails'` to dev and test  
-
-Run 
-
-`rails generate rspec:install`
-
-Set up settings in `spec/rails_helper.rb`
-
-Then add [shoulda-matchers](https://github.com/thoughtbot/shoulda-matchers)
-
-```
-  gem 'shoulda-matchers'
-  gem 'rails-controller-testing'
-  ```
-
-  Make a folder and file under `spec`: `spec/models/users_spec.rb`
-
-  # Validations 
-  # Relationshps 
-  # Methods 
