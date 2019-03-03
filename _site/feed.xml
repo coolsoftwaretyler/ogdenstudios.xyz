@@ -1,4 +1,299 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-02-05T19:22:42-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Ogden Studios</title><subtitle>Practical solutions for pragmatic people</subtitle><entry><title type="html">How do I Deploy a Rails 6 app to Amazon EC2?</title><link href="http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html" rel="alternate" type="text/html" title="How do I Deploy a Rails 6 app to Amazon EC2?" /><published>2019-01-30T00:00:00-07:00</published><updated>2019-01-30T00:00:00-07:00</updated><id>http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2</id><content type="html" xml:base="http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html">&lt;h2 id=&quot;why-i-wrote-this-blog-post&quot;&gt;Why I wrote this blog post&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-03-02T19:23:42-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Ogden Studios</title><subtitle>Practical solutions for pragmatic people</subtitle><entry><title type="html">How do I get an A+ in Mozilla Observatory with Jekyll and Netlify?</title><link href="http://localhost:4000/2019/03/02/how-to-get-an-a-plus-observatory.html" rel="alternate" type="text/html" title="How do I get an A+ in Mozilla Observatory with Jekyll and Netlify?" /><published>2019-03-02T00:00:00-07:00</published><updated>2019-03-02T00:00:00-07:00</updated><id>http://localhost:4000/2019/03/02/how-to-get-an-a-plus-observatory</id><content type="html" xml:base="http://localhost:4000/2019/03/02/how-to-get-an-a-plus-observatory.html">&lt;p&gt;When I need to build a blog or static site, my go-to is JAMstack with &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; and &lt;a href=&quot;https://www.netlify.com/&quot;&gt;Netlify&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I also try and build out secure websites. I used to think it really only mattered on sites that process personal or sensitive information. But then I listened t &lt;a href=&quot;https://shoptalkshow.com/episodes/250-web-security-april-king-alex-sexton/&quot;&gt;episode 250 of the Shop Talk Show&lt;/a&gt;, and April King and Alex Sexton talked about the different ways static sites can get hijacked, serve up malicious content, and otherwise make the internet a bad place.&lt;/p&gt;
+
+&lt;p&gt;My primary objective is to make the internet better, so after listening to that podcast, I started using the &lt;a href=&quot;https://observatory.mozilla.org/&quot;&gt;Mozilla Observatory&lt;/a&gt; to audit all my projects and improve my security. In most cases, fixing security vulnerabilities was straightforward, but I have consistently had issues configuring the proper security related headers with Jekyll and Netlify.&lt;/p&gt;
+
+&lt;p&gt;Here’s how I finally got an A+ for my Jekyll/Netlify site on Observatory.&lt;/p&gt;
+
+&lt;h2 id=&quot;step-1-create-a-new-jekyll-project&quot;&gt;Step 1: Create a new Jekyll project&lt;/h2&gt;
+
+&lt;p&gt;In a terminal, run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll new secure-jekyll-site&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Change into the secure Jekyll directory by running &lt;code class=&quot;highlighter-rouge&quot;&gt;cd secure-jekyll-site&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Initialize the git repository with &lt;code class=&quot;highlighter-rouge&quot;&gt;git init&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Make the initial git commit with:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git add .
+git commit -m &quot;init commit&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://help.github.com/en/articles/adding-an-existing-project-to-github-using-the-command-line&quot;&gt;Upload the repo to GitHub&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;step-2-deploy-to-netlify&quot;&gt;Step 2: Deploy to Netlify&lt;/h2&gt;
+
+&lt;p&gt;Follow the instructions to &lt;a href=&quot;https://www.netlify.com/docs/continuous-deployment/&quot;&gt;deploy a Jekyll site to Netlify&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I won’t be exploring any of the really cool features Netlify provides. You should do that on your own. But before you dig around, I’d recommend following the rest of this tutorial to create the most restrictive security policy possible before adding more to your project. You’ll find this will prevent you from building on top of security issues.&lt;/p&gt;
+
+&lt;p&gt;What you’ll probably find as you build out your site on top of this boilerplate is certain assets (images, styles, scripts) won’t load as expected. That’s the goal. You’ll have to learn to modify your headers and security policies to allow these assets and other functionality to your site. This practice will put you in a position to make intentional choices about which policies to relax.&lt;/p&gt;
+
+&lt;h2 id=&quot;step-3-check-the-initial-installation-with-observatory&quot;&gt;Step 3: Check the initial installation with Observatory&lt;/h2&gt;
+
+&lt;p&gt;Visit the &lt;a href=&quot;https://observatory.mozilla.org/&quot;&gt;Mozilla Observatory&lt;/a&gt; and enter your Netlify domain in the form. You’ll likely find the scan comes back with a grade of &lt;strong&gt;D+&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;In the top right hand corner, in the box labeled &lt;strong&gt;Recommendation&lt;/strong&gt;, you’ll find Mozilla provides easy-to-read and helpful advice to improve your security headers. This blog post won’t cover those in depth. Mozilla will prompt you to make one change at a time and re-scan your site. If you want to get a good feel for the process, I’d recommend going step by step.&lt;/p&gt;
+
+&lt;p&gt;The trick I found was figuring out how to deploy these changes to the live site. For the life of me, I couldn’t figure out what I was missing. The rest of this blog should clarify the process of updating and improving your headers for the Mozilla Observatory security check.&lt;/p&gt;
+
+&lt;h2 id=&quot;step-4-add-a-headers-file-and-include-it-in-your-jekyll-build-process&quot;&gt;Step 4: Add a headers file and include it in your Jekyll build process&lt;/h2&gt;
+
+&lt;p&gt;In order to provide Netlify with custom headers, you need to add a &lt;code class=&quot;highlighter-rouge&quot;&gt;_headers&lt;/code&gt; file to your project, &lt;a href=&quot;https://www.netlify.com/docs/headers-and-basic-auth/&quot;&gt;as outlined in the Netlify docs&lt;/a&gt;. Add this file in the &lt;strong&gt;root of your Jekyll project&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;However, if you were to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll build&lt;/code&gt; or deploy Netlify right now - the &lt;code class=&quot;highlighter-rouge&quot;&gt;_headers&lt;/code&gt; file wouldn’t be available. Jekyll isn’t set up to add it to the compiled &lt;code class=&quot;highlighter-rouge&quot;&gt;_site&lt;/code&gt; folder yet.&lt;/p&gt;
+
+&lt;p&gt;To &lt;a href=&quot;https://jekyllrb.com/docs/configuration/options/&quot;&gt;configure Jekyll&lt;/a&gt; to add the &lt;code class=&quot;highlighter-rouge&quot;&gt;_headers&lt;/code&gt; file to your build process, use the &lt;code class=&quot;highlighter-rouge&quot;&gt;include&lt;/code&gt; option. Inside your &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; file, add &lt;code class=&quot;highlighter-rouge&quot;&gt;include: [&quot;_headers&quot;]&lt;/code&gt; to _config.yml.&lt;/p&gt;
+
+&lt;p&gt;Now when you build your Jekyll site, &lt;code class=&quot;highlighter-rouge&quot;&gt;_headers&lt;/code&gt; will appear in the site root on Netlify. you can add the appropriate fixes as instructed by Mozilla.&lt;/p&gt;
+
+&lt;h2 id=&quot;step-5-add-restrictive-headers-to-your-site&quot;&gt;Step 5: Add restrictive headers to your site&lt;/h2&gt;
+
+&lt;p&gt;Now that &lt;code class=&quot;highlighter-rouge&quot;&gt;_headers&lt;/code&gt; works on your Netlify deploy, you can add the appropriate headers to get an &lt;strong&gt;A+&lt;/strong&gt;. Again, I’d recommend you make these changes step by step, following along with Mozilla to understand each piece of the process and make your own informed decisions. These are the headers that provide an &lt;strong&gt;A+&lt;/strong&gt; on the boilerplate Jekyll project:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/* 
+    Content-Security-Policy: default-src 'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self'; style-src 'self'
+    Referrer-Policy: same-origin
+    X-Content-Type-Options: nosniff
+    X-Frame-Options: DENY
+    X-XSS-Protection: 1; mode=block
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;With these headers, a blank Jekyll site should score an &lt;strong&gt;A+&lt;/strong&gt; on Mozilla Observatory. It will be as restrictive as possible, so you may find you need to make adjustments to these headers to get certain tools and components to work on your site. Again, it’s good practice to make the necessary changes intentionally, vs. trying to fix broken security policies retroactively.&lt;/p&gt;
+
+&lt;p&gt;If you’d like to use this boilerplate for your own Jekyll projects, you can &lt;a href=&quot;https://github.com/ogdenstudios/secure-jekyll-site&quot;&gt;fork the Secure Jekyll Site repo&lt;/a&gt;. You can also see the live site &lt;a href=&quot;https://secure-jekyll-site.netlify.com/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><category term="blog" /><category term="tutorial" /><category term="jekyll" /><category term="netlify" /><category term="observatory" /><category term="security" /><category term="JAMstack" /><summary type="html">When I need to build a blog or static site, my go-to is JAMstack with Jekyll and Netlify.</summary></entry><entry><title type="html">How do I add an Amazon Database to my Rails app?</title><link href="http://localhost:4000/2019/02/07/how-do-i-add-an-amazon-database-to-my-rails-app.html" rel="alternate" type="text/html" title="How do I add an Amazon Database to my Rails app?" /><published>2019-02-07T00:00:00-07:00</published><updated>2019-02-07T00:00:00-07:00</updated><id>http://localhost:4000/2019/02/07/how-do-i-add-an-amazon-database-to-my-rails-app</id><content type="html" xml:base="http://localhost:4000/2019/02/07/how-do-i-add-an-amazon-database-to-my-rails-app.html">&lt;p&gt;This is a follow up post to my blog titled: &lt;a href=&quot;https://ogdenstudios.xyz/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html&quot;&gt;How do I deploy a Rails 6 App to Amazon EC2?&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I’ll be continuing to work on the example Trackerr app, and my next step is to add a production-ready database to the application.&lt;/p&gt;
+
+&lt;p&gt;To summarize part one, we’ve got a blank Rails 6 Beta app with a placeholder route, controller, and view. It’s set up with &lt;a href=&quot;https://capistranorb.com/&quot;&gt;Capistrano&lt;/a&gt; for easy deploys. It uses SQLite3 as a database, which is fine for development purposes, but won’t scale well if the application takes off in popularity.&lt;/p&gt;
+
+&lt;p&gt;The Trackerr app lives on an Amazon EC2 instance, which makes the Amazon RDS Database instance a natural choice for adding a production database.&lt;/p&gt;
+
+&lt;p&gt;This blog post will follow as I:&lt;/p&gt;
+
+&lt;p&gt;1) Set up an Amazon RDS database instance with postgresql&lt;/p&gt;
+
+&lt;p&gt;2) Configure Trackerr to connect to the database&lt;/p&gt;
+
+&lt;p&gt;3) Test the database configuration and implementing a user authentication system with &lt;a href=&quot;https://github.com/plataformatec/devise&quot;&gt;Devise&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;step-1-set-up-an-amazon-rds-database-running-postgresql&quot;&gt;Step 1: Set up an Amazon RDS database running Postgresql&lt;/h2&gt;
+
+&lt;p&gt;I chose postgres as a database system because it’s a common choice amongst Rails devs. Additionally, it’s the database Heroku uses for their applications, and my intention is to use these blogposts as a guide for migrating away from Heroku as a web host. Using a similar stack to Heroku should help things go smoothly.&lt;/p&gt;
+
+&lt;p&gt;First, &lt;a href=&quot;https://console.aws.amazon.com&quot;&gt;sign in or sign up with Amazon AWS&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;In the navbar, choose &lt;strong&gt;Services&lt;/strong&gt; and then &lt;strong&gt;RDS&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;On the next page, click on your &lt;strong&gt;DB Instances&lt;/strong&gt; link.&lt;/p&gt;
+
+&lt;p&gt;In the RDS instance console, choose &lt;strong&gt;Create Database&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;At the bottom of the page, you can select an option to &lt;strong&gt;Only enable options eligible for RDS Free Usage Tier&lt;/strong&gt;. If you select this option, you’ll see PostgreSQL is still available. Select that box.&lt;/p&gt;
+
+&lt;p&gt;You’ll be taken to a page titled &lt;strong&gt;Specify DB details&lt;/strong&gt;. I kept all the settings default, except the required values at the bottom:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;DB Instance Identifier:&lt;/strong&gt; I chose “trackerr-db-0” for this&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Master username:&lt;/strong&gt; I chose a logical username here, but won’t list it for security reasons.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Master Password:&lt;/strong&gt; I used a secure password generator here and stored it in my password manager.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Take note of these values somewhere secure and convenient (such as a password manager). You’ll need them shortly.&lt;/p&gt;
+
+&lt;p&gt;Click &lt;strong&gt;Next&lt;/strong&gt; and you’ll be taken to the &lt;strong&gt;Configure advanced settings&lt;/strong&gt; page. I kept most of these settings default, although you’ll want to make sure that &lt;strong&gt;Public accessibility&lt;/strong&gt; is set to true, so our EC2 instance can access the database. If we were doing all of our development inside Elastic Beanstalk or a VPC, we could set this to false, but that’s not quite how we’ve set up the project, so this needs to be true to work.&lt;/p&gt;
+
+&lt;p&gt;Click &lt;strong&gt;Create Database&lt;/strong&gt; and then &lt;strong&gt;View DB Instance Details&lt;/strong&gt;. It can take 20-30 minutes for the database to fully spin up, so keep that in mind as we move on to the next steps, you may need to wait before the necessary information is available.&lt;/p&gt;
+
+&lt;h2 id=&quot;step-2-configure-our-rails-app-to-connect-to-the-database&quot;&gt;Step 2: Configure our rails app to connect to the database&lt;/h2&gt;
+
+&lt;p&gt;I’ll be following along the instructions &lt;a href=&quot;https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Ruby.rds.html&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;First I’m going to modify my Gemfile. I want Trackerr to use PostgreSQL in Production, and SQLite3 in development.&lt;/p&gt;
+
+&lt;p&gt;Let’s add a &lt;a href=&quot;https://depfu.com/blog/2017/01/18/bundler-and-gemfile-best-practices&quot;&gt;production block&lt;/a&gt; to the Gemfile. It should look like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr/Gemfile 
+group :production do 
+  gem 'pg'
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can just stick that at the end of the file. It tells the Gemfile to use the ‘pg’ (postgres) gem only when running in a production environment. Up next, we’ll tell our application to use the sqlite3 gem in development.&lt;/p&gt;
+
+&lt;p&gt;In that same file, find the line which reads &lt;code class=&quot;highlighter-rouge&quot;&gt;gem 'sqlite3'&lt;/code&gt;. It’s likely towards the top of the Gemfile Rails generated.&lt;/p&gt;
+
+&lt;p&gt;Move it into the block which starts &lt;code class=&quot;highlighter-rouge&quot;&gt;group :development, :test do&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;So you should now have a development and test block which reads:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr/Gemfile
+group :development, :test do
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # Use sqlite3 as the database for Active Record
+  gem 'sqlite3'
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Run a &lt;code class=&quot;highlighter-rouge&quot;&gt;bundle install&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;rails s&lt;/code&gt; to make sure the local environment is still working correctly.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
+local$ bundle install 
+local$ rails s
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If everything looks in order, here’s a great place for a git commit.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~ 
+local$ git add .
+local$ git commit -m &quot;add pg gem and move sqlite3 gem to dev/test&quot;
+local$ git push 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we’ll update the database configuration YAML file according to &lt;a href=&quot;https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Ruby.rds.html&quot;&gt;these specs&lt;/a&gt;. You’ll notice there is already some configuration for the &lt;code class=&quot;highlighter-rouge&quot;&gt;production:&lt;/code&gt; block part of your &lt;code class=&quot;highlighter-rouge&quot;&gt;database.yml&lt;/code&gt; file, so make sure to replace it all with the code below.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr/config/database.yml
+production:
+  adapter: postgresql
+  encoding: utf8
+  database: &amp;lt;%= Rails.application.credentials[:RDS_DB_NAME] %&amp;gt;
+  username: &amp;lt;%= Rails.application.credentials[:RDS_USERNAME] %&amp;gt;
+  password: &amp;lt;%= Rails.application.credentials[:RDS_PASSWORD] %&amp;gt;
+  host: &amp;lt;%= Rails.application.credentials[:RDS_HOSTNAME] %&amp;gt;
+  port: &amp;lt;%= Rails.application.credentials[:RDS_PORT] %&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Since Rails 5.2, we’ve had access to the &lt;code class=&quot;highlighter-rouge&quot;&gt;master.key&lt;/code&gt; file, which encrypts configuration variables and allows you to check them directly into source control, avoiding the need for complex environment variable setups. &lt;a href=&quot;https://ogdenstudios.xyz/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html&quot;&gt;Part 1&lt;/a&gt; of this series covers how to configure the master key correctly. If you’ve done so, you can add these values using &lt;a href=&quot;https://www.engineyard.com/blog/rails-encrypted-credentials-on-rails-5.2&quot;&gt;this guide&lt;/a&gt;, or by following along with me.&lt;/p&gt;
+
+&lt;p&gt;In your application directory, open up the encrypted credentials file:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr
+local$ EDITOR=vim rails credentials:edit 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In the editor, add the following values:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;RDS_DB_NAME: postgres
+RDS_USERNAME: **YOUR_USERNAME_HERE**
+RDS_PASSWORD: **YOUR_PASSWORD_HERE**
+RDS_HOSTNAME: **YOUR_ENDPOINT_HERE**
+RDS_PORT: **YOUR_PORT_HERE**
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In your values, paste in the name of the database we set up, the username we chose, the password we created. If you recall in step one, we chose a master username and master password. Use those for the fields labeled &lt;code class=&quot;highlighter-rouge&quot;&gt;YOUR_USERNAME_HERE&lt;/code&gt; and  &lt;code class=&quot;highlighter-rouge&quot;&gt;YOUR_PASSWORD_HERE&lt;/code&gt;. Your RDS_HOSTNAME will be provided on the RDS console. Visit the Amazon AWS Console, select &lt;strong&gt;RDS&lt;/strong&gt;, choose your database, and then find the “Endpoint” value under &lt;strong&gt;Connectivity&lt;/strong&gt;. The port value will be listed underneath, as well.&lt;/p&gt;
+
+&lt;h2 id=&quot;step-3-configure-your-ec2-instance-to-work-with-postgres&quot;&gt;Step 3: Configure your EC2 instance to work with postgres&lt;/h2&gt;
+
+&lt;p&gt;You won’t be able to run capistrano quite yet. You’ll need to make sure your EC2 instance has access to the software packages the pg gem requires. SSH into your EC2 instance and run:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~
+ubuntu$ sudo apt-get install postgresql-client libpq5 libpq-dev
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;With these pre-reqs in place, we can deploy to production from our local machine, running:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr
+
+cap production deploy 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;step-4-test-the-database-configuration-with-devise&quot;&gt;Step 4: Test the database configuration with Devise&lt;/h2&gt;
+
+&lt;p&gt;I’m not going to dive too deep into the design of Trackerr quite yet. Blog posts detailing the actual development will come later in this series. But I do know we’ll want to have a user authentication system.&lt;/p&gt;
+
+&lt;p&gt;One of the most battle-tested solutions for this is the &lt;a href=&quot;https://github.com/plataformatec/devise&quot;&gt;Devise gem&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you’ve never built your own authentication and authorization system, you might want to get some experience with that before reaching for the devise gem. The &lt;a href=&quot;https://www.railstutorial.org/book/modeling_users&quot;&gt;Michael Hartl Ruby on Rails tutorial&lt;/a&gt; has a great section on building user authentication from scratch. But in order to get things up and running quickly, I’m going to start with Devise.&lt;/p&gt;
+
+&lt;p&gt;Including the Devise setup is a great way to test our database configuration worked, because it requires a functioning database to work correctly, so if we can set up this initial user system, we’ll know we were successful.&lt;/p&gt;
+
+&lt;p&gt;Add the Devise gem to your gemfile:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr/Gemfile 
+gem 'devise'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Run a bundle install and then run the Devise generator:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr
+local$ bundle install 
+local$ rails generate devise:install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Devise will prompt you for some initial configuration.&lt;/p&gt;
+
+&lt;p&gt;In a later part of this series, we’ll dive deeper into a production configuration for Devise, but for a quickstart, here’s what you need to know:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;We need to have our root routed to some controller method, which we do from part 1.&lt;/li&gt;
+  &lt;li&gt;We need to set up the defaults for the Devise mailer. You can do this quickly by adding &lt;code class=&quot;highlighter-rouge&quot;&gt;config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;config/environments/development.rb&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Devise expects a way to display &lt;a href=&quot;https://api.rubyonrails.org/classes/ActionDispatch/Flash.html&quot;&gt;flash&lt;/a&gt; notices to your views. In &lt;code class=&quot;highlighter-rouge&quot;&gt;trackerr/app/views/layouts/application.html.erb&lt;/code&gt;, make sure you have the following markup, preferably towards the top of your document:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr/app/views/layouts/application.html.erb
+&amp;lt;% flash.each do |key, value| %&amp;gt;
+  &amp;lt;div class=&quot;alert alert-&amp;lt;%= key %&amp;gt;&quot;&amp;gt;&amp;lt;%= value %&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;% end %&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;With that quick (and incomplete, for now) configuration, it’s time to generate a devise model for the users.&lt;/p&gt;
+
+&lt;p&gt;Generate the devise model for users and migrate: 
+Need to adjust to inherit from active record [6.0] in migrate files&lt;/p&gt;
+
+&lt;p&gt;Run:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr
+local$ rails generate devise User 
+local$ rails db:migrate
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;I found that when I tried to run &lt;code class=&quot;highlighter-rouge&quot;&gt;rails db:migrate&lt;/code&gt;, I ran into an ActiveRecord error. It seems Devise didn’t specify the correct ActiveRecord class for inheritance. If you get errors when migrating, open up the migration file which ends in &lt;code class=&quot;highlighter-rouge&quot;&gt;_devise_create_users.rb&lt;/code&gt;. You’ll find it in the &lt;code class=&quot;highlighter-rouge&quot;&gt;db/migrate&lt;/code&gt; directory.&lt;/p&gt;
+
+&lt;p&gt;Find the line which reads &lt;code class=&quot;highlighter-rouge&quot;&gt;class DeviseCreateUsers &amp;lt; ActiveRecord::Migration&lt;/code&gt; (it should be right at the top of the file) and change it to: &lt;code class=&quot;highlighter-rouge&quot;&gt;class DeviseCreateUsers &amp;lt; ActiveRecord::Migration[6.0]&lt;/code&gt;. This sets the ActiveRecord class to the updated version (in sync with the Rails 6.0.0 beta we’re using).&lt;/p&gt;
+
+&lt;p&gt;Finally, let’s seed the initial user. In your &lt;code class=&quot;highlighter-rouge&quot;&gt;db/seeds.rb&lt;/code&gt; file,&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr/db/seeds.rb
+User.create!(
+    email: &quot;yourname@yourdomain.com&quot;,
+    password: Rails.application.credentials[:ADMIN_PASSWORD]
+)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Again, notice we’re using the encrypted credentials file. I’ve added an &lt;code class=&quot;highlighter-rouge&quot;&gt;ADMIN_PASSWORD&lt;/code&gt; field to the credentials by running &lt;code class=&quot;highlighter-rouge&quot;&gt;EDITOR=vim rails credentials:edit&lt;/code&gt; again.&lt;/p&gt;
+
+&lt;p&gt;In order for Capistrano to take advantage of your seeds, we need to add an additional gem.&lt;/p&gt;
+
+&lt;p&gt;In your Gemfile, add the capistrano rails db gem:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr/Gemfile
+...
+gem 'capistrano-rails-db'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And in your Capfile, add it as a requirement:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr/Capfile
+...
+require 'capistrano/rails/db'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Finally, let’s commit to git and deploy:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# ~/dev/trackerr
+local$ git add .
+local$ git commit -m &quot;add devise gem and initial user seed&quot;
+local$ git push 
+local$ cap production deploy 
+local$ cap production deploy:db:seed
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can visit your sign in page at yourdomain.com/users/sign_in and confirm that it worked. Enter your information and make sure you get a flash message saying you’ve successfully signed in!&lt;/p&gt;</content><author><name></name></author><category term="blog" /><category term="tutorial" /><category term="rails" /><category term="aws" /><category term="postgres" /><category term="RDS" /><summary type="html">This is a follow up post to my blog titled: How do I deploy a Rails 6 App to Amazon EC2?.</summary></entry><entry><title type="html">How do I Deploy a Rails 6 app to Amazon EC2?</title><link href="http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html" rel="alternate" type="text/html" title="How do I Deploy a Rails 6 app to Amazon EC2?" /><published>2019-01-30T00:00:00-07:00</published><updated>2019-01-30T00:00:00-07:00</updated><id>http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2</id><content type="html" xml:base="http://localhost:4000/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html">&lt;h2 id=&quot;why-i-wrote-this-blog-post&quot;&gt;Why I wrote this blog post&lt;/h2&gt;
 
 &lt;p&gt;I’ve been building Rails apps for some time now. I’ve been mostly relying on &lt;a href=&quot;https://heroku.com&quot;&gt;Heroku&lt;/a&gt; to for my deploys.&lt;/p&gt;
 
@@ -633,8 +928,8 @@ local$ cap production deploy
 
 &lt;ol&gt;
   &lt;li&gt;Set up the DNS records&lt;/li&gt;
-  &lt;li&gt;Set up a production-level database for the application.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://ogdenstudios.xyz/2019/02/07/how-do-i-add-an-amazon-database-to-my-rails-app.html&quot;&gt;Set up a production-level database for the application&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Actually build the application.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;These tasks are outside the scope of this tutorial, but will be covered in future posts, and links added back in.&lt;/p&gt;</content><author><name></name></author><category term="blog" /><category term="tutorial" /><category term="rails" /><category term="aws" /><category term="capistrano" /><category term="nginx" /><summary type="html">Why I wrote this blog post</summary></entry></feed>
+&lt;p&gt;These tasks are outside the scope of this tutorial, but are covered in additional blog posts.&lt;/p&gt;</content><author><name></name></author><category term="blog" /><category term="tutorial" /><category term="rails" /><category term="aws" /><category term="capistrano" /><category term="nginx" /><summary type="html">Why I wrote this blog post</summary></entry></feed>

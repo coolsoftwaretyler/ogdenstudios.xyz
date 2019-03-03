@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/assets/main.css">
     <link rel="stylesheet" href="/stylesheets/ogden.css"><!-- Begin Jekyll SEO tag v2.5.0 -->
-<title>How do I loop over an HTML Collection in JavaScript? | Ogden Studios</title>
+<title>How do I run JavaScript when the DOM is ready - without jQuery? | Ogden Studios</title>
 <meta name="generator" content="Jekyll v3.8.5" />
-<meta property="og:title" content="How do I loop over an HTML Collection in JavaScript?" />
+<meta property="og:title" content="How do I run JavaScript when the DOM is ready - without jQuery?" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Source" />
-<meta property="og:description" content="Source" />
-<link rel="canonical" href="http://localhost:4000/tidbits/loop-over-htmlcollection-javscript.html" />
-<meta property="og:url" content="http://localhost:4000/tidbits/loop-over-htmlcollection-javscript.html" />
+<meta name="description" content="I often rely on jQuery purely for the $(&quot;document&quot;).ready function - which feels wrong." />
+<meta property="og:description" content="I often rely on jQuery purely for the $(&quot;document&quot;).ready function - which feels wrong." />
+<link rel="canonical" href="http://localhost:4000/tidbits/dom-loaded-vanilla-javascript.html" />
+<meta property="og:url" content="http://localhost:4000/tidbits/dom-loaded-vanilla-javascript.html" />
 <meta property="og:site_name" content="Ogden Studios" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2019-01-31T00:00:00-07:00" />
+<meta property="article:published_time" content="2019-02-27T00:00:00-07:00" />
 <script type="application/ld+json">
-{"headline":"How do I loop over an HTML Collection in JavaScript?","dateModified":"2019-01-31T00:00:00-07:00","datePublished":"2019-01-31T00:00:00-07:00","description":"Source","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/tidbits/loop-over-htmlcollection-javscript.html"},"@type":"BlogPosting","url":"http://localhost:4000/tidbits/loop-over-htmlcollection-javscript.html","@context":"http://schema.org"}</script>
+{"headline":"How do I run JavaScript when the DOM is ready - without jQuery?","dateModified":"2019-02-27T00:00:00-07:00","datePublished":"2019-02-27T00:00:00-07:00","description":"I often rely on jQuery purely for the $(&quot;document&quot;).ready function - which feels wrong.","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/tidbits/dom-loaded-vanilla-javascript.html"},"@type":"BlogPosting","url":"http://localhost:4000/tidbits/dom-loaded-vanilla-javascript.html","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <meta property="og:image" content="http://localhost:4000/img/FacebookBanner.jpg" />
     <meta content="Ogden Studios" property="og:site_name"> 
     
-    <meta content="How do I loop over an HTML Collection in JavaScript?" property="og:title"> 
+    <meta content="How do I run JavaScript when the DOM is ready - without jQuery?" property="og:title"> 
      
     
     <meta content="article" property="og:type"> 
@@ -31,7 +31,7 @@
     <meta content="Practical solutions for pragmatic people" property="og:description"> 
      
     
-    <meta content="http://localhost:4000/tidbits/loop-over-htmlcollection-javscript.html" property="og:url"> 
+    <meta content="http://localhost:4000/tidbits/dom-loaded-vanilla-javascript.html" property="og:url"> 
      
     
     <meta content="/img/logo-high-resolution.png" property="og:image">
@@ -64,32 +64,25 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">How do I loop over an HTML Collection in JavaScript?</h1>
+    <h1 class="post-title p-name" itemprop="name headline">How do I run JavaScript when the DOM is ready - without jQuery?</h1>
     <p class="post-meta">
-      <time class="dt-published" datetime="2019-01-31T00:00:00-07:00" itemprop="datePublished">Jan 31, 2019
+      <time class="dt-published" datetime="2019-02-27T00:00:00-07:00" itemprop="datePublished">Feb 27, 2019
       </time></p>
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p><a href="https://stackoverflow.com/questions/22754315/for-loop-for-htmlcollection-elements">Source</a></p>
+    <p>I often rely on jQuery purely for the <code class="highlighter-rouge">$("document").ready</code> function - which feels wrong.</p>
 
-<p>Recent version of modern browsers support for/of iteration on DOM lists.</p>
+<p>In some cases, I really just want to run some small code when the page is ready. I’d like to do it in vanilla javascript, because these use cases are particularly well suited for vanilla.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var list = document.getElementsByClassName("events");
-for (let item of list) {
-    console.log(item.id);
-}
+<p>Replace the document ready from jQuery with:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>document.addEventListener("DOMContentLoaded", function() {
+    // Your code to be executed here
+});
 </code></pre></div></div>
 
-<p>Older browsers (like IE) need</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var list= document.getElementsByClassName("events");
-for (var i = 0; i &lt; list.length; i++) {
-    console.log(list[i].id); //second console output
-}
-</code></pre></div></div>
-
-  </div><a class="u-url" href="/tidbits/loop-over-htmlcollection-javscript.html" hidden></a>
+  </div><a class="u-url" href="/tidbits/dom-loaded-vanilla-javascript.html" hidden></a>
 </article>
 
 <div>

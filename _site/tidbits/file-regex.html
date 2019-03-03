@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/assets/main.css">
     <link rel="stylesheet" href="/stylesheets/ogden.css"><!-- Begin Jekyll SEO tag v2.5.0 -->
-<title>How do I loop over an HTML Collection in JavaScript? | Ogden Studios</title>
+<title>How do I just get the file name from a URL or file path? | Ogden Studios</title>
 <meta name="generator" content="Jekyll v3.8.5" />
-<meta property="og:title" content="How do I loop over an HTML Collection in JavaScript?" />
+<meta property="og:title" content="How do I just get the file name from a URL or file path?" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Source" />
-<meta property="og:description" content="Source" />
-<link rel="canonical" href="http://localhost:4000/tidbits/loop-over-htmlcollection-javscript.html" />
-<meta property="og:url" content="http://localhost:4000/tidbits/loop-over-htmlcollection-javscript.html" />
+<meta name="description" content="Sometimes you just need the name of a file, and its buried under any number of URL or local file paths. Here’s a regular expression that will get you that file name (in Ruby, assuming url is the long form name)." />
+<meta property="og:description" content="Sometimes you just need the name of a file, and its buried under any number of URL or local file paths. Here’s a regular expression that will get you that file name (in Ruby, assuming url is the long form name)." />
+<link rel="canonical" href="http://localhost:4000/tidbits/file-regex.html" />
+<meta property="og:url" content="http://localhost:4000/tidbits/file-regex.html" />
 <meta property="og:site_name" content="Ogden Studios" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2019-01-31T00:00:00-07:00" />
+<meta property="article:published_time" content="2019-02-18T00:00:00-07:00" />
 <script type="application/ld+json">
-{"headline":"How do I loop over an HTML Collection in JavaScript?","dateModified":"2019-01-31T00:00:00-07:00","datePublished":"2019-01-31T00:00:00-07:00","description":"Source","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/tidbits/loop-over-htmlcollection-javscript.html"},"@type":"BlogPosting","url":"http://localhost:4000/tidbits/loop-over-htmlcollection-javscript.html","@context":"http://schema.org"}</script>
+{"headline":"How do I just get the file name from a URL or file path?","dateModified":"2019-02-18T00:00:00-07:00","datePublished":"2019-02-18T00:00:00-07:00","description":"Sometimes you just need the name of a file, and its buried under any number of URL or local file paths. Here’s a regular expression that will get you that file name (in Ruby, assuming url is the long form name).","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/tidbits/file-regex.html"},"@type":"BlogPosting","url":"http://localhost:4000/tidbits/file-regex.html","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <meta property="og:image" content="http://localhost:4000/img/FacebookBanner.jpg" />
     <meta content="Ogden Studios" property="og:site_name"> 
     
-    <meta content="How do I loop over an HTML Collection in JavaScript?" property="og:title"> 
+    <meta content="How do I just get the file name from a URL or file path?" property="og:title"> 
      
     
     <meta content="article" property="og:type"> 
@@ -31,7 +31,7 @@
     <meta content="Practical solutions for pragmatic people" property="og:description"> 
      
     
-    <meta content="http://localhost:4000/tidbits/loop-over-htmlcollection-javscript.html" property="og:url"> 
+    <meta content="http://localhost:4000/tidbits/file-regex.html" property="og:url"> 
      
     
     <meta content="/img/logo-high-resolution.png" property="og:image">
@@ -64,32 +64,18 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">How do I loop over an HTML Collection in JavaScript?</h1>
+    <h1 class="post-title p-name" itemprop="name headline">How do I just get the file name from a URL or file path?</h1>
     <p class="post-meta">
-      <time class="dt-published" datetime="2019-01-31T00:00:00-07:00" itemprop="datePublished">Jan 31, 2019
+      <time class="dt-published" datetime="2019-02-18T00:00:00-07:00" itemprop="datePublished">Feb 18, 2019
       </time></p>
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p><a href="https://stackoverflow.com/questions/22754315/for-loop-for-htmlcollection-elements">Source</a></p>
+    <p>Sometimes you just need the name of a file, and its buried under any number of URL or local file paths. Here’s a regular expression that will get you that file name (in Ruby, assuming <code class="highlighter-rouge">url</code> is the long form name).</p>
 
-<p>Recent version of modern browsers support for/of iteration on DOM lists.</p>
+<p><code class="highlighter-rouge">filename = /([^\/]+)(?=\.\w+$)/.match(url)</code></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var list = document.getElementsByClassName("events");
-for (let item of list) {
-    console.log(item.id);
-}
-</code></pre></div></div>
-
-<p>Older browsers (like IE) need</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var list= document.getElementsByClassName("events");
-for (var i = 0; i &lt; list.length; i++) {
-    console.log(list[i].id); //second console output
-}
-</code></pre></div></div>
-
-  </div><a class="u-url" href="/tidbits/loop-over-htmlcollection-javscript.html" hidden></a>
+  </div><a class="u-url" href="/tidbits/file-regex.html" hidden></a>
 </article>
 
 <div>
