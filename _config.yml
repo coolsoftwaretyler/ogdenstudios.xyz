@@ -23,6 +23,7 @@ twitter_username: ogdenstudios
 github_username:  ogdenstudios
 
 # Build settings
+include: ["_headers"]
 markdown: kramdown
 theme: minima
 plugins:
