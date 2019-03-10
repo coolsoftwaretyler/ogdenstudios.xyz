@@ -58,3 +58,54 @@ add_filter('wp_headers', 'add_hsts_header');
 to the bottom. 
 
 With that in place, we've got a 40/100. 
+
+Next they'll ask 
+
+The use of the X-Frame-Options header and Content Security Policy’s frame-ancestors directive are a simple and easy way to protect your site against clickjacking attacks.
+
+Fix this in the custom security headers: 
+
+```
+/** Custom security HTTP headers **/
+function add_hsts_header($headers) {
+	$headers['strict-transport-security'] = 'max-age=63072000; includeSubDomains';
+	$headers['Content-Security-Policy'] = "frame-ancestors 'none'";
+	$headers['X-Frame-Options'] = 'DENY';
+	return $headers;
+  }
+```
+
+Up next is the x-content-type-options set 
+
+add 
+
+```
+/** Custom security HTTP headers **/
+function add_hsts_header($headers) {
+	$headers['strict-transport-security'] = 'max-age=63072000; includeSubDomains';
+	$headers['Content-Security-Policy'] = "frame-ancestors 'none'";
+	$headers['X-Frame-Options'] = 'DENY';
+	$headers['X-Content-Type-Options'] = 'nosniff';
+	return $headers;
+}
+```
+
+Now we're back to the CSP. Let's update it so it looks like: 
+
+/** Custom security HTTP headers **/
+function add_hsts_header($headers) {
+	$headers['strict-transport-security'] = 'max-age=63072000; includeSubDomains';
+	$headers['Content-Security-Policy'] = "base-uri 'self'; default-src 'none'; form-action 'self'; frame-ancestors 'none'; img-src 'self'; script-src 'self'; style-src 'self'";
+	$headers['X-Frame-Options'] = 'DENY';
+	$headers['X-Content-Type-Options'] = 'nosniff';
+	return $headers;
+}
+
+
+Change these headers from in-theme to htaccess, and od that on dad's site. 
+
+/** Set up automatic updates for all plugins */
+add_filter( 'auto_update_plugin', '__return_true' );
+
+/** Set up automatic updates for all themese */
+add_filter( 'auto_update_theme', '__return_true' );
