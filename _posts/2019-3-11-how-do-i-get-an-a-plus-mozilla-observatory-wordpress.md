@@ -23,6 +23,8 @@ With a fresh WordPress 5.1 install, our website scores an **F**.
 
 ## Step 3: Set up HTTPS 
 
+You'll need to have an SSL certification for your site. With Dreamhost, I use [Let's Encrypt](https://www.dreamhost.com/hosting/ssl-tls-certificates/) because I think SSL certificates should be free. 
+
 When you analyze your site through Mozilla Observatory, you'll be presented with a series of recommendations for improving your score. The first recommendation is automatically redirecting from HTTP to HTTPS.
 
 First, we'll need to change this in the WordPress administration settings. 
@@ -82,4 +84,10 @@ Even with those changes, the CSP is pretty locked down. You may find you need to
 
 ## Next Steps 
 
-Getting an A+ on Mozilla Observatory doesn't guarantee your site is entirely secure, especially if you're running WordPress. There is a wealth of information out there about locking down a WordPress site. Some great first steps might be [setting up JetPack](https://jetpack.com/support/getting-started-with-jetpack/) or [removing the WP generator meta tag](https://css-tricks.com/snippets/wordpress/remove-wp-generator-meta-tag/).
+Getting an A+ on Mozilla Observatory doesn't guarantee your site is entirely secure, especially if you're running WordPress. There is a wealth of information out there about locking down a WordPress site. A few things to consider: 
+
+1. [Set up JetPack](https://jetpack.com/support/getting-started-with-jetpack/)
+2. [Remove the WP generator meta tag](https://css-tricks.com/snippets/wordpress/remove-wp-generator-meta-tag/).
+3. [Configure auto-updates for WordPress Core, themes, and plug-ins](https://codex.wordpress.org/Configuring_Automatic_Background_Updates).
+
+If you end up purchasing hosting with Dreamhost, please consider using my personal [referral link](https://www.dreamhost.com/r.cgi?2263245).
