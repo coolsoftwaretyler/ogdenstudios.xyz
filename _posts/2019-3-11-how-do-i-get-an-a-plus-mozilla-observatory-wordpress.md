@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "How do I get an A+ in Mozilla Observatory with WordPress?"
+tags: [blog, tutorial, wordpress, observatory, security]
+description: "Learn how to get an A+ grade through Mozilla Observatory using WordPress."
+---
+
 I recently wrote a blog post about [getting an A+ in the Mozilla Observatory with Jekyll and Netlify](https://ogdenstudios.xyz/2019/03/03/how-do-i-get-an-a-plus-mozilla-observatory-jekyll-netlify.html). 
 
 I wrote that post as I completed a Jekyll site for a client. My next projects are going to be WordPress sites, so it makes sense to do the same for the WordPress platform. Here's how you can get an A+ on the Mozilla Observatory with a WordPress website.
