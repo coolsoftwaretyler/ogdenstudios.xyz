@@ -1,2 +1,42 @@
+html {
+  font-family: 'Work Sans', sans-serif; }
+
 h1 {
   text-transform: uppercase; }
+
+.page {
+  box-sizing: border-box;
+  max-width: 900px;
+  padding: 1em; }
+
+nav {
+  display: flex;
+  align-items: center; }
+  @media all and (max-width: 600px) {
+    nav {
+      flex-wrap: wrap; } }
+  nav ul {
+    display: flex;
+    list-style: none;
+    padding-left: 0; }
+  nav li {
+    margin-right: 1em; }
+  nav .brand {
+    height: 100px;
+    margin-left: 1em;
+    margin-right: 1em;
+    width: 100px; }
+
+.home {
+  display: flex;
+  flex-wrap: wrap; }
+  .home__headshot {
+    background-image: url("/img/tyler.jpg");
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    border-radius: 50%;
+    height: 100px;
+    margin: 0 1em 1em 0;
+    width: 100px; }
+  .home__lead {
+    width: 80%; }
