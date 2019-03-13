@@ -1,18 +1,18 @@
-.home {
-    display: flex;
-    flex-wrap: wrap;
-    &__headshot {
-        background-image: url('/img/tyler.jpg');
-        background-size: cover !important;
-        background-repeat: no-repeat !important;
-        border-radius: 50%;
-        height: 100px;
-        flex: 1;
-        margin: 0 2rem 2rem 0 ;
-        min-width: 100px;
-        max-width: 100px;
-    }
-    &__lead {
-        flex: 1;
-    }
-}
+// .home {
+//     display: flex;
+//     flex-wrap: wrap;
+//     &__headshot {
+//         background-image: url('/img/tyler.jpg');
+//         background-size: cover !important;
+//         background-repeat: no-repeat !important;
+//         border-radius: 50%;
+//         height: 100px;
+//         flex: 1;
+//         margin: 0 2rem 2rem 0 ;
+//         min-width: 100px;
+//         max-width: 100px;
+//     }
+//     &__lead {
+//         flex: 1;
+//     }
+// }
