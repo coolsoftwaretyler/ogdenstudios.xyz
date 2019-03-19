@@ -18,6 +18,7 @@ Front End Languages and Frameworks
 Back End Languages and Frameworks
 
 - Flask 
+- Node.js
 - Python 
 - PHP 
 - Ruby 
