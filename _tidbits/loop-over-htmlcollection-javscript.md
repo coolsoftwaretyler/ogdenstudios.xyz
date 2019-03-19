@@ -11,7 +11,7 @@ Recent version of modern browsers support for/of iteration on DOM lists.
 ```
 var list = document.getElementsByClassName("events");
 for (let item of list) {
-    console.log(item.id);
+    console.log(item);
 }
 ```
 
@@ -20,6 +20,6 @@ Older browsers (like IE) need
 ```
 var list= document.getElementsByClassName("events");
 for (var i = 0; i < list.length; i++) {
-    console.log(list[i].id); //second console output
+    console.log(list[i]);
 }
 ```
