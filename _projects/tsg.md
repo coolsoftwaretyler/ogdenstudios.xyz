@@ -5,5 +5,5 @@ github: https://github.com/ogdenstudios/tsg-rebuild
 link: http://thcstaffinggroup.com 
 live: true
 skills: ['Bootstrap', 'Continuous deployment', 'CSS', 'HTML', 'Hugo', 'JavaScript', 'SASS', 'WCAG AA', 'WordPress']
-weight: 40
+weight: 50
 ---
