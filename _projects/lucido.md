@@ -1,8 +1,8 @@
 ---
 title: Dr. Frank Lucido 
 link: https://drfranklucido.com 
-description: I provide some basic tech support and web administration for Dr. Frank Lucido's WordPress installation.
+description: I provided some basic tech support and web administration for Dr. Frank Lucido's WordPress installation.
 live: true
-skills: ["WordPress", "HTML", "CSS", "PHP"]
-weight: 50
+skills: ["CSS", "HTML", "PHP", "WordPress"]
+weight: 60
 ---

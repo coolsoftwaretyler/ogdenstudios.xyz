@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/assets/main.css">
     <link rel="stylesheet" href="/stylesheets/ogden.css"><!-- Begin Jekyll SEO tag v2.5.0 -->
-<title>How do I loop over an HTML Collection in JavaScript? | Ogden Studios</title>
+<title>How do I export data from Heroku Postgresql to CSV? | Ogden Studios</title>
 <meta name="generator" content="Jekyll v3.8.5" />
-<meta property="og:title" content="How do I loop over an HTML Collection in JavaScript?" />
+<meta property="og:title" content="How do I export data from Heroku Postgresql to CSV?" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Source" />
 <meta property="og:description" content="Source" />
-<link rel="canonical" href="http://localhost:4000/tidbits/loop-over-htmlcollection-javscript.html" />
-<meta property="og:url" content="http://localhost:4000/tidbits/loop-over-htmlcollection-javscript.html" />
+<link rel="canonical" href="http://localhost:4000/tidbits/export-heroku-pg-table-to-csv.html" />
+<meta property="og:url" content="http://localhost:4000/tidbits/export-heroku-pg-table-to-csv.html" />
 <meta property="og:site_name" content="Ogden Studios" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2019-01-31T00:00:00-07:00" />
+<meta property="article:published_time" content="2019-03-19T00:00:00-06:00" />
 <script type="application/ld+json">
-{"headline":"How do I loop over an HTML Collection in JavaScript?","dateModified":"2019-01-31T00:00:00-07:00","datePublished":"2019-01-31T00:00:00-07:00","description":"Source","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/tidbits/loop-over-htmlcollection-javscript.html"},"@type":"BlogPosting","url":"http://localhost:4000/tidbits/loop-over-htmlcollection-javscript.html","@context":"http://schema.org"}</script>
+{"headline":"How do I export data from Heroku Postgresql to CSV?","dateModified":"2019-03-19T00:00:00-06:00","datePublished":"2019-03-19T00:00:00-06:00","description":"Source","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/tidbits/export-heroku-pg-table-to-csv.html"},"@type":"BlogPosting","url":"http://localhost:4000/tidbits/export-heroku-pg-table-to-csv.html","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <meta property="og:image" content="http://localhost:4000/img/FacebookBanner.jpg" />
     <meta content="Ogden Studios" property="og:site_name"> 
     
-    <meta content="How do I loop over an HTML Collection in JavaScript?" property="og:title"> 
+    <meta content="How do I export data from Heroku Postgresql to CSV?" property="og:title"> 
      
     
     <meta content="article" property="og:type"> 
@@ -31,7 +31,7 @@
     <meta content="Practical solutions for pragmatic people" property="og:description"> 
      
     
-    <meta content="http://localhost:4000/tidbits/loop-over-htmlcollection-javscript.html" property="og:url"> 
+    <meta content="http://localhost:4000/tidbits/export-heroku-pg-table-to-csv.html" property="og:url"> 
      
     
     <meta content="/img/logo-high-resolution.png" property="og:image">
@@ -64,38 +64,28 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">How do I loop over an HTML Collection in JavaScript?</h1>
+    <h1 class="post-title p-name" itemprop="name headline">How do I export data from Heroku Postgresql to CSV?</h1>
     <p class="post-meta">
-      <time class="dt-published" datetime="2019-01-31T00:00:00-07:00" itemprop="datePublished">Jan 31, 2019
+      <time class="dt-published" datetime="2019-03-19T00:00:00-06:00" itemprop="datePublished">Mar 19, 2019
       </time></p>
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p><a href="https://stackoverflow.com/questions/22754315/for-loop-for-htmlcollection-elements">Source</a></p>
+    <p><a href="https://www.codeography.com/2016/02/11/export-heroku-postgres-to-csv.html">Source</a></p>
 
-<p>Recent version of modern browsers support for/of iteration on DOM lists.</p>
+<p>You can copy data from a Heroku postgres database to your local working directory by running:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var list = document.getElementsByClassName("events");
-for (let item of list) {
-    console.log(item.id);
-}
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>heroku pg:sql 
+app::DATABASE=&gt; \copy (SELECT * FROM some_table) TO some_table.csv CSV DELIMITER ','
 </code></pre></div></div>
 
-<p>Older browsers (like IE) need</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var list= document.getElementsByClassName("events");
-for (var i = 0; i &lt; list.length; i++) {
-    console.log(list[i].id); //second console output
-}
-</code></pre></div></div>
-
-  </div><a class="u-url" href="/tidbits/loop-over-htmlcollection-javscript.html" hidden></a>
+  </div><a class="u-url" href="/tidbits/export-heroku-pg-table-to-csv.html" hidden></a>
 </article>
 
 <div>
 <p>Questions? Comments? Send them all along to <a href="mailto: tyler@ogdenstudios.xyz">tyler@ogdenstudios.xyz</a></p>
 
-<p>Did you like this post? <a href="https://ko-fi.com/ogdenstudios">Buy me a coffee</a></p>
+<p>Want to support the open source work I do? <a href="https://ko-fi.com/ogdenstudios">Buy me a coffee</a></p>
 </div>
 
       </div>
