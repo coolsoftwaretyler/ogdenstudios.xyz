@@ -1,11 +1,9 @@
 ---
 title: The Atwater Group 
 link: https://theatwatergroup.com
-description: The Atwater Group offers proofreading and editing services - all at affordable rates. We built a custom site for them using the Hugo static site generator and Netlify.
-skills: ['HTML', 'SASS', 'Bootstrap', 'Hugo', 'Continuous Deployment']
-github: https://github.com/ogdenstudios/atwater
+description: The Atwater Group offers proofreading and editing services - all at affordable rates. We built a custom content management system and website for them with Ruby on Rails.
+skills: ['HTML', 'SASS', 'Ruby on Rails', 'Vanilla Javascript', 'CMS', 'Heroku']
+github: https://github.com/ogdenstudios/atwater-rails
 live: true
 weight: 20
 ---
-
-The Atwater Group offers proofreading and editing services - all at affordable rates. We built a custom site for them using the Hugo static site generator and Netlify. You can view the code [here](https://github.com/ogdenstudios/atwater)
