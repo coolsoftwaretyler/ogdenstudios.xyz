@@ -5,17 +5,16 @@ permalink: /experience/
 weight: 20
 ---
 
-
-## Full Stack Web Developer 
-### Maxar Technologies
+## Maxar Technologies
+### Full Stack Web Developer 
 *November 2018 - Present*
 
-- Worked with Maxar Creative team to build Rails applications:
-    - [Radiant Solutions](http://radiantsolutions.com) 
-    - Digital Globe
+- Worked with the Maxar Creative team to build Ruby on Rails applications:
+    - [Digital Globe](https://digitalglobe.com)
+    - [Radiant Solutions](https://www.radiantsolutions.com) 
 
-## Website Administrator
-### Students for Sensible Drug Policy
+## Students for Sensible Drug Policy
+### Website Administrator
 *July 2015 - November 2018*
 
 - Migrated legacy WordPress site to a headless CMS with a Hugo front end to address performance, security, and maintenance concerns. 
@@ -25,21 +24,20 @@ weight: 20
 - Became a Certified NationBuilder Developer to create internal productivity applications on top of NationBuilder API using Python, PHP, and Ruby scripting. 
 - Maintained legacy WordPress and Drupal web properties.
 
-
-## Mobile Development Intern
-### Cigna
+## Cigna
+### Mobile Development Intern
 *September 2013 - January 2014*
 
 - Designed internal website to explain and justify the implementation of DevOps in the mobile development department.
 
-## Electrical Engineering Intern
-### Sealed Air
+## Sealed Air
+### Electrical Engineering Intern
 *May 2012 - August 2013*
 
 - Embedded systems programming using .NET micro framework, prototyping and documenting industrial-grade packaging machinery
 
-## Technical Assistant
-### Center for 21st Century Skills
+## Center for 21st Century Skills
+### Technical Assistant
 *May 2011 - May 2012*
 
 - Developed an iOS Application to assist with field research on public education

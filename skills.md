@@ -6,36 +6,39 @@ weight: 30
 ---
 
 Front End Languages and Frameworks
-- HTML5 
-- CSS3 
-- JavaScript 
-- React 
 - Bootstrap 
+- CSS3 
+- HTML5 
 - Hugo 
+- JavaScript 
 - Jekyll
+- React 
+- Vue
 
 Back End Languages and Frameworks
 
+- Flask 
 - Python 
 - PHP 
 - Ruby 
 - Rails 
-- Flask 
 - RESTful APIs 
 
-Web Administration
+Website Administration
 
-- MySQL 
-- Wordpress 
-- Drupal 
 - Apache 
 - Certified NationBuilder Developer 
+- DNS configuration
+- Drupal 
+- MySQL 
+- Nginx
+- WordPress
 
 Tools
 
-- Linux 
-- git 
-- bash 
 - Adobe Suite 
+- Amazon Web Services
+- bash 
 - Google Suite 
-- Amazon AWS
+- git 
+- Linux 
