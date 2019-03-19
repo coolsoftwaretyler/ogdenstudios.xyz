@@ -2,4 +2,4 @@
 
 # Ogden Studios Main Website 
 
-Built in Jekyll. Serves as a living Resume, CV, Portfolio, Blog, and place to collect snippets of relevant information. 
+Built in Jekyll. Serves as a living resume, CV, portfolio, blog, and place to collect snippets of relevant information. 
