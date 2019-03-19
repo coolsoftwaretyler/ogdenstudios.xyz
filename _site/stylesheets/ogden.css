@@ -6,12 +6,16 @@ h1 {
 
 .page {
   box-sizing: border-box;
+  margin: 0 auto;
   max-width: 900px;
   padding: 1em; }
 
 nav {
   display: flex;
-  align-items: center; }
+  align-items: center;
+  margin: 0 auto;
+  max-width: 900px;
+  padding: 1em; }
   @media all and (max-width: 600px) {
     nav {
       flex-wrap: wrap; } }
@@ -19,8 +23,15 @@ nav {
     display: flex;
     list-style: none;
     padding-left: 0; }
+    @media all and (max-width: 600px) {
+      nav ul {
+        flex-wrap: wrap;
+        justify-content: space-around; } }
   nav li {
     margin-right: 1em; }
+    @media all and (max-width: 600px) {
+      nav li {
+        margin: 1em; } }
   nav .brand {
     height: 100px;
     margin-left: 1em;
@@ -38,5 +49,3 @@ nav {
     height: 100px;
     margin: 0 1em 1em 0;
     width: 100px; }
-  .home__lead {
-    width: 80%; }

@@ -1,6 +1,9 @@
 nav {
     display: flex;
     align-items: center;
+    margin: 0 auto;
+    max-width: 900px;
+    padding: 1em;
     @media all and (max-width: 600px) {
         flex-wrap: wrap;
     }
@@ -8,9 +11,16 @@ nav {
         display: flex;
         list-style: none;
         padding-left: 0;
+    @media all and (max-width: 600px) {
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
     }
     li {
         margin-right: 1em;
+        @media all and (max-width: 600px) {
+            margin: 1em;
+        }
     }
     .brand {
         height: 100px;

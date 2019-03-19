@@ -1,12 +1,14 @@
 html {
     font-family: 'Work Sans', sans-serif;
 }
+
 h1 {
     text-transform: uppercase;
 }
 
 .page {
     box-sizing: border-box;
+    margin: 0 auto;
     max-width: 900px;
     padding: 1em;
 }
