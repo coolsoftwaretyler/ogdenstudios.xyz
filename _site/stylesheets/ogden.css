@@ -50,6 +50,6 @@ nav {
     margin: 0 1em 1em 0;
     width: 100px; }
 
-.blog ul {
+.blog ul, .tidbits ul {
   list-style: none;
   padding-left: 0; }
