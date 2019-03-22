@@ -11,10 +11,10 @@ nav {
         display: flex;
         list-style: none;
         padding-left: 0;
-    @media all and (max-width: 600px) {
-        flex-wrap: wrap;
-        justify-content: space-around;
-    }
+        @media all and (max-width: 600px) {
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
     }
     li {
         margin-right: 1em;
