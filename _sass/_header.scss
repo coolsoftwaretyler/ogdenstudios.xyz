@@ -1,26 +1,31 @@
-.site-header {
-    background: $color__light-green;
-    border-top: none;
+nav {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 900px;
     padding: 1em;
-}
-
-.site-nav {
-    .page-link {
-        color: $color__white;
-        line-height: 100px;
-        &:hover {
-            text-decoration: none;
-        }
-        @media all and (max-width: 600px){
-            line-height: 1;
+    @media all and (max-width: 600px) {
+        flex-wrap: wrap;
+    }
+    ul {
+        display: flex;
+        list-style: none;
+        padding-left: 0;
+        @media all and (max-width: 600px) {
+            flex-wrap: wrap;
+            justify-content: flex-start;
         }
     }
+    li {
+        margin-right: 1em;
+        @media all and (max-width: 600px) {
+            margin: 1em 1em 0 0;
+        }
+    }
+    .brand {
+        height: 100px;
+        margin-left: 0;
+        margin-right: 1em;
+        width: 100px;
+    }
 }
-
-.nav-brand {
-    max-width: 100px;
-}
-.site-nav, .nav-trigger {
-    background: $color__light-green;
-}
-

@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Experience
+nav: true
 permalink: /experience/
 weight: 20
 ---

@@ -1,3 +1,33 @@
+html {
+    background-color: $color__gray;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 18px;
+}
+
 h1 {
     text-transform: uppercase;
+}
+
+a {
+    color: $color__green;
+}
+
+p {
+    line-height: 1.5;
+}
+
+pre {
+    background-color: $color__green--pre;
+    overflow-x: auto;
+}
+
+img {
+    width: 100%;
+}
+
+.page {
+    box-sizing: border-box;
+    margin: 0 auto;
+    max-width: 900px;
+    padding: 1em;
 }

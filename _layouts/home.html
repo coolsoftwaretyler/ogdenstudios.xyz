@@ -1,34 +1,10 @@
----
-layout: default
----
-
 <div class="home">
-  {%- if page.title -%}
-    <h1 class="page-heading">{{ page.title }}</h1>
-  {%- endif -%}
-
-  {{ content }}
-
-  {%- if site.posts.size > 0 -%}
-    <h2 class="post-list-heading">{{ page.list_title | default: "Posts" }}</h2>
-    <ul class="post-list">
-      {%- for post in site.posts -%}
-      <li>
-        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-        <span class="post-meta">{{ post.date | date: date_format }}</span>
-        <h3>
-          <a class="post-link" href="{{ post.url | relative_url }}">
-            {{ post.title | escape }}
-          </a>
-        </h3>
-        {%- if site.show_excerpts -%}
-          {{ post.excerpt }}
-        {%- endif -%}
-      </li>
-      {%- endfor -%}
-    </ul>
-
-    <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>
-  {%- endif -%}
-
+    <div class="home__headshot"></div>
+    <div class="home__lead">
+        <p>I'm Tyler Williams, Principal Developer at Ogden Studios. I build practical solutions for pragmatic people.</p>
+        <p>I'm a full stack web developer with a strong background in Ruby on Rails, although I'm language and framework agnostic. For every project I take on, I choose the right tools for the job and provide excellent results using appropriate technologies.</p>
+        <p>I'm particularly passionate about the lean web, speed, accessibility, and security. I love developing with continuous deployment, and I believe in a free and open web.</p>
+        <p>Find me on <a href="https://github.com/ogdenstudios" rel="noopener noreferrer" target="_blank">GitHub</a></p>
+        <p>Or join my network on <a href="https://www.linkedin.com/in/tylerwilliamsct" rel="noopener noreferrer" target="_blank">LinkedIn</a></p>
+    </div>
 </div>
