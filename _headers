@@ -1,6 +1,5 @@
 /* 
-    Content-Security-Policy: default-src 'none'; font-src: 'self'; frame-ancestors 'none'; img-src https://www.google-analytics.com
- 'self'; script-src https://www.google-analytics.com 'self'; style-src 'self'
+    Content-Security-Policy: default-src 'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self'; style-src 'self'
     Referrer-Policy: same-origin
     X-Content-Type-Options: nosniff
     X-Frame-Options: DENY
