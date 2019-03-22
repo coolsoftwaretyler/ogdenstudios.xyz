@@ -5,7 +5,6 @@ nav: true
 permalink: /experience/
 weight: 20
 ---
-
 ## Maxar Technologies
 ### Full Stack Web Developer 
 *November 2018 - Present*
