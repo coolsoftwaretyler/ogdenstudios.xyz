@@ -40,7 +40,7 @@ nav {
     margin-right: 1em; }
     @media all and (max-width: 600px) {
       nav li {
-        margin: 1em; } }
+        margin: 1em 1em 0 0; } }
   nav .brand {
     height: 100px;
     margin-left: 0;
