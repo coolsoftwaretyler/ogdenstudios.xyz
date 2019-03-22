@@ -49,3 +49,7 @@ nav {
     height: 100px;
     margin: 0 1em 1em 0;
     width: 100px; }
+
+.blog ul {
+  list-style: none;
+  padding-left: 0; }
