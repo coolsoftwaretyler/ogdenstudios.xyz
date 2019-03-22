@@ -11,11 +11,11 @@ layout: default
         <li>
             {%- assign date_format = "%b %-d, %Y" -%}
             <span class="post-meta">{{ tidbit.date | date: date_format }}</span>
-            <h4>
+            <h3>
             <a class="post-link" href="{{ tidbit.url | relative_url }}">
               {{ tidbit.title | escape }}
             </a>
-            </h4>
+            </h3>
         </li>
         {%- endfor -%}
     </ul>
