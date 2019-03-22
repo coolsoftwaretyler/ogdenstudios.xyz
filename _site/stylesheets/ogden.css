@@ -1,13 +1,17 @@
 html {
   background-color: #f1eeee;
-  font-family: 'Work Sans', sans-serif; }
+  font-family: 'Work Sans', sans-serif;
+  font-size: 18px; }
 
 h1 {
   text-transform: uppercase; }
 
 a {
-  color: #6aa267;
+  color: #345534;
   text-decoration: none; }
+
+p {
+  line-height: 1.5; }
 
 .page {
   box-sizing: border-box;
