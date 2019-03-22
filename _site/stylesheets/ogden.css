@@ -7,11 +7,17 @@ h1 {
   text-transform: uppercase; }
 
 a {
-  color: #345534;
-  text-decoration: none; }
+  color: #345534; }
 
 p {
   line-height: 1.5; }
+
+pre {
+  background-color: #c9dec9;
+  overflow-x: auto; }
+
+img {
+  width: 100%; }
 
 .page {
   box-sizing: border-box;

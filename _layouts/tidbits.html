@@ -7,7 +7,7 @@ layout: default
 	{{ content }} 
     {%- if site.tidbits.size > 0 -%}
     <ul class="post-list">
-        {% assign tidbits = site.tidbits | sort 'date' | reverse %}
+        {% assign tidbits = site.tidbits | sort: 'date' | reverse %}
         {%- for tidbit in tidbits -%}
         <li>
             {%- assign date_format = "%b %-d, %Y" -%}
