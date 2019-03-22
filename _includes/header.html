@@ -1,6 +1,6 @@
 <header role="banner">
     <nav>
-        <a href="/"><img class="brand" src="/img/ogden-transparent.png"></a>
+        <a href="/"><img class="brand" alt="" src="/img/ogden-transparent.png"></a>
         <ul>
             {% for page in (site.pages | sort: 'weight') %} {% if page.nav %}
             <li><a href="{{page.permalink}}">{{ page.title }}</a></li>
