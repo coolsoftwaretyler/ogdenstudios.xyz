@@ -4,9 +4,6 @@ description: The Atwater Group offers proofreading and editing services - all at
 github: https://github.com/ogdenstudios/atwater-rails
 link: https://theatwatergroup.com
 live: true
-<<<<<<< HEAD
 skills: ['Amazon Web Services', 'Content management system', 'Continous deployment', 'CSS', 'DNS', 'Heroku', 'HTML', 'JavaScript', 'Ruby on Rails', 'SASS']
-=======
->>>>>>> redesign
 weight: 30
 ---
