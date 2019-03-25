@@ -76,7 +76,7 @@ add_filter('wp_headers', 'add_security_header');
 
 ## Conclusion 
 
-With these headers, a blank Jekyll site should score an A+ on Mozilla Observatory with a score of 115/100. It will also clear almost all the Content Security Policy checks they run.
+With these headers, a blank WordPress site should score an A+ on Mozilla Observatory with a score of 115/100. It will also clear almost all the Content Security Policy checks they run.
 
 I did my best to make these settings as restrictive as possible, but WordPress breaks under the strictest settings. Setting the `default-src`, `script-src`, and `style-src` to `'self'` will allow WordPress to function as expected. 
 
