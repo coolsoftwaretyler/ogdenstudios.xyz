@@ -1,0 +1,568 @@
+Navbar helper 
+
+```
+# app/helpers/navbar_helper.rb
+module NavbarHelper
+    def get_navbar_data
+        return data = [
+            {
+                label: "Home",
+                slug: "home",
+                nodes: []
+            },
+          {
+              label: "Company",
+              slug: "company",
+              type: 'single',
+              nodes: [
+                  {
+                      label: 'About us',
+                      link: ''
+                  },
+                  {
+                      label: 'Leadership',
+                      link: ''
+                  },
+                  {
+                      label: 'News & events',
+                      link: ''
+                  },
+                  {
+                      label: 'Information Partners',
+                      link: ''
+                  },
+                  {
+                      label: 'Resellers',
+                      link: ''
+                  },
+                  {
+                      label: 'Open Data Program',
+                      link: ''
+                  },
+                  {
+                      label: 'Maxar family',
+                      link: ''
+                  }
+              ]
+          },
+          {
+              label: 'Products',
+              slug: "products",
+              type: 'multi',
+              nodes: [
+                  {
+                      label: 'Products',
+                      nodes: [
+                          {
+                              label: 'Overview',
+                              link: ''
+                          },
+                          {
+                              label: 'Use cases',
+                              link: ''
+                          }
+                      ]
+                  },
+                  {
+                      label: 'Satellite imagery',
+                      nodes: [
+                          {
+                              label: 'Satellite imagery',
+                              link: ''
+                          },
+                          {
+                              label: 'Imagery mosaics',
+                              link: ''
+                          },
+                          {
+                              label: 'Short-wave infrared imagery',
+                              link: ''
+                          },
+                          {
+                              label: 'Radar imagery',
+                              link: ''
+                          },
+                      ]
+                  },
+                  {
+                      label: 'Subscriptions',
+                      nodes: [
+                          {
+                              label: 'EarthWatch',
+                              link: ''
+                          },
+                          {
+                              label: 'FirstLook',
+                              link: ''
+                          },
+                          {
+                              label: 'Spatial on Demand',
+                              link: ''
+                          }
+                      ]
+                  },
+                  {
+                      label: 'Information products',
+                      nodes: [
+                          {
+                              label: 'Advanced Elevation Suite',
+                              link: ''
+                          },
+                          {
+                              label: 'Building Footprints',
+                              link: ''
+                          },
+                          {
+                              label: 'Telco geodata',
+                              link: ''
+                          }
+                      ]
+                  },
+                  {
+                      label: 'Analytics',
+                      nodes: [
+                          {
+                              label: 'GBDX',
+                              link: ''
+                          }
+                      ]
+                  },
+                  {
+                      label: 'Defense & Intelligence',
+                      nodes: [
+                          {
+                              label: 'SecureWatch',
+                              link: ''
+                          },
+                          {
+                              label: 'Rapid Access Program',
+                              link: ''
+                          },
+                          {
+                              label: 'Direct Access Program',
+                              link: ''
+                          }
+                      ]
+                  },
+                  {
+                      label: 'US Government',
+                      nodes: [
+                          {
+                              label: 'EnhancedView Web-Hosting Services',
+                              link: ''
+                          }
+                      ]
+                  },
+              ]
+          },
+          {
+              label: "Markets we serve",
+              slug: "markets-we-serve",
+              type: 'single',
+              nodes: [
+                  {
+                      label: 'Automotive',
+                      link: ''
+                  },
+                  {
+                      label: 'Global Development',
+                      link: ''
+                  },
+                  {
+                      label: 'International Defense & Intelligence',
+                      link: ''
+                  },
+                  {
+                      label: 'Telecommunications',
+                      link: ''
+                  },
+                  {
+                      label: 'U.S. Government',
+                      link: ''
+                  }
+              ]
+          },
+          {
+              label: 'Careers',
+              slug: "careers",
+              type: 'single',
+              nodes: [
+                  {
+                      label: 'Why join us',
+                      link: ''
+                  },
+                  {
+                      label: 'View opportunities',
+                      link: ''
+                  }
+              ]
+          },
+          {
+              label: 'Contact',
+              slug: "contact",
+              type: 'single',
+              nodes: [
+                  {
+                      label: 'Customer service',
+                      link: ''
+                  },
+                  {
+                      label: 'Locations',
+                      link: ''
+                  },
+                  {
+                      label: 'Media requests',
+                      link: ''
+                  },
+                  {
+                      label: 'Sales inquiries',
+                      link: ''
+                  }
+              ]
+          },
+          {
+              label: 'Get started',
+              slug: "get-started",
+              type: 'single',
+              nodes: [
+                  {
+                      label: 'Explore products',
+                      link: ''
+                  },
+                  {
+                      label: 'Search for imagery',
+                      link: ''
+                  },
+                  {
+                      label: 'Resources',
+                      link: ''
+                  },
+                  {
+                      label: 'Product samples',
+                      link: ''
+                  }
+              ]
+          },
+          {
+              label: 'Log in',
+              slug: "log-in",
+              type: 'single',
+              nodes: [
+                  {
+                      label: 'EarthWatch',
+                      link: ''
+                  },
+                  {
+                      label: 'EnhancedView Web-Hosting Services',
+                      link: ''
+                  },
+                  {
+                      label: 'GBDX',
+                      link: ''
+                  },
+                  {
+                      label: 'PartnerView',
+                      link: ''
+                  },
+                  {
+                      label: 'SecureWatch',
+                      link: ''
+                  },
+                  {
+                      label: 'Tomnod',
+                      link: ''
+                  }
+              ]
+          }
+      ]
+          end
+    def get_admin_navbar
+        return data = [
+            {
+                label: "Admin",
+                slug: "admin",
+                type: 'single',
+                nodes: [
+                    {
+                        label: 'Dashboard',
+                        link: ''
+                    },
+                    {
+                        label: 'Documents',
+                        link: ''
+                    },
+                    {
+                        label: 'Leadership',
+                        link: ''
+                    },
+                    {
+                        label: 'Open Data',
+                        link: ''
+                    },
+                    {
+                        label: 'Pages',
+                        link: ''
+                    },
+                    {
+                        label: 'Partners',
+                        link: ''
+                    },
+                    {
+                        label: 'Product Samples',
+                        link: ''
+                    },
+                    {
+                        label: 'Sales Territories',
+                        link: ''
+                    },
+                    {
+                        label: 'Webinars',
+                        link: ''
+                    },
+                ]
+            },
+        ]
+    end
+  end
+```
+
+Main navbar partial 
+
+```
+# app/views/layouts/navbar/_navbar.html.erb
+<% navbar_data = get_navbar_data %>
+<nav>
+  <%= render 'layouts/navbar/navbar_brand'%>
+  <div class="nav-mobile">
+    <span id="nav-toggle"><span></span></span>
+  </div>
+  <div id="navbar" class="navbar" tabindex="0">
+    <ul class="navbar__categories" tabindex="0">
+      <% navbar_data.each do |node| %>
+        <li class="navbar__categories__list-item" onblur="hideNavbar()" onfocus="displayNavbar('<%= node[:slug] %>')" tabindex="0">
+          <% if node[:type] == 'single'%>
+            <%= render 'layouts/navbar/navbar_single_col_panel', data: node %>
+          <% else %>
+            <%= render 'layouts/navbar/navbar_multi_col_panel', data: node %>
+          <% end %>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</nav>
+```
+
+Navbar brand 
+
+```
+# app/views/layouts/navbar/_navbar_brand.html.erb
+<%= link_to root_path do %>
+  <div class="brand">
+  Home
+  </div>
+<% end %>
+```
+
+Navbar single column 
+
+```
+# app/views/layouts/navbar/_navbar_single_col_panel.html.erb
+<div class="navbar__single-col-panel">
+  <span class="navbar__categories__header <%= data[:slug] %>" onmousedown="toggleNavbar('<%= data[:slug]%>')" ><%= data[:label]%></span>
+  <ul class="navbar__single-col navbar__category <%= data[:slug] %>">
+    <% data[:nodes].each do |node|%>
+      <li class="navbar__category__item">
+        <% if node[:link] %>
+          <a class="navbar__link" 
+            href="<%= node[:link] %>" 
+            onblur="hideNavbar()" 
+            onfocus="displayNavbar('<%= data[:slug]%>')"
+            <%= node[:newtab] ? 'target="_blank"' : ''%>
+          ><%= node[:label] %></a>
+        <% else %>
+          <span><%= node[:label] %></span>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+```
+
+Navbar multi column 
+
+```
+# app/views/layouts/navbar/_navbar_multi_col_panel.html.erb
+<div class="navbar__multi-col-panel">
+  <span class="navbar__categories__header <%= data[:slug] %>" onmousedown="toggleNavbar('<%= data[:slug]%>')"><%= data[:label]%></span>
+  <ul class="navbar__multi-col navbar__category <%= data[:slug] %> ">
+    <% data[:nodes].each do |node|%>
+      <li>
+        <span><%= node[:label] %></span>
+        <ul class="multi-col__category">
+          <% node[:nodes].each do |item| %>
+            <li class="multi-col__category__item">
+              <% if item[:link] %>
+                <a class="navbar__link" 
+                   href="<%= item[:link] %>" 
+                   onblur="hideNavbar()" 
+                   onfocus="displayNavbar('<%= data[:slug]%>')"
+                   <%= item[:newtab] ? 'target="_blank"' : ''%>
+                ><%= item[:label] %></a>
+              <% else %>
+                <span><%= item[:label] %></span>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+  </ul>
+</div>
+```
+
+Navbar js (linted with ESLint) 
+
+```
+# app/assets/javascripts/navbar.js
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("nav-toggle").addEventListener("click", function () {
+      document.getElementById("nav-toggle").classList.toggle("active");
+      document.getElementById("navbar").classList.toggle("active");
+    });
+    window.displayNavbar = function (target) {
+      var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
+      for (var i = 0;i < list.length;i++) {
+        if (list[i].classList.contains(target)) {
+          list[i].classList.add("active");
+        } else {
+          list[i].classList.remove("active");
+        }
+      }
+    }
+    window.hideNavbar = function () {
+      var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
+      for (var i = 0;i < list.length;i++) {
+        list[i].classList.remove("active");
+      }
+    }
+    window.toggleNavbar = function (target) {
+      var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
+      for (var i = 0;i < list.length;i++) {
+        if (list[i].classList.contains(target)) {
+          list[i].classList.toggle("active");
+        } else {
+          list[i].classList.remove("active");
+        }
+      }
+    }
+  });
+```
+
+Navbar css (linted with CSSLint)
+
+```
+# app/assets/stylesheets/navbar.css
+nav ul {
+    padding: 0;
+}
+
+.nav-mobile {
+    display: none;
+}
+
+.navbar ul {
+    list-style: none;
+}
+
+.navbar__categories {
+    display: flex;
+}
+
+.navbar__categories__header {
+    cursor: pointer;
+    display: block;
+    padding: 24px;
+}
+
+.navbar__category {
+    opacity: 0;
+    position: absolute;
+    z-index: -9999;
+}
+
+.navbar__category.active {
+    opacity: 1;
+    z-index: 0;
+}
+
+.navbar .multi-col__category {
+    padding-left: 0;
+}
+
+@media all and (max-width: 1080px) {
+    .nav-mobile {
+        display: block;
+        height: 50px;
+        z-index: 2;
+        width: 50px;
+    }
+    .nav-mobile #nav-toggle {
+        cursor: pointer;
+        padding: 10px 35px 16px 0;
+    }
+    .nav-mobile #nav-toggle span,
+    .nav-mobile #nav-toggle span:before,
+    .nav-mobile #nav-toggle span:after {
+        background: #000000;
+        cursor: pointer;
+        border-radius: 1px;
+        height: 5px;
+        width: 35px;
+        position: absolute;
+        display: block;
+        content: "";
+        transition: all 300ms ease-in-out;
+    }
+    .nav-mobile #nav-toggle span:before {
+        top: -10px;
+    }
+    .nav-mobile #nav-toggle span:after {
+        bottom: -10px;
+    }
+    .nav-mobile #nav-toggle.active span {
+        background-color: transparent;
+    }
+    .nav-mobile #nav-toggle.active span:before,
+    .nav-mobile #nav-toggle.active span:after {
+        top: 0;
+    }
+    .nav-mobile #nav-toggle.active span:before {
+        transform: rotate(45deg);
+    }
+    .nav-mobile #nav-toggle.active span:after {
+        transform: rotate(-45deg);
+    }
+    .navbar {
+        opacity: 0;
+        position: absolute;
+        z-index: -1;
+    }
+    .navbar.active {
+        opacity: 1;
+        z-index: 1;
+    }
+    .navbar__categories {
+        display: block;
+    }
+    .navbar__categories__header {
+        padding-left: 0;
+    }
+    .navbar__category.active {
+        position: relative;
+    }
+
+    .multi-col__category {
+        position: relative;
+    }
+}
+```
