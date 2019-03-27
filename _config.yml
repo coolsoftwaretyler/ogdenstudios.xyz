@@ -49,3 +49,7 @@ collections:
     output: false
   tidbits:
     output: true
+
+# Plugins
+plugins: 
+  - jekyll-sitemap
