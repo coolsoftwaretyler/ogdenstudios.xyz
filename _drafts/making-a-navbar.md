@@ -1,12 +1,53 @@
 ---
 layout: post
-title:  ''
+title: 'Building a semantic, accessible, responsive, and extensible navigation element'
 tags: []
 description: ''
 ---
-Vanilla Javascript - linted 
-Raw CSS - linted 
-Semantic HTML -  validated, only WCAG warning is onkeydown along onmousedown - check in on that. 
+
+For years, navigation bars have been the bane of my existence. So when my manager asked who wanted to build out the navbar for our site, I jumped at the chance. While my insides were screaming about all the complexities that go into making a semantic, accessible, responsive, and reusable navbar - I knew I had to face my fears. 
+
+After spending well over 40 hours of time working on this task, I feel as though I've come to a reasonable and extensible solution, and I'd like to share it with the world. 
+
+My navbar uses semantic HTML, raw CSS, and vanilla JavaScript. 
+
+The HTML is semantic and accessible, according to [AChecker](https://achecker.ca) **TODO: fix WCAG warning about onkeydown/onmousedown**
+
+I've linted the CSS with [CSSLint](http://csslint.net/), and the JavaScript with [ESLint](https://eslint.org/demo/). The CSS is 482 bytes minified and gzipped. The JavaScript is 315 bytes minimifed and gzipped. 
+
+In order to arrive at my solution, I've consumed tutorial after tutorial and synthesized the information relevant to my requirements. I took lessons learned (and the hamburger menu, to be specific) from [Tania Rascia's Responsive Dropdown Navigation Bar](https://www.taniarascia.com/responsive-dropdown-navigation-bar/). I used concepts and some markup structure from [Adobe's Accessible Mega Menu](https://adobe-accessibility.github.io/Accessible-Mega-Menu/). I incorporated some the ideas from [Smashing Magazine's Building Accessible Menu Systems](https://www.smashingmagazine.com/2017/11/building-accessible-menu-systems/), and I'd like to give a special shout out to [Chris Ferdinandi grappling with this problem and why it's so hard](https://gomakethings.com/i-was-wrong-about-javascript-free-dropdowns/) for inspiring me to write this article. 
+
+Here are the specifications: 
+
+Our navigation needs to use semantic HTML. It needs to be accessible. It needs to be responsive. It needs to accommodate top-level links, navigation menus with limited options, and navigation menus with a larger body of content/more options. We need to be able to change the content of the navigation with ease and error-free.
+
+## Stack 
+
+I mostly develop Ruby on Rails applications in my day job. 
+
+## Markup 
+
+Let's start with the markup. 
+
+## Styles 
+
+## JavaScript 
+
+## Demo 
+
+## Limitations 
+
+- Super custom content (paragraphs, divs, images, etc) 
+- Screen real estate 
+- I don't think massive mega navigation is a good design pattern (as evidenced by this website) 
+
+## Extensions 
+
+- HTML Templates? 
+- Vanilla JS package? 
+- Vue component? 
+- Ruby gem? 
+
 Navbar helper 
 
 ```
