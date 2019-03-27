@@ -1,3 +1,12 @@
+---
+layout: post
+title:  ''
+tags: []
+description: ''
+---
+Vanilla Javascript - linted 
+Raw CSS - linted 
+Semantic HTML -  validated, only WCAG warning is onkeydown along onmousedown - check in on that. 
 Navbar helper 
 
 ```
