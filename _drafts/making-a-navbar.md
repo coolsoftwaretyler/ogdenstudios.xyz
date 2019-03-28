@@ -13,6 +13,8 @@ but maybe: https://gomakethings.com/whats-the-difference-between-javascript-even
 
 or: https://gomakethings.com/when-do-you-need-to-use-usecapture-with-addeventlistener/
 
+got it, need prefixes: https://caniuse.com/#search=matches
+
 For years, navigation bars have been the bane of my existence. So when my manager asked who wanted to build out the navbar for our site, I jumped at the chance. While my insides were screaming about all the complexities that go into making a semantic, accessible, responsive, and reusable navbar - I knew I had to face my fears. 
 
 After spending well over 40 hours of time working on this task, I feel as though I've come to a reasonable and extensible solution, and I'd like to share it with the world. 
@@ -482,38 +484,82 @@ Navbar js (linted with ESLint)
 
 ```
 # app/assets/javascripts/navbar.js
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("nav-toggle").addEventListener("click", function () {
-      document.getElementById("nav-toggle").classList.toggle("active");
-      document.getElementById("navbar").classList.toggle("active");
-    });
-    window.displayNavbar = function (target) {
-      var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
-      for (var i = 0;i < list.length;i++) {
-        if (list[i].classList.contains(target)) {
-          list[i].classList.add("active");
-        } else {
+document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("focus", function (event) {
+    if (event.target.classList) {
+      if (event.target.matches(".navbar__link") || event.target.matches(".navbar__categories__list-item")) {
+        var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
+        for (var i = 0;i < list.length;i++) {
+          if (list[i].classList.contains(event.target.dataset.slug)) {
+            list[i].classList.add("active");
+          } else {
+            list[i].classList.remove("active");
+          }
+        }
+      }
+    }
+  }, true);
+  document.addEventListener("blur", function (event) {
+    if (event.target.classList) {
+      if (event.target.matches(".navbar__link") || event.target.matches(".navbar__categories__list-item")) {
+        var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
+        for (var i = 0;i < list.length;i++) {
           list[i].classList.remove("active");
         }
       }
     }
-    window.hideNavbar = function () {
-      var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
-      for (var i = 0;i < list.length;i++) {
-        list[i].classList.remove("active");
+  }, true);
+  document.addEventListener("mousdown", function (event) {
+    if (event.target.classList) {
+      if (event.target.matches(".navbar__categories__header") || event.target.matches(".navbar__categories__list-item")) {
+        var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
+        for (var i = 0;i < list.length;i++) {
+          if (list[i].classList.contains(event.target.dataset.slug)) {
+            list[i].classList.toggle("active");
+          } else {
+            list[i].classList.remove("active");
+          }
+        }
       }
     }
-    window.toggleNavbar = function (target) {
-      var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
-      for (var i = 0;i < list.length;i++) {
-        if (list[i].classList.contains(target)) {
-          list[i].classList.toggle("active");
-        } else {
-          list[i].classList.remove("active");
+  }, false);
+  document.addEventListener("keydown", function (event) {
+    var KEY_ENTER = 13;
+    var KEY_SPACE = 32;
+    switch (event.which) {
+      case KEY_ENTER:
+      case KEY_SPACE: {
+        if (event.target.classList) {
+          if (event.target.matches(".navbar__categories__header") || event.target.matches(".navbar__categories__list-item")) {
+            var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
+            for (var i = 0;i < list.length;i++) {
+              if (list[i].classList.contains(event.target.dataset.slug)) {
+                list[i].classList.toggle("active");
+              } else {
+                list[i].classList.remove("active");
+              }
+            }
+          }
         }
+      }
+    }
+  }, false);
+  document.getElementById("nav-toggle").addEventListener("click", function () {
+    document.getElementById("nav-toggle").classList.toggle("active");
+    document.getElementById("navbar").classList.toggle("active");
+  });
+  document.getElementById("nav-toggle").addEventListener("keydown", function (event) {
+    var KEY_ENTER = 13;
+    var KEY_SPACE = 32;
+    switch (event.which) {
+      case KEY_ENTER:
+      case KEY_SPACE: {
+        document.getElementById("nav-toggle").classList.toggle("active");
+        document.getElementById("navbar").classList.toggle("active");
       }
     }
   });
+});
 ```
 
 Navbar css (linted with CSSLint)
