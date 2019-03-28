@@ -5,6 +5,14 @@ tags: []
 description: ''
 ---
 
+Big q: 
+
+It might be [more performant to use delegatoin](https://gomakethings.com/why-event-delegation-is-a-better-way-to-listen-for-events-in-vanilla-js/) - but we're targeting focus and blur events, which don't bubble.
+
+but maybe: https://gomakethings.com/whats-the-difference-between-javascript-event-delegation-bubbling-and-capturing/ 
+
+or: https://gomakethings.com/when-do-you-need-to-use-usecapture-with-addeventlistener/
+
 For years, navigation bars have been the bane of my existence. So when my manager asked who wanted to build out the navbar for our site, I jumped at the chance. While my insides were screaming about all the complexities that go into making a semantic, accessible, responsive, and reusable navbar - I knew I had to face my fears. 
 
 After spending well over 40 hours of time working on this task, I feel as though I've come to a reasonable and extensible solution, and I'd like to share it with the world. 
