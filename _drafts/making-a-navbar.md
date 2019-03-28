@@ -4,28 +4,23 @@ title: 'Building a semantic, accessible, responsive, and extensible navigation e
 tags: []
 description: ''
 ---
+Navigation components are the bane of my existence. They present all sorts of challenges and complexities. A truly good navbar must be semantic, accessible, responsive, and reusable. In my opinion, the best site navigation is small and represents anywhere between three to five different links, each of which leads users to appropriate pages which are either top-level content, or some more detailed content funneling system. I think trying to fit more than five options in a site navigation is an exercise in futility, and a bad design pattern. 
 
-Big q: 
+I think some websites successfully implement *mega-menus*, but the appropriate use-cases for these kinds of navigation elements are places like Amazon. The majority of the time, mega-menus are bad for user experience, and represent an unwillingness to be critical about content, site architecture, and user stories. 
 
-It might be [more performant to use delegatoin](https://gomakethings.com/why-event-delegation-is-a-better-way-to-listen-for-events-in-vanilla-js/) - but we're targeting focus and blur events, which don't bubble.
+But when at my day job or working with clients, I am often handed non-negotiable specifications that call for some sort of massive site navigation. These requirements often scare me, and I've spent a tremendous amount of time building navigation elements that don't meet the **semantic, accessible, responsive, and reusable** requirements. It hurts every time that happens. Recently I took a deep dive into how to make the best possible navbar.
 
-but maybe: https://gomakethings.com/whats-the-difference-between-javascript-event-delegation-bubbling-and-capturing/ 
-
-or: https://gomakethings.com/when-do-you-need-to-use-usecapture-with-addeventlistener/
-
-got it, need prefixes: https://caniuse.com/#search=matches
-
-For years, navigation bars have been the bane of my existence. So when my manager asked who wanted to build out the navbar for our site, I jumped at the chance. While my insides were screaming about all the complexities that go into making a semantic, accessible, responsive, and reusable navbar - I knew I had to face my fears. 
-
-After spending well over 40 hours of time working on this task, I feel as though I've come to a reasonable and extensible solution, and I'd like to share it with the world. 
-
-My navbar uses semantic HTML, raw CSS, and vanilla JavaScript. 
+My navbar uses semantic HTML, raw CSS, and vanilla JavaScript. Since I'm a Rails guy, the HTML is generated in a Rails app, but as long as the final markup stays the same, it can be written by hand or through any other framework you like. 
 
 The HTML is semantic and accessible, according to [AChecker](https://achecker.ca) **TODO: fix WCAG warning about onkeydown/onmousedown**
 
-I've linted the CSS with [CSSLint](http://csslint.net/), and the JavaScript with [ESLint](https://eslint.org/demo/). The CSS is 482 bytes minified and gzipped. The JavaScript is 315 bytes minimifed and gzipped. 
+I've linted the CSS with [CSSLint](http://csslint.net/), and the JavaScript with [ESLint](https://eslint.org/demo/). The CSS is X bytes minified and gzipped. The JavaScript is X bytes minimifed and gzipped. 
 
-In order to arrive at my solution, I've consumed tutorial after tutorial and synthesized the information relevant to my requirements. I took lessons learned (and the hamburger menu, to be specific) from [Tania Rascia's Responsive Dropdown Navigation Bar](https://www.taniarascia.com/responsive-dropdown-navigation-bar/). I used concepts and some markup structure from [Adobe's Accessible Mega Menu](https://adobe-accessibility.github.io/Accessible-Mega-Menu/). I incorporated some the ideas from [Smashing Magazine's Building Accessible Menu Systems](https://www.smashingmagazine.com/2017/11/building-accessible-menu-systems/), and I'd like to give a special shout out to [Chris Ferdinandi grappling with this problem and why it's so hard](https://gomakethings.com/i-was-wrong-about-javascript-free-dropdowns/) for inspiring me to write this article. 
+In order to arrive at my solution, I've consumed tutorial after tutorial and synthesized the information relevant to my requirements. I took lessons learned (and the hamburger menu, to be specific) from [Tania Rascia's Responsive Dropdown Navigation Bar](https://www.taniarascia.com/responsive-dropdown-navigation-bar/). I used concepts and some markup structure from [Adobe's Accessible Mega Menu](https://adobe-accessibility.github.io/Accessible-Mega-Menu/). I incorporated some the ideas from [Smashing Magazine's Building Accessible Menu Systems](https://www.smashingmagazine.com/2017/11/building-accessible-menu-systems/), and I'd like to give a special shout out to [Chris Ferdinandi grappling with this problem and why it's so hard](https://gomakethings.com/i-was-wrong-about-javascript-free-dropdowns/) for inspiring me to write this article. I also relied on Chris pretty heavily when it came to [optimizing my JavaScript using event delegation](https://gomakethings.com/why-event-delegation-is-a-better-way-to-listen-for-events-in-vanilla-js/). 
+
+[understand event delevation, bubbling, and capturing](https://gomakethings.com/whats-the-difference-between-javascript-event-delegation-bubbling-and-capturing/)
+[I had to use event capturing for the focus and blur events](https://gomakethings.com/when-do-you-need-to-use-usecapture-with-addeventlistener/)
+[depending on your support requirements, you may need some polyfills](https://caniuse.com/#search=matches)
 
 Here are the specifications: 
 
