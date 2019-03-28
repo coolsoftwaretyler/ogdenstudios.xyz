@@ -18,373 +18,21 @@ I've linted the CSS with [CSSLint](http://csslint.net/), and the JavaScript with
 
 In order to arrive at my solution, I've consumed tutorial after tutorial and synthesized the information relevant to my requirements. I took lessons learned (and the hamburger menu, to be specific) from [Tania Rascia's Responsive Dropdown Navigation Bar](https://www.taniarascia.com/responsive-dropdown-navigation-bar/). I used concepts and some markup structure from [Adobe's Accessible Mega Menu](https://adobe-accessibility.github.io/Accessible-Mega-Menu/). I incorporated some the ideas from [Smashing Magazine's Building Accessible Menu Systems](https://www.smashingmagazine.com/2017/11/building-accessible-menu-systems/), and I'd like to give a special shout out to [Chris Ferdinandi grappling with this problem and why it's so hard](https://gomakethings.com/i-was-wrong-about-javascript-free-dropdowns/) for inspiring me to write this article. I also relied on Chris pretty heavily when it came to [optimizing my JavaScript using event delegation](https://gomakethings.com/why-event-delegation-is-a-better-way-to-listen-for-events-in-vanilla-js/). 
 
-[understand event delevation, bubbling, and capturing](https://gomakethings.com/whats-the-difference-between-javascript-event-delegation-bubbling-and-capturing/)
-[I had to use event capturing for the focus and blur events](https://gomakethings.com/when-do-you-need-to-use-usecapture-with-addeventlistener/)
-[depending on your support requirements, you may need some polyfills](https://caniuse.com/#search=matches)
-
 Here are the specifications: 
 
 Our navigation needs to use semantic HTML. It needs to be accessible. It needs to be responsive. It needs to accommodate top-level links, navigation menus with limited options, and navigation menus with a larger body of content/more options. We need to be able to change the content of the navigation with ease and error-free.
 
 ## Stack 
 
-I mostly develop Ruby on Rails applications in my day job. 
+I mostly develop Ruby on Rails applications in my day job. I generated the markup using `.erb` partials and some light logic. The markup of the navbar is created based on data returned by a Rails helper. But at the end of the day, all that just compiles down to semantic, valid HTML, so you can ignore the Rails part if you need, and just focus on creating the final HTML. I wrote my partials and helper methods in Rails 5.2, but that also shouldn't make a huge difference, there are very few dependencies or esoteric techniques there. 
 
 ## Markup 
 
-Let's start with the markup. 
-
-## Styles 
-
-## JavaScript 
-
-## Demo 
-
-## Limitations 
-
-- Super custom content (paragraphs, divs, images, etc) 
-- Screen real estate 
-- I don't think massive mega navigation is a good design pattern (as evidenced by this website) 
-
-## Extensions 
-
-- HTML Templates? 
-- Vanilla JS package? 
-- Vue component? 
-- Ruby gem? 
-
-Navbar helper 
-
-```
-# app/helpers/navbar_helper.rb
-module NavbarHelper
-    def get_navbar_data
-        return data = [
-            {
-                label: "Home",
-                slug: "home",
-                nodes: []
-            },
-          {
-              label: "Company",
-              slug: "company",
-              type: 'single',
-              nodes: [
-                  {
-                      label: 'About us',
-                      link: ''
-                  },
-                  {
-                      label: 'Leadership',
-                      link: ''
-                  },
-                  {
-                      label: 'News & events',
-                      link: ''
-                  },
-                  {
-                      label: 'Information Partners',
-                      link: ''
-                  },
-                  {
-                      label: 'Resellers',
-                      link: ''
-                  },
-                  {
-                      label: 'Open Data Program',
-                      link: ''
-                  },
-                  {
-                      label: 'Maxar family',
-                      link: ''
-                  }
-              ]
-          },
-          {
-              label: 'Products',
-              slug: "products",
-              type: 'multi',
-              nodes: [
-                  {
-                      label: 'Products',
-                      nodes: [
-                          {
-                              label: 'Overview',
-                              link: ''
-                          },
-                          {
-                              label: 'Use cases',
-                              link: ''
-                          }
-                      ]
-                  },
-                  {
-                      label: 'Satellite imagery',
-                      nodes: [
-                          {
-                              label: 'Satellite imagery',
-                              link: ''
-                          },
-                          {
-                              label: 'Imagery mosaics',
-                              link: ''
-                          },
-                          {
-                              label: 'Short-wave infrared imagery',
-                              link: ''
-                          },
-                          {
-                              label: 'Radar imagery',
-                              link: ''
-                          },
-                      ]
-                  },
-                  {
-                      label: 'Subscriptions',
-                      nodes: [
-                          {
-                              label: 'EarthWatch',
-                              link: ''
-                          },
-                          {
-                              label: 'FirstLook',
-                              link: ''
-                          },
-                          {
-                              label: 'Spatial on Demand',
-                              link: ''
-                          }
-                      ]
-                  },
-                  {
-                      label: 'Information products',
-                      nodes: [
-                          {
-                              label: 'Advanced Elevation Suite',
-                              link: ''
-                          },
-                          {
-                              label: 'Building Footprints',
-                              link: ''
-                          },
-                          {
-                              label: 'Telco geodata',
-                              link: ''
-                          }
-                      ]
-                  },
-                  {
-                      label: 'Analytics',
-                      nodes: [
-                          {
-                              label: 'GBDX',
-                              link: ''
-                          }
-                      ]
-                  },
-                  {
-                      label: 'Defense & Intelligence',
-                      nodes: [
-                          {
-                              label: 'SecureWatch',
-                              link: ''
-                          },
-                          {
-                              label: 'Rapid Access Program',
-                              link: ''
-                          },
-                          {
-                              label: 'Direct Access Program',
-                              link: ''
-                          }
-                      ]
-                  },
-                  {
-                      label: 'US Government',
-                      nodes: [
-                          {
-                              label: 'EnhancedView Web-Hosting Services',
-                              link: ''
-                          }
-                      ]
-                  },
-              ]
-          },
-          {
-              label: "Markets we serve",
-              slug: "markets-we-serve",
-              type: 'single',
-              nodes: [
-                  {
-                      label: 'Automotive',
-                      link: ''
-                  },
-                  {
-                      label: 'Global Development',
-                      link: ''
-                  },
-                  {
-                      label: 'International Defense & Intelligence',
-                      link: ''
-                  },
-                  {
-                      label: 'Telecommunications',
-                      link: ''
-                  },
-                  {
-                      label: 'U.S. Government',
-                      link: ''
-                  }
-              ]
-          },
-          {
-              label: 'Careers',
-              slug: "careers",
-              type: 'single',
-              nodes: [
-                  {
-                      label: 'Why join us',
-                      link: ''
-                  },
-                  {
-                      label: 'View opportunities',
-                      link: ''
-                  }
-              ]
-          },
-          {
-              label: 'Contact',
-              slug: "contact",
-              type: 'single',
-              nodes: [
-                  {
-                      label: 'Customer service',
-                      link: ''
-                  },
-                  {
-                      label: 'Locations',
-                      link: ''
-                  },
-                  {
-                      label: 'Media requests',
-                      link: ''
-                  },
-                  {
-                      label: 'Sales inquiries',
-                      link: ''
-                  }
-              ]
-          },
-          {
-              label: 'Get started',
-              slug: "get-started",
-              type: 'single',
-              nodes: [
-                  {
-                      label: 'Explore products',
-                      link: ''
-                  },
-                  {
-                      label: 'Search for imagery',
-                      link: ''
-                  },
-                  {
-                      label: 'Resources',
-                      link: ''
-                  },
-                  {
-                      label: 'Product samples',
-                      link: ''
-                  }
-              ]
-          },
-          {
-              label: 'Log in',
-              slug: "log-in",
-              type: 'single',
-              nodes: [
-                  {
-                      label: 'EarthWatch',
-                      link: ''
-                  },
-                  {
-                      label: 'EnhancedView Web-Hosting Services',
-                      link: ''
-                  },
-                  {
-                      label: 'GBDX',
-                      link: ''
-                  },
-                  {
-                      label: 'PartnerView',
-                      link: ''
-                  },
-                  {
-                      label: 'SecureWatch',
-                      link: ''
-                  },
-                  {
-                      label: 'Tomnod',
-                      link: ''
-                  }
-              ]
-          }
-      ]
-          end
-    def get_admin_navbar
-        return data = [
-            {
-                label: "Admin",
-                slug: "admin",
-                type: 'single',
-                nodes: [
-                    {
-                        label: 'Dashboard',
-                        link: ''
-                    },
-                    {
-                        label: 'Documents',
-                        link: ''
-                    },
-                    {
-                        label: 'Leadership',
-                        link: ''
-                    },
-                    {
-                        label: 'Open Data',
-                        link: ''
-                    },
-                    {
-                        label: 'Pages',
-                        link: ''
-                    },
-                    {
-                        label: 'Partners',
-                        link: ''
-                    },
-                    {
-                        label: 'Product Samples',
-                        link: ''
-                    },
-                    {
-                        label: 'Sales Territories',
-                        link: ''
-                    },
-                    {
-                        label: 'Webinars',
-                        link: ''
-                    },
-                ]
-            },
-        ]
-    end
-  end
-```
-
-Main navbar partial 
+Let's talk about the markup. The entry point into the navbar partial is my `_navbar.html.erb` file. It looks like this: 
 
 ```
 # app/views/layouts/navbar/_navbar.html.erb
+# Main navbar partial 
 <% navbar_data = get_navbar_data %>
 <nav>
   <%= render 'layouts/navbar/navbar_brand'%>
@@ -407,10 +55,120 @@ Main navbar partial
 </nav>
 ```
 
-Navbar brand 
+The first line retrieves a hash with the actual data for the navbar. The specific implementation of this isn't very important. In production, I'm able to do some fancy footwork here and query our routes, controllers, etc. and come up with a comprehensive and adaptable navigation structure. But to start, you can just set up a helper method to return a static hash. It might look something like this: 
+
+```
+# app/helpers/navbar_helper.rb
+# Navbar helper 
+module NavbarHelper
+    def get_navbar_data
+        return data = [
+            {
+                label: "Home",
+                slug: "home",
+                nodes: []
+            },
+          {
+              label: "Single",
+              slug: "single",
+              type: 'single',
+              nodes: [
+                  {
+                      label: 'About',
+                      link: '/about'
+                  },
+                  {
+                      label: 'Contact',
+                      link: '/contact'
+                  },
+                  {
+                      label: 'Blog',
+                      link: '/blog'
+                  }
+              ]
+          },
+          {
+              label: 'Multiple',
+              slug: "multiple",
+              type: 'multi',
+              nodes: [
+                  {
+                      label: 'Category 1',
+                      nodes: [
+                          {
+                              label: 'Item 1',
+                              link: '/category-1/item-1'
+                          },
+                          {
+                              label: 'Item 2',
+                              link: '/category-1/item-2'
+                          }
+                      ]
+                  },
+                  {
+                      label: 'Category 2',
+                      nodes: [
+                             {
+                              label: 'Item 1',
+                              link: '/category-2/item-1'
+                          },
+                          {
+                              label: 'Item 2',
+                              link: '/category-2/item-2'
+                          }
+                              {
+                              label: 'Item 3',
+                              link: '/category-2/item-3'
+                          },
+                          {
+                              label: 'Item 4',
+                              link: '/category-2/item-4'
+                          }
+                      ]
+                  },
+                  {
+                      label: 'Category 3',
+                      nodes: [
+                         {
+                              label: 'Item 1',
+                              link: '/category-3/item-1'
+                          },
+                          {
+                              label: 'Item 2',
+                              link: '/category-3/item-2'
+                          }
+                              {
+                              label: 'Item 3',
+                              link: '/category-3/item-3'
+                          }
+                      ]
+                  }
+              ]
+          }
+      ]
+    end
+  end
+```
+
+This sample structure is supremely basic, and represents only a starting point of what you can do. I use a hash because I'm working in Rails, but if you're doing most of your backend work in JavaScript, you could represent this as JSON data, or really any other format as long as it's predictable and allows you to generate your HTML correctly. You could add additional attributes and render them as necessary. This example is not meant to be exhaustive of the possibilities. 
+
+But for our purposes, it represents the three major use-cases I run into when making these kinds of components:
+
+1. Top-level links 
+2. Single-category lists of links
+3. Multiple-category lists of links
+
+The `_navbar` partial takes this data, iterates over it, and uses three additional partials to stitch together the final product: 
+
+1. The brand element 
+2. Single column items 
+3. Multi column items 
+
+The navbar brand is small. It's extensible, but typically is meant to be a single item with no logic required. I broke it out into a partial to keep the top level navbar partial neat and clean. 
 
 ```
 # app/views/layouts/navbar/_navbar_brand.html.erb
+# Navbar brand 
 <%= link_to root_path do %>
   <div class="brand">
   Home
@@ -418,10 +176,11 @@ Navbar brand
 <% end %>
 ```
 
-Navbar single column 
+If the navbar partial runs into a single column category, it will pass that over the `_navbar_single_col_panel.html.erb` file, which looks like this: 
 
 ```
 # app/views/layouts/navbar/_navbar_single_col_panel.html.erb
+# Navbar single column 
 <div class="navbar__single-col-panel">
   <span class="navbar__categories__header <%= data[:slug] %>" onmousedown="toggleNavbar('<%= data[:slug]%>')" ><%= data[:label]%></span>
   <ul class="navbar__single-col navbar__category <%= data[:slug] %>">
@@ -443,10 +202,11 @@ Navbar single column
 </div>
 ```
 
-Navbar multi column 
+If the navbar partial runs into a multiple column category, it will pass that over the `_navbar_multi_col_panel.html.erb` file, which looks like this: 
 
 ```
 # app/views/layouts/navbar/_navbar_multi_col_panel.html.erb
+# Navbar multi column 
 <div class="navbar__multi-col-panel">
   <span class="navbar__categories__header <%= data[:slug] %>" onmousedown="toggleNavbar('<%= data[:slug]%>')"><%= data[:label]%></span>
   <ul class="navbar__multi-col navbar__category <%= data[:slug] %> ">
@@ -475,92 +235,12 @@ Navbar multi column
 </div>
 ```
 
-Navbar js (linted with ESLint) 
+## Styles 
 
-```
-# app/assets/javascripts/navbar.js
-document.addEventListener("DOMContentLoaded", function () {
-  document.addEventListener("focus", function (event) {
-    if (event.target.classList) {
-      if (event.target.matches(".navbar__link") || event.target.matches(".navbar__categories__list-item")) {
-        var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
-        for (var i = 0;i < list.length;i++) {
-          if (list[i].classList.contains(event.target.dataset.slug)) {
-            list[i].classList.add("active");
-          } else {
-            list[i].classList.remove("active");
-          }
-        }
-      }
-    }
-  }, true);
-  document.addEventListener("blur", function (event) {
-    if (event.target.classList) {
-      if (event.target.matches(".navbar__link") || event.target.matches(".navbar__categories__list-item")) {
-        var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
-        for (var i = 0;i < list.length;i++) {
-          list[i].classList.remove("active");
-        }
-      }
-    }
-  }, true);
-  document.addEventListener("mousdown", function (event) {
-    if (event.target.classList) {
-      if (event.target.matches(".navbar__categories__header") || event.target.matches(".navbar__categories__list-item")) {
-        var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
-        for (var i = 0;i < list.length;i++) {
-          if (list[i].classList.contains(event.target.dataset.slug)) {
-            list[i].classList.toggle("active");
-          } else {
-            list[i].classList.remove("active");
-          }
-        }
-      }
-    }
-  }, false);
-  document.addEventListener("keydown", function (event) {
-    var KEY_ENTER = 13;
-    var KEY_SPACE = 32;
-    switch (event.which) {
-      case KEY_ENTER:
-      case KEY_SPACE: {
-        if (event.target.classList) {
-          if (event.target.matches(".navbar__categories__header") || event.target.matches(".navbar__categories__list-item")) {
-            var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
-            for (var i = 0;i < list.length;i++) {
-              if (list[i].classList.contains(event.target.dataset.slug)) {
-                list[i].classList.toggle("active");
-              } else {
-                list[i].classList.remove("active");
-              }
-            }
-          }
-        }
-      }
-    }
-  }, false);
-  document.getElementById("nav-toggle").addEventListener("click", function () {
-    document.getElementById("nav-toggle").classList.toggle("active");
-    document.getElementById("navbar").classList.toggle("active");
-  });
-  document.getElementById("nav-toggle").addEventListener("keydown", function (event) {
-    var KEY_ENTER = 13;
-    var KEY_SPACE = 32;
-    switch (event.which) {
-      case KEY_ENTER:
-      case KEY_SPACE: {
-        document.getElementById("nav-toggle").classList.toggle("active");
-        document.getElementById("navbar").classList.toggle("active");
-      }
-    }
-  });
-});
-```
-
-Navbar css (linted with CSSLint)
 
 ```
 # app/assets/stylesheets/navbar.css
+# Navbar css (linted with CSSLint)
 nav ul {
     padding: 0;
 }
@@ -665,3 +345,111 @@ nav ul {
     }
 }
 ```
+
+## JavaScript 
+[understand event delevation, bubbling, and capturing](https://gomakethings.com/whats-the-difference-between-javascript-event-delegation-bubbling-and-capturing/)
+[I had to use event capturing for the focus and blur events](https://gomakethings.com/when-do-you-need-to-use-usecapture-with-addeventlistener/)
+[depending on your support requirements, you may need some polyfills](https://caniuse.com/#search=matches)
+
+```
+# app/assets/javascripts/navbar.js
+# Navbar js (linted with ESLint) 
+document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("focus", function (event) {
+    if (event.target.classList) {
+      if (event.target.matches(".navbar__link") || event.target.matches(".navbar__categories__list-item")) {
+        var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
+        for (var i = 0;i < list.length;i++) {
+          if (list[i].classList.contains(event.target.dataset.slug)) {
+            list[i].classList.add("active");
+          } else {
+            list[i].classList.remove("active");
+          }
+        }
+      }
+    }
+  }, true);
+  document.addEventListener("blur", function (event) {
+    if (event.target.classList) {
+      if (event.target.matches(".navbar__link") || event.target.matches(".navbar__categories__list-item")) {
+        var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
+        for (var i = 0;i < list.length;i++) {
+          list[i].classList.remove("active");
+        }
+      }
+    }
+  }, true);
+  document.addEventListener("mousdown", function (event) {
+    if (event.target.classList) {
+      if (event.target.matches(".navbar__categories__header") || event.target.matches(".navbar__categories__list-item")) {
+        var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
+        for (var i = 0;i < list.length;i++) {
+          if (list[i].classList.contains(event.target.dataset.slug)) {
+            list[i].classList.toggle("active");
+          } else {
+            list[i].classList.remove("active");
+          }
+        }
+      }
+    }
+  }, false);
+  document.addEventListener("keydown", function (event) {
+    var KEY_ENTER = 13;
+    var KEY_SPACE = 32;
+    switch (event.which) {
+      case KEY_ENTER:
+      case KEY_SPACE: {
+        if (event.target.classList) {
+          if (event.target.matches(".navbar__categories__header") || event.target.matches(".navbar__categories__list-item")) {
+            var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
+            for (var i = 0;i < list.length;i++) {
+              if (list[i].classList.contains(event.target.dataset.slug)) {
+                list[i].classList.toggle("active");
+              } else {
+                list[i].classList.remove("active");
+              }
+            }
+          }
+        }
+      }
+    }
+  }, false);
+  document.getElementById("nav-toggle").addEventListener("click", function () {
+    document.getElementById("nav-toggle").classList.toggle("active");
+    document.getElementById("navbar").classList.toggle("active");
+  });
+  document.getElementById("nav-toggle").addEventListener("keydown", function (event) {
+    var KEY_ENTER = 13;
+    var KEY_SPACE = 32;
+    switch (event.which) {
+      case KEY_ENTER:
+      case KEY_SPACE: {
+        document.getElementById("nav-toggle").classList.toggle("active");
+        document.getElementById("navbar").classList.toggle("active");
+      }
+    }
+  });
+});
+```
+
+## Demo 
+Codepen 
+
+## Limitations 
+
+- Super custom content (paragraphs, divs, images, etc) 
+- Screen real estate 
+- I don't think massive mega navigation is a good design pattern (as evidenced by this website) 
+
+## Extensions 
+
+- HTML Templates? 
+- Vanilla JS package? 
+- Vue component? 
+- Ruby gem? 
+
+
+
+
+
+
