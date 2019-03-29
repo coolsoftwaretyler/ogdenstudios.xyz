@@ -9,6 +9,8 @@ TODO: take out slug class names, set that as the data attribute?
 TODO: add single link capability  
 TODO: take out brand entirely?
 TODO: swap brand with single link capability?
+TODO: take screenshots at same dimension
+TODO: optimize screenshots
 
 Navigation components are the bane of my existence. They present all sorts of challenges and complexities. A truly good navbar must be semantic, accessible, responsive, and reusable. In my opinion, the best site navigation is small and represents anywhere between three to five different links, each of which leads users to appropriate pages which are either top-level content, or some more detailed content funneling system. I think trying to fit more than five options in a site navigation is an exercise in futility, and a bad design pattern. 
 
@@ -253,7 +255,7 @@ Ruby iterates one more time over the inner nodes of each node and each becomes a
 
 If you were to set up a Rails application, add these helper files and view partials, add controllers, routes, and views to the application, and then add `<%= render 'layouts/partials/navbar' %>` to your `app/views/layouts/application.html.erb` file, you would see the following: 
 
-![Markup only navbar in sample Rails app](/img/navbar-tutorial/navbar-markup-only.png)
+![Markup only navbar in sample Rails app](/img/navbar-tutorial/navbar-markup.png)
 
 ## Styles 
 
@@ -379,6 +381,12 @@ nav ul {
     }
 }
 ```
+
+### Bringing the styles together 
+
+With this CSS added to our project, you can expect to see: 
+
+![Markup and additional css on the navbar in sample Rails app](/img/navbar-tutorial/navbar-markup-css.png)
 
 ## JavaScript 
 [understand event delevation, bubbling, and capturing](https://gomakethings.com/whats-the-difference-between-javascript-event-delegation-bubbling-and-capturing/)
