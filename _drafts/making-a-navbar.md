@@ -1,57 +1,54 @@
 ---
 layout: post
 title: 'Building a semantic, accessible, responsive, and extensible navigation element'
-tags: []
+tags: ['navigation', 'ux', 'mega-menus', 'html5', 'css', 'vanilla javascript', 'semantic html', 'accessibility', 'responsive web design', 'ruby on rails']
 description: ''
 ---
 
-TODO: take out slug class names, set that as the data attribute? 
-TODO: add single link capability  
-TODO: take out brand entirely?
-TODO: swap brand with single link capability?
 TODO: take screenshots at same dimension
 TODO: optimize screenshots
 
-Navigation components are the bane of my existence. They present all sorts of challenges and complexities. A truly good navbar must be semantic, accessible, responsive, and reusable. In my opinion, the best site navigation is small and represents anywhere between three to five different links, each of which leads users to appropriate pages which are either top-level content, or some more detailed content funneling system. I think trying to fit more than five options in a site navigation is an exercise in futility, and a bad design pattern. 
+Navigation components present all sorts of challenges and complexities. A good navbar must be semantic, accessible, responsive, and reusable. In my opinion, the best site navigation is small and represents between three to five different links, each of which leads users to top-level content, or some more detailed content funnels. In my opinion, trying to fit more than five options in a site navigation is not usually worth the difficulty in implementation. 
 
-I think some websites successfully implement *mega-menus*, but the appropriate use-cases for these kinds of navigation elements are places like Amazon. The majority of the time, mega-menus are bad for user experience, and represent an unwillingness to be critical about content, site architecture, and user stories. 
+Some websites successfully implement *mega-menus*, but the appropriate use-cases for these kinds of navigation elements are places like Amazon. But for most cases, I don't think they're the right decision.
 
-But when at my day job or working with clients, I am often handed non-negotiable specifications that call for some sort of massive site navigation. These requirements often scare me, and I've spent a tremendous amount of time building navigation elements that don't meet the **semantic, accessible, responsive, and reusable** requirements. It hurts every time that happens. Recently I took a deep dive into how to make the best possible navbar.
+But I am often handed non-negotiable specifications that call for some sort of massive site navigation. These requirements often intimidate me. I've spent a tremendous amount of time building navigation elements that don't meet the **semantic, accessible, responsive, and reusable** requirements. It hurts every time that happens. Recently I took a deep dive into how to make the best possible navbar so it would never happen again.
 
-My navbar uses semantic HTML, raw CSS, and vanilla JavaScript. Since I'm a Rails guy, the HTML is generated in a Rails app, but as long as the final markup stays the same, it can be written by hand or through any other framework you like. 
+My navbar uses HTML5, raw CSS, and vanilla JavaScript. Since I'm a Rails guy, the HTML is generated in a Rails app, but as long as the final markup stays the same, it can be written by hand or through any other framework you like. 
 
-The HTML is semantic and accessible, according to [AChecker](https://achecker.ca) **TODO: fix WCAG warning about onkeydown/onmousedown**
+The HTML is semantic and accessible, according to [AChecker](https://achecker.ca).
 
-I've linted the CSS with [CSSLint](http://csslint.net/), and the JavaScript with [ESLint](https://eslint.org/demo/). The CSS is X bytes minified and gzipped. The JavaScript is X bytes minimifed and gzipped. 
+I've linted the CSS with [CSSLint](http://csslint.net/), and the JavaScript with [ESLint](https://eslint.org/demo/). The CSS is X bytes minified and gzipped. The JavaScript is X bytes minimifed and gzipped. TODO: get min/gzipped sizes.
 
-In order to arrive at my solution, I've consumed tutorial after tutorial and synthesized the information relevant to my requirements. I took lessons learned (and the hamburger menu, to be specific) from [Tania Rascia's Responsive Dropdown Navigation Bar](https://www.taniarascia.com/responsive-dropdown-navigation-bar/). I used concepts and some markup structure from [Adobe's Accessible Mega Menu](https://adobe-accessibility.github.io/Accessible-Mega-Menu/). I incorporated some the ideas from [Smashing Magazine's Building Accessible Menu Systems](https://www.smashingmagazine.com/2017/11/building-accessible-menu-systems/), and I'd like to give a special shout out to [Chris Ferdinandi grappling with this problem and why it's so hard](https://gomakethings.com/i-was-wrong-about-javascript-free-dropdowns/) for inspiring me to write this article. I also relied on Chris pretty heavily when it came to [optimizing my JavaScript using event delegation](https://gomakethings.com/why-event-delegation-is-a-better-way-to-listen-for-events-in-vanilla-js/). 
+In order to arrive at my solution, I've read tutorial after tutorial. This final product incorporates the hamburger navigation and lessons learned from [Tania Rascia's Responsive Dropdown Navigation Bar](https://www.taniarascia.com/responsive-dropdown-navigation-bar/). I used concepts and some markup structure from [Adobe's Accessible Mega Menu](https://adobe-accessibility.github.io/Accessible-Mega-Menu/). I used some the ideas from [Smashing Magazine's Building Accessible Menu Systems](https://www.smashingmagazine.com/2017/11/building-accessible-menu-systems/), and I'd like to give a special shout out to [Chris Ferdinandi grappling with this problem and why it's so hard](https://gomakethings.com/i-was-wrong-about-javascript-free-dropdowns/). His blog posts inspired me to write my own. I also relied on Chris pretty heavily when it came to [optimizing my JavaScript using event delegation](https://gomakethings.com/why-event-delegation-is-a-better-way-to-listen-for-events-in-vanilla-js/). 
 
-Here are the specifications: 
+## Specifications 
 
-Our navigation needs to use semantic HTML. It needs to be accessible. It needs to be responsive. It needs to accommodate top-level links, navigation menus with limited options, and navigation menus with a larger body of content/more options. We need to be able to change the content of the navigation with ease and error-free.
+Our navigation needs to use semantic HTML. It needs to be accessible. It needs to be responsive. It needs to accommodate top-level links, navigation menus with limited options, and navigation menus with a larger body of content/more options. We need to be able to change the content of the navigation with ease.
 
 ## Stack 
 
-I mostly develop Ruby on Rails applications in my day job. I generated the markup using `.erb` partials and some light logic. The markup of the navbar is created based on data returned by a Rails helper. But at the end of the day, all that just compiles down to semantic, valid HTML, so you can ignore the Rails part if you need, and just focus on creating the final HTML. I wrote my partials and helper methods in Rails 5.2, but that also shouldn't make a huge difference, there are very few dependencies or esoteric techniques there. 
+I mostly develop Ruby on Rails applications in my day job. I generated the markup using embedded Ruby. The markup of the navbar is created based on data returned by a Rails helper function. But at the end of the day, all that compiles down to semantic, valid HTML. That means you can ignore the Rails part if you need and just focus on creating the final HTML. I wrote this in Rails 5.2, but considering I'm not using any bleeding-edge Rails utilities, this should work in most Raisl contexts. 
 
 ## Markup 
 
-Let's talk about the markup. The entry point into the navbar partial is my `_navbar.html.erb` file. The root element is a semantic `nav` component. It looks like this: 
+The entry point into the navbar partial is the `_navbar.html.erb` file. The root element is a semantic `nav` component. The partial looks like this: 
 
 ```
 # app/views/layouts/navbar/_navbar.html.erb
 # Main navbar partial 
 <% navbar_data = get_navbar_data %>
 <nav>
-  <%= render 'layouts/navbar/navbar_brand'%>
   <div class="nav-mobile">
-    <span id="nav-toggle"><span></span></span>
+    <span id="nav-toggle" class="nav-toggle"><span></span></span>
   </div>
   <div id="navbar" class="navbar" tabindex="0">
     <ul class="navbar__categories" tabindex="0">
       <% navbar_data.each do |node| %>
-        <li class="navbar__categories__list-item" tabindex="0">
-          <% if node[:type] == 'single'%>
+        <li class="navbar__categories__list-item" data-slug="<%= node[:slug] %>" tabindex="0">
+          <% if node[:type] == 'top-level' %>
+            <a class="navbar__categories__header" data-slug="<%= node[:slug]%>" href="<%= node[:link] %>"><%= node[:label] %></a>
+          <% elsif node[:type] == 'single'%>
             <%= render 'layouts/navbar/navbar_single_col_panel', data: node %>
           <% else %>
             <%= render 'layouts/navbar/navbar_multi_col_panel', data: node %>
@@ -65,141 +62,124 @@ Let's talk about the markup. The entry point into the navbar partial is my `_nav
 
 ### The data 
 
-The first line retrieves a hash with the actual data for the navbar. The specific implementation of this isn't very important. In production, I do some fancy footwork and query our routes, controllers, etc., and come up with a comprehensive and adaptable navigation structure. But to start, you can just set up a helper method to return a static hash. It might look something like this: 
+The first line retrieves a hash with the data for the navbar. The specific implementation of this isn't important. In production, I do some fancy footwork: query routes, controllers, etc., and come up with a comprehensive and adaptable navigation structure. To start, you can just set up a helper method to return a static hash. It might look something like this: 
 
 ```
 # app/helpers/navbar_helper.rb
 # Navbar helper 
 module NavbarHelper
     def get_navbar_data
-        return data = [
-            {
-                label: "Home",
-                slug: "home",
-                nodes: []
-            },
-          {
-              label: "Single",
-              slug: "single",
-              type: 'single',
-              nodes: [
-                  {
-                      label: 'About',
-                      link: '/about'
-                  },
-                  {
-                      label: 'Contact',
-                      link: '/contact'
-                  },
-                  {
-                      label: 'Blog',
-                      link: '/blog'
-                  }
-              ]
+    return data = [{
+        label: 'Home',
+        slug: 'home',
+        type: 'top-level',
+        link: '/'
+      },
+      {
+        label: 'Single',
+        slug: 'single',
+        type: 'single',
+        nodes: [{
+            label: 'About',
+            link: '/about'
           },
           {
-              label: 'Multiple',
-              slug: "multiple",
-              type: 'multi',
-              nodes: [
-                  {
-                      label: 'Category 1',
-                      nodes: [
-                          {
-                              label: 'Item 1',
-                              link: '/category-1/item-1'
-                          },
-                          {
-                              label: 'Item 2',
-                              link: '/category-1/item-2'
-                          }
-                      ]
-                  },
-                  {
-                      label: 'Category 2',
-                      nodes: [
-                             {
-                              label: 'Item 1',
-                              link: '/category-2/item-1'
-                          },
-                          {
-                              label: 'Item 2',
-                              link: '/category-2/item-2'
-                          }
-                              {
-                              label: 'Item 3',
-                              link: '/category-2/item-3'
-                          },
-                          {
-                              label: 'Item 4',
-                              link: '/category-2/item-4'
-                          }
-                      ]
-                  },
-                  {
-                      label: 'Category 3',
-                      nodes: [
-                         {
-                              label: 'Item 1',
-                              link: '/category-3/item-1'
-                          },
-                          {
-                              label: 'Item 2',
-                              link: '/category-3/item-2'
-                          }
-                              {
-                              label: 'Item 3',
-                              link: '/category-3/item-3'
-                          }
-                      ]
-                  }
-              ]
+            label: 'Contact',
+            link: '/contact'
+          },
+          {
+            label: 'Blog',
+            link: '/blog'
           }
-      ]
-    end
+        ]
+      },
+      {
+        label: 'Multiple',
+        slug: 'multiple',
+        type: 'multi',
+        nodes: [{
+            label: 'Category 1',
+            nodes: [{
+                label: 'Item 1',
+                link: '/category-1/item-1'
+              },
+              {
+                label: 'Item 2',
+                link: '/category-1/item-2'
+              }
+            ]
+          },
+          {
+            label: 'Category 2',
+            nodes: [{
+                label: 'Item 1',
+                link: '/category-2/item-1'
+              },
+              {
+                label: 'Item 2',
+                link: '/category-2/item-2'
+              },
+              {
+                label: 'Item 3',
+                link: '/category-2/item-3'
+              },
+              {
+                label: 'Item 4',
+                link: '/category-2/item-4'
+              }
+            ]
+          },
+          {
+            label: 'Category 3',
+            nodes: [{
+                label: 'Item 1',
+                link: '/category-3/item-1'
+              },
+              {
+                label: 'Item 2',
+                link: '/category-3/item-2'
+              },
+              {
+                label: 'Item 3',
+                link: '/category-3/item-3'
+              }
+            ]
+          }
+        ]
+      }
+    ]
   end
+end
 ```
 
-This sample structure is supremely basic, and represents only a starting point of what you can do. I use a hash because I'm working in Rails, but if you're doing most of your backend work in JavaScript, you could represent this as JSON data, or really any other format as long as it's predictable and allows you to generate your HTML correctly. You could add additional attributes and render them as necessary. This example is not meant to be exhaustive of the possibilities. 
+This sample structure represents only a starting point of what you can do. I use a hash because I'm working in Ruby, but if you're doing most of your work in JavaScript, you could represent this as JSON, or any other format - as long as it's predictable and allows you to generate your HTML correctly. You could add additional attributes and render them as necessary. 
 
-But for our purposes, it represents the three major use-cases I run into when making these kinds of components:
+This example data is not meant to be exhaustive, but it represents the three types of elements I usually expect to encounter in a navbar:
 
-1. Top-level links 
-2. Single-category lists of links
-3. Multiple-category lists of links
+1. Top level links 
+2. Single category lists of links
+3. Multiple category lists of links
 
-### The components
+### Top level links
 
-The `_navbar` partial takes this data, iterates over it, and uses three additional partials to stitch together the final product: 
+If the partial encounters a `top-level` type node, it renders an anchor element with the `.navbar__categories__header` class and an custom attribute, `data-slug`. The href points to the node's `link`, and its text is rendered from the node's `label`. 
 
-1. The brand element 
-2. Single column items 
-3. Multi column items 
-
-### The navbar brand
-
-The navbar brand is small. It's extensible, but typically is meant to be a single item with no logic required. I broke it out into a partial to keep the top level navbar partial neat and clean. 
+That all happens here: 
 
 ```
-# app/views/layouts/navbar/_navbar_brand.html.erb
-# Navbar brand 
-<%= link_to root_path do %>
-  <div class="brand">
-  Home
-  </div>
-<% end %>
+<a class="navbar__categories__header" data-slug="<%= node[:slug]%>" href="<%= node[:link] %>"><%= node[:label] %></a>
 ```
 
-### Single column categories
+### Single category list of links
 
-If the navbar partial runs into a single column category, it will pass that over the `_navbar_single_col_panel.html.erb` file, which looks like this: 
+If the navbar partial runs into a `single` type node, it will pass that to the `_navbar_single_col_panel.html.erb` partial, which looks like this: 
 
 ```
 # app/views/layouts/navbar/_navbar_single_col_panel.html.erb
 # Navbar single column 
 <div class="navbar__single-col-panel">
-  <span class="navbar__categories__header <%= data[:slug] %>" data-slug="<%= data[:slug]%>"><%= data[:label]%></span>
-  <ul class="navbar__single-col navbar__category <%= data[:slug] %>">
+  <span class="navbar__categories__header" data-slug="<%= data[:slug]%>"><%= data[:label]%></span>
+  <ul class="navbar__single-col navbar__category">
     <% data[:nodes].each do |node|%>
       <li class="navbar__category__item">
         <a class="navbar__link" data-slug="<%= data[:slug]%>" href="<%= node[:link] %>">
@@ -211,22 +191,22 @@ If the navbar partial runs into a single column category, it will pass that over
 </div>
 ```
 
-This inserts a `.navbar__single-col-panel` div as a list item in the unordered list with classname of `.navbar__categories`. The div starts with a span, which gets the `.navbar__categories__header` class, and ruby dynamically generates a class name based on the `data[:slug]` attribute, available through the hash. This span gets a custom data attribute of the same name, with `data-slug="<%= data[:slug]%>"`. The span's inner content is the `data[:label]`, again made available through the hash. 
+This inserts a `.navbar__single-col-panel` div as a list item in the unordered list with classname of `.navbar__categories` (from the root `_navbar` partial). The `div`'s first child is a `span`, which gets the `.navbar__categories__header` class. This span gets a custom attribute of the same name, with `data-slug="<%= data[:slug]%>"`. The span's inner content is the `data[:label]`, again pulled from the hash. 
 
-Under the span is another unordered list, with the classes `.navbar__single-col`, `.navbar__category`, and the slug class name as well. 
+Under the span is another unordered list, with the classes `.navbar__single-col` and `.navbar__category`. 
 
-Then ruby iterates over the inner nodes and creates a list item of class `.navbar__category__item`. Each node becomes an anchor with a `data-slug` attribute that matches the slug of this category, and an href with the link. The link text is created from that node's `label` attribute. 
+Then ruby iterates over the inner nodes and creates a list item of class `.navbar__category__item`. Each node becomes an anchor with a `data-slug` attribute that matches the slug of this category, and an href that points to the link. The link text is created from that node's `label` attribute. 
 
-### Multiple column categories 
+### Multiple category list of links
 
-If the navbar partial runs into a multiple column category, it will pass that over the `_navbar_multi_col_panel.html.erb` file, which looks like this: 
+If the navbar partial runs into a multiple column category, it will pass it to the `_navbar_multi_col_panel.html.erb` file, which looks like this: 
 
 ```
 # app/views/layouts/navbar/_navbar_multi_col_panel.html.erb
 # Navbar multi column 
 <div class="navbar__multi-col-panel">
-  <span class="navbar__categories__header <%= data[:slug] %>" data-slug="<%= data[:slug]%>"><%= data[:label]%></span>
-  <ul class="navbar__multi-col navbar__category <%= data[:slug] %> ">
+  <span class="navbar__categories__header" data-slug="<%= data[:slug]%>"><%= data[:label]%></span>
+  <ul class="navbar__multi-col navbar__category">
     <% data[:nodes].each do |node|%>
       <li>
         <span><%= node[:label] %></span>
@@ -245,7 +225,7 @@ If the navbar partial runs into a multiple column category, it will pass that ov
 
 This inserts a `.navbar__mutli-col-panel` div as a list item in the unordered list with classname of `.navbar__categories`. The div starts with a span, which gets the `.navbar__categories__header` class, and ruby dynamically generates a class name based on the `data[:slug]` attribute, available through the hash. This span gets a custom data attribute of the same name, with `data-slug="<%= data[:slug]%>"`. The span's inner content is the `data[:label]`, again made available through the hash. 
 
-Under the span is another unordered list, with the classes `.navbar__multi-col`, `.navbar__category`, and the slug class name as well. 
+Under the span is another unordered list, with the classes `.navbar__multi-col` abd `.navbar__category`.
 
 Then ruby iterates over the inner nodes and creates a list item with a nested unordered list inside of it, with the class `.multi-col__category`. 
 
@@ -253,7 +233,7 @@ Ruby iterates one more time over the inner nodes of each node and each becomes a
 
 ### Bringing the markup together 
 
-If you were to set up a Rails application, add these helper files and view partials, add controllers, routes, and views to the application, and then add `<%= render 'layouts/partials/navbar' %>` to your `app/views/layouts/application.html.erb` file, you would see the following: 
+If you were to set up a Rails application and use these helpers and partials to render a page, you would see the following: 
 
 ![Markup only navbar in sample Rails app](/img/navbar-tutorial/navbar-markup.png)
 
@@ -261,101 +241,188 @@ The generated markup looks like this:
 
 ```
 <nav>
-<a href="/">
-   <div class="brand">
-      Home
-   </div>
-</a>
-<div class="nav-mobile">
-   <span id="nav-toggle"><span></span></span>
-</div>
-<div id="navbar" class="navbar" tabindex="0">
-   <ul class="navbar__categories" tabindex="0">
+  <div class="nav-mobile">
+    <span id="nav-toggle"><span></span></span>
+  </div>
+  <div id="navbar" class="navbar" tabindex="0">
+    <ul class="navbar__categories" tabindex="0">
       <li class="navbar__categories__list-item" tabindex="0">
-         <div class="navbar__multi-col-panel">
-            <span class="navbar__categories__header home" data-slug="home">Home</span>
-            <ul class="navbar__multi-col navbar__category home ">
-            </ul>
-         </div>
+        <a class="navbar__categories__header" data-slug="home" href="/">Home</a>
       <li class="navbar__categories__list-item" tabindex="0">
-         <div class="navbar__single-col-panel">
-            <span class="navbar__categories__header single" data-slug="single">Single</span>
-            <ul class="navbar__single-col navbar__category single">
-               <li class="navbar__category__item">
-                  <a class="navbar__link" data-slug="single" href="/about">
-                  About
-                  </a>
-               </li>
-               <li class="navbar__category__item">
-                  <a class="navbar__link" data-slug="single" href="/contact">
-                  Contact
-                  </a>
-               </li>
-               <li class="navbar__category__item">
-                  <a class="navbar__link" data-slug="single" href="/blog">
-                  Blog
-                  </a>
-               </li>
-            </ul>
-         </div>
+        <div class="navbar__single-col-panel">
+          <span class="navbar__categories__header" data-slug="single">Single</span>
+          <ul class="navbar__single-col navbar__category">
+            <li class="navbar__category__item">
+              <a class="navbar__link" data-slug="single" href="/about">
+              About
+              </a>
+            </li>
+            <li class="navbar__category__item">
+              <a class="navbar__link" data-slug="single" href="/contact">
+              Contact
+              </a>
+            </li>
+            <li class="navbar__category__item">
+              <a class="navbar__link" data-slug="single" href="/blog">
+              Blog
+              </a>
+            </li>
+          </ul>
+        </div>
       <li class="navbar__categories__list-item" tabindex="0">
-         <div class="navbar__multi-col-panel">
-            <span class="navbar__categories__header multiple" data-slug="multiple">Multiple</span>
-            <ul class="navbar__multi-col navbar__category multiple ">
-               <li>
-                  <span>Category 1</span>
-                  <ul class="multi-col__category">
-                     <li class="multi-col__category__item">
-                        <a class="navbar__link" data-slug="multiple"href="/category-1/item-1" >Item 1</a>
-                     </li>
-                     <li class="multi-col__category__item">
-                        <a class="navbar__link" data-slug="multiple"href="/category-1/item-2" >Item 2</a>
-                     </li>
-                  </ul>
-               </li>
-               <li>
-                  <span>Category 2</span>
-                  <ul class="multi-col__category">
-                     <li class="multi-col__category__item">
-                        <a class="navbar__link" data-slug="multiple"href="/category-2/item-1" >Item 1</a>
-                     </li>
-                     <li class="multi-col__category__item">
-                        <a class="navbar__link" data-slug="multiple"href="/category-2/item-2" >Item 2</a>
-                     </li>
-                     <li class="multi-col__category__item">
-                        <a class="navbar__link" data-slug="multiple"href="/category-2/item-3" >Item 3</a>
-                     </li>
-                     <li class="multi-col__category__item">
-                        <a class="navbar__link" data-slug="multiple"href="/category-2/item-4" >Item 4</a>
-                     </li>
-                  </ul>
-               </li>
-               <li>
-                  <span>Category 3</span>
-                  <ul class="multi-col__category">
-                     <li class="multi-col__category__item">
-                        <a class="navbar__link" data-slug="multiple"href="/category-3/item-1" >Item 1</a>
-                     </li>
-                     <li class="multi-col__category__item">
-                        <a class="navbar__link" data-slug="multiple"href="/category-3/item-2" >Item 2</a>
-                     </li>
-                     <li class="multi-col__category__item">
-                        <a class="navbar__link" data-slug="multiple"href="/category-3/item-3" >Item 3</a>
-                     </li>
-                  </ul>
-               </li>
-            </ul>
-         </div>
+        <div class="navbar__multi-col-panel">
+          <span class="navbar__categories__header" data-slug="multiple">Multiple</span>
+          <ul class="navbar__multi-col navbar__category">
+            <li>
+              <span>Category 1</span>
+              <ul class="multi-col__category">
+                <li class="multi-col__category__item">
+                  <a class="navbar__link" data-slug="multiple"href="/category-1/item-1" >Item 1</a>
+                </li>
+                <li class="multi-col__category__item">
+                  <a class="navbar__link" data-slug="multiple"href="/category-1/item-2" >Item 2</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span>Category 2</span>
+              <ul class="multi-col__category">
+                <li class="multi-col__category__item">
+                  <a class="navbar__link" data-slug="multiple"href="/category-2/item-1" >Item 1</a>
+                </li>
+                <li class="multi-col__category__item">
+                  <a class="navbar__link" data-slug="multiple"href="/category-2/item-2" >Item 2</a>
+                </li>
+                <li class="multi-col__category__item">
+                  <a class="navbar__link" data-slug="multiple"href="/category-2/item-3" >Item 3</a>
+                </li>
+                <li class="multi-col__category__item">
+                  <a class="navbar__link" data-slug="multiple"href="/category-2/item-4" >Item 4</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span>Category 3</span>
+              <ul class="multi-col__category">
+                <li class="multi-col__category__item">
+                  <a class="navbar__link" data-slug="multiple"href="/category-3/item-1" >Item 1</a>
+                </li>
+                <li class="multi-col__category__item">
+                  <a class="navbar__link" data-slug="multiple"href="/category-3/item-2" >Item 2</a>
+                </li>
+                <li class="multi-col__category__item">
+                  <a class="navbar__link" data-slug="multiple"href="/category-3/item-3" >Item 3</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </li>
-   </ul>
-</div>
+    </ul>
+  </div>
+</nav>
 ```
+
+I've deployed a sample app to Heroku. You can find it [here]() TODO: do this. Keep in mind, Heroku free-tier servers have a spin up time, so it may be slow to load if it hasn't received traffic in the last 30 minutes. 
 
 ## Styles 
 
-The goal of this navbar is to make something easily extensible, so I haven't written comprehensive styles. For the most part, these styles are everything you really need for a basic layout to work.
+The goal of this navbar is to make something easily extensible, so I haven't designed comprehensive styles. These styles are everything you need for a basic layout to work, nothing more. It's raw CSS with no errors or warnings from CSSLint. 
 
-### Default, wide viewport styles 
+```
+# app/assets/stylesheets/navbar.css
+# Base navbar styles
+nav ul {
+    padding: 0;
+    list-style: none;
+}
+.nav-mobile {
+    display: none;
+}
+.navbar__categories {
+    display: flex;
+}
+.navbar__categories__header {
+    cursor: pointer;
+    display: block;
+    padding: 24px;
+}
+.navbar__category {
+    opacity: 0;
+    position: absolute;
+    z-index: -9999;
+}
+.navbar__category--active {
+    opacity: 1;
+    z-index: 0;
+}
+@media all and (max-width: 768px) {
+    .nav-mobile {
+        display: block;
+        height: 50px;
+        z-index: 1;
+        width: 50px;
+    }
+    .nav-mobile .nav-toggle {
+        cursor: pointer;
+        padding: 10px 35px 16px 0;
+    }
+    .nav-mobile .nav-toggle span,
+    .nav-mobile .nav-toggle span:before,
+    .nav-mobile .nav-toggle span:after {
+        background: #000000;
+        cursor: pointer;
+        border-radius: 1px;
+        height: 5px;
+        width: 35px;
+        position: absolute;
+        display: block;
+        content: "";
+    }
+    .nav-mobile .nav-toggle span:before {
+        top: -10px;
+    }
+    .nav-mobile .nav-toggle span:after {
+        bottom: -10px;
+    }
+    .nav-mobile .nav-toggle--active span {
+        background-color: transparent;
+    }
+    .nav-mobile .nav-toggle--active span:before,
+    .nav-mobile .nav-toggle--active span:after {
+        top: 0;
+    }
+    .nav-mobile .nav-toggle--active span:before {
+        transform: rotate(45deg);
+    }
+    .nav-mobile .nav-toggle--active span:after {
+        transform: rotate(-45deg);
+    }
+    .navbar {
+        opacity: 0;
+        position: absolute;
+        z-index: -9999;
+    }
+    .navbar--active {
+        opacity: 1;
+        z-index: 0;
+    }
+    .navbar__categories {
+        display: block;
+    }
+    .navbar__categories__header {
+        padding-left: 0;
+    }
+    .navbar__category--active {
+        position: relative;
+    }
+    .multi-col__category {
+        position: relative;
+    }
+}
+```
+
+### Default styles above "mobile" breakpoint
 
 1. I don't want the standard `ul` padding, so I set every `ul` nested within the `nav` to have `padding: 0`. 
 2. Similarly, I have no need for the dots and other list-item decoration, so I set `list-style: none`.
@@ -374,117 +441,18 @@ The goal of this navbar is to make something easily extensible, so I haven't wri
 3. The `.nav-mobile` is given `z-index: 1` to sit on top of the navbar and remain clickable when the nav is dropped down. 
 4. All of the `.nav-mobile #nav-toggle` styles and other nested attributes are taken directly from [Tania Rascia's Responsive Dropdown Navigation Bar](https://www.taniarascia.com/responsive-dropdown-navigation-bar/). It's a great hamburger menu, tried and true, and I had no reason to mess with it. Thanks, Tania! 
 5. The `.navbar` is initially set to `opacity: 0` and `z-index: -1` to hide it, and much like the `.navbar__category` class above the breakpoint, gets set to `opacity: 1` and `z-index: 0` with an `.active` class. 
-6. TODO: what changes the mobile navbar category heigh? The relative position? 
-
-TODO: adjoining classes, ID selectors 
-
-```
-nav ul {
-    padding: 0;
-    list-style: none;
-}
-
-.nav-mobile {
-    display: none;
-}
-
-.navbar__categories {
-    display: flex;
-}
-
-.navbar__categories__header {
-    cursor: pointer;
-    display: block;
-    padding: 24px;
-}
-
-.navbar__category {
-    opacity: 0;
-    position: absolute;
-    z-index: -9999;
-}
-
-.navbar__category.active {
-    opacity: 1;
-    z-index: 0;
-}
-
-@media all and (max-width: 768px) {
-    .nav-mobile {
-        display: block;
-        height: 50px;
-        z-index: 1;
-        width: 50px;
-    }
-    .nav-mobile #nav-toggle {
-        cursor: pointer;
-        padding: 10px 35px 16px 0;
-    }
-    .nav-mobile #nav-toggle span,
-    .nav-mobile #nav-toggle span:before,
-    .nav-mobile #nav-toggle span:after {
-        background: #000000;
-        cursor: pointer;
-        border-radius: 1px;
-        height: 5px;
-        width: 35px;
-        position: absolute;
-        display: block;
-        content: "";
-        transition: all 300ms ease-in-out;
-    }
-    .nav-mobile #nav-toggle span:before {
-        top: -10px;
-    }
-    .nav-mobile #nav-toggle span:after {
-        bottom: -10px;
-    }
-    .nav-mobile #nav-toggle.active span {
-        background-color: transparent;
-    }
-    .nav-mobile #nav-toggle.active span:before,
-    .nav-mobile #nav-toggle.active span:after {
-        top: 0;
-    }
-    .nav-mobile #nav-toggle.active span:before {
-        transform: rotate(45deg);
-    }
-    .nav-mobile #nav-toggle.active span:after {
-        transform: rotate(-45deg);
-    }
-    .navbar {
-        opacity: 0;
-        position: absolute;
-        z-index: -9999;
-    }
-    .navbar.active {
-        opacity: 1;
-        z-index: 0;
-    }
-    .navbar__categories {
-        display: block;
-    }
-    .navbar__categories__header {
-        padding-left: 0;
-    }
-    .navbar__category.active {
-        position: relative;
-    }
-    .multi-col__category {
-        position: relative;
-    }
-}
-```
-
+ 
 ### Bringing the styles together 
 
 With this CSS added to our project, you can expect to see: 
 
 ![Markup and additional css on the navbar in sample Rails app](/img/navbar-tutorial/navbar-markup-css.png)
 
+You can view the live version at the [navbar--rails heroku app](). TODO: do this 
+
 ## JavaScript 
 
-In order for our navbar to work and to meet our requirements, we need to use some JavaScript. There are tons of searches and resources out there about CSS-only navbars, and someday I wonder if this common design pattern will be built in to browser components, and all we'll ever need is markup and CSS. But until that day comes, JavaScript must play a role in our final product. 
+In order for our navbar to truly work, we need to use some JavaScript. There are tons of resources out there about CSS-only navbars, and someday I hope this common design pattern will be a native HTML5 element, and all we'll ever need is markup and CSS. Until that day comes, JavaScript must play a role in our final product. 
 
 I was hopeful when I saw Chris Ferdinandi had a blog post aiming towards a CSS-only solution. [He subsequently corrected himself](https://gomakethings.com/i-was-wrong-about-javascript-free-dropdowns/).
 
@@ -510,6 +478,26 @@ Event delegation sounds like the right way to go here. Instead of registering ev
 
 The final piece of exposition about this JavaScript is that the `.matches()` function does require a [polyfill for IE11](https://caniuse.com/#search=matches). It is also not supported by Opera Mini whatsoever.
 
+Setting up event listeners requires their targets to exist, and that requires the entire DOM content to be loaded in. Since this component is expected to Just Work, regardless of context, I wrapped it in a `DOMContentLoaded` event listener. It won't start until the DOM Content is loaded, meaning you can include the script in any way shape or form, independent of any build process. 
+
+The script then sets up event listeners on focus, blur, mousedown, and keydown. Each one has an `if` statement which only executes if the target of the event has a classList. This is because the first piece of real application logic happens when the callback functiosn attempt to match the event target with `.navbar__categories__header` or `.navbar__categories__list-item`. `.matches()` requires a classList to run appropriately. Without it, some browsers throw errors. This happens specifically if the event's target is something like `HTMLDocument`. 
+
+So if an event fires, and its target has a classList, the callback checks to see what that target was. If it was a `.navbar__link` or `.navbar__categories__list-item`, focus events will trigger the navbar to display and blur events will trigger the navbar to be hidden. 
+
+If the event target was a `.navbar__categories__header` or `.navbar__categories__list-item` on mousedown or keydown, then we believe the user is attempting to toggle that item and run the navbar toggle logic. 
+
+We use `mousedown` instead of `click` for the toggle, because `click` events trigger focus, and the toggle happens an extra time because of the `focus` event listener. Mousedown happens before `focus` is set, and can be used to effectively signal a user's desire to toggle a button. 
+
+In the `keydown` event listener, we set variables `KEY_ENTER` and `KEY_SPACE` so the callback only fires when a user presses enter or the spacebar. 
+
+As for the logic - the show callback iterates over every `.navbar__category` and `.navbar__categories__header` and compares its `data-slug` attribute with the `data-slug` attribute of the target. If they match, it gets the `active` class. If they don't, the `active` class is removed. 
+
+In the hide callback, we iterate over every `.navbar__category` and `.navbar__categories__header` and remove `.active`. 
+
+The toggle callback functions like the show callback, but uses `toggle` instead of `add` to toggle `.active` instead of aribtarirly adding it. 
+
+The `#nav-toggle` element gets a similar treatment, although in this case, since it only ever needs to toggle, we can use `click` listeners and `keydown` listeners. 
+
 ```
 # app/assets/javascripts/navbar.js
 # Navbar js (linted with ESLint) 
@@ -519,7 +507,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (event.target.matches(".navbar__link") || event.target.matches(".navbar__categories__list-item")) {
         var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
         for (var i = 0;i < list.length;i++) {
-          if (list[i].classList.contains(event.target.dataset.slug)) {
+          if (list[i].dataset.slug === event.target.dataset.slug) {
             list[i].classList.add("active");
           } else {
             list[i].classList.remove("active");
@@ -543,7 +531,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (event.target.matches(".navbar__categories__header") || event.target.matches(".navbar__categories__list-item")) {
         var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
         for (var i = 0;i < list.length;i++) {
-          if (list[i].classList.contains(event.target.dataset.slug)) {
+          if (list[i].dataset.slug === event.target.dataset.slug) {
             list[i].classList.toggle("active");
           } else {
             list[i].classList.remove("active");
@@ -562,7 +550,7 @@ document.addEventListener("DOMContentLoaded", function () {
           if (event.target.matches(".navbar__categories__header") || event.target.matches(".navbar__categories__list-item")) {
             var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
             for (var i = 0;i < list.length;i++) {
-              if (list[i].classList.contains(event.target.dataset.slug)) {
+              if (list[i].dataset.slug === event.target.dataset.slug) {
                 list[i].classList.toggle("active");
               } else {
                 list[i].classList.remove("active");
@@ -576,7 +564,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("nav-toggle").addEventListener("click", function () {
     document.getElementById("nav-toggle").classList.toggle("active");
     document.getElementById("navbar").classList.toggle("active");
-  });
+  }, false);
   document.getElementById("nav-toggle").addEventListener("keydown", function (event) {
     var KEY_ENTER = 13;
     var KEY_SPACE = 32;
@@ -587,7 +575,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("navbar").classList.toggle("active");
       }
     }
-  });
+  }, false);
 });
 ```
 
@@ -595,7 +583,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 Now that we've covered the markup, styles, and JavaScript for the navigation element, you can see the full demo on CodePen: 
 
-<p class="codepen" data-height="265" data-theme-id="0" data-default-tab="html,result" data-user="ogdenstudios" data-slug-hash="oOvWZb" data-preview="true" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="Semantic, accessible, responsive, and extensible navigation element">
+<p class="codepen" data-height="500" data-theme-id="0" data-default-tab="html,result" data-user="ogdenstudios" data-slug-hash="oOvWZb" data-preview="true" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="Semantic, accessible, responsive, and extensible navigation element">
   <span>See the Pen <a href="https://codepen.io/ogdenstudios/pen/oOvWZb/">
   Semantic, accessible, responsive, and extensible navigation element</a> by Tyler Scott Williams (<a href="https://codepen.io/ogdenstudios">@ogdenstudios</a>)
   on <a href="https://codepen.io">CodePen</a>.</span>
@@ -608,6 +596,7 @@ Now that we've covered the markup, styles, and JavaScript for the navigation ele
 - Screen real estate 
 - I don't think massive mega navigation is a good design pattern (as evidenced by this website) 
 - JavaScript fails to load: noscript? 
+- Callback hell in the JS - mitigate it with your favorite framework, syntactic sugar, or ES6 if you really want. 
 
 ## Extensions 
 
