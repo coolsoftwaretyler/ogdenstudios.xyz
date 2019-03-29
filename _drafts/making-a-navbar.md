@@ -257,9 +257,107 @@ If you were to set up a Rails application, add these helper files and view parti
 
 ![Markup only navbar in sample Rails app](/img/navbar-tutorial/navbar-markup.png)
 
+The generated markup looks like this: 
+
+```
+# Generated HTML from Rails 
+
+
+<nav>
+   <a href="/">
+      <div class="brand">
+         Home
+      </div>
+   </a>
+   <div class="nav-mobile">
+      <span id="nav-toggle"><span></span></span>
+   </div>
+   <div id="navbar" class="navbar" tabindex="0">
+      <ul class="navbar__categories" tabindex="0">
+         <li class="navbar__categories__list-item" onblur="hideNavbar()" onfocus="displayNavbar('home')" tabindex="0">
+            <div class="navbar__multi-col-panel">
+               <span class="navbar__categories__header home" data-slug="home">Home</span>
+               <ul class="navbar__multi-col navbar__category home ">
+               </ul>
+            </div>
+         <li class="navbar__categories__list-item" onblur="hideNavbar()" onfocus="displayNavbar('single')" tabindex="0">
+            <div class="navbar__single-col-panel">
+               <span class="navbar__categories__header single" data-slug="single">Single</span>
+               <ul class="navbar__single-col navbar__category single">
+                  <li class="navbar__category__item">
+                     <a class="navbar__link" data-slug="single" href="/about">
+                     About
+                     </a>
+                  </li>
+                  <li class="navbar__category__item">
+                     <a class="navbar__link" data-slug="single" href="/contact">
+                     Contact
+                     </a>
+                  </li>
+                  <li class="navbar__category__item">
+                     <a class="navbar__link" data-slug="single" href="/blog">
+                     Blog
+                     </a>
+                  </li>
+               </ul>
+            </div>
+         <li class="navbar__categories__list-item" onblur="hideNavbar()" onfocus="displayNavbar('multiple')" tabindex="0">
+            <div class="navbar__multi-col-panel">
+               <span class="navbar__categories__header multiple" data-slug="multiple">Multiple</span>
+               <ul class="navbar__multi-col navbar__category multiple ">
+                  <li>
+                     <span>Category 1</span>
+                     <ul class="multi-col__category">
+                        <li class="multi-col__category__item">
+                           <a class="navbar__link" data-slug="multiple"href="/category-1/item-1" >Item 1</a>
+                        </li>
+                        <li class="multi-col__category__item">
+                           <a class="navbar__link" data-slug="multiple"href="/category-1/item-2" >Item 2</a>
+                        </li>
+                     </ul>
+                  </li>
+                  <li>
+                     <span>Category 2</span>
+                     <ul class="multi-col__category">
+                        <li class="multi-col__category__item">
+                           <a class="navbar__link" data-slug="multiple"href="/category-2/item-1" >Item 1</a>
+                        </li>
+                        <li class="multi-col__category__item">
+                           <a class="navbar__link" data-slug="multiple"href="/category-2/item-2" >Item 2</a>
+                        </li>
+                        <li class="multi-col__category__item">
+                           <a class="navbar__link" data-slug="multiple"href="/category-2/item-3" >Item 3</a>
+                        </li>
+                        <li class="multi-col__category__item">
+                           <a class="navbar__link" data-slug="multiple"href="/category-2/item-4" >Item 4</a>
+                        </li>
+                     </ul>
+                  </li>
+                  <li>
+                     <span>Category 3</span>
+                     <ul class="multi-col__category">
+                        <li class="multi-col__category__item">
+                           <a class="navbar__link" data-slug="multiple"href="/category-3/item-1" >Item 1</a>
+                        </li>
+                        <li class="multi-col__category__item">
+                           <a class="navbar__link" data-slug="multiple"href="/category-3/item-2" >Item 2</a>
+                        </li>
+                        <li class="multi-col__category__item">
+                           <a class="navbar__link" data-slug="multiple"href="/category-3/item-3" >Item 3</a>
+                        </li>
+                     </ul>
+                  </li>
+               </ul>
+            </div>
+         </li>
+      </ul>
+   </div>
+</nav>
+```
+
 ## Styles 
 
-The goal of this navbar is to make something easily extensible, so I haven't written beautiful styles. For the most part, these styles are everything you really need for a basic layout to work.
+The goal of this navbar is to make something easily extensible, so I haven't written comprehensive styles. For the most part, these styles are everything you really need for a basic layout to work.
 
 ### Default, wide viewport styles 
 
@@ -389,9 +487,32 @@ With this CSS added to our project, you can expect to see:
 ![Markup and additional css on the navbar in sample Rails app](/img/navbar-tutorial/navbar-markup-css.png)
 
 ## JavaScript 
-[understand event delevation, bubbling, and capturing](https://gomakethings.com/whats-the-difference-between-javascript-event-delegation-bubbling-and-capturing/)
-[I had to use event capturing for the focus and blur events](https://gomakethings.com/when-do-you-need-to-use-usecapture-with-addeventlistener/)
-[depending on your support requirements, you may need some polyfills](https://caniuse.com/#search=matches)
+
+In order for our navbar to work and to meet our requirements, we need to use some JavaScript. There are tons of searches and resources out there about CSS-only navbars, and someday I wonder if this common design pattern will be built in to browser components, and all we'll ever need is markup and CSS. But until that day comes, JavaScript must play a role in our final product. 
+
+I was hopeful when I saw Chris Ferdinandi had a blog post aiming towards a CSS-only solution. [He subsequently corrected himself](https://gomakethings.com/i-was-wrong-about-javascript-free-dropdowns/).
+
+We need to give our navbar the ability to: 
+
+1. Explicitly show a targeted navbar item.
+2. Explicitly hide a targeted navbar item.
+3. Toggle a targeted navbar item when we are unsure of its state. 
+
+These will happen based on events in the browser: 
+
+1. If a user focuses a navbar item, we want to show the navbar.
+2. If a user removes focus from a navbar item, we want to hide the navbar.
+3. If a user creates standard toggling behavior (mousedown, keydown), we want to toggle the navbar based on its current state. 
+
+So we set up event listeners for focus, blur (when focus is taken away from an object), mousedown, and keydown. Focus shows, blur hides, mousedown toggles, and keydown toggles. 
+ 
+In an early iteration of this script, I set up event listeners in the DOM and registered them independently. It's a common practice, totally valid, but might not scale in the case of a massive mega-menu. This navbar is meant to be the foundation of such an element, so I was concerned about the performance implications of registering so many event handlers. 
+
+Fortunately, Chris Ferdinandi has a great article all about [understanding event delevation, bubbling, and capturing](https://gomakethings.com/whats-the-difference-between-javascript-event-delegation-bubbling-and-capturing/).
+
+Event delegation sounds like the right way to go here. Instead of registering event listeners on all these DOM elements and their children, I just set up one listener to the document for focus, blur, mousedown, and keydown events. But there's a catch: focus and blur events don't bubble up the way we'd hope they do. Again, Chris Ferdinandi saved my bacon and wrote a post about how we can get access to these events by setting up [event capturing](https://gomakethings.com/when-do-you-need-to-use-usecapture-with-addeventlistener/).
+
+The final piece of exposition about this JavaScript is that the `.matches()` function does require a [polyfill for IE11](https://caniuse.com/#search=matches). It is also not supported by Opera Mini whatsoever.
 
 ```
 # app/assets/javascripts/navbar.js
@@ -421,7 +542,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   }, true);
-  document.addEventListener("mousdown", function (event) {
+  document.addEventListener("mousedown", function (event) {
     if (event.target.classList) {
       if (event.target.matches(".navbar__categories__header") || event.target.matches(".navbar__categories__list-item")) {
         var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
@@ -482,6 +603,7 @@ Codepen
 - Super custom content (paragraphs, divs, images, etc) 
 - Screen real estate 
 - I don't think massive mega navigation is a good design pattern (as evidenced by this website) 
+- JavaScript fails to load: noscript? 
 
 ## Extensions 
 
