@@ -4,6 +4,12 @@ title: 'Building a semantic, accessible, responsive, and extensible navigation e
 tags: []
 description: ''
 ---
+
+TODO: take out slug class names, set that as the data attribute? 
+TODO: add single link capability  
+TODO: take out brand entirely?
+TODO: swap brand with single link capability?
+
 Navigation components are the bane of my existence. They present all sorts of challenges and complexities. A truly good navbar must be semantic, accessible, responsive, and reusable. In my opinion, the best site navigation is small and represents anywhere between three to five different links, each of which leads users to appropriate pages which are either top-level content, or some more detailed content funneling system. I think trying to fit more than five options in a site navigation is an exercise in futility, and a bad design pattern. 
 
 I think some websites successfully implement *mega-menus*, but the appropriate use-cases for these kinds of navigation elements are places like Amazon. The majority of the time, mega-menus are bad for user experience, and represent an unwillingness to be critical about content, site architecture, and user stories. 
@@ -55,7 +61,9 @@ Let's talk about the markup. The entry point into the navbar partial is my `_nav
 </nav>
 ```
 
-The first line retrieves a hash with the actual data for the navbar. The specific implementation of this isn't very important. In production, I'm able to do some fancy footwork here and query our routes, controllers, etc. and come up with a comprehensive and adaptable navigation structure. But to start, you can just set up a helper method to return a static hash. It might look something like this: 
+### The data 
+
+The first line retrieves a hash with the actual data for the navbar. The specific implementation of this isn't very important. In production, I do some fancy footwork and query our routes, controllers, etc., and come up with a comprehensive and adaptable navigation structure. But to start, you can just set up a helper method to return a static hash. It might look something like this: 
 
 ```
 # app/helpers/navbar_helper.rb
@@ -158,11 +166,15 @@ But for our purposes, it represents the three major use-cases I run into when ma
 2. Single-category lists of links
 3. Multiple-category lists of links
 
+### The components
+
 The `_navbar` partial takes this data, iterates over it, and uses three additional partials to stitch together the final product: 
 
 1. The brand element 
 2. Single column items 
 3. Multi column items 
+
+### The navbar brand
 
 The navbar brand is small. It's extensible, but typically is meant to be a single item with no logic required. I broke it out into a partial to keep the top level navbar partial neat and clean. 
 
@@ -176,31 +188,34 @@ The navbar brand is small. It's extensible, but typically is meant to be a singl
 <% end %>
 ```
 
+### Single column categories
+
 If the navbar partial runs into a single column category, it will pass that over the `_navbar_single_col_panel.html.erb` file, which looks like this: 
 
 ```
 # app/views/layouts/navbar/_navbar_single_col_panel.html.erb
 # Navbar single column 
 <div class="navbar__single-col-panel">
-  <span class="navbar__categories__header <%= data[:slug] %>" onmousedown="toggleNavbar('<%= data[:slug]%>')" ><%= data[:label]%></span>
+  <span class="navbar__categories__header <%= data[:slug] %>" data-slug="<%= data[:slug]%>"><%= data[:label]%></span>
   <ul class="navbar__single-col navbar__category <%= data[:slug] %>">
     <% data[:nodes].each do |node|%>
       <li class="navbar__category__item">
-        <% if node[:link] %>
-          <a class="navbar__link" 
-            href="<%= node[:link] %>" 
-            onblur="hideNavbar()" 
-            onfocus="displayNavbar('<%= data[:slug]%>')"
-            <%= node[:newtab] ? 'target="_blank"' : ''%>
-          ><%= node[:label] %></a>
-        <% else %>
-          <span><%= node[:label] %></span>
-        <% end %>
+        <a class="navbar__link" data-slug="<%= data[:slug]%>" href="<%= node[:link] %>">
+          <%= node[:label] %>
+        </a>
       </li>
     <% end %>
   </ul>
 </div>
 ```
+
+This inserts a `.navbar__single-col-panel` div as a list item in the unordered list with classname of `.navbar__categories`. The div starts with a span, which gets the `.navbar__categories__header` class, and ruby dynamically generates a class name based on the `data[:slug]` attribute, available through the hash. This span gets a custom data attribute of the same name, with `data-slug="<%= data[:slug]%>"`. The span's inner content is the `data[:label]`, again made available through the hash. 
+
+Under the span is another unordered list, with the classes `.navbar__single-col`, `.navbar__category`, and the slug class name as well. 
+
+Then ruby iterates over the inner nodes and creates a list item of class `.navbar__category__item`. Each node becomes an anchor with a `data-slug` attribute that matches the slug of this category, and an href with the link. The link text is created from that node's `label` attribute. 
+
+### Multiple column categories 
 
 If the navbar partial runs into a multiple column category, it will pass that over the `_navbar_multi_col_panel.html.erb` file, which looks like this: 
 
@@ -208,7 +223,7 @@ If the navbar partial runs into a multiple column category, it will pass that ov
 # app/views/layouts/navbar/_navbar_multi_col_panel.html.erb
 # Navbar multi column 
 <div class="navbar__multi-col-panel">
-  <span class="navbar__categories__header <%= data[:slug] %>" onmousedown="toggleNavbar('<%= data[:slug]%>')"><%= data[:label]%></span>
+  <span class="navbar__categories__header <%= data[:slug] %>" data-slug="<%= data[:slug]%>"><%= data[:label]%></span>
   <ul class="navbar__multi-col navbar__category <%= data[:slug] %> ">
     <% data[:nodes].each do |node|%>
       <li>
@@ -216,16 +231,7 @@ If the navbar partial runs into a multiple column category, it will pass that ov
         <ul class="multi-col__category">
           <% node[:nodes].each do |item| %>
             <li class="multi-col__category__item">
-              <% if item[:link] %>
-                <a class="navbar__link" 
-                   href="<%= item[:link] %>" 
-                   onblur="hideNavbar()" 
-                   onfocus="displayNavbar('<%= data[:slug]%>')"
-                   <%= item[:newtab] ? 'target="_blank"' : ''%>
-                ><%= item[:label] %></a>
-              <% else %>
-                <span><%= item[:label] %></span>
-              <% end %>
+              <a class="navbar__link" data-slug="<%= data[:slug]%>"href="<%= item[:link] %>" ><%= item[:label] %></a>
             </li>
           <% end %>
         </ul>
@@ -235,22 +241,55 @@ If the navbar partial runs into a multiple column category, it will pass that ov
 </div>
 ```
 
+This inserts a `.navbar__mutli-col-panel` div as a list item in the unordered list with classname of `.navbar__categories`. The div starts with a span, which gets the `.navbar__categories__header` class, and ruby dynamically generates a class name based on the `data[:slug]` attribute, available through the hash. This span gets a custom data attribute of the same name, with `data-slug="<%= data[:slug]%>"`. The span's inner content is the `data[:label]`, again made available through the hash. 
+
+Under the span is another unordered list, with the classes `.navbar__multi-col`, `.navbar__category`, and the slug class name as well. 
+
+Then ruby iterates over the inner nodes and creates a list item with a nested unordered list inside of it, with the class `.multi-col__category`. 
+
+Ruby iterates one more time over the inner nodes of each node and each becomes an anchor with a `data-slug` attribute that matches the slug of this category, and an href with the link. The link text is created from that node's `label` attribute. 
+
+### Bringing the markup together 
+
+If you were to set up a Rails application, add these helper files and view partials, add controllers, routes, and views to the application, and then add `<%= render 'layouts/partials/navbar' %>` to your `app/views/layouts/application.html.erb` file, you would see the following: 
+
+![Markup only navbar in sample Rails app](/img/navbar-tutorial/navbar-markup-only.png)
+
 ## Styles 
 
+The goal of this navbar is to make something easily extensible, so I haven't written beautiful styles. For the most part, these styles are everything you really need for a basic layout to work.
+
+### Default, wide viewport styles 
+
+1. I don't want the standard `ul` padding, so I set every `ul` nested within the `nav` to have `padding: 0`. 
+2. Similarly, I have no need for the dots and other list-item decoration, so I set `list-style: none`.
+3. We truly don't want `nav-mobile` to be displayed above our breakpoint, so `display: none` is appropriate there. 
+4. I use `display: flex` for an easily responsive `.navbar__categories` element. Flexbox is an excellent choice for one-dimensional responsive styles. 
+5. Since `.navbar__categories__header` is going to be a focusable and clickable `span` element TODO: should these be buttons? I don't think so, probably list semantics, maybe, we set `cursor: pointer` to indicate that
+6. The `.navbar__categories__header` is given `padding: 24px` to be an accessible touch-target of 48px or larger. TODO: source 
+7. The actual navbar content, wrapped in the `.navbar__category` class, is hidden with `opacity: 0` and `z-index: -9999`. 
+8. We'll cover this more thoroughly in the JavaScript portion of the post, but I added a `.navbar__category.active` class that sets `opacity: 1` and `z-index: 0` when items ought to be displayed. 
+9. I chose `768px` as a mobile breakpoint, mostly out of habit from my Bootstrap days. Your mileage may vary, and you'll want to follow good design habits around breakpoints: focusing on pixel values and testing, vs. trying to target specific devices. 
+
+### Under the breakpoint 
+
+1. We display the `.nav-mobile` element with `display: block`. 
+2. I set `.nav-mobile` to be 50x50px because it's an appropriate size for a touch target, and a nice, round number. 
+3. The `.nav-mobile` is given `z-index: 1` to sit on top of the navbar and remain clickable when the nav is dropped down. 
+4. All of the `.nav-mobile #nav-toggle` styles and other nested attributes are taken directly from [Tania Rascia's Responsive Dropdown Navigation Bar](https://www.taniarascia.com/responsive-dropdown-navigation-bar/). It's a great hamburger menu, tried and true, and I had no reason to mess with it. Thanks, Tania! 
+5. The `.navbar` is initially set to `opacity: 0` and `z-index: -1` to hide it, and much like the `.navbar__category` class above the breakpoint, gets set to `opacity: 1` and `z-index: 0` with an `.active` class. 
+6. TODO: what changes the mobile navbar category heigh? The relative position? 
+
+TODO: adjoining classes, ID selectors 
 
 ```
-# app/assets/stylesheets/navbar.css
-# Navbar css (linted with CSSLint)
 nav ul {
     padding: 0;
+    list-style: none;
 }
 
 .nav-mobile {
     display: none;
-}
-
-.navbar ul {
-    list-style: none;
 }
 
 .navbar__categories {
@@ -274,15 +313,11 @@ nav ul {
     z-index: 0;
 }
 
-.navbar .multi-col__category {
-    padding-left: 0;
-}
-
-@media all and (max-width: 1080px) {
+@media all and (max-width: 768px) {
     .nav-mobile {
         display: block;
         height: 50px;
-        z-index: 2;
+        z-index: 1;
         width: 50px;
     }
     .nav-mobile #nav-toggle {
@@ -324,11 +359,11 @@ nav ul {
     .navbar {
         opacity: 0;
         position: absolute;
-        z-index: -1;
+        z-index: -9999;
     }
     .navbar.active {
         opacity: 1;
-        z-index: 1;
+        z-index: 0;
     }
     .navbar__categories {
         display: block;
@@ -339,7 +374,6 @@ nav ul {
     .navbar__category.active {
         position: relative;
     }
-
     .multi-col__category {
         position: relative;
     }
