@@ -36,7 +36,7 @@ I mostly develop Ruby on Rails applications in my day job. I generated the marku
 
 ## Markup 
 
-Let's talk about the markup. The entry point into the navbar partial is my `_navbar.html.erb` file. It looks like this: 
+Let's talk about the markup. The entry point into the navbar partial is my `_navbar.html.erb` file. The root element is a semantic `nav` component. It looks like this: 
 
 ```
 # app/views/layouts/navbar/_navbar.html.erb
@@ -50,7 +50,7 @@ Let's talk about the markup. The entry point into the navbar partial is my `_nav
   <div id="navbar" class="navbar" tabindex="0">
     <ul class="navbar__categories" tabindex="0">
       <% navbar_data.each do |node| %>
-        <li class="navbar__categories__list-item" onblur="hideNavbar()" onfocus="displayNavbar('<%= node[:slug] %>')" tabindex="0">
+        <li class="navbar__categories__list-item" tabindex="0">
           <% if node[:type] == 'single'%>
             <%= render 'layouts/navbar/navbar_single_col_panel', data: node %>
           <% else %>
@@ -260,99 +260,95 @@ If you were to set up a Rails application, add these helper files and view parti
 The generated markup looks like this: 
 
 ```
-# Generated HTML from Rails 
-
-
 <nav>
-   <a href="/">
-      <div class="brand">
-         Home
-      </div>
-   </a>
-   <div class="nav-mobile">
-      <span id="nav-toggle"><span></span></span>
+<a href="/">
+   <div class="brand">
+      Home
    </div>
-   <div id="navbar" class="navbar" tabindex="0">
-      <ul class="navbar__categories" tabindex="0">
-         <li class="navbar__categories__list-item" onblur="hideNavbar()" onfocus="displayNavbar('home')" tabindex="0">
-            <div class="navbar__multi-col-panel">
-               <span class="navbar__categories__header home" data-slug="home">Home</span>
-               <ul class="navbar__multi-col navbar__category home ">
-               </ul>
-            </div>
-         <li class="navbar__categories__list-item" onblur="hideNavbar()" onfocus="displayNavbar('single')" tabindex="0">
-            <div class="navbar__single-col-panel">
-               <span class="navbar__categories__header single" data-slug="single">Single</span>
-               <ul class="navbar__single-col navbar__category single">
-                  <li class="navbar__category__item">
-                     <a class="navbar__link" data-slug="single" href="/about">
-                     About
-                     </a>
-                  </li>
-                  <li class="navbar__category__item">
-                     <a class="navbar__link" data-slug="single" href="/contact">
-                     Contact
-                     </a>
-                  </li>
-                  <li class="navbar__category__item">
-                     <a class="navbar__link" data-slug="single" href="/blog">
-                     Blog
-                     </a>
-                  </li>
-               </ul>
-            </div>
-         <li class="navbar__categories__list-item" onblur="hideNavbar()" onfocus="displayNavbar('multiple')" tabindex="0">
-            <div class="navbar__multi-col-panel">
-               <span class="navbar__categories__header multiple" data-slug="multiple">Multiple</span>
-               <ul class="navbar__multi-col navbar__category multiple ">
-                  <li>
-                     <span>Category 1</span>
-                     <ul class="multi-col__category">
-                        <li class="multi-col__category__item">
-                           <a class="navbar__link" data-slug="multiple"href="/category-1/item-1" >Item 1</a>
-                        </li>
-                        <li class="multi-col__category__item">
-                           <a class="navbar__link" data-slug="multiple"href="/category-1/item-2" >Item 2</a>
-                        </li>
-                     </ul>
-                  </li>
-                  <li>
-                     <span>Category 2</span>
-                     <ul class="multi-col__category">
-                        <li class="multi-col__category__item">
-                           <a class="navbar__link" data-slug="multiple"href="/category-2/item-1" >Item 1</a>
-                        </li>
-                        <li class="multi-col__category__item">
-                           <a class="navbar__link" data-slug="multiple"href="/category-2/item-2" >Item 2</a>
-                        </li>
-                        <li class="multi-col__category__item">
-                           <a class="navbar__link" data-slug="multiple"href="/category-2/item-3" >Item 3</a>
-                        </li>
-                        <li class="multi-col__category__item">
-                           <a class="navbar__link" data-slug="multiple"href="/category-2/item-4" >Item 4</a>
-                        </li>
-                     </ul>
-                  </li>
-                  <li>
-                     <span>Category 3</span>
-                     <ul class="multi-col__category">
-                        <li class="multi-col__category__item">
-                           <a class="navbar__link" data-slug="multiple"href="/category-3/item-1" >Item 1</a>
-                        </li>
-                        <li class="multi-col__category__item">
-                           <a class="navbar__link" data-slug="multiple"href="/category-3/item-2" >Item 2</a>
-                        </li>
-                        <li class="multi-col__category__item">
-                           <a class="navbar__link" data-slug="multiple"href="/category-3/item-3" >Item 3</a>
-                        </li>
-                     </ul>
-                  </li>
-               </ul>
-            </div>
-         </li>
-      </ul>
-   </div>
-</nav>
+</a>
+<div class="nav-mobile">
+   <span id="nav-toggle"><span></span></span>
+</div>
+<div id="navbar" class="navbar" tabindex="0">
+   <ul class="navbar__categories" tabindex="0">
+      <li class="navbar__categories__list-item" tabindex="0">
+         <div class="navbar__multi-col-panel">
+            <span class="navbar__categories__header home" data-slug="home">Home</span>
+            <ul class="navbar__multi-col navbar__category home ">
+            </ul>
+         </div>
+      <li class="navbar__categories__list-item" tabindex="0">
+         <div class="navbar__single-col-panel">
+            <span class="navbar__categories__header single" data-slug="single">Single</span>
+            <ul class="navbar__single-col navbar__category single">
+               <li class="navbar__category__item">
+                  <a class="navbar__link" data-slug="single" href="/about">
+                  About
+                  </a>
+               </li>
+               <li class="navbar__category__item">
+                  <a class="navbar__link" data-slug="single" href="/contact">
+                  Contact
+                  </a>
+               </li>
+               <li class="navbar__category__item">
+                  <a class="navbar__link" data-slug="single" href="/blog">
+                  Blog
+                  </a>
+               </li>
+            </ul>
+         </div>
+      <li class="navbar__categories__list-item" tabindex="0">
+         <div class="navbar__multi-col-panel">
+            <span class="navbar__categories__header multiple" data-slug="multiple">Multiple</span>
+            <ul class="navbar__multi-col navbar__category multiple ">
+               <li>
+                  <span>Category 1</span>
+                  <ul class="multi-col__category">
+                     <li class="multi-col__category__item">
+                        <a class="navbar__link" data-slug="multiple"href="/category-1/item-1" >Item 1</a>
+                     </li>
+                     <li class="multi-col__category__item">
+                        <a class="navbar__link" data-slug="multiple"href="/category-1/item-2" >Item 2</a>
+                     </li>
+                  </ul>
+               </li>
+               <li>
+                  <span>Category 2</span>
+                  <ul class="multi-col__category">
+                     <li class="multi-col__category__item">
+                        <a class="navbar__link" data-slug="multiple"href="/category-2/item-1" >Item 1</a>
+                     </li>
+                     <li class="multi-col__category__item">
+                        <a class="navbar__link" data-slug="multiple"href="/category-2/item-2" >Item 2</a>
+                     </li>
+                     <li class="multi-col__category__item">
+                        <a class="navbar__link" data-slug="multiple"href="/category-2/item-3" >Item 3</a>
+                     </li>
+                     <li class="multi-col__category__item">
+                        <a class="navbar__link" data-slug="multiple"href="/category-2/item-4" >Item 4</a>
+                     </li>
+                  </ul>
+               </li>
+               <li>
+                  <span>Category 3</span>
+                  <ul class="multi-col__category">
+                     <li class="multi-col__category__item">
+                        <a class="navbar__link" data-slug="multiple"href="/category-3/item-1" >Item 1</a>
+                     </li>
+                     <li class="multi-col__category__item">
+                        <a class="navbar__link" data-slug="multiple"href="/category-3/item-2" >Item 2</a>
+                     </li>
+                     <li class="multi-col__category__item">
+                        <a class="navbar__link" data-slug="multiple"href="/category-3/item-3" >Item 3</a>
+                     </li>
+                  </ul>
+               </li>
+            </ul>
+         </div>
+      </li>
+   </ul>
+</div>
 ```
 
 ## Styles 
@@ -595,8 +591,16 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 ```
 
-## Demo 
-Codepen 
+### Bringing it all together 
+
+Now that we've covered the markup, styles, and JavaScript for the navigation element, you can see the full demo on CodePen: 
+
+<p class="codepen" data-height="265" data-theme-id="0" data-default-tab="html,result" data-user="ogdenstudios" data-slug-hash="oOvWZb" data-preview="true" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="Semantic, accessible, responsive, and extensible navigation element">
+  <span>See the Pen <a href="https://codepen.io/ogdenstudios/pen/oOvWZb/">
+  Semantic, accessible, responsive, and extensible navigation element</a> by Tyler Scott Williams (<a href="https://codepen.io/ogdenstudios">@ogdenstudios</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
 ## Limitations 
 
