@@ -4,7 +4,7 @@ title: 'Building a semantic, accessible, responsive, and reusable navigation ele
 tags: ['navigation', 'ux', 'mega-menus', 'html5', 'css', 'vanilla javascript', 'semantic html', 'accessibility', 'responsive web design', 'ruby on rails']
 description: 'Building website navigations can be difficult. This tutorial covers building a large site navigation that is semantic, accessible, responsive, and reusable.'
 ---
-*Don't care about the implementation details? Just looking for some template code to solve your problem? [Check out the CodePen](https://codepen.io/ogdenstudios/pen/oOvWZb/)*
+*Don't care about the implementation details? Just looking for some template code to solve your problem? [Check out the CodePen](https://codepen.io/ogdenstudios/pen/oOvWZb/).*
 
 Navigation components present all sorts of challenges and complexities. A good navbar should be semantic, accessible, responsive, and reusable. In my opinion, the best site navigation is small and contains three to five different links, each of which leads users to top-level content, or detailed content funnels. While some websites successfully implement mega-menus, I think the appropriate situations for mega-menus are limited to correspondingly large sites, e.g. Amazon. 
 
