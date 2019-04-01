@@ -599,11 +599,11 @@ This navbar is intended to be the best possible implementation of a reusable sol
 
 ## Next steps
 
-I'm hoping the internet at large agrees with me that I've found an optimal solution for site navigation here. If that's not the case, I'd love to know what I missed. I've invested quite a bit of time here and solving this problem appropriately: with an emphasis on accessibility, responsive design, and reusability is important to me. Please send me an email or even submit a pull request on [ogdenstudios.xyz] to edit this blog post with your suggestions, or a pull request against [the sample rails project]() to show me where I can improve. 
+I'm hoping the internet at large agrees with me that I've found an optimal solution for site navigation here. If that's not the case, I'd love to know what I missed. I've invested quite a bit of time here and solving this problem appropriately: with an emphasis on accessibility, responsive design, and reusability is important to me. Please send me an email or even submit a pull request on [ogdenstudios.xyz](https://github.com/ogdenstudios/ogdenstudios.xyz) to edit this blog post with your suggestions, or a pull request against [the sample rails project]() to show me where I can improve. 
 
-I think an [HTML template]() for this component is a great use case. I'd love to implement it that way for greater reusability and portability. 
+I think an [HTML template](https://css-tricks.com/crafting-reusable-html-templates/) for this component is a great use case. I'd love to implement it that way for greater reusability and portability. 
 
-Also considering the ubiquity and ease of use of [npm], I'd be interested in building this into a vanilla JavaScript or Vue component for others to quickly import into projects. A ruby gem is a great target here, too. 
+Also considering the ubiquity and ease of use of npm I'd be interested in building this into a vanilla JavaScript or Vue component for others to quickly import into projects. A ruby gem is a great target here, too. 
 
 
 
