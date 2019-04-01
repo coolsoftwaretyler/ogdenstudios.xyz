@@ -5,8 +5,7 @@ tags: ['navigation', 'ux', 'mega-menus', 'html5', 'css', 'vanilla javascript', '
 description: 'Building website navigations can be difficult. This tutorial covers building a large site navigation that is semantic, accessible, responsive, and reusable.'
 ---
 
-TODO: take screenshots at same dimension
-TODO: optimize screenshots
+TODO: consider different links, maybe hashtag 
 
 Navigation components present all sorts of challenges and complexities. A good navbar must be semantic, accessible, responsive, and reusable. In my opinion, the best site navigation is small and contains between three to five different links, each of which leads users to top-level content, or some more detailed content funnels. In my opinion, trying to fit more than five options in a site navigation is not usually worth the difficulty. 
 
@@ -68,12 +67,12 @@ The first line retrieves a hash with the data for the navbar. The specific imple
 # app/helpers/navbar_helper.rb
 # Navbar helper 
 module NavbarHelper
-    def get_navbar_data
+  def get_navbar_data
     return data = [{
         label: 'Home',
         slug: 'home',
         type: 'top-level',
-        link: '/'
+        link: '#!'
       },
       {
         label: 'Single',
@@ -81,15 +80,15 @@ module NavbarHelper
         type: 'single',
         nodes: [{
             label: 'About',
-            link: '/about'
+            link: '#!'
           },
           {
             label: 'Contact',
-            link: '/contact'
+            link: '#!'
           },
           {
             label: 'Blog',
-            link: '/blog'
+            link: '#!'
           }
         ]
       },
@@ -101,11 +100,11 @@ module NavbarHelper
             label: 'Category 1',
             nodes: [{
                 label: 'Item 1',
-                link: '/category-1/item-1'
+                link: '#!'
               },
               {
                 label: 'Item 2',
-                link: '/category-1/item-2'
+                link: '#!'
               }
             ]
           },
@@ -113,19 +112,19 @@ module NavbarHelper
             label: 'Category 2',
             nodes: [{
                 label: 'Item 1',
-                link: '/category-2/item-1'
+                link: '#!'
               },
               {
                 label: 'Item 2',
-                link: '/category-2/item-2'
+                link: '#!'
               },
               {
                 label: 'Item 3',
-                link: '/category-2/item-3'
+                link: '#!'
               },
               {
                 label: 'Item 4',
-                link: '/category-2/item-4'
+                link: '#!'
               }
             ]
           },
@@ -133,26 +132,26 @@ module NavbarHelper
             label: 'Category 3',
             nodes: [{
                 label: 'Item 1',
-                link: '/category-3/item-1'
+                link: '#!'
               },
               {
                 label: 'Item 2',
-                link: '/category-3/item-2'
+                link: '#!'
               },
               {
                 label: 'Item 3',
-                link: '/category-3/item-3'
+                link: '#!'
               }
             ]
           }
         ]
       }
-    ]
+    ] 
   end
 end
 ```
 
-This sample structure represents only a starting point of what you can do. I use a hash because I'm working in Ruby, but if you're doing most of your work in JavaScript, you could represent this as JSON, or any other format - as long as it's predictable and allows you to generate your HTML correctly. You could add additional attributes and render them as necessary. 
+This sample structure represents only a starting point of what you can do. I use a hash because I'm working in Ruby, but if you're doing most of your work in JavaScript, you could represent this as JSON or any other format - as long as it's predictable and allows you to generate your HTML correctly. You could add additional attributes to the markup and render them as necessary. 
 
 This example data is not meant to be exhaustive, but it represents the three types of elements I usually expect to encounter in a navbar:
 
@@ -177,9 +176,9 @@ If the navbar partial runs into a `single` type node, it will pass that to the `
 ```
 # app/views/layouts/navbar/_navbar_single_col_panel.html.erb
 # Navbar single column 
-<div class="navbar__single-col-panel">
+<div class="navbar__single-col-panel" data-slug="<%= data[:slug]%>">
   <span class="navbar__categories__header" data-slug="<%= data[:slug]%>"><%= data[:label]%></span>
-  <ul class="navbar__single-col navbar__category">
+  <ul class="navbar__single-col navbar__category" data-slug="<%= data[:slug]%>">
     <% data[:nodes].each do |node|%>
       <li class="navbar__category__item">
         <a class="navbar__link" data-slug="<%= data[:slug]%>" href="<%= node[:link] %>">
@@ -191,11 +190,11 @@ If the navbar partial runs into a `single` type node, it will pass that to the `
 </div>
 ```
 
-This inserts a `.navbar__single-col-panel` div as a list item in the unordered list with classname of `.navbar__categories` (from the root `_navbar` partial). The `div`'s first child is a `span`, which gets the `.navbar__categories__header` class. This span gets a custom attribute of the same name, with `data-slug="<%= data[:slug]%>"`. The span's inner content is the `data[:label]`, again pulled from the hash. 
+This inserts a `.navbar__single-col-panel` `div` as a list item in the unordered list with classname of `.navbar__categories` (from the root `_navbar` partial) We give this `div` a `data-slug` attribute with the node's slug. The `div`'s first child is a `span`, which gets the `.navbar__categories__header` class. This span gets a custom attribute of the same name, with `data-slug="<%= data[:slug]%>"` as well. The span's inner content is the `data[:label]`, again pulled from the hash. 
 
-Under the span is another unordered list, with the classes `.navbar__single-col` and `.navbar__category`. 
+Under the span is another unordered list, with the classes `.navbar__single-col` and `.navbar__category`. We wire this up with the corresponding `data-slug` attribute as well.
 
-Then ruby iterates over the inner nodes and creates a list item of class `.navbar__category__item`. Each node becomes an anchor with a `data-slug` attribute that matches the slug of this category, and an href that points to the link. The link text is created from that node's `label` attribute. 
+Then ruby iterates over the inner nodes and creates a list item of class `.navbar__category__item`. Each node becomes an anchor with a `data-slug` attribute that matches the slug of this category, and an href that points to the link. The link text is created from that node's `label` attribute. We'll use the `data-slug` attribute in our JavaScript to determine associations as we check for which elements ought to be treated together.
 
 ### Multiple category list of links
 
@@ -204,9 +203,9 @@ If the navbar partial runs into a multiple column category, it will pass it to t
 ```
 # app/views/layouts/navbar/_navbar_multi_col_panel.html.erb
 # Navbar multi column 
-<div class="navbar__multi-col-panel">
+<div class="navbar__multi-col-panel" data-slug="<%= data[:slug]%>">
   <span class="navbar__categories__header" data-slug="<%= data[:slug]%>"><%= data[:label]%></span>
-  <ul class="navbar__multi-col navbar__category">
+  <ul class="navbar__multi-col navbar__category" data-slug="<%= data[:slug]%>">
     <% data[:nodes].each do |node|%>
       <li>
         <span><%= node[:label] %></span>
@@ -223,7 +222,7 @@ If the navbar partial runs into a multiple column category, it will pass it to t
 </div>
 ```
 
-This inserts a `.navbar__mutli-col-panel` div as a list item in the unordered list with classname of `.navbar__categories`. The div starts with a span, which gets the `.navbar__categories__header` class, and ruby dynamically generates a class name based on the `data[:slug]` attribute, available through the hash. This span gets a custom data attribute of the same name, with `data-slug="<%= data[:slug]%>"`. The span's inner content is the `data[:label]`, again made available through the hash. 
+This inserts a `.navbar__mutli-col-panel` div as a list item in the unordered list with classname of `.navbar__categories`. The div starts with a span, which gets the `.navbar__categories__header` class. This span gets a custom data attribute of the same name, with `data-slug="<%= data[:slug]%>"`. The span's inner content is the `data[:label]`, again made available through the hash. 
 
 Under the span is another unordered list, with the classes `.navbar__multi-col` abd `.navbar__category`.
 
@@ -242,45 +241,45 @@ The generated markup looks like this:
 ```
 <nav>
   <div class="nav-mobile">
-    <span id="nav-toggle"><span></span></span>
+    <span id="nav-toggle" class="nav-toggle"><span></span></span>
   </div>
   <div id="navbar" class="navbar" tabindex="0">
     <ul class="navbar__categories" tabindex="0">
-      <li class="navbar__categories__list-item" tabindex="0">
-        <a class="navbar__categories__header" data-slug="home" href="/">Home</a>
-      <li class="navbar__categories__list-item" tabindex="0">
-        <div class="navbar__single-col-panel">
+      <li class="navbar__categories__list-item" data-slug="home" tabindex="0">
+        <a class="navbar__categories__header" data-slug="home" href="#!">Home</a>
+      <li class="navbar__categories__list-item" data-slug="single" tabindex="0">
+        <div class="navbar__single-col-panel" data-slug="single">
           <span class="navbar__categories__header" data-slug="single">Single</span>
-          <ul class="navbar__single-col navbar__category">
+          <ul class="navbar__single-col navbar__category" data-slug="single">
             <li class="navbar__category__item">
-              <a class="navbar__link" data-slug="single" href="/about">
+              <a class="navbar__link" data-slug="single" href="#!">
               About
               </a>
             </li>
             <li class="navbar__category__item">
-              <a class="navbar__link" data-slug="single" href="/contact">
+              <a class="navbar__link" data-slug="single" href="#!">
               Contact
               </a>
             </li>
             <li class="navbar__category__item">
-              <a class="navbar__link" data-slug="single" href="/blog">
+              <a class="navbar__link" data-slug="single" href="#!">
               Blog
               </a>
             </li>
           </ul>
         </div>
-      <li class="navbar__categories__list-item" tabindex="0">
-        <div class="navbar__multi-col-panel">
+      <li class="navbar__categories__list-item" data-slug="multiple" tabindex="0">
+        <div class="navbar__multi-col-panel" data-slug="multiple">
           <span class="navbar__categories__header" data-slug="multiple">Multiple</span>
-          <ul class="navbar__multi-col navbar__category">
+          <ul class="navbar__multi-col navbar__category" data-slug="multiple">
             <li>
               <span>Category 1</span>
               <ul class="multi-col__category">
                 <li class="multi-col__category__item">
-                  <a class="navbar__link" data-slug="multiple"href="/category-1/item-1" >Item 1</a>
+                  <a class="navbar__link" data-slug="multiple"href="#!" >Item 1</a>
                 </li>
                 <li class="multi-col__category__item">
-                  <a class="navbar__link" data-slug="multiple"href="/category-1/item-2" >Item 2</a>
+                  <a class="navbar__link" data-slug="multiple"href="#!" >Item 2</a>
                 </li>
               </ul>
             </li>
@@ -288,16 +287,16 @@ The generated markup looks like this:
               <span>Category 2</span>
               <ul class="multi-col__category">
                 <li class="multi-col__category__item">
-                  <a class="navbar__link" data-slug="multiple"href="/category-2/item-1" >Item 1</a>
+                  <a class="navbar__link" data-slug="multiple"href="#!" >Item 1</a>
                 </li>
                 <li class="multi-col__category__item">
-                  <a class="navbar__link" data-slug="multiple"href="/category-2/item-2" >Item 2</a>
+                  <a class="navbar__link" data-slug="multiple"href="#!" >Item 2</a>
                 </li>
                 <li class="multi-col__category__item">
-                  <a class="navbar__link" data-slug="multiple"href="/category-2/item-3" >Item 3</a>
+                  <a class="navbar__link" data-slug="multiple"href="#!" >Item 3</a>
                 </li>
                 <li class="multi-col__category__item">
-                  <a class="navbar__link" data-slug="multiple"href="/category-2/item-4" >Item 4</a>
+                  <a class="navbar__link" data-slug="multiple"href="#!" >Item 4</a>
                 </li>
               </ul>
             </li>
@@ -305,13 +304,13 @@ The generated markup looks like this:
               <span>Category 3</span>
               <ul class="multi-col__category">
                 <li class="multi-col__category__item">
-                  <a class="navbar__link" data-slug="multiple"href="/category-3/item-1" >Item 1</a>
+                  <a class="navbar__link" data-slug="multiple"href="#!" >Item 1</a>
                 </li>
                 <li class="multi-col__category__item">
-                  <a class="navbar__link" data-slug="multiple"href="/category-3/item-2" >Item 2</a>
+                  <a class="navbar__link" data-slug="multiple"href="#!" >Item 2</a>
                 </li>
                 <li class="multi-col__category__item">
-                  <a class="navbar__link" data-slug="multiple"href="/category-3/item-3" >Item 3</a>
+                  <a class="navbar__link" data-slug="multiple"href="#!" >Item 3</a>
                 </li>
               </ul>
             </li>
@@ -323,7 +322,7 @@ The generated markup looks like this:
 </nav>
 ```
 
-I've deployed a sample app to Heroku. You can find it [here]() TODO: do this. Keep in mind, Heroku free-tier servers have a spin up time, so it may be slow to load if it hasn't received traffic in the last 30 minutes. 
+I've deployed a sample app to Heroku. You can find it [here](https://navbar--rails.herokuapp.com). Keep in mind, Heroku free-tier servers have a spin up time, so it may be slow to load if it hasn't received traffic in the last 30 minutes. 
 
 ## Styles 
 
@@ -348,13 +347,11 @@ nav ul {
     padding: 24px;
 }
 .navbar__category {
-    opacity: 0;
     position: absolute;
-    z-index: -9999;
+    left: -9999px;
 }
 .navbar__category--active {
-    opacity: 1;
-    z-index: 0;
+    left: unset;
 }
 @media all and (max-width: 768px) {
     .nav-mobile {
@@ -399,13 +396,11 @@ nav ul {
         transform: rotate(-45deg);
     }
     .navbar {
-        opacity: 0;
         position: absolute;
-        z-index: -9999;
+        left: -9999px;
     }
     .navbar--active {
-        opacity: 1;
-        z-index: 0;
+        left: unset;
     }
     .navbar__categories {
         display: block;
@@ -426,13 +421,12 @@ nav ul {
 
 1. I don't want the standard `ul` padding, so I set every `ul` nested within the `nav` to have `padding: 0`. 
 2. Similarly, I have no need for the dots and other list-item decoration, so I set `list-style: none`.
-3. We truly don't want `nav-mobile` to be displayed above our breakpoint, so `display: none` is appropriate there. 
+3. I truly don't want `nav-mobile` to be displayed above the breakpoint, so `display: none` is appropriate there. 
 4. I use `display: flex` for an easily responsive `.navbar__categories` element. Flexbox is an excellent choice for one-dimensional responsive styles. 
-5. Since `.navbar__categories__header` is going to be a focusable and clickable `span` element TODO: should these be buttons? I don't think so, probably list semantics, maybe, we set `cursor: pointer` to indicate that
-6. The `.navbar__categories__header` is given `padding: 24px` to be an accessible touch-target of 48px or larger. TODO: source 
-7. The actual navbar content, wrapped in the `.navbar__category` class, is hidden with `opacity: 0` and `z-index: -9999`. 
-8. We'll cover this more thoroughly in the JavaScript portion of the post, but I added a `.navbar__category.active` class that sets `opacity: 1` and `z-index: 0` when items ought to be displayed. 
-9. I chose `768px` as a mobile breakpoint, mostly out of habit from my Bootstrap days. Your mileage may vary, and you'll want to follow good design habits around breakpoints: focusing on pixel values and testing, vs. trying to target specific devices. 
+5. Since `.navbar__categories__header` is going to be a focusable and clickable `span` element, I set `cursor: pointer` to indicate that.
+6. The `.navbar__categories__header` is given `padding: 24px` to be an [accessible touch-target of 48px or larger](https://developers.google.com/web/fundamentals/accessibility/accessible-styles).
+7. The actual navbar content, wrapped in the `.navbar__category` class, is hidden with absolute positioning and `left: -9999px`. When given the `.navbar__category--active` class, I `unset` the value instead of setting it to `0` - to keep it in line with its higher level element.
+8. I chose `768px` as a mobile breakpoint, mostly out of habit from design frameworks I've used in the past. Your mileage may vary, and you'll want to follow good design habits around breakpoints: focusing on pixel values and testing, vs. trying to target specific devices. 
 
 ### Under the breakpoint 
 
@@ -440,7 +434,7 @@ nav ul {
 2. I set `.nav-mobile` to be 50x50px because it's an appropriate size for a touch target, and a nice, round number. 
 3. The `.nav-mobile` is given `z-index: 1` to sit on top of the navbar and remain clickable when the nav is dropped down. 
 4. All of the `.nav-mobile #nav-toggle` styles and other nested attributes are taken directly from [Tania Rascia's Responsive Dropdown Navigation Bar](https://www.taniarascia.com/responsive-dropdown-navigation-bar/). It's a great hamburger menu, tried and true, and I had no reason to mess with it. Thanks, Tania! 
-5. The `.navbar` is initially set to `opacity: 0` and `z-index: -1` to hide it, and much like the `.navbar__category` class above the breakpoint, gets set to `opacity: 1` and `z-index: 0` with an `.active` class. 
+5. The `.navbar` is initially set to `position: absolute` and `left: -9999px` to hide it, and much like the `.navbar__category--active` class above the breakpoint, `.navbar__category--active` sets `left: unset`. 
  
 ### Bringing the styles together 
 
@@ -448,13 +442,11 @@ With this CSS added to our project, you can expect to see:
 
 ![Markup and additional css on the navbar in sample Rails app](/img/navbar-tutorial/navbar-markup-css.png)
 
-You can view the live version at the [navbar--rails heroku app](). TODO: do this 
+Again, you can view the live version at the [navbar--rails heroku app](http://navbar--rails.herokuapp.com/).
 
 ## JavaScript 
 
-In order for our navbar to truly work, we need to use some JavaScript. There are tons of resources out there about CSS-only navbars, and someday I hope this common design pattern will be a native HTML5 element, and all we'll ever need is markup and CSS. Until that day comes, JavaScript must play a role in our final product. 
-
-I was hopeful when I saw Chris Ferdinandi had a blog post aiming towards a CSS-only solution. [He subsequently corrected himself](https://gomakethings.com/i-was-wrong-about-javascript-free-dropdowns/).
+In order for our navbar to truly work, we need to use some JavaScript. I hope this common design pattern will someday be a native HTML5 element, and all we'll ever need is markup and CSS. Until that day comes, JavaScript must play a role in our final product. 
 
 We need to give our navbar the ability to: 
 
@@ -466,51 +458,57 @@ These will happen based on events in the browser:
 
 1. If a user focuses a navbar item, we want to show the navbar.
 2. If a user removes focus from a navbar item, we want to hide the navbar.
-3. If a user creates standard toggling behavior (mousedown, keydown), we want to toggle the navbar based on its current state. 
+3. If a user emits toggling behavior (`mousedown`, `keydown`), we want to toggle the navbar based on its current state. 
 
-So we set up event listeners for focus, blur (when focus is taken away from an object), mousedown, and keydown. Focus shows, blur hides, mousedown toggles, and keydown toggles. 
+So we set up event listeners for `focus`, `blur`, `mousedown`, and `keydown`. `Focus` shows, `blur` hides, `mousedown` toggles, and `keydown` toggles. 
  
-In an early iteration of this script, I set up event listeners in the DOM and registered them independently. It's a common practice, totally valid, but might not scale in the case of a massive mega-menu. This navbar is meant to be the foundation of such an element, so I was concerned about the performance implications of registering so many event handlers. 
+In an early iteration of this script, I set up event listeners in the DOM and registered them in the HTML generation. It's a common practice, totally valid, but might not scale in the case of a massive mega-menu. This navbar is meant to be the foundation of such an element, so I was concerned about the performance implications of registering so many event handlers. 
 
 Fortunately, Chris Ferdinandi has a great article all about [understanding event delevation, bubbling, and capturing](https://gomakethings.com/whats-the-difference-between-javascript-event-delegation-bubbling-and-capturing/).
 
-Event delegation sounds like the right way to go here. Instead of registering event listeners on all these DOM elements and their children, I just set up one listener to the document for focus, blur, mousedown, and keydown events. But there's a catch: focus and blur events don't bubble up the way we'd hope they do. Again, Chris Ferdinandi saved my bacon and wrote a post about how we can get access to these events by setting up [event capturing](https://gomakethings.com/when-do-you-need-to-use-usecapture-with-addeventlistener/).
+Event delegation sounds like the right way to go here. Instead of registering event listeners on all these DOM elements and their children, I just set up one listener to the document for `focus`, `blur`, `mousedown`, and `keydown` events. But there's a catch: `focus` and `blur` events don't bubble up the way I need them to. Again, Chris Ferdinandi saved my bacon and wrote a post about how we can get access to these events by setting up [event capturing](https://gomakethings.com/when-do-you-need-to-use-usecapture-with-addeventlistener/).
 
-The final piece of exposition about this JavaScript is that the `.matches()` function does require a [polyfill for IE11](https://caniuse.com/#search=matches). It is also not supported by Opera Mini whatsoever.
+Setting up event listeners requires their targets to exist, and that requires the entire DOM content to be loaded in. Since this component is expected to Just Work, regardless of context,I wrapped it in a `DOMContentLoaded` event listener. It won't start until the DOM Content is loaded, meaning you can include the script in any way shape or form, independent of build process. 
 
-Setting up event listeners requires their targets to exist, and that requires the entire DOM content to be loaded in. Since this component is expected to Just Work, regardless of context, I wrapped it in a `DOMContentLoaded` event listener. It won't start until the DOM Content is loaded, meaning you can include the script in any way shape or form, independent of any build process. 
-
-The script then sets up event listeners on focus, blur, mousedown, and keydown. Each one has an `if` statement which only executes if the target of the event has a classList. This is because the first piece of real application logic happens when the callback functiosn attempt to match the event target with `.navbar__categories__header` or `.navbar__categories__list-item`. `.matches()` requires a classList to run appropriately. Without it, some browsers throw errors. This happens specifically if the event's target is something like `HTMLDocument`. 
+The script then sets up event listeners on `focus`, `blur`, `mousedown`, and `keydown`. Each one has an `if` statement which only executes if the target of the event has a classList. This is because the first piece of real application logic happens when the callback functions attempt to match the event target with `.navbar__categories__header` or `.navbar__categories__list-item`. `.matches()` requires a classList to run appropriately. Without it, some browsers throw errors. This happens specifically if the event's target is the `HTMLDocument`. 
 
 So if an event fires, and its target has a classList, the callback checks to see what that target was. If it was a `.navbar__link` or `.navbar__categories__list-item`, focus events will trigger the navbar to display and blur events will trigger the navbar to be hidden. 
 
-If the event target was a `.navbar__categories__header` or `.navbar__categories__list-item` on mousedown or keydown, then we believe the user is attempting to toggle that item and run the navbar toggle logic. 
+If the event target was a `.navbar__categories__header` or `.navbar__categories__list-item` on `mousedown` or `keydown`, then we believe the user is attempting to toggle that item and run the navbar toggle logic. 
 
-We use `mousedown` instead of `click` for the toggle, because `click` events trigger focus, and the toggle happens an extra time because of the `focus` event listener. Mousedown happens before `focus` is set, and can be used to effectively signal a user's desire to toggle a button. 
+We use `mousedown` instead of `click` for the toggle, because `click` events trigger `focus`, and the toggle happens an extra time because of the `focus` event listener. `mousedown` happens before `focus` is set, and can be used to effectively signal a user's desire to toggle a button. 
 
 In the `keydown` event listener, we set variables `KEY_ENTER` and `KEY_SPACE` so the callback only fires when a user presses enter or the spacebar. 
 
-As for the logic - the show callback iterates over every `.navbar__category` and `.navbar__categories__header` and compares its `data-slug` attribute with the `data-slug` attribute of the target. If they match, it gets the `active` class. If they don't, the `active` class is removed. 
+The show callback iterates over every `.navbar__category` and `.navbar__categories__header` and compares its `data-slug` attribute with the `data-slug` attribute of the target. If they match, it gets the `.navbar__category--active`. If they don't, the class is removed. 
 
-In the hide callback, we iterate over every `.navbar__category` and `.navbar__categories__header` and remove `.active`. 
+In the hide callback, we iterate over every `.navbar__category` and `.navbar__categories__header` and remove the `.navbar__category--active` class. 
 
-The toggle callback functions like the show callback, but uses `toggle` instead of `add` to toggle `.active` instead of aribtarirly adding it. 
+The toggle callback functions like the show callback, but uses `toggle` instead of `add`. 
 
-The `#nav-toggle` element gets a similar treatment, although in this case, since it only ever needs to toggle, we can use `click` listeners and `keydown` listeners. 
+The `#nav-toggle` element gets a similar treatment, although in this case, since it only ever needs to toggle, we can use `click` listeners and `keydown` listeners, and I add `nav-toggle--active` and `.navbar--active`. 
+
+The final piece of exposition about this JavaScript is that the `.matches()` function does require a [polyfill for Internet Explorer](https://caniuse.com/#search=matches). It is also not supported by Opera Mini whatsoever. The [internet explorer polyfill is pretty simple](https://developer.mozilla.org/en-US/docs/Web/API/Element/matches), so I add that at the top of my script. If you support Opera Mini, you might want to use something like [Document.querySelectorAll()](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll) and check for matching classes. 
+
+Here's the full JavaScript for my navbar. 
 
 ```
 # app/assets/javascripts/navbar.js
 # Navbar js (linted with ESLint) 
 document.addEventListener("DOMContentLoaded", function () {
+  if (!Element.prototype.matches) {
+    Element.prototype.matches = Element.prototype.msMatchesSelector ||
+      Element.prototype.webkitMatchesSelector;
+  }
   document.addEventListener("focus", function (event) {
     if (event.target.classList) {
       if (event.target.matches(".navbar__link") || event.target.matches(".navbar__categories__list-item")) {
-        var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
+        var list = document.getElementsByClassName("navbar__category");
         for (var i = 0;i < list.length;i++) {
           if (list[i].dataset.slug === event.target.dataset.slug) {
-            list[i].classList.add("active");
+            list[i].classList.add("navbar__category--active");
           } else {
-            list[i].classList.remove("active");
+            list[i].classList.remove("navbar__category--active");
           }
         }
       }
@@ -519,9 +517,9 @@ document.addEventListener("DOMContentLoaded", function () {
   document.addEventListener("blur", function (event) {
     if (event.target.classList) {
       if (event.target.matches(".navbar__link") || event.target.matches(".navbar__categories__list-item")) {
-        var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
+        var list = document.getElementsByClassName("navbar__category");
         for (var i = 0;i < list.length;i++) {
-          list[i].classList.remove("active");
+          list[i].classList.remove("navbar__category--active");
         }
       }
     }
@@ -529,12 +527,12 @@ document.addEventListener("DOMContentLoaded", function () {
   document.addEventListener("mousedown", function (event) {
     if (event.target.classList) {
       if (event.target.matches(".navbar__categories__header") || event.target.matches(".navbar__categories__list-item")) {
-        var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
+        var list = document.getElementsByClassName("navbar__category");
         for (var i = 0;i < list.length;i++) {
           if (list[i].dataset.slug === event.target.dataset.slug) {
-            list[i].classList.toggle("active");
+            list[i].classList.toggle("navbar__category--active");
           } else {
-            list[i].classList.remove("active");
+            list[i].classList.remove("navbar__category--active");
           }
         }
       }
@@ -548,12 +546,12 @@ document.addEventListener("DOMContentLoaded", function () {
       case KEY_SPACE: {
         if (event.target.classList) {
           if (event.target.matches(".navbar__categories__header") || event.target.matches(".navbar__categories__list-item")) {
-            var list = document.querySelectorAll(".navbar__category, .navbar__categories__header");
+            var list = document.getElementsByClassName("navbar__category");
             for (var i = 0;i < list.length;i++) {
               if (list[i].dataset.slug === event.target.dataset.slug) {
-                list[i].classList.toggle("active");
+                list[i].classList.toggle("navbar__category--active");
               } else {
-                list[i].classList.remove("active");
+                list[i].classList.remove("navbar__category--active");
               }
             }
           }
@@ -562,8 +560,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }, false);
   document.getElementById("nav-toggle").addEventListener("click", function () {
-    document.getElementById("nav-toggle").classList.toggle("active");
-    document.getElementById("navbar").classList.toggle("active");
+    document.getElementById("nav-toggle").classList.toggle("nav-toggle--active");
+    document.getElementById("navbar").classList.toggle("navbar--active");
   }, false);
   document.getElementById("nav-toggle").addEventListener("keydown", function (event) {
     var KEY_ENTER = 13;
@@ -571,8 +569,8 @@ document.addEventListener("DOMContentLoaded", function () {
     switch (event.which) {
       case KEY_ENTER:
       case KEY_SPACE: {
-        document.getElementById("nav-toggle").classList.toggle("active");
-        document.getElementById("navbar").classList.toggle("active");
+        document.getElementById("nav-toggle").classList.toggle("nav-toggle--active");
+        document.getElementById("navbar").classList.toggle("navbar--active");
       }
     }
   }, false);
