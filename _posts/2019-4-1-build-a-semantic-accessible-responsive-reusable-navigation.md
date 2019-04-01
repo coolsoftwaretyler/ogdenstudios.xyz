@@ -578,11 +578,11 @@ The `#nav-toggle` element gets a similar treatment, although in this case, since
 
 The final piece of exposition about this JavaScript is that the `.matches()` function does require a [polyfill for Internet Explorer](https://caniuse.com/#search=matches). It is also not supported by Opera Mini whatsoever. The [internet explorer polyfill is pretty simple](https://developer.mozilla.org/en-US/docs/Web/API/Element/matches), so I add that at the top of the script. If you support Opera Mini, you might want to use something like [Document.querySelectorAll()](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll) and check for matching classes. That workaround is not covered in this tutorial. 
 
-### Bringing it all together 
+### Bringing it all together <a name="codepen"></a>
 
 Now that I've covered the markup, styles, and JavaScript for the navigation element, you can see the full demo on CodePen: 
 
-<p id="#codepen" class="codepen" data-height="500" data-theme-id="0" data-default-tab="html,result" data-user="ogdenstudios" data-slug-hash="oOvWZb" data-preview="true" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="Semantic, accessible, responsive, and extensible navigation element">
+<p class="codepen" data-height="500" data-theme-id="0" data-default-tab="html,result" data-user="ogdenstudios" data-slug-hash="oOvWZb" data-preview="true" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="Semantic, accessible, responsive, and extensible navigation element">
   <span>See the Pen <a href="https://codepen.io/ogdenstudios/pen/oOvWZb/">
   Semantic, accessible, responsive, and extensible navigation element</a> by Tyler Scott Williams (<a href="https://codepen.io/ogdenstudios">@ogdenstudios</a>)
   on <a href="https://codepen.io">CodePen</a>.</span>
