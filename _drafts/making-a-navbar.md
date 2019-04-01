@@ -4,9 +4,6 @@ title: 'Building a semantic, accessible, responsive, and extensible navigation e
 tags: ['navigation', 'ux', 'mega-menus', 'html5', 'css', 'vanilla javascript', 'semantic html', 'accessibility', 'responsive web design', 'ruby on rails']
 description: 'Building website navigations can be difficult. This tutorial covers building a large site navigation that is semantic, accessible, responsive, and reusable.'
 ---
-
-TODO: consider different links, maybe hashtag 
-
 Navigation components present all sorts of challenges and complexities. A good navbar must be semantic, accessible, responsive, and reusable. In my opinion, the best site navigation is small and contains between three to five different links, each of which leads users to top-level content, or some more detailed content funnels. In my opinion, trying to fit more than five options in a site navigation is not usually worth the difficulty. 
 
 Some websites successfully implement mega-menus, but the appropriate use cases for these kinds of navigation elements are places like Amazon. For most cases, I don't think they're the right decision. If you can, consider paring down your site navigation. 
@@ -590,18 +587,23 @@ Now that we've covered the markup, styles, and JavaScript for the navigation ele
 
 ## Limitations 
 
-- Super custom content (paragraphs, divs, images, etc) 
-- Screen real estate 
-- I don't think massive mega navigation is a good design pattern (as evidenced by this website) 
-- JavaScript fails to load: noscript? 
-- Callback hell in the JS - mitigate it with your favorite framework, syntactic sugar, or ES6 if you really want. 
+This navbar is intended to be the best possible implementation of a reusable solution to a common problem I face: building accessible, responsive, and extensible navigations with a large number and variation of items. It still has some limitations in application. 
 
-## Extensions 
+1. First, I can't guarantee that any changes you make to markup inside categories will automatically be valid. If you change, add, or remove elements in the markup, consider checking your final output for WCAG compliance. You could certainly find a valid, accessible, and semantic way to add custom content like paragraphs, inner `div`s, images, and other content. But it's imperative that accessibility is your primary concern when doing so. 
 
-- HTML Templates? 
-- Vanilla JS package? 
-- Vue component? 
-- Ruby gem? 
+2. I don't think mega-menus are a great design pattern. You could probably tell by my website navigation. I think the best case scenario is limiting your site navigation scope so you don't need such a comprehensive solution to the problem. 
+
+3. This solution requires JavaScript. It's a very minimal and backwards-compatible JavaScript requirement, and I've done everything to remove dependencies from this project, but it still requires JavaScript. If you're extending this solution, you should consider incorporating a `<noscript>` element that covers users who don't load JavaScript. 
+
+4. Callback hell. I recognize that using vanilla JavaScript here means I summoned the Devil of Callback Hell. That was intentional, and difficult to avoid while reducing dependencies and making the script as universal as possible. The great thing about modern JavaScript is all the syntactic sugar out there. It would be a relatively small lift to port this script over to your favorite framework or JavaScript standard, I think. 
+
+## Next steps
+
+I'm hoping the internet at large agrees with me that I've found an optimal solution for site navigation here. If that's not the case, I'd love to know what I missed. I've invested quite a bit of time here and solving this problem appropriately: with an emphasis on accessibility, responsive design, and reusability is important to me. Please send me an email or even submit a pull request on [ogdenstudios.xyz] to edit this blog post with your suggestions, or a pull request against [the sample rails project]() to show me where I can improve. 
+
+I think an [HTML template]() for this component is a great use case. I'd love to implement it that way for greater reusability and portability. 
+
+Also considering the ubiquity and ease of use of [npm], I'd be interested in building this into a vanilla JavaScript or Vue component for others to quickly import into projects. A ruby gem is a great target here, too. 
 
 
 
