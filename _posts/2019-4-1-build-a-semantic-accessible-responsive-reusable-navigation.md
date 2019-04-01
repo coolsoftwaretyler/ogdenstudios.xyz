@@ -601,19 +601,19 @@ I think this navbar has some limitations:
 
 ## Next steps
 
-1. Improve my initial design
+### Improve my initial design
 
 I'm hoping the internet at large agrees I've found an optimal solution for site navigation. If that's not the case, I'd love to know what I missed. Please [send me an email](mailto:tyler@ogdenstudios.xyz), or submit a pull request against [the sample rails project](https://github.com/ogdenstudios/navbar--rails) to show me where I can improve. 
 
-2. Extend as an HTML template
+### Extend as an HTML template
 
 I think this navbar is an excellent candidate for building a [web component](https://css-tricks.com/an-introduction-to-web-components/). I'll likely follow up on this blog post with a use-case of converting the work here into a web component as outlined in Caleb's series. 
 
-3. Implement in production 
+### Implement in production 
 
 I've implemented different versions of this navbar in production and plan to continue doing so. I'll be following up with some use cases, including incorporating the navbar with WordPress, Jekyll, and a full Rails app. I'd be interested to hear how others fare utilizing it in other stacks. 
 
-4. Package it up
+### Package it up
 
 I built this navbar with an eye to reusability, and after it lives in the wild for some time, I think creating an Node package or Ruby gem would be a great way to wrap it all up. 
 

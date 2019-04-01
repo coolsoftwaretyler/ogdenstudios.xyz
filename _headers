@@ -1,5 +1,5 @@
 /* 
-    Content-Security-Policy: default-src 'none'; font-src https://ogdenstudios.xyz; frame-ancestors 'none'; img-src 'self' https://www.google-analytics.com https://www.googletagmanager.com; script-src 'self' https://www.google-analytics.com https://www.googletagmanager.com assets.codepen.io production-assets.codepen.io; style-src 'self'
+    Content-Security-Policy: default-src 'none'; font-src https://ogdenstudios.xyz; frame-ancestors 'none'; img-src 'self' https://www.google-analytics.com https://www.googletagmanager.com; script-src 'self' https://www.google-analytics.com https://www.googletagmanager.com assets.codepen.io production-assets.codepen.io; style-src 'self' assets.codepen.io production-assets.codepen.io
     Referrer-Policy: same-origin
     X-Content-Type-Options: nosniff
     X-Frame-Options: DENY
