@@ -4,7 +4,7 @@ title: 'Building a semantic, accessible, responsive, and reusable navigation ele
 tags: ['navigation', 'ux', 'mega-menus', 'html5', 'css', 'vanilla javascript', 'semantic html', 'accessibility', 'responsive web design', 'ruby on rails']
 description: 'Building website navigations can be difficult. This tutorial covers building a large site navigation that is semantic, accessible, responsive, and reusable.'
 ---
-*Don't care about the implementation details? Just looking for some template code to solve your problem? [Jump to the CodePen](#codepen)*
+*Don't care about the implementation details? Just looking for some template code to solve your problem? [Check out the CodePen](https://codepen.io/ogdenstudios/pen/oOvWZb/)*
 
 Navigation components present all sorts of challenges and complexities. A good navbar should be semantic, accessible, responsive, and reusable. In my opinion, the best site navigation is small and contains three to five different links, each of which leads users to top-level content, or detailed content funnels. While some websites successfully implement mega-menus, I think the appropriate situations for mega-menus are limited to correspondingly large sites, e.g. Amazon. 
 
@@ -580,14 +580,7 @@ The final piece of exposition about this JavaScript is that the `.matches()` fun
 
 ### Bringing it all together <a name="codepen"></a>
 
-Now that I've covered the markup, styles, and JavaScript for the navigation element, you can see the full demo on CodePen: 
-
-<p class="codepen" data-height="500" data-theme-id="0" data-default-tab="html,result" data-user="ogdenstudios" data-slug-hash="oOvWZb" data-preview="true" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="Semantic, accessible, responsive, and extensible navigation element">
-  <span>See the Pen <a href="https://codepen.io/ogdenstudios/pen/oOvWZb/">
-  Semantic, accessible, responsive, and extensible navigation element</a> by Tyler Scott Williams (<a href="https://codepen.io/ogdenstudios">@ogdenstudios</a>)
-  on <a href="https://codepen.io">CodePen</a>.</span>
-</p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+Now that I've covered the markup, styles, and JavaScript for the navigation element, you can see the full demo on [CodePen](https://codepen.io/ogdenstudios/pen/oOvWZb/).
 
 ## Limitations 
 
