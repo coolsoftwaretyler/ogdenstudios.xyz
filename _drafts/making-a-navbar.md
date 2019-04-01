@@ -8,7 +8,7 @@ Navigation components present all sorts of challenges and complexities. A good n
 
 Some websites successfully implement mega-menus, but the appropriate use cases for these kinds of navigation elements are places like Amazon. For most cases, I don't think they're the right decision. If you can, consider paring down your site navigation. 
 
-Sometimes, though, we're handed non-negotiable specifications that call for massive site navigation. These requirements often intimidate me. I've spent a tremendous amount of time building navigation elements that don't meet the **semantic, accessible, responsive, and reusable** requirements. It hurts every time that happens. Recently I took a deep dive into how to make the best possible navbar so it would never happen again.
+Sometimes, though, developers are handed non-negotiable specifications that call for massive site navigation. These requirements often intimidate me. I've spent a tremendous amount of time building navigation elements that don't meet the **semantic, accessible, responsive, and reusable** requirements. It hurts every time that happens. Recently I took a deep dive into how to make the best possible navbar so it would never happen again.
 
 My solution uses HTML5, raw CSS, and vanilla JavaScript. Since I'm a Rails guy, the HTML is generated in a Rails application, but as long as the final markup stays the same, it can be written by hand or generated through any other framework you like. 
 
@@ -20,7 +20,7 @@ In order to arrive at my solution, I've read tutorial after tutorial. This final
 
 ## Specifications 
 
-Our navigation needs to use semantic HTML. It needs to be accessible. It needs to be responsive. It needs to accommodate top-level links, navigation items with limited options, and items with a larger body of content/more options. We need to be able to change the content of the navigation with ease.
+The navigation needs to use semantic HTML. It needs to be accessible. It needs to be responsive. It needs to accommodate top-level links, navigation items with limited options, and items with a larger body of content/more options. We need to be able to change the content of the navigation with ease.
 
 ## Stack 
 
@@ -187,11 +187,11 @@ If the navbar partial runs into a `single` type node, it will pass that to the `
 </div>
 ```
 
-This inserts a `.navbar__single-col-panel` `div` as a list item in the unordered list with classname of `.navbar__categories` (from the root `_navbar` partial) We give this `div` a `data-slug` attribute with the node's slug. The `div`'s first child is a `span`, which gets the `.navbar__categories__header` class. This span gets a custom attribute of the same name, with `data-slug="<%= data[:slug]%>"` as well. The span's inner content is the `data[:label]`, again pulled from the hash. 
+This inserts a `.navbar__single-col-panel` `div` as a list item in the unordered list with classname of `.navbar__categories` (from the root `_navbar` partial). I give this `div` a `data-slug` attribute with the node's slug. The `div`'s first child is a `span`, which gets the `.navbar__categories__header` class. This span gets a custom attribute of the same name, with `data-slug="<%= data[:slug]%>"` as well. The span's inner content is the `data[:label]`, again pulled from the hash. 
 
-Under the span is another unordered list, with the classes `.navbar__single-col` and `.navbar__category`. We wire this up with the corresponding `data-slug` attribute as well.
+Under the span is another unordered list, with the classes `.navbar__single-col` and `.navbar__category`. I wire this up with the corresponding `data-slug` attribute as well.
 
-Then ruby iterates over the inner nodes and creates a list item of class `.navbar__category__item`. Each node becomes an anchor with a `data-slug` attribute that matches the slug of this category, and an href that points to the link. The link text is created from that node's `label` attribute. We'll use the `data-slug` attribute in our JavaScript to determine associations as we check for which elements ought to be treated together.
+Then ruby iterates over the inner nodes and creates a list item of class `.navbar__category__item`. Each node becomes an anchor with a `data-slug` attribute that matches the slug of this category, and an href that points to the link. The link text is created from that node's `label` attribute. I'll use the `data-slug` attribute in the JavaScript to determine associations as it checks for which elements ought to be treated together.
 
 ### Multiple category list of links
 
@@ -427,7 +427,7 @@ nav ul {
 
 ### Under the breakpoint 
 
-1. We display the `.nav-mobile` element with `display: block`. 
+1. Display the `.nav-mobile` element with `display: block`. 
 2. I set `.nav-mobile` to be 50x50px because it's an appropriate size for a touch target, and a nice, round number. 
 3. The `.nav-mobile` is given `z-index: 1` to sit on top of the navbar and remain clickable when the nav is dropped down. 
 4. All of the `.nav-mobile #nav-toggle` styles and other nested attributes are taken directly from [Tania Rascia's Responsive Dropdown Navigation Bar](https://www.taniarascia.com/responsive-dropdown-navigation-bar/). It's a great hamburger menu, tried and true, and I had no reason to mess with it. Thanks, Tania! 
@@ -435,7 +435,7 @@ nav ul {
  
 ### Bringing the styles together 
 
-With this CSS added to our project, you can expect to see: 
+With this CSS added to the project, you can expect to see: 
 
 ![Markup and additional css on the navbar in sample Rails app](/img/navbar-tutorial/navbar-markup-css.png)
 
@@ -443,21 +443,21 @@ Again, you can view the live version at the [navbar--rails heroku app](http://na
 
 ## JavaScript 
 
-In order for our navbar to truly work, we need to use some JavaScript. I hope this common design pattern will someday be a native HTML5 element, and all we'll ever need is markup and CSS. Until that day comes, JavaScript must play a role in our final product. 
+In order for the navbar to truly work, I need to use some JavaScript. I hope this common design pattern will someday be a native HTML5 element, and all I'll ever need is markup and CSS. Until that day comes, JavaScript must play a role in the final product. 
 
-We need to give our navbar the ability to: 
+The navbar must have the ability to: 
 
 1. Explicitly show a targeted navbar item.
 2. Explicitly hide a targeted navbar item.
-3. Toggle a targeted navbar item when we are unsure of its state. 
+3. Toggle a targeted navbar item when. 
 
 These will happen based on events in the browser: 
 
-1. If a user focuses a navbar item, we want to show the navbar.
-2. If a user removes focus from a navbar item, we want to hide the navbar.
-3. If a user emits toggling behavior (`mousedown`, `keydown`), we want to toggle the navbar based on its current state. 
+1. If a user focuses a navbar item, show the navbar.
+2. If a user removes focus from a navbar item, hide the navbar.
+3. If a user emits toggling behavior (`mousedown`, `keydown`), toggle the navbar based on its current state. 
 
-So we set up event listeners for `focus`, `blur`, `mousedown`, and `keydown`. `Focus` shows, `blur` hides, `mousedown` toggles, and `keydown` toggles. 
+So I set up event listeners for `focus`, `blur`, `mousedown`, and `keydown`. `Focus` shows, `blur` hides, `mousedown` toggles, and `keydown` toggles. 
  
 In an early iteration of this script, I set up event listeners in the DOM and registered them in the HTML generation. It's a common practice, totally valid, but might not scale in the case of a massive mega-menu. This navbar is meant to be the foundation of such an element, so I was concerned about the performance implications of registering so many event handlers. 
 
@@ -471,19 +471,19 @@ The script then sets up event listeners on `focus`, `blur`, `mousedown`, and `ke
 
 So if an event fires, and its target has a classList, the callback checks to see what that target was. If it was a `.navbar__link` or `.navbar__categories__list-item`, focus events will trigger the navbar to display and blur events will trigger the navbar to be hidden. 
 
-If the event target was a `.navbar__categories__header` or `.navbar__categories__list-item` on `mousedown` or `keydown`, then we believe the user is attempting to toggle that item and run the navbar toggle logic. 
+If the event target was a `.navbar__categories__header` or `.navbar__categories__list-item` on `mousedown` or `keydown`, then I believe the user is attempting to toggle that item and run the navbar toggle logic. 
 
-We use `mousedown` instead of `click` for the toggle, because `click` events trigger `focus`, and the toggle happens an extra time because of the `focus` event listener. `mousedown` happens before `focus` is set, and can be used to effectively signal a user's desire to toggle a button. 
+I use `mousedown` instead of `click` for the toggle, because `click` events trigger `focus`, and the toggle happens an extra time because of the `focus` event listener. `mousedown` happens before `focus` is set, and can be used to effectively signal a user's desire to toggle a button. 
 
-In the `keydown` event listener, we set variables `KEY_ENTER` and `KEY_SPACE` so the callback only fires when a user presses enter or the spacebar. 
+In the `keydown` event listener, I set variables `KEY_ENTER` and `KEY_SPACE` so the callback only fires when a user presses enter or the spacebar. 
 
 The show callback iterates over every `.navbar__category` and `.navbar__categories__header` and compares its `data-slug` attribute with the `data-slug` attribute of the target. If they match, it gets the `.navbar__category--active`. If they don't, the class is removed. 
 
-In the hide callback, we iterate over every `.navbar__category` and `.navbar__categories__header` and remove the `.navbar__category--active` class. 
+In the hide callback, the script iterates over every `.navbar__category` and `.navbar__categories__header` and remove the `.navbar__category--active` class. 
 
 The toggle callback functions like the show callback, but uses `toggle` instead of `add`. 
 
-The `#nav-toggle` element gets a similar treatment, although in this case, since it only ever needs to toggle, we can use `click` listeners and `keydown` listeners, and I add `nav-toggle--active` and `.navbar--active`. 
+The `#nav-toggle` element gets a similar treatment, although in this case, since it only ever needs to toggle, I can use `click` listeners and `keydown` listeners. When under the breakpoint, I add `nav-toggle--active` and `.navbar--active`. 
 
 The final piece of exposition about this JavaScript is that the `.matches()` function does require a [polyfill for Internet Explorer](https://caniuse.com/#search=matches). It is also not supported by Opera Mini whatsoever. The [internet explorer polyfill is pretty simple](https://developer.mozilla.org/en-US/docs/Web/API/Element/matches), so I add that at the top of my script. If you support Opera Mini, you might want to use something like [Document.querySelectorAll()](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll) and check for matching classes. 
 
@@ -576,7 +576,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 ### Bringing it all together 
 
-Now that we've covered the markup, styles, and JavaScript for the navigation element, you can see the full demo on CodePen: 
+Now that I've covered the markup, styles, and JavaScript for the navigation element, you can see the full demo on CodePen: 
 
 <p class="codepen" data-height="500" data-theme-id="0" data-default-tab="html,result" data-user="ogdenstudios" data-slug-hash="oOvWZb" data-preview="true" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="Semantic, accessible, responsive, and extensible navigation element">
   <span>See the Pen <a href="https://codepen.io/ogdenstudios/pen/oOvWZb/">
