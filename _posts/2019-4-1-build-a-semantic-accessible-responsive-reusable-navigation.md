@@ -16,7 +16,7 @@ My solution uses HTML5, raw CSS, and vanilla JavaScript. Since I'm a Rails guy, 
 
 The HTML is semantic and accessible, according to [AChecker](https://achecker.ca).
 
-I've linted the CSS with [CSSLint](http://csslint.net/), and the JavaScript with [ESLint](https://eslint.org/demo/). The CSS is 450 bytes minified and gzipped. The JavaScript is 523 bytes minimifed and gzipped.
+I've linted the CSS with [CSSLint](http://csslint.net/), and the JavaScript with [ESLint](https://eslint.org/demo/). The CSS is 450 bytes minified and gzipped. The JavaScript is 670 bytes minified and gzipped.
 
 In order to arrive at my solution, I've read tutorial after tutorial and synthesized information from some truly fantastic developers and designers. This final product incorporates the responsive hamburger navigation from [Tania Rascia's Responsive Dropdown Navigation Bar](https://www.taniarascia.com/responsive-dropdown-navigation-bar/). I used concepts and some markup from [Adobe's Accessible Mega Menu](https://adobe-accessibility.github.io/Accessible-Mega-Menu/). I used ideas from [Smashing Magazine's Building Accessible Menu Systems](https://www.smashingmagazine.com/2017/11/building-accessible-menu-systems/), and I'd like to give a special shout out to [Chris Ferdinandi grappling with this problem and why it's so hard](https://gomakethings.com/i-was-wrong-about-javascript-free-dropdowns/). His blog posts inspired me to write my own. I also relied on Chris pretty heavily when it came to [optimizing my JavaScript using event delegation](https://gomakethings.com/why-event-delegation-is-a-better-way-to-listen-for-events-in-vanilla-js/). 
 
