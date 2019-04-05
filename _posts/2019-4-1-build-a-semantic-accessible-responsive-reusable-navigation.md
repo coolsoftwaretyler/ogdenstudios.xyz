@@ -4,7 +4,9 @@ title: 'Building a semantic, accessible, responsive, and reusable navigation ele
 tags: ['navigation', 'ux', 'mega-menus', 'html5', 'css', 'vanilla javascript', 'semantic html', 'accessibility', 'responsive web design', 'ruby on rails']
 description: 'Building website navigations can be difficult. This tutorial covers building a large site navigation that is semantic, accessible, responsive, and reusable.'
 ---
-*Don't care about the implementation details? Just looking for some template code to solve your problem? [Check out the CodePen](https://codepen.io/ogdenstudios/pen/oOvWZb/).*
+*Last updated Apr 5, 2019*
+
+*Don't care about the implementation details? Just looking for template code to solve your problem? [Check out the CodePen](https://codepen.io/ogdenstudios/pen/oOvWZb/).*
 
 Navigation components present all sorts of challenges and complexities. A good navbar should be semantic, accessible, responsive, and reusable. In my opinion, the best site navigation is small and contains three to five different links, each of which leads users to top-level content, or detailed content funnels. While some websites successfully implement mega-menus, I think the appropriate situations for mega-menus are limited to correspondingly large sites, e.g. Amazon. 
 
@@ -231,190 +233,27 @@ Ruby iterates one more time over the inner nodes of each node and each becomes a
 
 ### Bringing the markup together 
 
-If you were to set up a Rails application and use these helpers and partials to render a page, you would see the following: 
+Using these rails helpers and embedded Ruby partials, you can create markup that looks like this: 
 
-![Markup only navbar in sample Rails app](/img/navbar-tutorial/navbar-markup.png)
+<p class="codepen" data-height="265" data-theme-id="0" data-default-tab="html,result" data-user="ogdenstudios" data-slug-hash="OGXVpB" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="Markup for semantic, accessible, responsive, and extensible navigation element">
+  <span>See the Pen <a href="https://codepen.io/ogdenstudios/pen/OGXVpB/">
+  Markup for semantic, accessible, responsive, and extensible navigation element</a> by Tyler Scott Williams (<a href="https://codepen.io/ogdenstudios">@ogdenstudios</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
-The generated markup looks like this: 
-
-```
-<nav>
-  <div class="nav-mobile">
-    <span id="nav-toggle" class="nav-toggle"><span></span></span>
-  </div>
-  <div id="navbar" class="navbar" tabindex="0">
-    <ul class="navbar__categories" tabindex="0">
-      <li class="navbar__categories__list-item" data-slug="home" tabindex="0">
-        <a class="navbar__categories__header" data-slug="home" href="#!">Home</a>
-      <li class="navbar__categories__list-item" data-slug="single" tabindex="0">
-        <div class="navbar__single-col-panel" data-slug="single">
-          <span class="navbar__categories__header" data-slug="single">Single</span>
-          <ul class="navbar__single-col navbar__category" data-slug="single">
-            <li class="navbar__category__item">
-              <a class="navbar__link" data-slug="single" href="#!">
-              About
-              </a>
-            </li>
-            <li class="navbar__category__item">
-              <a class="navbar__link" data-slug="single" href="#!">
-              Contact
-              </a>
-            </li>
-            <li class="navbar__category__item">
-              <a class="navbar__link" data-slug="single" href="#!">
-              Blog
-              </a>
-            </li>
-          </ul>
-        </div>
-      <li class="navbar__categories__list-item" data-slug="multiple" tabindex="0">
-        <div class="navbar__multi-col-panel" data-slug="multiple">
-          <span class="navbar__categories__header" data-slug="multiple">Multiple</span>
-          <ul class="navbar__multi-col navbar__category" data-slug="multiple">
-            <li>
-              <span>Category 1</span>
-              <ul class="multi-col__category">
-                <li class="multi-col__category__item">
-                  <a class="navbar__link" data-slug="multiple"href="#!" >Item 1</a>
-                </li>
-                <li class="multi-col__category__item">
-                  <a class="navbar__link" data-slug="multiple"href="#!" >Item 2</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <span>Category 2</span>
-              <ul class="multi-col__category">
-                <li class="multi-col__category__item">
-                  <a class="navbar__link" data-slug="multiple"href="#!" >Item 1</a>
-                </li>
-                <li class="multi-col__category__item">
-                  <a class="navbar__link" data-slug="multiple"href="#!" >Item 2</a>
-                </li>
-                <li class="multi-col__category__item">
-                  <a class="navbar__link" data-slug="multiple"href="#!" >Item 3</a>
-                </li>
-                <li class="multi-col__category__item">
-                  <a class="navbar__link" data-slug="multiple"href="#!" >Item 4</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <span>Category 3</span>
-              <ul class="multi-col__category">
-                <li class="multi-col__category__item">
-                  <a class="navbar__link" data-slug="multiple"href="#!" >Item 1</a>
-                </li>
-                <li class="multi-col__category__item">
-                  <a class="navbar__link" data-slug="multiple"href="#!" >Item 2</a>
-                </li>
-                <li class="multi-col__category__item">
-                  <a class="navbar__link" data-slug="multiple"href="#!" >Item 3</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </li>
-    </ul>
-  </div>
-</nav>
-```
-
-I've deployed a sample app to Heroku. You can find it [here](https://navbar--rails.herokuapp.com). Keep in mind, Heroku free-tier servers have a spin up time, so it may be slow to load if it hasn't received traffic in the last 30 minutes. This demo also has styles on it, which I'll cover in the next section.
+If you care more about a full Rails application, I've deployed a sample app to Heroku. You can find it [here](https://navbar--rails.herokuapp.com). Keep in mind, Heroku free-tier servers have a spin up time, so it may be slow to load if it hasn't received traffic in the last 30 minutes. This demo also has styles on it, which I'll cover in the next section.
 
 ## Styles 
 
-The goal of this navbar is to make something easily extensible, so I haven't designed comprehensive styles. These styles are everything you need for a basic layout to work, nothing more. It's raw CSS with no errors or warnings from CSSLint. I'm a big fan of the [Block Element Modifier methodology](http://getbem.com/) and have tried to stick to that convention as much as I can.
+The goal of this navbar is to make something easily extensible, so I haven't designed comprehensive styles. These styles are everything you need for a basic layout to work, nothing more. It's raw CSS with no errors or warnings from CSSLint. I'm a big fan of the [Block Element Modifier methodology](http://getbem.com/) and have tried to stick to that convention as much as I can. You can check it out in this codepen, using the same markup as the last one: 
 
-```
-# app/assets/stylesheets/navbar.css
-# Base navbar styles
-nav ul {
-    padding: 0;
-    list-style: none;
-}
-.nav-mobile {
-    display: none;
-}
-.navbar__categories {
-    display: flex;
-}
-.navbar__categories__header {
-    cursor: pointer;
-    display: block;
-    padding: 24px;
-}
-.navbar__category {
-    position: absolute;
-    left: -9999px;
-}
-.navbar__category--active {
-    left: unset;
-}
-@media all and (max-width: 768px) {
-    .nav-mobile {
-        display: block;
-        height: 50px;
-        z-index: 1;
-        width: 50px;
-    }
-    .nav-mobile .nav-toggle {
-        cursor: pointer;
-        padding: 10px 35px 16px 0;
-    }
-    .nav-mobile .nav-toggle span,
-    .nav-mobile .nav-toggle span:before,
-    .nav-mobile .nav-toggle span:after {
-        background: #000000;
-        cursor: pointer;
-        border-radius: 1px;
-        height: 5px;
-        width: 35px;
-        position: absolute;
-        display: block;
-        content: "";
-    }
-    .nav-mobile .nav-toggle span:before {
-        top: -10px;
-    }
-    .nav-mobile .nav-toggle span:after {
-        bottom: -10px;
-    }
-    .nav-mobile .nav-toggle--active span {
-        background-color: transparent;
-    }
-    .nav-mobile .nav-toggle--active span:before,
-    .nav-mobile .nav-toggle--active span:after {
-        top: 0;
-    }
-    .nav-mobile .nav-toggle--active span:before {
-        transform: rotate(45deg);
-    }
-    .nav-mobile .nav-toggle--active span:after {
-        transform: rotate(-45deg);
-    }
-    .navbar {
-        position: absolute;
-        left: -9999px;
-    }
-    .navbar--active {
-        left: unset;
-    }
-    .navbar__categories {
-        display: block;
-    }
-    .navbar__categories__header {
-        padding-left: 0;
-    }
-    .navbar__category--active {
-        position: relative;
-    }
-    .multi-col__category {
-        position: relative;
-    }
-}
-```
+<p class="codepen" data-height="265" data-theme-id="0" data-default-tab="html,result" data-user="ogdenstudios" data-slug-hash="axZOyp" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="Markup and styles for semantic, accessible, responsive, and extensible navigation element">
+  <span>See the Pen <a href="https://codepen.io/ogdenstudios/pen/axZOyp/">
+  Markup and styles for semantic, accessible, responsive, and extensible navigation element</a> by Tyler Scott Williams (<a href="https://codepen.io/ogdenstudios">@ogdenstudios</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
 ### Default styles above "mobile" breakpoint
 
@@ -434,14 +273,8 @@ nav ul {
 3. The `.nav-mobile` is given `z-index: 1` to sit on top of the navbar and remain clickable when the nav is dropped down. 
 4. All of the `.nav-mobile #nav-toggle` styles and other nested attributes are taken directly from [Tania Rascia's Responsive Dropdown Navigation Bar](https://www.taniarascia.com/responsive-dropdown-navigation-bar/). It's a great hamburger menu, tried and true, and I had no reason to mess with it. Thanks, Tania! 
 5. The `.navbar` is initially set to `position: absolute` and `left: -9999px` to hide it, and much like the `.navbar__category--active` class above the breakpoint, `.navbar__category--active` sets `left: unset`. 
- 
-### Bringing the styles together 
 
-With this CSS added to the project, you can expect to see: 
-
-![Markup and additional css on the navbar in sample Rails app](/img/navbar-tutorial/navbar-markup-css.png)
-
-Again, you can view the live version at the [navbar--rails heroku app](http://navbar--rails.herokuapp.com/).
+Again, you can view this implementation in a Rails application at the [navbar--rails heroku app](http://navbar--rails.herokuapp.com/).
 
 ## JavaScript 
 
@@ -459,94 +292,16 @@ These will happen based on events in the browser:
 2. If a user removes focus from a navbar item, hide the navbar.
 3. If a user emits toggling behavior (`mousedown`, `keydown`), toggle the navbar based on its current state. 
 
-Here's the full JavaScript for my navbar. 
+Here's what the full component looks with markup, styles, and JavaScript: 
 
-```
-# app/assets/javascripts/navbar.js
-# Navbar js (linted with ESLint) 
-document.addEventListener("DOMContentLoaded", function () {
-  if (!Element.prototype.matches) {
-    Element.prototype.matches = Element.prototype.msMatchesSelector ||
-      Element.prototype.webkitMatchesSelector;
-  }
-  document.addEventListener("focus", function (event) {
-    if (event.target.classList) {
-      if (event.target.matches(".navbar__link") || event.target.matches(".navbar__categories__list-item")) {
-        showNavbar(event.target.dataset.slug);
-      }
-    }
-  }, true);
-  document.addEventListener("blur", function (event) {
-    if (event.target.classList) {
-      if (event.target.matches(".navbar__link") || event.target.matches(".navbar__categories__list-item")) {
-        hideNavbar();
-      }
-    }
-  }, true);
-  document.addEventListener("mousedown", function (event) {
-    if (event.target.classList) {
-      if (event.target.matches(".navbar__categories__header") || event.target.matches(".navbar__categories__list-item")) {
-        toggleNavbar(event.target.dataset.slug);
-      }
-    }
-  }, false);
-  document.addEventListener("keydown", function (event) {
-    var KEY_ENTER = 13;
-    var KEY_SPACE = 32;
-    switch (event.which) {
-      case KEY_ENTER:
-      case KEY_SPACE: {
-        if (event.target.classList) {
-          if (event.target.matches(".navbar__categories__header") || event.target.matches(".navbar__categories__list-item")) {
-            toggleNavbar(event.target.dataset.slug);
-          }
-        }
-      }
-    }
-  }, false);
-  document.getElementById("nav-toggle").addEventListener("click", function () {
-    document.getElementById("nav-toggle").classList.toggle("nav-toggle--active");
-    document.getElementById("navbar").classList.toggle("navbar--active");
-  }, false);
-  document.getElementById("nav-toggle").addEventListener("keydown", function (event) {
-    var KEY_ENTER = 13;
-    var KEY_SPACE = 32;
-    switch (event.which) {
-      case KEY_ENTER:
-      case KEY_SPACE: {
-        document.getElementById("nav-toggle").classList.toggle("nav-toggle--active");
-        document.getElementById("navbar").classList.toggle("navbar--active");
-      }
-    }
-  }, false);
-});
-function showNavbar(slug) {
-  var list = document.getElementsByClassName("navbar__category");
-  for (var i = 0;i < list.length;i++) {
-    if (list[i].dataset.slug === slug) {
-      list[i].classList.add("navbar__category--active");
-    } else {
-      list[i].classList.remove("navbar__category--active");
-    }
-  }
-}
-function hideNavbar() {
-  var list = document.getElementsByClassName("navbar__category");
-  for (var i = 0;i < list.length;i++) {
-    list[i].classList.remove("navbar__category--active");
-  }
-}
-function toggleNavbar(slug) {
-  var list = document.getElementsByClassName("navbar__category");
-  for (var i = 0;i < list.length;i++) {
-    if (list[i].dataset.slug === slug) {
-      list[i].classList.toggle("navbar__category--active");
-    } else {
-      list[i].classList.remove("navbar__category--active");
-    }
-  }
-}
-```
+<p class="codepen" data-height="265" data-theme-id="0" data-default-tab="html,result" data-user="ogdenstudios" data-slug-hash="oOvWZb" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="Semantic, accessible, responsive, and extensible navigation element">
+  <span>See the Pen <a href="https://codepen.io/ogdenstudios/pen/oOvWZb/">
+  Semantic, accessible, responsive, and extensible navigation element</a> by Tyler Scott Williams (<a href="https://codepen.io/ogdenstudios">@ogdenstudios</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+### Setting up event listeners
 
 The script registers event listeners for `focus`, `blur`, `mousedown`, and `keydown` events. `Focus` shows, `blur` hides, `mousedown` toggles, and `keydown` toggles. 
  
@@ -554,33 +309,35 @@ In an early iteration of this script, I set up event listeners in the DOM. It's 
 
 Fortunately, Chris Ferdinandi has a great article all about [understanding event delevation, bubbling, and capturing](https://gomakethings.com/whats-the-difference-between-javascript-event-delegation-bubbling-and-capturing/).
 
-Event delegation sounds like the right way to go here. Instead of registering event listeners on all these DOM elements and their children, I just set up one listener to the document for `focus`, `blur`, `mousedown`, and `keydown` events. But there's a catch: `focus` and `blur` events don't bubble up the way I need them to. Again, Chris Ferdinandi saved my bacon and wrote a post about how we can get access to these events by setting up [event capturing](https://gomakethings.com/when-do-you-need-to-use-usecapture-with-addeventlistener/).
+Event delegation sounds like the right way to go here. Instead of registering event listeners on all these DOM elements and their children, I just set up one listener to the document for the events. But there's a catch: `focus` and `blur` events don't bubble up the way I need them to. Again, Chris Ferdinandi saved my bacon and wrote a post about how we can get access to these events by setting up [event capturing](https://gomakethings.com/when-do-you-need-to-use-usecapture-with-addeventlistener/).
 
 Setting up event listeners requires their targets to exist, and that requires the entire DOM content to be loaded in. Since this component is expected to Just Work, regardless of context, I wrapped it in a `DOMContentLoaded` event listener. It won't start until the DOM Content is loaded, meaning you can include the script in any way shape or form, independent of build process. 
 
-The script then sets up event listeners on `focus`, `blur`, `mousedown`, and `keydown`. Each one has an `if` statement which only executes if the target of the event has a `classList`. This is because the first piece of real application logic happens when the callback functions attempt to match the event target with `.navbar__categories__header` or `.navbar__categories__list-item`. `.matches()` requires a `classList` to run appropriately. Without it, some browsers throw errors. This happens specifically if the event's target is the `HTMLDocument`. 
+Each event listener only executes if the target of the event has a `classList`. This is because the first piece of logic happens when the callback functions attempt to match the event target with `.navbar__categories__header` or `.navbar__categories__list-item`. `.matches()` requires a `classList` to run. Without it, some browsers throw errors.
 
-So if an event fires, and its target has a `classList`, the callback checks to see what that target was. If it was a `.navbar__link` or `.navbar__categories__list-item`, focus events will trigger the navbar to display and blur events will trigger the navbar to be hidden. 
+So if an event fires, and its target has a `classList`, the callback checks to see what that target was. If it was a `.navbar__link` or `.navbar__categories__list-item`, the appropriate action (show the navbar, hide the navbar, toggle the navbar) is taken.
 
-If the event target was a `.navbar__categories__header` or `.navbar__categories__list-item` on `mousedown` or `keydown`, then I believe the user is attempting to toggle that item and run the navbar toggle logic. 
+### Using mousedown instead of click 
 
-I use `mousedown` instead of `click` for the toggle, because `click` events trigger `focus`, and the toggle happens an extra time because of the `focus` event listener. `mousedown` happens before `focus` is set, and can be used to effectively signal a user's desire to toggle a button. 
+I use `mousedown` instead of `click` for the toggle, because `click` events trigger `focus`, and a `click` event would trigger some actions twice. `mousedown` can be used to effectively signal a user's desire to toggle a button without doubling up on actions.
 
-In the `keydown` event listener, I set variables `KEY_ENTER` and `KEY_SPACE` so the callback only fires when a user presses enter or the spacebar. 
+The `keydown` event listener only fires when a user presses enter or the spacebar, which is accomplished the the key values set in `KEY_ENTER` and `KEY_SPACE`
+
+### The callback functions
 
 The show function iterates over every `.navbar__category` and `.navbar__categories__header` and compares its `data-slug` attribute with the `data-slug` attribute of the target. If they match, it gets the `.navbar__category--active`. If they don't, the class is removed. 
 
-In the hide function, the script iterates over every `.navbar__category` and `.navbar__categories__header` and remove the `.navbar__category--active` class. 
+In the hide function, the script iterates over every `.navbar__category` and `.navbar__categories__header` and removes the `.navbar__category--active` class. 
 
 The toggle function works like the show function, but uses `toggle` instead of `add`. 
 
+### Mobile toggling 
+
 The `#nav-toggle` element gets a similar treatment, although in this case, since it only ever needs to toggle, I can use `click` listeners and `keydown` listeners. This element interacts with `nav-toggle--active` and `.navbar--active` classes. 
 
+### Only one polyfill to worry about
+
 The final piece of exposition about this JavaScript is that the `.matches()` function does require a [polyfill for Internet Explorer](https://caniuse.com/#search=matches). It is also not supported by Opera Mini whatsoever. The [internet explorer polyfill is pretty simple](https://developer.mozilla.org/en-US/docs/Web/API/Element/matches), so I add that at the top of the script. If you support Opera Mini, you might want to use something like [Document.querySelectorAll()](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll) and check for matching classes. That workaround is not covered in this tutorial. 
-
-### Bringing it all together <a name="codepen"></a>
-
-Now that I've covered the markup, styles, and JavaScript for the navigation element, you can see the full demo on [CodePen](https://codepen.io/ogdenstudios/pen/oOvWZb/).
 
 ## Limitations 
 
@@ -591,6 +348,8 @@ I think this navbar has some limitations:
 2. I don't think mega-menus are the right design pattern for most websites. I think the best case scenario is limiting your site navigation scope so you don't need such a comprehensive solution to the problem. 
 
 3. This solution requires JavaScript, and having a hard dependency on JavaScript is difficult to reconcile with progressive enhancement principles. I think my JavaScript is lean and avoids unnecessary dependencies, but it's still there. If you're extending this solution, you should consider incorporating a `<noscript>` element that provides navigation to users who don't load JavaScript.
+
+4. Opera Mini - I don't want to cop out on the fact that this solution doesn't provide coverage for every possible browser. I made a choice not to implement the workaround for Opera Mini because it's outside of the scope of browsers I usually support and I was prioritizing reducing the size and complexity of my JavaScript over supporting that one browser without a `.matches()` polyfill.
 
 ## Next steps
 
@@ -610,4 +369,6 @@ I've implemented different versions of this navbar in production and plan to con
 
 I built this navbar with an eye to reusability, and after it lives in the wild for some time, I think creating an Node package or Ruby gem would be a great way to wrap it all up. 
 
-Stay tuned for updates as I continue to refine and implement my navbar. 
+## Conclusion 
+
+Thanks to my good friend [Kevin Oliveira](https://twitter.com/KaySoQueso) for reviewing this blog post in its first release. Thanks to you for reading. Thanks to all the folks who wrote tutorials I used to synthesize this navbar. I hope folks can take this, use it, expand on it, and otherwise benefit from this solution to a common UX challenge. 
