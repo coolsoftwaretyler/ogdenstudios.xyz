@@ -23,7 +23,7 @@ twitter_username: ogdenstudios
 github_username:  ogdenstudios
 
 # Build settings
-#include: ["_headers"]
+include: ["_headers"]
 markdown: kramdown
 
 # Exclude from processing.
