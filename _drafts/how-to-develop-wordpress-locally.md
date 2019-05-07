@@ -107,19 +107,79 @@ TODO: the rest of these steps for real to demo them
 - Click "Browse..." and select the the `.sql` file in `~/Downloads/YYYY-MM-DD-jkoplendesign.com/Database`. 
 - Click "Execute" 
 
+Your production database will be loaded into Local's server. In order for it to work correctly, we need to change two values in the database manually. 
+
+In the `wp_options` table, find `siteurl` and `home`. (The table name may have a different prefix). Change them both to `http://jake-koplen-dev.local`
+
 Change the wp-config 
 
-We have to change the `wp-config.php` file to look for the Local database and use the correct credentials there. 
-TODO: grab the standard local credentials 
+The final piece of the puzzle is to change the `wp-config.php` file to look for the Local database and use the correct credentials there. 
 
-Check that it looks like production
+Head over to `~/Local Sites/jake-koplen-dev/app/public/wp-config.php` 
 
-Themes and child theme settings (which don't touch the database)
-Show editing the themes and child themes 
-FTP those back up to the server 
+We want to make sure the database settings look like so: 
 
-Content and settings changes
-Export content
-Find a good WP database uploader  
+```
+// ** MySQL settings ** //
+/** The name of the database for WordPress */
+define( 'DB_NAME', 'local' );
 
-TODO: ask jake if he uses a Mac, if he knows/likes git, and i fhe wants it to be mac agnostic
+/** MySQL database username */
+define( 'DB_USER', 'root' );
+
+/** MySQL database password */
+define( 'DB_PASSWORD', 'root' );
+
+/** MySQL hostname */
+define( 'DB_HOST', 'localhost' );
+
+/** Database Charset to use in creating database tables. */
+define( 'DB_CHARSET', 'utf8' );
+
+/** The Database Collate type. Don't change this if in doubt. */
+define( 'DB_COLLATE', '' );
+```
+
+Head on over to jake-koplen-dev.local in your browser and you should see the whole site!
+
+# Editing themes and child themes which don't touch the database 
+
+Editing themes and child themes is the easiest workflow for local to production on WordPress. As long as you aren't doing much with [custom post types](https://codex.wordpress.org/Post_Types), all the work you do on these themes is insulated to the theme directory at `wp-content/themes`. If you are working with custom post types, the PHP code you write will end up affecting the database and you may want to skip to the TODO: next section. 
+
+But if you just need to work on the theme files, you can now find them all at `~/Local Sites/jake-koplen-dev/app/public/wp-content/themes`. Open that up in your preferred editor and go to town. 
+
+Once you've made your changes, go check them out at http://jake-koplen-dev.local. 
+
+If everything is good, all you have to do now is FTP those back up to the server. 
+
+Just like the instructions in TODO: get step number, connect to your Bluehost via FTP. Navigate to the `wp-content/themes` folder on the server, and right click. If you're using Cyberduck, you'll see a menu like this: 
+![img/wp-dev-tutorials/ftp-upload-menu.png]
+
+Click "Upload". Navigate to your updated theme at `~/Local Sites/jake-koplen-dev/app/public/wp-content/themes` in the file browser. Select the entire folder. If it already exists, select "Overwrite all files" in the upload menu. It'll look like this: 
+![img/wp-dev-tutorials/upload-overwrite-option.png]
+
+Click "Continue", your files will upload, and you'll be good to go! 
+
+# Editing content, settings, custom post types, and other data
+
+Sometimes you may need to do big content edits you want to preview locally. Or you need to make changes to your theme that require settings changes in the WordPress or create custom post types. For that kind of work, you'll need to export and import the full database, like we did in TODO: step link. 
+
+If you have to do this often and hate this process, I'd recommend something like [WP Migrate DB Pro](https://deliciousbrains.com/wp-migrate-db-pro/). It's a paid plug in but it syncs up local and production WordPress databases so you don't have to much around with your database manually. I've never used it because I don't mind playing with databases, so I don't have a great guide for it, but it comes highly recommended by people I trust. 
+
+But if you just need to do this every once in a while, the process is very similar to our setup, but in reverse. 
+
+**If you're changing your production database, you might want to make a backup TODO: link to section before following these instructions** 
+- Log in to Adminer with Local 
+- Export your database as a .sql files
+- Log in to phpmyadmin at Bluehost TODO: link to section 
+- Select your WordPress database 
+- Select all and drop the tables 
+- Upload the local.sql file 
+- Change the In the `wp_options` table, find `siteurl` and `home`. (The table name may have a different prefix). Change them both to `https://jkoplendesign.com`
+- Check the production website and make sure it all looks as intended. 
+
+Again, I wouldn't recommend doing this process often. It's error prone and you may lose some work. For the most part, if you've got minor content changes, or content changes that don't change much on your site, I'd recommend making those changes through the normal WordPress administration page.  
+
+If you want to make content changes in a local environment, test them out, and then deploy, and you want to do that often, try something like the paid WP Migrate Pro. Local also has the ability to deploy from the local server, but it requires migrating to their proprietary hosting. 
+
+
