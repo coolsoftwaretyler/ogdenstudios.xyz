@@ -21,26 +21,32 @@ Whether or not you choose to use the more advanced features of Local, it does a 
 ## Create a fresh WordPress installation
 
 After installation, Local should start up. If it doesn't run automatically, find the icon in your Applications or Programs folder. It may take some time on the initial load. Once it's running, you should see something that looks like: 
-![img/wp-dev-tutorial/init-local-run.png]
 
-Click the big green plus button to create a new local site.  
+![Initial local run](/img/wp-dev-tutorial/init-local-run.png)
 
-Give it a name. Choose something that indicates the development nature of the site. Something like "Jake Koplen Dev". 
-![img/wp-dev-tutorial/choose-site-name.png]
+1. Click the big green plus button to create a new local site.  
 
-Choose the "Preferred" setup option 
-![img/wp-dev-tutorial/choose-preferred-setup.png]
+2. Give it a name. Choose something that indicates the development nature of the site. Something like "Jake Koplen Dev". 
 
-Choose a username, password, and email. This will get overwritten later on, so choose whatever values you want.
-![img/wp-dev-tutorial/choose-user.png]
+![Site name choice](/img/wp-dev-tutorial/choose-site-name.png)
 
-Click "Add site". Local will take a few moments to get things set up and may ask for your computer password to write to the system. 
+3. Choose the "Preferred" setup option.
 
-Check out your shiny new WordPress site. In the local interface, click "View site"
-![img/wp-dev-tutorial/click-view-site.png]
+![Local setup options](/img/wp-dev-tutorial/choose-preferred-setup.png)
 
-Confirm that you have a fresh WordPress installation. It should look something like this: 
-![img/wp-dev-tutorial/fresh-wp-install.png]
+4. Choose a username, password, and email. This will get overwritten later on, so choose whatever values you want.
+
+![Local WordPress user setup](/img/wp-dev-tutorial/choose-user.png)
+
+5. Click "Add site". Local will take a few moments to get things set up and may ask for your computer password to write to the system. 
+
+6. Check out your shiny new WordPress site. In the local interface, click "View site".
+
+![Local View Site option](/img/wp-dev-tutorial/click-view-site.png)
+
+7. Confirm that you have a fresh WordPress installation. It should look something like this: 
+
+![Fresh WordPress install](/img/wp-dev-tutorial/fresh-wp-install.png)
 
 ## Create a full backup of the production site
 
@@ -50,72 +56,89 @@ WordPress requires two separate components: site files and a database. We can us
 
 1. Install Cyberduck or FileZilla.
 
-2. Create your FTP credentials with Bluehost.
-    - Log in to Bluehost 
-    - Click "Advanced" in the left menu. You'll see something like this: 
-    ![img/wp-dev-tutorial/bluehost-advanced-menu.png]
-    - Click on "FTP Accounts" 
-    - I like to make an entirely new FTP account when taking backups for the first time. It keeps everything encapsulated.
-    - Choose a username and password. I recommend using the "Password Generator" button for a secure password. Keep the home directory and Quota at default values. Click "Create FTP Account". 
+2. Log in to Bluehost 
 
-3. Log in to your server with the FTP client
-    - If you're using Cyberduck, your interface will look like this: 
-    ![img/wp-dev-tutorial/cyberduck-interface.png]
-    - Click on the "Open Connection" button. 
-    - Choose "FTP-SSL (Explicit AUTH TLS)"
-    - Your server name is just your website name, `jkoplendesign.com`
-    - Your username is `whateryouchose@jkoplendesign.com` 
-    - Your password is the password generated in cpanel earlier 
-    - Hit "Connect" if your screen looks like this: 
-    ![img/wp-dev-tutorial/cyberduck-login.png]
+3. Click "Advanced" in the left menu. You'll see something like this: 
 
-4. If everything connects correctly, you'll end up looking at a file directory. 
+![Bluehost advanced menu](/img/wp-dev-tutorial/bluehost-advanced-menu.png)
 
-5. Depending on how Bluehost initially installed your WordPress site, your site files may live in a folder called `public_html` or `jkoplendesign.com`. The correct directory will contain a listing that looks like this: 
-![img/wp-dev-tutorial/prod-wp-files.png]
+4. Click on "FTP Accounts" 
 
-Keep that screen open and open up a new Finder or file browser window on your local machine. 
+5. I like to make an entirely new FTP account when taking backups for the first time. It keeps everything encapsulated.
 
-6. I like to create a whole new directory for backups in my Downloads folder. So create a folder like `~/Downloads/YYYY-MM-DD-jkoplendesign.com` with two sub-directories: `Site files` and `Database`. 
+6. Choose a username and password. I recommend using the "Password Generator" button for a secure password. Keep the home directory and Quota at default values. Click "Create FTP Account". 
 
-7. Back in your FTP client, make sure you click "View > Show Hidden Files" (or its equivalent in whichever program you use). You want to make sure you can see the `.htaccess` file. There may be other hidden files tucked away in there. It's worth it to grab them. 
+7. Log in to your server with the FTP client. If you're using Cyberduck, your interface will look like this: 
 
-8. Select the entire directory (including hidden files) and right-click. Select "Download-to" and download them to `~/Downloads/YYYY-MM-DD-jkoplendesign.com/Site files`. 
+![Cyberduck interface](/img/wp-dev-tutorial/cyberduck-interface.png)
 
-9. It may take some time for your download to complete. Do your best not to interrupt it. It can be a hassle to get halfway through and then start over if you accidentally cancel it.
+8. Click on the "Open Connection" button. 
 
-10. Now that we've got the site files, we need to get the database for the site. This is where most of the configuration and content lives. 
+9. Choose "FTP-SSL (Explicit AUTH TLS)"
 
-11. Head back to your Bluehost cpanel config. This time, click on "phpmyadmin". 
+10. Your server name is just your website name, `jkoplendesign.com`
 
-12. You should be taken to an administration panel that looks like:
-![img/wp-dev-tutorial/phpmyadmin-login.png] 
+11. Your username is `whateryouchose@jkoplendesign.com` 
 
-13. Click on the database name in the left menu TODO: get a screenshot here 
+12. Your password is the password generated in cpanel earlier 
 
-14. Click "Export" in the top menu
+13. Hit "Connect" if your screen looks like this: 
 
-15. Select "Quick" as the "export method" and "SQL" as the "Format". 
+![Cyberduck login](/img/wp-dev-tutorial/cyberduck-login.png)
 
-16. You should get a `.sql` file downloaded through your browser. Move that to `~/Downloads/YYYY-MM-DD-jkoplendesign.com/Database`. 
+14. If everything connects correctly, you'll end up looking at a file directory. 
 
-17. Compress the whole `~/Downloads/YYYY-MM-DD-jkoplendesign.com` directory. I recommend backing this up to Dropbox or some other cloud storage, along with a physical drive. This zip file is everything you need to restore a WordPress site. It can act as a great backup and snapshot in time of your production site. **I recommend performing this process regularly, and every time you make large changes to your website**.
+15. Depending on how Bluehost initially installed your WordPress site, your site files may live in a folder called `public_html` or `jkoplendesign.com`. The correct directory will contain a listing that looks like this: 
+
+![Production server WordPress directory](/img/wp-dev-tutorial/prod-wp-files.png)
+
+17. Keep that screen open and open up a new Finder or file browser window on your local machine. 
+
+18. I like to create a whole new directory for backups in my Downloads folder. So create a folder like `~/Downloads/YYYY-MM-DD-jkoplendesign.com` with two sub-directories: `Site files` and `Database`. 
+
+19. Back in your FTP client, make sure you click "View > Show Hidden Files" (or its equivalent in whichever program you use). You want to make sure you can see the `.htaccess` file. There may be other hidden files tucked away in there. It's worth it to grab them. 
+
+20. Select the entire directory (including hidden files) and right-click. Select "Download-to" and download them to `~/Downloads/YYYY-MM-DD-jkoplendesign.com/Site files`. 
+
+21. It may take some time for your download to complete. Do your best not to interrupt it. It can be a hassle to get halfway through and then start over if you accidentally cancel it.
+
+22. Now that we've got the site files, we need to get the database for the site. This is where most of the configuration and content lives. 
+
+23. Head back to your Bluehost cpanel config. This time, click on "phpmyadmin". 
+
+24. You should be taken to an administration panel that looks like:
+
+![phpmyadmin login](/img/wp-dev-tutorial/phpmyadmin-login.png)
+
+25. Click on the database name in the left menu TODO: get a screenshot here 
+
+26. Click "Export" in the top menu
+
+27. Select "Quick" as the "export method" and "SQL" as the "Format". 
+
+28. You should get a `.sql` file downloaded through your browser. Move that to `~/Downloads/YYYY-MM-DD-jkoplendesign.com/Database`. 
+
+29. Compress the whole `~/Downloads/YYYY-MM-DD-jkoplendesign.com` directory. I recommend backing this up to Dropbox or some other cloud storage, along with a physical drive. This zip file is everything you need to restore a WordPress site. It can act as a great backup and snapshot in time of your production site. **I recommend performing this process regularly, and every time you make large changes to your website**.
 
 ## Import the production site to Local
 
 Let's get back to Local now. Local installs site files into `~/Local Sites/site-name` by default. So if you go to `~/Local Sites/jake-koplen-dev/app/public` in your Finder window, you'll see something that looks similar to the first directory we landed on in the FTP client: 
-![img/wp-dev-tutorial/local-install-dir.png]
+
+![Local installation directory](/img/wp-dev-tutorial/local-install-dir.png)
 
 1. Delete the entire `~/Local Sites/jake-koplen-dev/app/public` directory and replace it with the files in `~/Downloads/YYYY-MM-DD-jkoplendesign.com/Site files`. 
 
-2. Click Database>Adminer in the Local interface. You should be looking at something like :
-![img/wp-dev-tutorial/local-db-admin.png]
+2. Click "Database > Adminer" in the Local interface. You should be looking at something like:
+
+![Local database administration page](/img/wp-dev-tutorial/local-db-admin.png)
 
 3. Once you click Adminer, you'll see the Adminer interface, which looks like this: 
-![img/wp-dev-tutorials/adminer.png]
+
+![Adminer interface](/img/wp-dev-tutorial/adminer.png)
 
 4. Select all and click "Drop", like so: 
-![img/wp-dev-tutorials/drop-tables.png]
+
+![Drop tables command](/img/wp-dev-tutorial/drop-tables.png)
 
 5. Confirm your drop command. 
 
@@ -131,32 +154,32 @@ Your production database will be loaded into Local's server. In order for it to 
 
 10. The final piece of the puzzle is to change the `wp-config.php` file to look for the Local database and use the correct credentials there. 
 
-    - Head over to `~/Local Sites/jake-koplen-dev/app/public/wp-config.php` 
+11. Head over to `~/Local Sites/jake-koplen-dev/app/public/wp-config.php` 
 
-    - Change the database settings look like: 
+12. Change the database settings look like: 
 
-    ```
-    // ** MySQL settings ** //
-    /** The name of the database for WordPress */
-    define( 'DB_NAME', 'local' );
+```
+// ** MySQL settings ** //
+/** The name of the database for WordPress */
+define( 'DB_NAME', 'local' );
 
-    /** MySQL database username */
-    define( 'DB_USER', 'root' );
+/** MySQL database username */
+define( 'DB_USER', 'root' );
 
-    /** MySQL database password */
-    define( 'DB_PASSWORD', 'root' );
+/** MySQL database password */
+define( 'DB_PASSWORD', 'root' );
 
-    /** MySQL hostname */
-    define( 'DB_HOST', 'localhost' );
+/** MySQL hostname */
+define( 'DB_HOST', 'localhost' );
 
-    /** Database Charset to use in creating database tables. */
-    define( 'DB_CHARSET', 'utf8' );
+/** Database Charset to use in creating database tables. */
+define( 'DB_CHARSET', 'utf8' );
 
-    /** The Database Collate type. Don't change this if in doubt. */
-    define( 'DB_COLLATE', '' );
-    ```
+/** The Database Collate type. Don't change this if in doubt. */
+define( 'DB_COLLATE', '' );
+```
 
-Point your browser to jake-koplen-dev.local and you should see the whole site!
+13. Point your browser to jake-koplen-dev.local and you should see the whole site!
 
 ## Editing themes and child themes which don't touch the database 
 
@@ -168,13 +191,15 @@ Once you've made your changes, go check them out at http://jake-koplen-dev.local
 
 If everything is good, all you have to do now is FTP those back up to the server. 
 
-Just like the instructions in **Step 3** of **Create a full backup of the production site**, connect to your server via FTP. Navigate to the `wp-content/themes` folder and right click. If you're using Cyberduck, you'll see a menu like this: 
-![img/wp-dev-tutorials/ftp-upload-menu.png]
+1. Just like the instructions in **Step 3** of **Create a full backup of the production site**, connect to your server via FTP. Navigate to the `wp-content/themes` folder and right click. If you're using Cyberduck, you'll see a menu like this: 
 
-Click "Upload". Navigate to your updated theme at `~/Local Sites/jake-koplen-dev/app/public/wp-content/themes` in the file browser. Select the entire folder. If it already exists, select "Overwrite all files" in the upload menu. It'll look like this: 
-![img/wp-dev-tutorials/upload-overwrite-option.png]
+![FTP upload menu](/img/wp-dev-tutorial/ftp-upload-menu.png)
 
-Click "Continue", your files will upload, and you'll be good to go! 
+2. Click "Upload". Navigate to your updated theme at `~/Local Sites/jake-koplen-dev/app/public/wp-content/themes` in the file browser. Select the entire folder. If it already exists, select "Overwrite all files" in the upload menu. It'll look like this: 
+
+![Overwrite files](/img/wp-dev-tutorial/upload-overwrite-option.png)
+
+3. Click "Continue", your files will upload, and you'll be good to go! 
 
 ## Editing content, settings, custom post types, and other data
 
