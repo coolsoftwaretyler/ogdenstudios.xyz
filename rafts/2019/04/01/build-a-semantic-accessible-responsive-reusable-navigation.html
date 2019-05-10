@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <title>Ogden Studios</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="/img/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="/img/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- End Favicon -->
+    <link rel="stylesheet" href="/stylesheets/ogden.css"> 
+    <meta property="og:image" content="/img/FacebookBanner.jpg" />
+    <meta content="Ogden Studios" property="og:site_name"> 
+    
+    <meta content="Building a semantic, accessible, responsive, and reusable navigation element" property="og:title"> 
+     
+    
+    <meta content="article" property="og:type"> 
+     
+    
+    <meta content="Building website navigations can be difficult. This tutorial covers building a large site navigation that is semantic, accessible, responsive, and reusable." property="og:description"> 
+     
+    
+    <meta content="http://localhost:4000/2019/04/01/build-a-semantic-accessible-responsive-reusable-navigation.html" property="og:url"> 
+     
+    
+    <meta content="/img/logo-high-resolution.png" property="og:image">
+    <meta content="/img/OgdenLogo.jpg" property="twitter:image"> 
+    
+    <!-- Google Suite Verification -->
+    <meta name="google-site-verification" content="Ay267gjaK2dbcK9EuGzYKc0xKCC-cNH8tc4D-rc5D2U" /></head><body><header role="banner">
+    <nav>
+        <a href="/"><img class="brand" alt="" src="/img/ogden-transparent.png"></a>
+        <ul>
+               
+            <li><a href="/blog/">Blog</a></li>
+                
+            <li><a href="/experience/">Experience</a></li>
+                    
+            <li><a href="/projects/">Projects</a></li>
+              
+            <li><a href="/skills/">Skills</a></li>
+              
+            <li><a href="/tidbits/">Tidbits</a></li>
+                 
+        </ul>
+    </nav>
+</header><main class="page" aria-label="Content">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Building a semantic, accessible, responsive, and reusable navigation element</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-04-01T00:00:00-06:00" itemprop="datePublished">Apr 1, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p><em>Last updated Apr 5, 2019</em></p>
+
+<p><em>Don’t care about the implementation details? Just looking for template code to solve your problem? <a href="https://codepen.io/ogdenstudios/pen/oOvWZb/">Check out the CodePen</a>.</em></p>
+
+<p>Navigation components present all sorts of challenges and complexities. A good navbar should be semantic, accessible, responsive, and reusable. In my opinion, the best site navigation is small and contains three to five different links, each of which leads users to top-level content, or detailed content funnels. While some websites successfully implement mega-menus, I think the appropriate situations for mega-menus are limited to correspondingly large sites, e.g. Amazon.</p>
+
+<p>I try to advise my clients against adding <em>every single page</em> to their navigation. I think you can mitigate most navigation challenges if you’re willing to be strategic and discerning about your content and user stories.</p>
+
+<p>Sometimes, though, product owners provide non-negotiable specifications that call for massive site navigation. These requirements often intimidate me. I’ve spent a tremendous amount of time building navigation elements that don’t meet the <strong>semantic, accessible, responsive, and reusable</strong> requirements. It hurts every time that happens. Recently I took a deep dive into how to make the best possible navbar so I can do better at avoiding those mistakes.</p>
+
+<p>My solution uses HTML5, raw CSS, and vanilla JavaScript. Since I’m a Rails guy, the HTML is generated in a Rails application, but as long as the final markup stays the same, it can be written by hand or generated through any other framework you like.</p>
+
+<p>The HTML is semantic and accessible, according to <a href="https://achecker.ca">AChecker</a>.</p>
+
+<p>I’ve linted the CSS with <a href="http://csslint.net/">CSSLint</a>, and the JavaScript with <a href="https://eslint.org/demo/">ESLint</a>. The CSS is 450 bytes minified and gzipped. The JavaScript is 670 bytes minified and gzipped.</p>
+
+<p>In order to arrive at my solution, I’ve read tutorial after tutorial and synthesized information from some truly fantastic developers and designers. This final product incorporates the responsive hamburger navigation from <a href="https://www.taniarascia.com/responsive-dropdown-navigation-bar/">Tania Rascia’s Responsive Dropdown Navigation Bar</a>. I used concepts and some markup from <a href="https://adobe-accessibility.github.io/Accessible-Mega-Menu/">Adobe’s Accessible Mega Menu</a>. I used ideas from <a href="https://www.smashingmagazine.com/2017/11/building-accessible-menu-systems/">Smashing Magazine’s Building Accessible Menu Systems</a>, and I’d like to give a special shout out to <a href="https://gomakethings.com/i-was-wrong-about-javascript-free-dropdowns/">Chris Ferdinandi grappling with this problem and why it’s so hard</a>. His blog posts inspired me to write my own. I also relied on Chris pretty heavily when it came to <a href="https://gomakethings.com/why-event-delegation-is-a-better-way-to-listen-for-events-in-vanilla-js/">optimizing my JavaScript using event delegation</a>.</p>
+
+<h2 id="specifications">Specifications</h2>
+
+<p>The navigation needs to use semantic HTML. It needs to be accessible. It needs to be responsive. It needs to accommodate top-level links, navigation items with limited options, and items with a larger body of content/more options. Users should be able to change the content of the navigation with ease.</p>
+
+<h2 id="stack">Stack</h2>
+
+<p>I do the bulk of my work in Ruby on Rails, so I generated the markup using embedded Ruby. The markup of the navbar is generated with data returned by a Rails helper function. But at the end of the day, all that compiles down to semantic, valid HTML. That means you can ignore the Rails part if you need and just focus on creating the final HTML. I wrote this in Rails 5.2, but considering I’m not using any bleeding-edge Rails utilities, this should work with most Rails versions.</p>
+
+<h2 id="markup">Markup</h2>
+
+<p>The entry point into the navbar partial is the <code class="highlighter-rouge">_navbar.html.erb</code> file. The root element is a semantic <code class="highlighter-rouge">nav</code> component. The partial looks like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># app/views/layouts/navbar/_navbar.html.erb
+# Main navbar partial 
+&lt;% navbar_data = get_navbar_data %&gt;
+&lt;nav&gt;
+  &lt;div class="nav-mobile"&gt;
+    &lt;span id="nav-toggle" class="nav-toggle"&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div id="navbar" class="navbar" tabindex="0"&gt;
+    &lt;ul class="navbar__categories" tabindex="0"&gt;
+      &lt;% navbar_data.each do |node| %&gt;
+        &lt;li class="navbar__categories__list-item" data-slug="&lt;%= node[:slug] %&gt;" tabindex="0"&gt;
+          &lt;% if node[:type] == 'top-level' %&gt;
+            &lt;a class="navbar__categories__header" data-slug="&lt;%= node[:slug]%&gt;" href="&lt;%= node[:link] %&gt;"&gt;&lt;%= node[:label] %&gt;&lt;/a&gt;
+          &lt;% elsif node[:type] == 'single'%&gt;
+            &lt;%= render 'layouts/navbar/navbar_single_col_panel', data: node %&gt;
+          &lt;% else %&gt;
+            &lt;%= render 'layouts/navbar/navbar_multi_col_panel', data: node %&gt;
+          &lt;% end %&gt;
+        &lt;% end %&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+</code></pre></div></div>
+
+<h3 id="the-data">The data</h3>
+
+<p>The first line retrieves a hash with the data for the navbar. The specific implementation of this isn’t important. In production, I do some fancy footwork: query routes, controllers, etc., and come up with a comprehensive and adaptable navigation structure. To start, you can just set up a helper method to return a static hash. It might look something like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># app/helpers/navbar_helper.rb
+# Navbar helper 
+module NavbarHelper
+  def get_navbar_data
+    return data = [{
+        label: 'Home',
+        slug: 'home',
+        type: 'top-level',
+        link: '#!'
+      },
+      {
+        label: 'Single',
+        slug: 'single',
+        type: 'single',
+        nodes: [{
+            label: 'About',
+            link: '#!'
+          },
+          {
+            label: 'Contact',
+            link: '#!'
+          },
+          {
+            label: 'Blog',
+            link: '#!'
+          }
+        ]
+      },
+      {
+        label: 'Multiple',
+        slug: 'multiple',
+        type: 'multi',
+        nodes: [{
+            label: 'Category 1',
+            nodes: [{
+                label: 'Item 1',
+                link: '#!'
+              },
+              {
+                label: 'Item 2',
+                link: '#!'
+              }
+            ]
+          },
+          {
+            label: 'Category 2',
+            nodes: [{
+                label: 'Item 1',
+                link: '#!'
+              },
+              {
+                label: 'Item 2',
+                link: '#!'
+              },
+              {
+                label: 'Item 3',
+                link: '#!'
+              },
+              {
+                label: 'Item 4',
+                link: '#!'
+              }
+            ]
+          },
+          {
+            label: 'Category 3',
+            nodes: [{
+                label: 'Item 1',
+                link: '#!'
+              },
+              {
+                label: 'Item 2',
+                link: '#!'
+              },
+              {
+                label: 'Item 3',
+                link: '#!'
+              }
+            ]
+          }
+        ]
+      }
+    ] 
+  end
+end
+</code></pre></div></div>
+
+<p>This sample structure represents only a starting point of what you can do. I use a hash because I’m working in Ruby, but if you’re doing most of your work in JavaScript, you could represent this as JSON or any other format - as long as it’s predictable and allows you to generate your HTML correctly. You could add additional attributes to the markup and render them as necessary.</p>
+
+<p>This example data is not meant to be exhaustive, but it represents the three types of elements I usually expect to encounter in a navbar:</p>
+
+<ol>
+  <li>Top level links</li>
+  <li>Single category lists of links</li>
+  <li>Multiple category lists of links</li>
+</ol>
+
+<h3 id="top-level-links">Top level links</h3>
+
+<p>If the partial encounters a <code class="highlighter-rouge">top-level</code> type node, it renders an anchor element with the <code class="highlighter-rouge">.navbar__categories__header</code> class and a custom attribute, <code class="highlighter-rouge">data-slug</code>. The href points to the node’s <code class="highlighter-rouge">link</code>, and its text is rendered from the node’s <code class="highlighter-rouge">label</code>.</p>
+
+<p>That all happens here:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;a class="navbar__categories__header" data-slug="&lt;%= node[:slug]%&gt;" href="&lt;%= node[:link] %&gt;"&gt;&lt;%= node[:label] %&gt;&lt;/a&gt;
+</code></pre></div></div>
+
+<h3 id="single-category-list-of-links">Single category list of links</h3>
+
+<p>If the navbar partial runs into a <code class="highlighter-rouge">single</code> type node, it will pass that to the <code class="highlighter-rouge">_navbar_single_col_panel.html.erb</code> partial, which looks like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># app/views/layouts/navbar/_navbar_single_col_panel.html.erb
+# Navbar single column 
+&lt;div class="navbar__single-col-panel" data-slug="&lt;%= data[:slug]%&gt;"&gt;
+  &lt;span class="navbar__categories__header" data-slug="&lt;%= data[:slug]%&gt;"&gt;&lt;%= data[:label]%&gt;&lt;/span&gt;
+  &lt;ul class="navbar__single-col navbar__category" data-slug="&lt;%= data[:slug]%&gt;"&gt;
+    &lt;% data[:nodes].each do |node|%&gt;
+      &lt;li class="navbar__category__item"&gt;
+        &lt;a class="navbar__link" data-slug="&lt;%= data[:slug]%&gt;" href="&lt;%= node[:link] %&gt;"&gt;
+          &lt;%= node[:label] %&gt;
+        &lt;/a&gt;
+      &lt;/li&gt;
+    &lt;% end %&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>This inserts a <code class="highlighter-rouge">.navbar__single-col-panel</code> <code class="highlighter-rouge">div</code> as a list item in the unordered list with classname of <code class="highlighter-rouge">.navbar__categories</code> (from the root <code class="highlighter-rouge">_navbar</code> partial). I give this <code class="highlighter-rouge">div</code> a <code class="highlighter-rouge">data-slug</code> attribute with the node’s slug. The <code class="highlighter-rouge">div</code>’s first child is a <code class="highlighter-rouge">span</code>, which gets the <code class="highlighter-rouge">.navbar__categories__header</code> class. This <code class="highlighter-rouge">span</code> gets a custom attribute of the same name, with <code class="highlighter-rouge">data-slug="&lt;%= data[:slug]%&gt;"</code>. The <code class="highlighter-rouge">span</code>’s inner content is the <code class="highlighter-rouge">data[:label]</code>, again pulled from the hash.</p>
+
+<p>Under the <code class="highlighter-rouge">span</code> is another unordered list, with the classes <code class="highlighter-rouge">.navbar__single-col</code> and <code class="highlighter-rouge">.navbar__category</code>. This unordered list also gets wired up with the corresponding <code class="highlighter-rouge">data-slug</code> attribute.</p>
+
+<p>Then ruby iterates over the inner nodes and creates list items of class <code class="highlighter-rouge">.navbar__category__item</code>. Each node becomes an anchor with a <code class="highlighter-rouge">data-slug</code> attribute that matches the slug of this category, and an href that points to the link provided by the node. The link text is created from that node’s <code class="highlighter-rouge">label</code> attribute. I’ll use the <code class="highlighter-rouge">data-slug</code> attribute in the JavaScript to determine associations as it checks for which elements ought to be treated together.</p>
+
+<h3 id="multiple-category-list-of-links">Multiple category list of links</h3>
+
+<p>If the navbar partial runs into a multiple column category, it will pass it to the <code class="highlighter-rouge">_navbar_multi_col_panel.html.erb</code> file, which looks like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># app/views/layouts/navbar/_navbar_multi_col_panel.html.erb
+# Navbar multi column 
+&lt;div class="navbar__multi-col-panel" data-slug="&lt;%= data[:slug]%&gt;"&gt;
+  &lt;span class="navbar__categories__header" data-slug="&lt;%= data[:slug]%&gt;"&gt;&lt;%= data[:label]%&gt;&lt;/span&gt;
+  &lt;ul class="navbar__multi-col navbar__category" data-slug="&lt;%= data[:slug]%&gt;"&gt;
+    &lt;% data[:nodes].each do |node|%&gt;
+      &lt;li&gt;
+        &lt;span&gt;&lt;%= node[:label] %&gt;&lt;/span&gt;
+        &lt;ul class="multi-col__category"&gt;
+          &lt;% node[:nodes].each do |item| %&gt;
+            &lt;li class="multi-col__category__item"&gt;
+              &lt;a class="navbar__link" data-slug="&lt;%= data[:slug]%&gt;"href="&lt;%= item[:link] %&gt;" &gt;&lt;%= item[:label] %&gt;&lt;/a&gt;
+            &lt;/li&gt;
+          &lt;% end %&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;% end %&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>This inserts a <code class="highlighter-rouge">.navbar__mutli-col-panel</code> <code class="highlighter-rouge">div</code> as a list item in the unordered list with classname of <code class="highlighter-rouge">.navbar__categories</code>. The <code class="highlighter-rouge">div</code> starts with a <code class="highlighter-rouge">span</code>, which gets the <code class="highlighter-rouge">.navbar__categories__header</code> class. This <code class="highlighter-rouge">span</code> gets a custom data attribute of the same name, with <code class="highlighter-rouge">data-slug="&lt;%= data[:slug]%&gt;"</code>. The <code class="highlighter-rouge">span</code>’s inner content is the <code class="highlighter-rouge">data[:label]</code>, again made available through the hash.</p>
+
+<p>Under the <code class="highlighter-rouge">span</code> is another unordered list, with the classes <code class="highlighter-rouge">.navbar__multi-col</code> and <code class="highlighter-rouge">.navbar__category</code>.</p>
+
+<p>Then ruby iterates over the inner nodes and creates a list item with a nested unordered list inside of it, with the class <code class="highlighter-rouge">.multi-col__category</code>.</p>
+
+<p>Ruby iterates one more time over the inner nodes of each node and each becomes an anchor with a <code class="highlighter-rouge">data-slug</code> attribute that matches the slug of this category, and an href with the link. The link text is created from that node’s <code class="highlighter-rouge">label</code> attribute.</p>
+
+<h3 id="bringing-the-markup-together">Bringing the markup together</h3>
+
+<p>Using these rails helpers and embedded Ruby partials, you can create markup that looks like this:</p>
+
+<p class="codepen" data-height="265" data-theme-id="0" data-default-tab="html,result" data-user="ogdenstudios" data-slug-hash="OGXVpB" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="Markup for semantic, accessible, responsive, and extensible navigation element">
+  <span>See the Pen <a href="https://codepen.io/ogdenstudios/pen/OGXVpB/">
+  Markup for semantic, accessible, responsive, and extensible navigation element</a> by Tyler Scott Williams (<a href="https://codepen.io/ogdenstudios">@ogdenstudios</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async="" src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+<p>If you care more about a full Rails application, I’ve deployed a sample app to Heroku. You can find it <a href="https://navbar--rails.herokuapp.com">here</a>. Keep in mind, Heroku free-tier servers have a spin up time, so it may be slow to load if it hasn’t received traffic in the last 30 minutes. This demo also has styles on it, which I’ll cover in the next section.</p>
+
+<h2 id="styles">Styles</h2>
+
+<p>The goal of this navbar is to make something easily extensible, so I haven’t designed comprehensive styles. These styles are everything you need for a basic layout to work, nothing more. It’s raw CSS with no errors or warnings from CSSLint. I’m a big fan of the <a href="http://getbem.com/">Block Element Modifier methodology</a> and have tried to stick to that convention as much as I can. You can check it out in this codepen, using the same markup as the last one:</p>
+
+<p class="codepen" data-height="265" data-theme-id="0" data-default-tab="html,result" data-user="ogdenstudios" data-slug-hash="axZOyp" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="Markup and styles for semantic, accessible, responsive, and extensible navigation element">
+  <span>See the Pen <a href="https://codepen.io/ogdenstudios/pen/axZOyp/">
+  Markup and styles for semantic, accessible, responsive, and extensible navigation element</a> by Tyler Scott Williams (<a href="https://codepen.io/ogdenstudios">@ogdenstudios</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async="" src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+<h3 id="default-styles-above-mobile-breakpoint">Default styles above “mobile” breakpoint</h3>
+
+<ol>
+  <li>I don’t want the standard <code class="highlighter-rouge">ul</code> padding, so I set every <code class="highlighter-rouge">ul</code> nested within the <code class="highlighter-rouge">nav</code> to have <code class="highlighter-rouge">padding: 0</code>.</li>
+  <li>Similarly, I have no need for the dots and other list-item decoration, so I set <code class="highlighter-rouge">list-style: none</code>.</li>
+  <li>I truly don’t want <code class="highlighter-rouge">nav-mobile</code> to be displayed above the breakpoint, so <code class="highlighter-rouge">display: none</code> is appropriate there.</li>
+  <li>I use <code class="highlighter-rouge">display: flex</code> for an easily responsive <code class="highlighter-rouge">.navbar__categories</code> element. Flexbox is an excellent choice for one-dimensional responsive styles.</li>
+  <li>Since <code class="highlighter-rouge">.navbar__categories__header</code> is going to be a focusable and clickable <code class="highlighter-rouge">span</code> element, I set <code class="highlighter-rouge">cursor: pointer</code> to indicate that.</li>
+  <li>The <code class="highlighter-rouge">.navbar__categories__header</code> is given <code class="highlighter-rouge">padding: 24px</code> to be an <a href="https://developers.google.com/web/fundamentals/accessibility/accessible-styles">accessible touch-target of 48px or larger</a>.</li>
+  <li>The actual navbar content, wrapped in the <code class="highlighter-rouge">.navbar__category</code> class, is hidden with absolute positioning and <code class="highlighter-rouge">left: -9999px</code>. When given the <code class="highlighter-rouge">.navbar__category--active</code> class, I <code class="highlighter-rouge">unset</code> the value instead of setting it to <code class="highlighter-rouge">0</code> - to keep it in line with its higher level element.</li>
+  <li>I chose <code class="highlighter-rouge">768px</code> as a mobile breakpoint, mostly out of habit from design frameworks I’ve used in the past. Your mileage may vary, and you’ll want to follow good design habits around breakpoints: focusing on pixel values and testing, vs. trying to target specific devices.</li>
+</ol>
+
+<h3 id="under-the-breakpoint">Under the breakpoint</h3>
+
+<ol>
+  <li>Display the <code class="highlighter-rouge">.nav-mobile</code> element with <code class="highlighter-rouge">display: block</code>.</li>
+  <li>I set <code class="highlighter-rouge">.nav-mobile</code> to be 50x50px because it’s an appropriate size for a touch target, and a nice, round number.</li>
+  <li>The <code class="highlighter-rouge">.nav-mobile</code> is given <code class="highlighter-rouge">z-index: 1</code> to sit on top of the navbar and remain clickable when the nav is dropped down.</li>
+  <li>All of the <code class="highlighter-rouge">.nav-mobile #nav-toggle</code> styles and other nested attributes are taken directly from <a href="https://www.taniarascia.com/responsive-dropdown-navigation-bar/">Tania Rascia’s Responsive Dropdown Navigation Bar</a>. It’s a great hamburger menu, tried and true, and I had no reason to mess with it. Thanks, Tania!</li>
+  <li>The <code class="highlighter-rouge">.navbar</code> is initially set to <code class="highlighter-rouge">position: absolute</code> and <code class="highlighter-rouge">left: -9999px</code> to hide it, and much like the <code class="highlighter-rouge">.navbar__category--active</code> class above the breakpoint, <code class="highlighter-rouge">.navbar__category--active</code> sets <code class="highlighter-rouge">left: unset</code>.</li>
+</ol>
+
+<p>Again, you can view this implementation in a Rails application at the <a href="http://navbar--rails.herokuapp.com/">navbar–rails heroku app</a>.</p>
+
+<h2 id="javascript">JavaScript</h2>
+
+<p>In order for the navbar to truly work, I need to use some JavaScript. I hope this common design pattern will someday be a native HTML5 element, and all I’ll ever need is markup and CSS. Until that day comes, JavaScript must play a role in the final product.</p>
+
+<p>The navbar must have the ability to:</p>
+
+<ol>
+  <li>Explicitly show a targeted navbar item.</li>
+  <li>Explicitly hide a targeted navbar item.</li>
+  <li>Toggle a targeted navbar item when.</li>
+</ol>
+
+<p>These will happen based on events in the browser:</p>
+
+<ol>
+  <li>If a user focuses a navbar item, show the navbar.</li>
+  <li>If a user removes focus from a navbar item, hide the navbar.</li>
+  <li>If a user emits toggling behavior (<code class="highlighter-rouge">mousedown</code>, <code class="highlighter-rouge">keydown</code>), toggle the navbar based on its current state.</li>
+</ol>
+
+<p>Here’s what the full component looks with markup, styles, and JavaScript:</p>
+
+<p class="codepen" data-height="265" data-theme-id="0" data-default-tab="html,result" data-user="ogdenstudios" data-slug-hash="oOvWZb" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="Semantic, accessible, responsive, and extensible navigation element">
+  <span>See the Pen <a href="https://codepen.io/ogdenstudios/pen/oOvWZb/">
+  Semantic, accessible, responsive, and extensible navigation element</a> by Tyler Scott Williams (<a href="https://codepen.io/ogdenstudios">@ogdenstudios</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async="" src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+<h3 id="setting-up-event-listeners">Setting up event listeners</h3>
+
+<p>The script registers event listeners for <code class="highlighter-rouge">focus</code>, <code class="highlighter-rouge">blur</code>, <code class="highlighter-rouge">mousedown</code>, and <code class="highlighter-rouge">keydown</code> events. <code class="highlighter-rouge">Focus</code> shows, <code class="highlighter-rouge">blur</code> hides, <code class="highlighter-rouge">mousedown</code> toggles, and <code class="highlighter-rouge">keydown</code> toggles.</p>
+
+<p>In an early iteration of this script, I set up event listeners in the DOM. It’s a common practice, totally valid, but might not scale in the case of a massive mega-menu. This navbar is meant to be the foundation of such an element, so I was concerned about the performance implications of registering so many event handlers.</p>
+
+<p>Fortunately, Chris Ferdinandi has a great article all about <a href="https://gomakethings.com/whats-the-difference-between-javascript-event-delegation-bubbling-and-capturing/">understanding event delevation, bubbling, and capturing</a>.</p>
+
+<p>Event delegation sounds like the right way to go here. Instead of registering event listeners on all these DOM elements and their children, I just set up one listener to the document for the events. But there’s a catch: <code class="highlighter-rouge">focus</code> and <code class="highlighter-rouge">blur</code> events don’t bubble up the way I need them to. Again, Chris Ferdinandi saved my bacon and wrote a post about how we can get access to these events by setting up <a href="https://gomakethings.com/when-do-you-need-to-use-usecapture-with-addeventlistener/">event capturing</a>.</p>
+
+<p>Setting up event listeners requires their targets to exist, and that requires the entire DOM content to be loaded in. Since this component is expected to Just Work, regardless of context, I wrapped it in a <code class="highlighter-rouge">DOMContentLoaded</code> event listener. It won’t start until the DOM Content is loaded, meaning you can include the script in any way shape or form, independent of build process.</p>
+
+<p>Each event listener only executes if the target of the event has a <code class="highlighter-rouge">classList</code>. This is because the first piece of logic happens when the callback functions attempt to match the event target with <code class="highlighter-rouge">.navbar__categories__header</code> or <code class="highlighter-rouge">.navbar__categories__list-item</code>. <code class="highlighter-rouge">.matches()</code> requires a <code class="highlighter-rouge">classList</code> to run. Without it, some browsers throw errors.</p>
+
+<p>So if an event fires, and its target has a <code class="highlighter-rouge">classList</code>, the callback checks to see what that target was. If it was a <code class="highlighter-rouge">.navbar__link</code> or <code class="highlighter-rouge">.navbar__categories__list-item</code>, the appropriate action (show the navbar, hide the navbar, toggle the navbar) is taken.</p>
+
+<h3 id="using-mousedown-instead-of-click">Using mousedown instead of click</h3>
+
+<p>I use <code class="highlighter-rouge">mousedown</code> instead of <code class="highlighter-rouge">click</code> for the toggle, because <code class="highlighter-rouge">click</code> events trigger <code class="highlighter-rouge">focus</code>, and a <code class="highlighter-rouge">click</code> event would trigger some actions twice. <code class="highlighter-rouge">mousedown</code> can be used to effectively signal a user’s desire to toggle a button without doubling up on actions.</p>
+
+<p>The <code class="highlighter-rouge">keydown</code> event listener only fires when a user presses enter or the spacebar, which is accomplished the the key values set in <code class="highlighter-rouge">KEY_ENTER</code> and <code class="highlighter-rouge">KEY_SPACE</code></p>
+
+<h3 id="the-callback-functions">The callback functions</h3>
+
+<p>The show function iterates over every <code class="highlighter-rouge">.navbar__category</code> and <code class="highlighter-rouge">.navbar__categories__header</code> and compares its <code class="highlighter-rouge">data-slug</code> attribute with the <code class="highlighter-rouge">data-slug</code> attribute of the target. If they match, it gets the <code class="highlighter-rouge">.navbar__category--active</code>. If they don’t, the class is removed.</p>
+
+<p>In the hide function, the script iterates over every <code class="highlighter-rouge">.navbar__category</code> and <code class="highlighter-rouge">.navbar__categories__header</code> and removes the <code class="highlighter-rouge">.navbar__category--active</code> class.</p>
+
+<p>The toggle function works like the show function, but uses <code class="highlighter-rouge">toggle</code> instead of <code class="highlighter-rouge">add</code>.</p>
+
+<h3 id="mobile-toggling">Mobile toggling</h3>
+
+<p>The <code class="highlighter-rouge">#nav-toggle</code> element gets a similar treatment, although in this case, since it only ever needs to toggle, I can use <code class="highlighter-rouge">click</code> listeners and <code class="highlighter-rouge">keydown</code> listeners. This element interacts with <code class="highlighter-rouge">nav-toggle--active</code> and <code class="highlighter-rouge">.navbar--active</code> classes.</p>
+
+<h3 id="only-one-polyfill-to-worry-about">Only one polyfill to worry about</h3>
+
+<p>The final piece of exposition about this JavaScript is that the <code class="highlighter-rouge">.matches()</code> function does require a <a href="https://caniuse.com/#search=matches">polyfill for Internet Explorer</a>. It is also not supported by Opera Mini whatsoever. The <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/matches">internet explorer polyfill is pretty simple</a>, so I add that at the top of the script. If you support Opera Mini, you might want to use something like <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll">Document.querySelectorAll()</a> and check for matching classes. That workaround is not covered in this tutorial.</p>
+
+<h2 id="limitations">Limitations</h2>
+
+<p>I think this navbar has some limitations:</p>
+
+<ol>
+  <li>
+    <p>I can’t guarantee that any changes you make to markup inside categories will be valid. If you change, add, or remove elements in the markup, consider checking your final output for <a href="https://en.wikipedia.org/wiki/Web_Content_Accessibility_Guidelines">WCAG</a> compliance. You could certainly find a valid, accessible, and semantic way to add paragraphs, <code class="highlighter-rouge">div</code>s, images, and other content, but it’s imperative that accessibility is your primary concern when doing so.</p>
+  </li>
+  <li>
+    <p>I don’t think mega-menus are the right design pattern for most websites. I think the best case scenario is limiting your site navigation scope so you don’t need such a comprehensive solution to the problem.</p>
+  </li>
+  <li>
+    <p>This solution requires JavaScript, and having a hard dependency on JavaScript is difficult to reconcile with progressive enhancement principles. I think my JavaScript is lean and avoids unnecessary dependencies, but it’s still there. If you’re extending this solution, you should consider incorporating a <code class="highlighter-rouge">&lt;noscript&gt;</code> element that provides navigation to users who don’t load JavaScript.</p>
+  </li>
+  <li>
+    <p>Opera Mini - I don’t want to cop out on the fact that this solution doesn’t provide coverage for every possible browser. I made a choice not to implement the workaround for Opera Mini because it’s outside of the scope of browsers I usually support and I was prioritizing reducing the size and complexity of my JavaScript over supporting that one browser without a <code class="highlighter-rouge">.matches()</code> polyfill.</p>
+  </li>
+</ol>
+
+<h2 id="next-steps">Next steps</h2>
+
+<h3 id="improve-my-initial-design">Improve my initial design</h3>
+
+<p>I’m hoping the internet at large agrees I’ve found an optimal solution for site navigation. If that’s not the case, I’d love to know what I missed. Please <a href="mailto:tyler@ogdenstudios.xyz">send me an email</a>, or submit a pull request against <a href="https://github.com/ogdenstudios/navbar--rails">the sample rails project</a> to show me where I can improve.</p>
+
+<h3 id="extend-as-an-html-template">Extend as an HTML template</h3>
+
+<p>I think this navbar is an excellent candidate for building a <a href="https://css-tricks.com/an-introduction-to-web-components/">web component</a>. I’ll likely follow up on this blog post with a use-case of converting the work here into a web component as outlined in Caleb’s series.</p>
+
+<h3 id="implement-in-production">Implement in production</h3>
+
+<p>I’ve implemented different versions of this navbar in production and plan to continue doing so. I’ll be following up with some use cases, including incorporating the navbar with WordPress, Jekyll, and a full Rails app. I’d be interested to hear how others fare utilizing it in other stacks.</p>
+
+<h3 id="package-it-up">Package it up</h3>
+
+<p>I built this navbar with an eye to reusability, and after it lives in the wild for some time, I think creating an Node package or Ruby gem would be a great way to wrap it all up.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Thanks to my good friend <a href="https://twitter.com/KaySoQueso">Kevin Oliveira</a> for reviewing this blog post in its first release. Thanks to you for reading. Thanks to all the folks who wrote tutorials I used to synthesize this navbar. I hope folks can take this, use it, expand on it, and otherwise benefit from this solution to a common UX challenge.</p>
+
+  </div><a class="u-url" href="/2019/04/01/build-a-semantic-accessible-responsive-reusable-navigation.html" hidden></a>
+</article>
+
+<div>
+<p>Questions? Comments? Send them all along to <a href="mailto: tyler@ogdenstudios.xyz">tyler@ogdenstudios.xyz</a></p>
+
+<p>Want to support the open source work I do? <a href="https://ko-fi.com/ogdenstudios">Buy me a coffee</a>.</p>
+
+<p>Unless otherwise specified, all code samples and work are published under the <a href="/license">MIT license</a>.</p>
+</div>
+
+    </main>
+  </body>
+</html>

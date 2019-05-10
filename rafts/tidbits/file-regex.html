@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <title>Ogden Studios</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="/img/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="/img/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- End Favicon -->
+    <link rel="stylesheet" href="/stylesheets/ogden.css"> 
+    <meta property="og:image" content="/img/FacebookBanner.jpg" />
+    <meta content="Ogden Studios" property="og:site_name"> 
+    
+    <meta content="How do I just get the file name from a URL or file path?" property="og:title"> 
+     
+    
+    <meta content="article" property="og:type"> 
+     
+    
+    <meta content="Practical solutions for pragmatic people" property="og:description"> 
+     
+    
+    <meta content="http://localhost:4000/tidbits/file-regex.html" property="og:url"> 
+     
+    
+    <meta content="/img/logo-high-resolution.png" property="og:image">
+    <meta content="/img/OgdenLogo.jpg" property="twitter:image"> 
+    
+    <!-- Google Suite Verification -->
+    <meta name="google-site-verification" content="Ay267gjaK2dbcK9EuGzYKc0xKCC-cNH8tc4D-rc5D2U" /></head><body><header role="banner">
+    <nav>
+        <a href="/"><img class="brand" alt="" src="/img/ogden-transparent.png"></a>
+        <ul>
+               
+            <li><a href="/blog/">Blog</a></li>
+                
+            <li><a href="/experience/">Experience</a></li>
+                    
+            <li><a href="/projects/">Projects</a></li>
+              
+            <li><a href="/skills/">Skills</a></li>
+              
+            <li><a href="/tidbits/">Tidbits</a></li>
+                 
+        </ul>
+    </nav>
+</header><main class="page" aria-label="Content">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">How do I just get the file name from a URL or file path?</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-02-18T00:00:00-07:00" itemprop="datePublished">Feb 18, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Sometimes you just need the name of a file, and its buried under any number of URL or local file paths. Here’s a regular expression that will get you that file name (in Ruby, assuming <code class="highlighter-rouge">url</code> is the long form name).</p>
+
+<p><code class="highlighter-rouge">filename = /([^\/]+)(?=\.\w+$)/.match(url)</code></p>
+
+  </div><a class="u-url" href="/tidbits/file-regex.html" hidden></a>
+</article>
+
+<div>
+<p>Questions? Comments? Send them all along to <a href="mailto: tyler@ogdenstudios.xyz">tyler@ogdenstudios.xyz</a></p>
+
+<p>Want to support the open source work I do? <a href="https://ko-fi.com/ogdenstudios">Buy me a coffee</a>.</p>
+
+<p>Unless otherwise specified, all code samples and work are published under the <a href="/license">MIT license</a>.</p>
+</div>
+
+    </main>
+  </body>
+</html>
