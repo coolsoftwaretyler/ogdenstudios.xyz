@@ -4,5 +4,5 @@ description: In 2015, I co-founded the This Week in Drugs podcast. Over the cour
 link: https://thisweekindrugs.org 
 live: true
 skills: ['Adobe Audition', 'Amazon Web Services', 'CSS', 'DNS', 'Github Pages', 'Jekyll', 'HTML', 'PHP', 'Ruby', 'WordPress']
-weight: 60
+weight: 80
 ---
