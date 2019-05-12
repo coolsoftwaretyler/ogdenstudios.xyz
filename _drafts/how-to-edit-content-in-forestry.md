@@ -39,7 +39,7 @@ To create a new page, click the **Create new** button at the top of the screen. 
 On the next page, you can: 
 
 1. Select a **layout** (you should keep this value set to **page**).
-2. Choose a title **title** [TODO: wil lthis be the linK?], 
+2. Choose a title **title**. This will become the URL. 
 3. Set a **description**. This is the value that will show up in link previews. If you leave it empty, it will default to the sitewide description. 
 4. Create your **content**. Use the rich text editor to put your content together here. 
 
@@ -136,5 +136,3 @@ You'll notice there are two date fields:
 **Media Date** and **Year**. 
 
 **Media Date** is the date that will render on the site for people to see. **Year** is the four-digit representation of the year for us to use to filter out which media hits appear on the home page. You can write the **Media Date** in any format you choose, depending on how you prefer. But the **Year** field **must be four digits** in order for the filtering system to work. 
-
-## Site settings 
