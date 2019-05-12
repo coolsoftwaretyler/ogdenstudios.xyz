@@ -34,14 +34,13 @@ From the CMS home screen, click **Pages**. You'll see a page that looks like:
 
 ### Create a new page 
 
-To create a new page, click the **Create new** button at the top of the screen. A dropdown will appear. You can select **Pages** to make a new page, it will become a top level link, like: `https://shaleentitle.com/new-page-title`.
+To create a new page, click the **Create new** button at the top of the screen. A dropdown will appear. You can select **Pages** to make a new page. When you make a new page, it will become a top level link. So a page called **Test Page** would create a link at: `https://shaleentitle.com/test-page`.
 
 On the next page, you can: 
 
-1. Select a **layout** (you should keep this value set to **page**).
-2. Choose a title **title**. This will become the URL. 
-3. Set a **description**. This is the value that will show up in link previews. If you leave it empty, it will default to the sitewide description. 
-4. Create your **content**. Use the rich text editor to put your content together here. 
+1. Choose a title **title**. This will become the URL. 
+2. Set a **description**. This is the value that will show up in link previews. If you leave it empty, it will default to the sitewide description. 
+3. Create your **content**. Use the rich text editor to put your content together here. 
 
 Here's what a sample page creation might look like: 
 
@@ -67,11 +66,11 @@ Click **Posts** on the left-hand menu of the CMS. You'll see a page that looks l
 
 ![Posts page](/img/forestry-instructions/posts-page.png)
 
-Click **Create new**. You can choose the same options as pages: creating **Posts** or a **Folder**. A new folder will change the URL structure. My suggestion is you keep all blog posts in the same place, and only ever create new **Posts** here. 
+Click **Create new** to create a blog post.
 
 ### Create a blog post 
 
-As with the new page interface, choose a **layout**, **title**, and **description**. Then create your blog post. This process might look something like this: 
+As with the new page interface, choose a **title**, **description**, and **create your blog post**. This process might look something like this: 
 
 ![Creating a post](/img/forestry-instructions/create-a-post.png)
 
@@ -87,7 +86,7 @@ Deleting a blog post is the same process as deleting a page, but choose a blog p
 
 ## News posts 
 
-Creating, editing, and deleting news posts is the same as Blog posts, except it happens on the **News** interface, and when you click **Create new**, make sure you select **News update** as its template.
+Creating, editing, and deleting news posts is the same as Blog posts, except it happens on the **News** interface.
 
 ## Awards 
 
@@ -136,3 +135,37 @@ You'll notice there are two date fields:
 **Media Date** and **Year**. 
 
 **Media Date** is the date that will render on the site for people to see. **Year** is the four-digit representation of the year for us to use to filter out which media hits appear on the home page. You can write the **Media Date** in any format you choose, depending on how you prefer. But the **Year** field **must be four digits** in order for the filtering system to work. 
+
+## Images 
+
+One of the biggest quirks about the Forestry content management system is its image handling. Since it commits directly to the GitHub repository, and doesn't have a traditional database, adding images is a two step process. 
+
+### Upload the images to the repository 
+
+If you're going to add an image to a page, blog post, or news update, the first step is to upload that image to the repository. Click **Media** on the left hand menu, and you'll see a screen like this: 
+
+![Media manager](/img/forestry-instructions/media-manager.png)
+
+Click **Upload** and select the photo from your computer. Forestry will add it to the repository and update the media library, like this: 
+
+![Media added](/img/forestry-instructions/media-added.png)
+
+### Add the image to a page, blog post, or news update 
+
+As we've done in the **Edit** section for pages, blogs, and news updates - enter the editor. 
+
+When in the editor, click on **Insert image** in the rich text editor. You can see it here: 
+
+![Insert image](/img/forestry-instructions/insert-image.png)
+
+Click **Open** to choose an image from your media library and add it to the page. 
+
+You *can* add images by URL, but I'd recommend **only adding images if they're at a URL you control**. If you don't control the image source, it could get deleted, changed, or otherwise negatively impact your site's speed and performance. It's always better to have direct control of your media, and for media to live **on the website's server**, if possible. 
+
+Once you've added an image, it'll look like this: 
+
+![Image in CMS](/img/forestry-instructions/image-in-cms.png)
+
+And the published page will end up looking like: 
+
+![Image in website](/img/forestry-instructions/image-in-website.png)
