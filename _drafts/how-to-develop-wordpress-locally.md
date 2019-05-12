@@ -4,11 +4,6 @@ title: 'How to develop WordPress locally and deploy to production'
 tags: ['']
 description: ''
 ---
-<style>
-html {
-    background-color: white !important
-}
-</style>
 ## Install the local server application
 
 We'll use [Local by Flywheel](https://localbyflywheel.com/pricing/#) as a local WordPress development environment. Local is relatively new, although it does most of what  has excelled at for a long time. 

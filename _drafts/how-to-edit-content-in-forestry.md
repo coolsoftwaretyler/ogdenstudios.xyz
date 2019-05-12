@@ -4,12 +4,6 @@ title: 'How to edit content in Forestry'
 tags: ['']
 description: ''
 ---
-<style>
-html {
-    background-color: white !important
-}
-</style>
-
 I integrated [shaleentitle.com](https://www.shaleentitle.com) with [Forestry](https://forestry.io/). 
 
 Follow these steps to use Forestry to create, update, and delete content on shaleentitle.com. 
