@@ -52,11 +52,125 @@ Again, you can view the full source code [here](https://github.com/ogdenstudios/
 
 ### Dependencies and variables 
 
+I set up the dependencies and variables like so: 
+
+```
+var d = new Date();
+d.setDate(d.getDate() - 1);
+var date = d.toISOString().split('T')[0];
+var env = 'test';
+var https = require('https');
+var openStatesQuery = createOpenStatesQuery(date);
+var secrets = require('./secrets.json');
+var Twitter = require('twitter');
+var twitter = new Twitter({
+  consumer_key: secrets.api_key,
+  consumer_secret: secrets.api_secret_key,
+  access_token_key: secrets.access_token,
+  access_token_secret: secrets.access_token_secret,
+});
+var url = 'openstates.org';
+```
+
+- I set `date` to the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format date of **yesterday**. I'll use this to grab bill activity from the previous day. 
+- `env` is set to `test` by default. 
+- I load in the [Node.js https module](https://nodejs.org/api/https.html) as `https`. 
+- I use my `createOpenStatesQuery()` function to create my initial openStatesQuery, using the `date` variable. 
+- I load in my sensitive information as `secrets`. The `secrets.json` file is never checked into version control. 
+- I load the [Twitter for Node.js](https://www.npmjs.com/package/twitter) npm package as `Twitter`.
+- I set the `twitter` variable (note the case difference) to a new instance of `Twitter`, using my `secrets`. 
+- I set the `url` to `openstates.org` for convenience. 
+
 ### The Lambda handler 
+
+In order for AWS Lambda to invoke the function, we need to provide a [handler](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html). My handler looks like this: 
+
+```
+exports.handler = function (event, context, callback) {
+  console.log(event);
+  console.log(context);
+  env = 'production';
+  getIt(openStatesQuery, []);
+  callback(null, 'Success from lambda');
+};
+```
+
+The parameters are standard from AWS. I set up a few `console.log()` statements for my own debugging and curiosity (I wanted to see what the `event` and `context` parameters looked like). I set `env` to `production`, which will come into play later on. As I wrote before, `env` is set to `test` by default. Overwriting it only happens when someone calls the `handler` export, which is what's happening with AWS Lambda. 
+
+After that, I run the `getit()` function. I'll explain it in more detail later on, but that's all this script really does! One function call and it executes my logic. 
+
+After getit(), I run a callback. I don't have much meaningful to provide to it, so I add another debugging statement `Success from lambda`, again more as a curiosity for myself than a functional bit. I think the `callback` parameter can do more interesting work for complex Lambda functions, but it's not necessary for Openerr. 
 
 ### createOpenStatesQuery()
 
+The first function that fires is `createOpenStatesQuery()`. In the dependencies and variables step, I set `var openStatesQuery = createOpenStatesQuery(date);`. This creates the initial query based on the `date` variable, which represents the previous day. 
+
+`createOpenStatesQuery()` looks like: 
+```
+function createOpenStatesQuery(date, cursor = null) {
+  var query = `
+        {
+            search: bills(first:100, after:"${
+    cursor ? cursor : ''
+    }", jurisdiction: "Colorado", actionSince: "${date}") {
+                edges {
+                    node {
+                        id,
+                        title,
+                        identifier,
+                        openstatesUrl,
+                        actions {
+                            description
+                            date
+                        }
+                    }
+                }
+                pageInfo {
+                    hasNextPage
+                    hasPreviousPage
+                    endCursor
+                    startCursor
+                }
+            }
+        }
+    `;
+  return encodeURIComponent(query);
+}
+```
+
+This mostly exists as a convenience for me. I played around with the [Open States GraphQL editor](https://openstates.org/graphql) to determine the correct query to return the results I care about. Keeping it as a [template literal](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) allows me to edit it in the code as I might edit it in the web application from Open States. It helps keep one-to-one parity with the request I care about/the request I send. In earlier iterations, I tried writing it as a string with no whitespace, but I found it difficult to match expressions, and difficult to read. 
+
+Aside from the template literal I hardcode, the function takes a `date` parameter which it uses as the argument for `actionSince` in the Open States GraphQL query. 
+
+It has an optional parameter for `cursor`. If `cursor` isn't provided, it's set to `null`. The GraphQL query will pass an empty string just fine. The cursor can be provided to allow us to page through the results if there are many. We'll talk more about that logic in the next section.
+
+This function interpolates the `date` and `cursor` values into the template literal, then runs [encodeURIComponent](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) on the result. The function then returns a string we can send as part of a GET request later on. 
+
 ### getIt() 
+
+When Lambda calls our handler, we run `getIt(openStatesQuery, []);`. This passes in the initial query created by `createOpenStatesQuery()` and an empty array. 
+
+Inside `getIt()` we do the following: 
+
+#### Set the options for the request 
+
+The `https` module allows us to pass in options, which we define as such: 
+
+```
+var options = {
+    headers: {'X-API-KEY': secrets.openStatesKey},
+    host: url,
+    path: `/graphql/?query=${query}`,
+};
+```
+
+#### Make the request 
+
+#### Handle chunked data 
+
+#### Handle the end of the request 
+
+#### Handle errors
 
 ### createBillObject
 
@@ -66,7 +180,15 @@ Again, you can view the full source code [here](https://github.com/ogdenstudios/
 
 ### tweet()
 
-### Testing exports 
+### Testing exports
+
+### Packaging up the script 
+
+### Uploading to Lambda 
+
+### Setting up CloudWatch
+
+### Other Lambda configuration
 
 ## Conclusion 
 
