@@ -18,6 +18,11 @@ code, pre {
     overflow-x: auto;
 }
 
+code {
+    max-width: 100%;
+    word-wrap: anywhere;
+}
+
 img {
     width: 100%;
 }
