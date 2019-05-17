@@ -151,7 +151,7 @@ I have no error handling, no logs, and the script is somewhat decoupled from my 
 
 I also have some discomfort using `sudo` to run a command as the `postgres` user. I did this as opposed to giving expanded permissions to other roles in the database. It feels better to keep the default PostgreSQL permissioning system and hack it in one bash script, rather than change the permissions so my one-off script can run `pg_dump` from the `ubuntu` user. I don't know what the right answer is here and would love to hear from people with a better understanding of secops. Again, the implications are limited because this app is not open for the public or customers. 
 
-## IE VM localhost
+## Testing Internet Explorer on a Mac
 
 ### The problem 
 
