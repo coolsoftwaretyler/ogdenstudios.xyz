@@ -1,5 +1,4 @@
 /* 
-   # Content-Security-Policy: default-src 'none'; font-src 'self'; frame-src https://codepen.io; img-src 'self' https://www.google-analytics.com; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://static.codepen.io/assets/embed/ei.js https://www.google-analytics.com/analytics.js https://www.googletagmanager.com/gtag/js; style-src 'self' 'unsafe-inline' 
    Referrer-Policy: same-origin
    X-Content-Type-Options: nosniff
    X-Frame-Options: DENY
