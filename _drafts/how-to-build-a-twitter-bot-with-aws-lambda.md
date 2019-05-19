@@ -164,13 +164,47 @@ var options = {
 };
 ```
 
+We use the `secrets.openStatesKey` as the `X-API-KEY` header, which [Open States requires](https://docs.openstates.org/en/latest/api/v2/index.html#basics).
+
+For convenience, the `host` option is set to the `url` variable set earlier. 
+
+This next bit tripped me up for a while. `host` needs to *only be the domain name*, and `path` is the actual path we want to hit on the API. We interpolate `query` which is passed in as a parameter to `getIt()`. 
+
 #### Make the request 
+
+With our options set up correctly, we set `var req` equal to `https.get(options, function(res) { // callback function })`. In the beginning of the callback function, we set a few `console.log()`s for personal curiosity. They aren't truly necessary, but I like to use them to debug and see what all is going on. 
+
+We also set up an empty array called `bodyChunks` to store chunks of data that come back from `https.get()`. 
+
+If this feels a bit out of your wheelhouse, consider playing around with the [learnyounode tutorial](https://github.com/workshopper/learnyounode), which really helped me understand the `http` module (and the `https` module works just about the same, but using SSL to encrypt the requests).
 
 #### Handle chunked data 
 
+In the callback function for `https.get()` we set up a handler for `data`, which takes a callback with the signature of `function (chunk) { // code }`. In our callback, all we do is `bodyChunks.push(chunk)` - which pushes the data chunk into the `bodyChunks` array we set up in the initial `https.get()` callback.
+
 #### Handle the end of the request 
 
-#### Handle errors
+When `https` indicates the response has finished, we can process the data chunks we've grabbed. 
+
+In the callback for `end`, we use [Buffer](https://nodejs.org/api/buffer.html) to concatenate the `bodyChunks` array into one `body` variable. 
+
+Then we use `JSON.parse()` to set `parsedBody` as a JSON object from the concatenated `body` variable. 
+
+We grab some helper variables to make the logic a little cleaner: 
+
+- `hasNextPage`: tells us if there are multiple pages to the response.
+- `endCursor`: provides the location of the end of the page, if there are more pages.
+- `responseData`: the actual JSON data from the response we'll use for processing.
+
+The callback then loops through the `responseData` JSON and runs `createBillObject` on each node in the JSON. We'll talk more about that function later. It creates a [JavaScript object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects) from the JSON data. Then the loop runs `bills.push(bill)` to add the object to the `bills` array, which is passed in as a parameter on `getIt()`. 
+
+On the first function call, `bills` will be an empty array. But subsequently, if `hasNextPage` is true, we create a new Open States query (with `createOpenStatesQuery()` and the `endCursor` from the request) and run `getIt()` with that new query and the `bills` array as is. 
+
+If `hasNextPage` is false, we run `startTweeting(bills)` to send out the bill tweets.
+
+#### Handle errors for https.get()
+
+`https.get()` might return some errors 
 
 ### createBillObject
 
