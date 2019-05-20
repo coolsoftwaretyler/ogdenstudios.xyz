@@ -4,6 +4,7 @@ title:  "How do I get an A+ in Mozilla Observatory with Jekyll and Netlify?"
 tags: [blog, tutorial, jekyll, netlify, observatory, security, JAMstack]
 description: "Learn how to get an A+ grade through Mozilla Observatory using Jekyll and Netlify."
 ---
+*Last updated March 3, 2019*
 
 When I need to build a blog or static site, my go-to is JAMstack with [Jekyll](https://jekyllrb.com/) and [Netlify](https://www.netlify.com/).
 

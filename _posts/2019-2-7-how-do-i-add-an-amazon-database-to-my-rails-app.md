@@ -4,6 +4,7 @@ title:  "How do I add an Amazon Database to my Rails app?"
 tags: [blog, tutorial, rails, aws, postgres, RDS]
 description: "A step-by-step tutorial for adding Amazon RDS services to your existing rails app running on Amazon EC2"
 ---
+*Last updated February 7, 2019*
 
 This is a follow up post to my blog titled: [How do I deploy a Rails 6 App to Amazon EC2?](https://ogdenstudios.xyz/2019/01/30/how-do-i-deploy-a-rails-6-app-to-amazon-ec-2.html).  
 

@@ -4,7 +4,7 @@ title: 'How to build a Twitter bot using AWS Lambda'
 tags: ['AWS', 'Lambda', 'JavaScript', 'Node.js', 'Twitter bot', 'API']
 description: ''
 ---
-*Last updated May 17, 2019*
+*Last updated May 20, 2019*
 
 It feels like everyone is talking about [Lambda functions](https://aws.amazon.com/lambda/). Amazon Web Services Lambda allows you to write code and execute it in the cloud without provisioning, maintaining, and paying for a full server instance yourself. 
 
