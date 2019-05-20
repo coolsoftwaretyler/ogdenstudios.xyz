@@ -216,7 +216,7 @@ It's nothing too fancy, but Lambda will output the `console.log()`s so we can ch
 
 ### createBillObject()
 
-In the last section TODO: link to section, I mentioned we take the response JSON and turn it into a JavaScript object with `createBillObject()`. 
+In the last section I mentioned we take the response JSON and turn it into a JavaScript object with `createBillObject()`. 
 
 `createBillObjet()` takes one param, `data`, which should be a JSON object. It then creates the `bill` variable as an object and sets the following attributes:
 
@@ -374,7 +374,7 @@ Of course, there are some limitations to my script and blog post here!
 
 #### What if there are more than 300 bills with action? 
 
-In the TODO: link here startTweeting() section, I explained the looping logic which respects the Twitter rate limits of 300 requests per 3 hours. It's certainly possible that the Colorado State Legislature might take action on more than 300 bills in a given day. Right now I'm taking the easy way out by tweeting 299 bills and sending an initial "Read more here" tweet to capture all the activity. I'm satisfied with this approach for now, but eventually I'd like to figure out a way to run this Lambda function in a way that respect the rate limits. The difficulty is that Lambda functions are limited to 15 minutes execution time max, and the rate limit window is 3 hours long, so I'd need to preserve my bills array, preserve the position I'm in, and trigger the script to fire again. I think it's possible, but I haven't gotten around to figuring it out yet. I'd love to hear your thoughts if you have a good idea about solving that problem. 
+In the `startTweeting()` section, I explained the looping logic which respects the Twitter rate limits of 300 requests per 3 hours. It's certainly possible that the Colorado State Legislature might take action on more than 300 bills in a given day. Right now I'm taking the easy way out by tweeting 299 bills and sending an initial "Read more here" tweet to capture all the activity. I'm satisfied with this approach for now, but eventually I'd like to figure out a way to run this Lambda function in a way that respect the rate limits. The difficulty is that Lambda functions are limited to 15 minutes execution time max, and the rate limit window is 3 hours long, so I'd need to preserve my bills array, preserve the position I'm in, and trigger the script to fire again. I think it's possible, but I haven't gotten around to figuring it out yet. I'd love to hear your thoughts if you have a good idea about solving that problem. 
 
 #### My test coverage is poor 
 
