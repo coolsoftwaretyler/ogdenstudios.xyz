@@ -204,11 +204,43 @@ If `hasNextPage` is false, we run `startTweeting(bills)` to send out the bill tw
 
 #### Handle errors for https.get()
 
-`https.get()` might return some errors 
+`https.get()` might return some errors, so in its callback, we set up a `console.log()` call with: 
 
-### createBillObject
+```
+req.on('error', function (e) {
+  console.log('ERROR: ' + e.message);
+});
+```
+
+It's nothing too fancy, but Lambda will output the `console.log()`s so we can check in and see what's going on should the bot stop working. 
+
+### createBillObject()
+
+In the last section TODO: link to section, I mentioned we take the response JSON and turn it into a JavaScript object with `createBillObject()`. 
+
+`createBillObjet()` takes one param, `data`, which should be a JSON object. It then creates the `bill` variable as an object and sets the following attributes:
+
+- `identifier`
+- `title`
+- `latestAction`
+- `latestActionDate`
+- `openstatesUrl`
+
+Encapsulating the bill object creation here gives us some flexibility if we end up wanting different information to get sent out, if our Open States query changes (which could change the structure of the data), or if the Open States API ever changes in a significant way. 
+
+Finally, the function returns the object for use. 
 
 ### startTweeting() 
+
+The `startTweeting()` function controls the Twitter loop. It takes two params: `bills` and `testing`. Testing is set to `false` by default, since it's reserved for a specific use-case. 
+
+We start by setting the `limit` to 0. Then we check if the `bills` array passed in as a parameter has a length of 0. If it length was 0, we `console.log()` "No bills found today" and `return false` to end the script. 
+
+If the bills length is over 300, we begin by tweeting out a message notifying readers that over 300 bills had activity the previous day, and that exceeds the rate limit for Tweeting. We then set `limit` to 299. 
+
+Finally, if `0 < bills.length < 300`, we set `limit` to `bills.length` and run a `for` loop with that many iterations. Inside the loop we use `createTweetText()` on `bills[i]` to create a tweet that complies with Twitter character limits.
+
+If `testing` has been passed in as `true`, we return the bills object to the test. If not, we use `tweet()` to send out the status created with `createTweetText()`.
 
 ### createTweetText()
 
