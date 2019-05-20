@@ -315,6 +315,10 @@ Now, when Mocha imports `index.js`, it has the following functions available:
 
 The specifics of the tests are slightly outside of the scope of this article. I tried to follow best practices as much as I could, but the use case for the script is limited enough that test coverage isn't huge. Still, it's nice to give a sense of where you might be able to add some tests to your own script if you made one. Feel free to brows `test/test.js` and read the logic there as an example. 
 
+### Run local 
+
+TODO: write up this handler
+
 ### Packaging up the script 
 
 Lambda won't run `npm install` for us. **It just runs the script handler export**. So we need to actually send our `node_modules` folder along with everything. In order to upload it, we'll need a `.zip` file. 
@@ -354,14 +358,28 @@ Heads up! Amazon has a *slightly* different syntax for cron than you might be us
 
 ## Conclusion 
 
+I had a ton of fun building this Lambda function. It was a great way to continue to hone my JavaScript and Node skills, by focusing on minimal package imports. I also feel like I have a good sense of what Lambda functions are, and that I'm *in with the cool kids* in a sense. With Lambda in my wheelhouse, I feel a wide scope of possibilities have opened to me. I hope this blog post makes you feel comfortable writing some JavaScript in the Node environment and executing it in the cloud with Amazon Lambda functions. 
+
+Of course, there are some limitations to my script and blog post here!
+
 ### Limitations
 
-Testing 
+#### What if there are more than 300 bills with action? 
 
-Loggin 
+In the TODO: link here startTweeting() section, I explained the looping logic which respects the Twitter rate limits of 300 requests per 3 hours. It's certainly possible that the Colorado State Legislature might take action on more than 300 bills in a given day. Right now I'm taking the easy way out by tweeting 299 bills and sending an initial "Read more here" tweet to capture all the activity. I'm satisfied with this approach for now, but eventually I'd like to figure out a way to run this Lambda function in a way that respect the rate limits. The difficulty is that Lambda functions are limited to 15 minutes execution time max, and the rate limit window is 3 hours long, so I'd need to preserve my bills array, preserve the position I'm in, and trigger the script to fire again. I think it's possible, but I haven't gotten around to figuring it out yet. I'd love to hear your thoughts if you have a good idea about solving that problem. 
 
-Better hooks 
+#### My test coverage is poor 
 
-Logic for 300+ tweets 
+The tests I wrote were really for my own benefit of learning the Mocha testing syntax. I don't believe they provide a tremendous amount of coverage. If this were more than a hobby project and more folks were contributing or relying on it, I'd likely set up more in-depth testing. As Openerr grows and more folks use it, this is on the agenda. 
+
+#### I'd like better logs 
+
+Using `console.log()` to log activity to AWS Lambda feels a little sloppy. In an ideal world, I'd like the script to maybe send me some emails with error reports, summaries of what happened, etc. etc. I think CloudWatch also has some capabilities around reporting that I'm not tapping into and could learn more about. 
+
+#### I'm not taking full advantage of Lambda
+
+This is somewhat related to all the previous limitations. I've just scratched the surface of Lambda and what it can do. I'd like to find a way to chain together Lambda functions to provide the option to work with the Twitter rate limits. I'd like to set up a real test environment in Lambda. I'd like to provide the proper handlers to give clear error and success reports to CloudWatch and have them sent to me for monitoring. Hopefully I'll have some time soon to explore these ideas and do some follow up blog posts about them.
+
+## Give money to Open States 
 
 If you like my project or the work Open States does, the best way to support them is [by giving money to Open States](https://openstates.org/donate/)
