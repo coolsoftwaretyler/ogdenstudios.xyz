@@ -244,6 +244,36 @@ If `testing` has been passed in as `true`, we return the bills object to the tes
 
 ### createTweetText()
 
+Twitter has a 280 character limit on tweets. Our ideal Tweet text looks like: 
+
+```
+Colorado [BILL IDENTIFIER]: [BILL TITLE]. On [DATE OF LAST ACTION], the following action was taken: [NAME OF LAST ACTION]. Read more at: [OPEN STATES BILL LINK].
+```
+
+Depending on how long each of those variables is, we might end up with a tweet above the 280 character limit. To avoid that, we use `createTweetText()` to control the Tweet composition process. 
+
+First, we set `tweetText` to an empty string. We then set `tweetBody` to:
+
+```
+`Colorado ${bill.identifier}: ${bill.title}. On ${bill.latestActionDate}, the following action was taken: ${bill.latestAction}. `
+```
+
+Because we are very certain we'll have an identifier, title, latest action date, and latest action. 
+
+Then we set up the `readMore` text, which uses a [ternary operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) to determine its final value. Some Open States bills don't have corresponding links. If the bill is missing one, `readMore` is set to an empty string. If the bill has one, we set it to `'Read more at: ' + bill.openstatesUrl.toString()`. 
+
+These two variables, `tweetBody` and `readMore` represent the fully composed Tweet we'd like. We then check if the `.length` of them is `<= 280`. If it is, we set `tweeText = tweetBody + readMore`. 
+
+If their combined length is greater than 280, we check to see if just `tweetBody.length <= 280`. If that's the case, we set `tweetText` to `tweetBody`. 
+
+Finally, if `tweetBody` is also too long, we set a default `tweetText` to: 
+
+```
+`There was action on Colorado ${bill.identifier}, but it was too long to tweet.`
+``` 
+
+Finally, we return `tweetText`, as it will be used by the `tweet()` function. 
+
 ### tweet()
 
 ### Testing exports
