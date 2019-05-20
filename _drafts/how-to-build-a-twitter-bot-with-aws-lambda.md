@@ -317,7 +317,15 @@ The specifics of the tests are slightly outside of the scope of this article. I 
 
 ### Run local 
 
-TODO: write up this handler
+At the bottom of the script you'll notice the following: 
+
+```
+if (process.argv[2] === 'local') {
+  getIt(openStatesQuery, []);
+}
+``` 
+
+This allows you to run `npm run local` in the directory of the project and see the `console.log()` output of the script. It's useful if you want to run it locally, not have to worry about testing in Lambda, and not have to worry about duplicate tweets. It's not necessary a "test", but I find it a convenient debugging tool. 
 
 ### Packaging up the script 
 
