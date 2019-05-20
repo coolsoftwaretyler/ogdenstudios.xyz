@@ -276,16 +276,92 @@ Finally, we return `tweetText`, as it will be used by the `tweet()` function.
 
 ### tweet()
 
+Our `tweet()` function is pretty much just a wrapper around the `twitter` object created by the Twitter Node package. It takes one parameter, `status`.
+
+If `env` is set to `production`, the function runs `twitter.post('statuses/update', {status: status})`. 
+
+The `.then()` function just `console.log()`s the tweet, and the `.catch()` logs out the `error` if there is one. 
+
+If `env` isn't set to `production`, we just `console.log(status)` instead of sending out the tweet. We set `env` in our different exported handlers to control this behavior. 
+
 ### Testing exports
+
+We use Mocha to test the script and set up tests in `test/test.js`. The Mocha tests import the `index.js` file and use its exports, so in order to create specific testing exports, we add: 
+
+```
+exports.testCreateOpenStatesQuery = function (date, cursor) {
+  return createOpenStatesQuery(date, cursor).raw;
+};
+
+exports.testCreateBillObject = function (data) {
+  return createBillObject(data);
+};
+
+exports.testStartTweeting = function (bills) {
+  return startTweeting(bills, true);
+};
+
+exports.testCreateTweetText = function(bill) {
+  return createTweetText(bill);
+};
+```
+
+Now, when Mocha imports `index.js`, it has the following functions available: 
+
+- `testCreateOpenStatesQuery()`
+- `testCreateBillObject()` 
+- `testStartTweeting()` 
+- `testCreateTweetText()` 
+
+The specifics of the tests are slightly outside of the scope of this article. I tried to follow best practices as much as I could, but the use case for the script is limited enough that test coverage isn't huge. Still, it's nice to give a sense of where you might be able to add some tests to your own script if you made one. Feel free to brows `test/test.js` and read the logic there as an example. 
 
 ### Packaging up the script 
 
+Lambda won't run `npm install` for us. **It just runs the script handler export**. So we need to actually send our `node_modules` folder along with everything. In order to upload it, we'll need a `.zip` file. 
+
+I wrote an npm script to make this easier. `npm run zip` is an alias for `zip -r ./openerr.zip *`. This will create (and overwrite!) `openerr.zip` in the root of the project, which is added to the `.gitignore` file. 
+
 ### Uploading to Lambda 
+
+If your `.zip` file is small enough, you can upload directly through the Lambda console. But at 10 MB and larger, AWS requires you to upload the package to an S3 bucket and select it from there. Openerr is 10.5 MB, so I set up a separate S3 bucket to hold it. S3 is outside the scope of this article, but you can [read about it in the AWS docs](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html). 
+
+- Log in to the [AWS Console](https://console.aws.amazon.com). 
+- Click **Lambda**. 
+- Click **Create function**.
+- Select a **Function name** and **Runtime** (Openerr and Node.js 8.x for our script).
+- Click **Create function** 
+- Change the **Code entry type** to **Upload a .zip file** or **Upload a file from Amazon S3**. 
+- Select the file and click **Upload**. 
+- Click **Save**. 
+
+Now the Lambda function is correctly set up! So exciting!
 
 ### Setting up CloudWatch
 
-### Other Lambda configuration
+I [use CloudWatch to schedule the Openerr Lambda function](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/RunLambdaSchedule.html). There are other ways you can set this up using hooks, but Openerr essentially just needs a cron job. 
+
+Back in the AWS console: 
+
+- Click **Services**
+- Click **CloudWatch** 
+- Click **Rules** 
+- Click **Create rule** 
+- Click **Schedule** 
+- You can either use a **Fixed rate** or **Cron expression**
+- Openerr uses a **cron expression** of `0 12 ? * * *` which runs every day at 12 GMT. 
+
+Heads up! Amazon has a *slightly* different syntax for cron than you might be used to. Here's [the documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html) for that. 
 
 ## Conclusion 
+
+### Limitations
+
+Testing 
+
+Loggin 
+
+Better hooks 
+
+Logic for 300+ tweets 
 
 If you like my project or the work Open States does, the best way to support them is [by giving money to Open States](https://openstates.org/donate/)
