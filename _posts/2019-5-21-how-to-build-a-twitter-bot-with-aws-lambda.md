@@ -12,7 +12,7 @@ I wanted to get in on the action and write my first Lambda function. I was pleas
 
 ## The Twitter bot 
 
-After college, I spent a three years working at a political non-profit. I think politics should be important to everyone, especially developers. When I do side projects, I try to work on issues that matter to me. 
+After college, I spent a three years working at a political non-profit. I think politics should be important to everyone, especially developers. When I do side projects, I try to choose projects which advance progressive politics. 
 
 One of my go-to resources for building civic projects is [Open States](https://openstates.org/). I wanted to integrate their platform with the [Twitter API](https://developer.twitter.com/en/docs.html). It's unfortunate that [Twitter loves Nazis and the revenue they generate](https://boingboing.net/2019/04/25/why-jack-hasnt-banned-nazis.html), because I think Twitter is a really excellent platform. They have a massive userbase, and the microblogging format lends itself to interesting constraints that create engaging content. Twitter bots are super interesting to me and I think there's a lot of value in using Twitter for social justice. 
 
