@@ -6,7 +6,7 @@ description: 'A step by step tutorial for building a Twitter bot with JavaScript
 ---
 *Last updated May 21, 2019*
 
-It feels like everyone is talking about the Amazon Web Services [Lambda functions](https://aws.amazon.com/lambda/). Lambda allows you to write code and execute it in the cloud without provisioning, maintaining, and paying for a full server instance. 
+It feels like everyone is talking about Amazon Web Services [Lambda functions](https://aws.amazon.com/lambda/). Lambda allows you to write code and execute it in the cloud without provisioning, maintaining, and paying for a full server instance. 
 
 I wanted to get in on the action and write my first Lambda function. I was pleased to find out how simple, versatile, and useful Lambda is. 
 
