@@ -4,6 +4,8 @@ title: 'Lessons learned: template tags, S3 backups, and IE11 virtual machines'
 tags: ['html', 'javascript', 'template tags', 'amazon web services', 'S3', 'postgresql', 'internet explorer', 'virtual machines' ]
 description: 'This week I learned about content templates, server backups with S3, and Internet Explorer testing on Macs.'
 ---
+*Last updated May 17, 2019*
+
 ## Using template tags for modals 
 
 ### The problem 
