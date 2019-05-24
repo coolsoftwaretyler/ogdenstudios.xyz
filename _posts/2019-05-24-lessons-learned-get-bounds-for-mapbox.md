@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 'Lessons learned: quick and dirty hacks to get Mapbox bounds'
+title: 'Lessons learned: get Mapbox bounds'
 tags: ['JavaScript', 'Mapbox', 'GIS']
-description: 'This week I learned about content templates, server backups with S3, and Internet Explorer testing on Macs.'
+description: 'This week I learned a bit about the Mapbox API and bounds'
 ---
 *Last updated May 24, 2019*
 
