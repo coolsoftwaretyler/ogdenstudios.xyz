@@ -1,0 +1,71 @@
+- Company: Maxar Technologies
+  Location: Westminster, CO 
+  Position: Full Stack Web Developer 
+  StartDate: November 2018 
+  EndDate: null 
+  Description: "Since joining the team, I’ve helped build two websites from scratch: DigitalGlobe and Radiant Solutions. 
+Our websites are built with Ruby on Rails. We write semantic HTML5, CSS3 with SASS, and JavaScript in ES5. When ES5 doesn’t suffice, we create reactive UX with Vue.
+I write Capistrano, Nginx, and other configuration for our EC2 servers.
+I also maintain a Craft CMS installation for the Maxar blog."
+  Skills: ['Ruby on Rails', 'HTML', 'CSS', 'JavaScript', 'Vue', 'Capistrano', 'Nginx', 'TDD', 'EC2', 'Craft CMS', 'PHP', 'ES5', 'ES6', 'TravisCI', 'Mapbox', 'API', 'Ruby', 'Node']
+  Projects:
+    - Title: Radiant Solutions 
+      Description: "I built the Radiant Solutions website from scratch using Ruby on Rails"
+    - Title: Digital Globe 
+      Description: "I built the DigitalGlobe webiste from scracth using Ruby on Rails"
+    - Title: Maxar 1.5 
+      Description: "I worked with the design team to update the current Maxar website with new brand guidelines and created modals and stuff"
+    - Title: Maxar 2.0 
+      Description: New Maxar website, block system, Vue 
+    - Title: GeoInt Conference Mapbox Demo 
+      Description: Mapbox demo for geoint 
+      
+
+- Company:
+  Location:
+  Position:
+  StartDate:
+  EndDate:  
+  Description: ""
+  Skills: []
+
+
+Ogden Studios, LLC, Denver, CO                                                                          Principal and Freelance Web Developer                          August 2017 - Present
+In my spare time, I manage a freelance web development firm.
+Shaleen Title: Designed, built, and deployed Jekyll site with Forestry CMS and Netlify CDN.
+Sheila Vakharia: Designed and implemented custom WordPress theme for personal rebrand.
+The Atwater Group: Rebuilt website using Ruby on Rails.
+
+SSDP Foundation, Denver, CO
+Website Administrator                                             July 2015 – October 2018
+Migrated legacy WordPress site to a headless CMS and Hugo front-end to improve accessibility, maintenance, performance, and security.
+Built a Ruby on Rails app that allows student chapters to update national headquarters about their activities on campus. 
+Became a Certified NationBuilder API Developer to create internal productivity applications with Python, PHP, and Ruby.
+Maintained legacy WordPress and Drupal web properties.
+
+Regional Outreach Coordinator                                       July 2015 - April 2018
+Oversaw SSDP chapters in the Heartland, Midwest, and Mountain regions
+Coached students in college and high schools to become effective change makers and political agents
+Managed statewide campaigns and regional events
+
+Fund for the Public Interest, New Haven, CT
+Field Manager                                                      May 2014 - September 2014 
+Led team of canvassers to educate, politically engage, and fundraise for environmental issues.
+Organized campaign events: petition drives, community outreach, meetings with federal legislators.
+Trained incoming field managers and canvassers.
+
+Cigna, Storrs, CT
+Mobile Development Intern                             September 2013 - January 2014 
+Designed and built a static internal website to explain and justify implementation of DevOps in the mobile development department.
+
+Sealed Air, Danbury, CT
+Electrical Engineering Intern                                       May 2012 - August 2013
+Developed user interfaces for embedded systems and microcontrollers using the .NET micro framework.
+Designed internal control systems for use in industrial packaging machines.
+Documented, assembled, and installed prototypes of packaging machines.
+
+Center for 21st Century Skills, Litchfield CT
+Technical Assistant                                                         May 2011 - May 2012
+Developed an iOS Application in Objective-C to assist with field research on public education.
+Supervised technology needs for the Connecticut Student Film Festival. 
+Assisted with research on the organization’s White Paper on Blended Instruction.
