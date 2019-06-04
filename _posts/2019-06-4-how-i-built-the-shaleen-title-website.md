@@ -1,8 +1,8 @@
 ---
 layout: post
 title: 'How I built shaleentitle.com'
-tags: ['Jekyll', 'Netlify', 'Forestry', 'Static site generators']
-description: 'A write up about my work for Shaleen Title's personal website. How I built it and why I made those choices.'
+description: 'A write up on how I built the Shaleen Title website with Jekyll, Netlify and Forestry.'
+tags: ['static site generators', 'jekyll', 'forestry', 'netlify', 'forestry']
 ---
 *Last updated June 4, 2019*
 
