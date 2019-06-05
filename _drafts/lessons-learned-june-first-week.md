@@ -48,3 +48,7 @@ describe "GET /admin/components/circle_components.json" do
   ```
 
 Looking for 401, not 302. 
+
+Postman null_session 
+
+https://stackoverflow.com/questions/16258911/rails-4-authenticity-token
