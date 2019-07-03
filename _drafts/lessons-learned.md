@@ -43,3 +43,5 @@ gulp.task('default', gulp.series('styles', function(){
     gulp.watch('*.html').on('change', browserSync.reload);
 }));
 ```
+
+https://medium.com/@brockreece/scoped-styles-with-v-html-c0f6d2dc5d8e
