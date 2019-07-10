@@ -24,3 +24,5 @@ export default {
 ```
 
 something else about how we do these.
+
+https://medium.com/@brockreece/scoped-styles-with-v-html-c0f6d2dc5d8e
