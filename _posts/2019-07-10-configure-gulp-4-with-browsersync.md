@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Lessons learned: Configuring Gulp 4 with Browsersync'
+title: 'Configuring Gulp 4 with Browsersync'
 tags: ['gulp', 'gulp 4', 'browsersync', 'javascript']
 description: 'Last week I cleared a personal blocker: getting Browsersync to work with Gulp 4, despite confusing documentation.'
 ---

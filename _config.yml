@@ -47,8 +47,6 @@ sass:
 collections: 
   projects:
     output: false
-  tidbits:
-    output: true
 
 # Plugins
 plugins: 

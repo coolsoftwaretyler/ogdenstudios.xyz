@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Lessons learned: thinking with portals'
+title: 'Thinking with portals'
 tags: ['Portals', 'Chrome']
 description: 'This week I played around with the new portal element in chrome.'
 ---

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Lessons learned: default has_one associations in Rails'
+title: 'Default has_one associations in Rails'
 tags: ['rails', 'associations', 'has_one', 'defaults', 'database']
 description: 'This week I spent some time working with Rails has_one associations and setting default values for them.'
 ---

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Lessons learned: testing JSON routes in Rails'
+title: 'Testing JSON routes in Rails'
 tags: ['RSpec', 'JSON', 'Routing']
 description: 'This week I learned a few tricks for testing JSON routes with Ruby on Rails'
 ---

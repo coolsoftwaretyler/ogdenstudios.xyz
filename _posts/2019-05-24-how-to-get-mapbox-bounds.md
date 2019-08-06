@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Lessons learned: get Mapbox bounds'
+title: 'How to get Mapbox bounds'
 tags: ['JavaScript', 'Mapbox', 'GIS']
 description: 'This week I learned a bit about the Mapbox API and bounds'
 ---

@@ -1,8 +1,8 @@
 ---
 layout: post
 title: How do I export data from Heroku Postgresql to CSV?
-category: ["heroku", "postgresql"]
-date: 2019-03-19
+tags: ["heroku", "postgresql"]
+description: "A quick tidbit about exporting data from Heroku to CSV"
 ---
 [Source](https://www.codeography.com/2016/02/11/export-heroku-postgres-to-csv.html)
 

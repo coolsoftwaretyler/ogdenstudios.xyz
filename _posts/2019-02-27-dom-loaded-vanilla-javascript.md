@@ -1,8 +1,8 @@
 ---
 layout: post
 title: How do I run JavaScript when the DOM is ready - without jQuery?
-category: ["vanilla javascript"]
-date: 2019-02-27
+tags: ["vanilla javascript"]
+description: "How to wait for the document to be ready without jQuery"
 ---
 
 I often rely on jQuery purely for the `$("document").ready` function - which feels wrong. 

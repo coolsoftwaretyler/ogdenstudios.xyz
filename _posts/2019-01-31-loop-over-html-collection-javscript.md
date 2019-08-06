@@ -1,8 +1,8 @@
 ---
 layout: post
 title: How do I loop over an HTML Collection in JavaScript?
-category: ["javascript"]
-date: 2019-01-31
+tags: ["javascript"]
+description: 'Loop over HTML collections correctly'
 ---
 [Source](https://stackoverflow.com/questions/22754315/for-loop-for-htmlcollection-elements)
 
