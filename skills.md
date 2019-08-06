@@ -6,12 +6,14 @@ permalink: /skills/
 weight: 30
 ---
 
-Front End Languages and Frameworks
+Front End Languages and Frameworks:
 - Bootstrap 
 - CSS3 
+- Eleventy
+- Foundation
 - HTML5 
 - Hugo 
-- JavaScript 
+- JavaScript (ES5, ES6)
 - Jekyll
 - React 
 - Vue
@@ -20,11 +22,11 @@ Back End Languages and Frameworks
 
 - Flask 
 - Node.js
-- Python 
 - PHP 
-- Ruby 
+- Python 
 - Rails 
 - RESTful APIs 
+- Ruby 
 
 Website Administration
 
