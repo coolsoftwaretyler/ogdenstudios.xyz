@@ -4,7 +4,7 @@
   StartDate: November 2018 
   EndDate: null 
   Description: "Since joining the team, I’ve helped build two websites from scratch: DigitalGlobe and Radiant Solutions. 
-Our websites are built with Ruby on Rails. We write semantic HTML5, CSS3 with SASS, and JavaScript in ES5. When ES5 doesn’t suffice, we create reactive UX with Vue.
+Our websites are built with Ruby on Rails. We write semantic HTML5, CSS3 with Sass, and JavaScript in ES5. When ES5 doesn’t suffice, we create reactive UX with Vue.
 I write Capistrano, Nginx, and other configuration for our EC2 servers.
 I also maintain a Craft CMS installation for the Maxar blog."
   Skills: ['Ruby on Rails', 'HTML', 'CSS', 'JavaScript', 'Vue', 'Capistrano', 'Nginx', 'TDD', 'EC2', 'Craft CMS', 'PHP', 'ES5', 'ES6', 'TravisCI', 'Mapbox', 'API', 'Ruby', 'Node']
@@ -12,7 +12,7 @@ I also maintain a Craft CMS installation for the Maxar blog."
     - Title: Radiant Solutions 
       Description: "I built the Radiant Solutions website from scratch using Ruby on Rails"
     - Title: Digital Globe 
-      Description: "I built the DigitalGlobe webiste from scracth using Ruby on Rails"
+      Description: "I built the DigitalGlobe website from scracth using Ruby on Rails"
     - Title: Maxar 1.5 
       Description: "I worked with the design team to update the current Maxar website with new brand guidelines and created modals and stuff"
     - Title: Maxar 2.0 
