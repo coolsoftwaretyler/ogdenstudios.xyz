@@ -4,5 +4,5 @@ description: I created a Vue/Nuxt application to highlight Maxar's space infrast
 link: https://explorespace.maxar.com
 live: true
 skills: ['CSS', 'HTML', 'JavaScript', 'Nuxt', 'Vue']
-weight: 21
+weight: 22
 ---

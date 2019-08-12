@@ -4,5 +4,5 @@ description: I worked with Maxar Marketing to create an interactive slippy map w
 link: https://microsites.digitalglobe.com/interactive/automotive2019/
 live: true
 skills: ['CSS', 'HTML', 'JavaScript', 'Mapbox']
-weight: 23
+weight: 24
 ---
