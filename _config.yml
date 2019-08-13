@@ -47,6 +47,8 @@ sass:
 collections: 
   projects:
     output: false
+  notes: 
+    output: true
 
 # Plugins
 plugins: 
