@@ -1242,3 +1242,369 @@ This is different because the `yield` is waiting for the resolutions of the prom
 It's basically the gate pattern, so we could also use that. 
 
 All of the concurrency capabilities of Promises are available to us in the generator + Promise approach. Any place you need more than sequential this-then-that async flow, Promises are likely your best bet. 
+
+* * * 
+
+# Generator Delegation
+
+So far we've been calling regular functions from inside generators. This is fine, but the normal functions don't get to play like generators. So the logical question is "can we call a generator from within a generator? 
+The best way to do this called *yield delegation*.
+
+The special syntax for yield delegation is `yield * __` (notice the extra `*`).
+
+Consider: 
+
+```
+function *foo() {
+    console.log("*foo is starting");
+    yield 3;
+    yield 4;
+    console.log("*foo finished");
+}
+
+function *bar() {
+    yield 1; 
+    yield 2;
+    yield *foo(); // yield-delegation
+    yield 5;
+}
+
+var it = bar();
+
+it.next().value // 1 
+it.next().value // 2
+it.next().value // *foo() starting
+                // 3
+it.next().value // 4
+it.next().value // *foo() finished
+                // 5
+```
+
+So how does `yield *foo()` delegation work? 
+
+First, calling foo() creates an `iterator` exactly as we've already seen. Then `yield *` delegates/transfers the `iterator` instance control (of th epresent `*bar()` generator) to the other `*foo()` iterator. 
+
+## But why?
+
+`yield` delegation is mostly for code organization in a way that is symmetrical with normal function calling. If we have multiple functions defined for good code separation of concerns, and we need them to run as anticipated as generators, we want to use this pattern to organize the syntax but maintain expected behavior. 
+
+* * * 
+
+# Generator Concurrency 
+
+Lots of the concurrency interleaving examples so far have been somewhat cofusing, but here is a secenario where it's clearly useful: 
+
+Consider the example of making two different, simultaneous Ajax requests and coordinating them so their data communication is not a race condition. In the earlier addressing, we slotted the responses into an array like this: 
+
+```
+function response(data) {
+    if (data.url == "https://some.url.1") {
+        res[0] = data;
+    } else if (data.url == "https://some.url.2") {
+        res[1] = data;
+    }
+}
+```
+
+We can use multiple generators concurrently for this scenario. Instead of having to manually sort out `res[0]` and `res[1]` assignment, we can use coordinated ordering so `res.push(..)` properly slots the values in the expected and predictable order. This should feel cleaner. 
+
+Imagine doing this manually with promises: 
+
+```
+var rest = [];
+
+// Assume `request()` is a Promise-aware Ajax utility
+function *reqData(url) {
+    res.push(yield request(url);)
+}
+
+var it1 = reqData("https://some.url.1");
+var it2 = reqData("https://some.url.2");
+
+var p1 = it1.next();
+var p2 = it2.next();
+
+p1
+.then( function(data) {
+    it1.next(data);
+    return p2;
+})
+.then( function(data) {
+    it2.next(data);
+});
+```
+
+`reqData()`'s two instances are both started to make their Ajax requests, then paused with yield. Then we choose to resume the first instance when p1 resolves, and then p2's resolution will restart the second instance. 
+
+In this way, we use Promise orchestration to ensure that `res[0]` will have the first response and `res[1]` will have the second response. 
+
+But it's still pretty manual, and doesn't let the generators orchestrate themselves. 
+
+Let's try this: 
+
+```
+// `request()` is a Promise-aware Ajax utility 
+
+var res = [];
+
+function *reqData(url) {
+    var data = yield request(url);
+
+    // transfer control 
+    yield;
+    req.push(data);
+}
+
+var it1 = reqData("http://some.url.1");
+var it2 = reqData("https://some.url.2");
+
+var p1 = it.next();
+var p2 = it.next();
+
+p1.then(function(data){ 
+    it1.next(data);
+});
+
+p2.then(function(data) {
+    it2.next(data);
+});
+
+Promise.all([p1, p2])
+.then(function(){
+    it1.next();
+    it2.next();
+});
+```
+
+This is better, but still manual. Buut now the two instances of `*reqData()` run concurrently and independently. 
+
+But there are hints of better reusability here. We could do something like this with a utility called `runAll()` in theory: 
+
+```
+// `request()` is a promise-aware Ajax utility 
+
+var res = [];
+
+runAll(
+    function*() {
+        var p1 = request("https://some.url.1");
+
+        // transfer control 
+        yield;
+
+        res.push(yield p1);
+    },
+    function*() {
+        var p2 = request("https://some.url.2");
+
+        // transfer control 
+        yield;
+
+        res.push(yield p2);
+    }
+)
+```
+
+Here's how this would run: 
+
+1. the first generator gets a promise fro the first Ajax response from URL 1, then yields control back to the runAll() utility.
+2. The second generator runs and does the same for URL 2, yielding control back to the runAll() utility 
+3. The first generator resumes and then yields out its promise p1. The runAll() utility does the same in this case as our previous run() in that it waits on the promise to resolve, then resumes the same generator. When p1 resolves, runAll() resumes the first generator again with that resolution value, and then res[0] is given its value. When the first generator finishs, that's an implicit transfer of control. 
+4. The second generator resumes, yields out its promise p2 and waits for it to resolve. Once it does, runAll() resumes the second generator with that value, and res[1] is set. 
+
+But we could extend this to provide an inner variable space for multiple generator instances to share. It could take non-Promise values that are yielded and hand them off to the next generator. 
+
+* * * 
+
+# Thunks 
+
+Yielding a Promise from a generator and having that Promise resume the generator with a helper utility like `run()` is the best way to manage asynchrony with generators. 
+
+But there's another pattern that's appeared in the past called *thunks*. 
+
+A thunk is a function wired to call another function. You wrap a function definition around function call (with any params it needs) to defer the execution of that call, and that wrapping function is a thunk. When you execute the thunk, you call the original function. 
+
+The author goes on to demo them and add them to the generator chaining, but I'm skipping this section to move forward for now. 
+
+* * * 
+
+# Transpiling Generators 
+
+Generators are entirely new JS syntax in ES6. They can, in fact, be transpiled to ES5. We can do this with closure-based *iterators*. 
+
+Consider: 
+
+```
+// request() is a promise-aware Ajax utility 
+
+function *foo(url) {
+    try {
+        console.log("requesting: ", url);
+        var val = yield request(url);
+        console.log(val);
+    } 
+    catch (err) {
+        console.log("Oops: ", err);
+        return false;
+    }
+}
+
+var it = foo("http://some.url.1");
+```
+
+So we'll still need the normal `foo()` function to be called, and it will need to return an *iterator*. Let's sketch out the non-generator transformation: 
+
+```
+function foo(url) {
+    // .. 
+    // make and return an iterator 
+    return {
+        next: function(v) {
+            // .
+        }, 
+        throw: function(e) {
+            // .
+        }
+    };
+}
+
+var it = foo("http://some.url.1");
+```
+
+The generator does its "magic" by suspending its scope/state. We can emulate that with function closure. Let's annotate different parts of our generatore with state values: 
+
+```
+// request() is a Promise-aware Ajax utility 
+
+function *foo(url) {
+    // STATE 1 
+
+    try {
+        console.log("requesting: ", url);
+        var TMP1 = request(url);
+
+        // STATE 2 
+        var val = yield TMP1;
+        console.log(val);
+    }
+    catch (err) {
+        // STATE 3 
+        console.log("Oops: ", err);
+        return false
+    }
+}
+```
+
+1 is the beginning state. 
+
+2 is the state if the request succeeds. 
+
+3 is the state if the request fails. 
+
+Extra yield steps might be encoded as extra states. 
+
+Back in the transpiled generator, define a variable `state` in the clouser we can use to keep track of state: 
+
+```
+function foo(url) {
+    // manage generator state 
+    var state;
+
+    // ..
+}
+```
+
+Now define an inner function called `process()` inside the closure which handles each state with a `switch` statement
+
+```
+// request() is a promise-aware Ajax utility 
+
+function foo(url) {
+    // manage generator state 
+
+    var state; 
+
+    // generator-wide variable declarations 
+
+    var val;
+
+    function process(v) {
+        switch(state) {
+            case 1: 
+                console.log('requesting: ', url);
+                return request(url);
+            case 2: 
+                val = v;
+                console.log(val);
+                return;
+            case 3: 
+                var err = v;
+                consoel.log("Oops: ", err);
+                return false
+        }
+    }
+
+    // make and return an interator 
+    return {
+        next: function(v) {
+            //initial state 
+            if(!state) {
+                state = 1;
+                return { 
+                    done: false, 
+                    value: process()
+                };
+            }
+            // yield resumed successfully 
+            else if (state == 1) {
+                state = 2; 
+                return {
+                    done: true, 
+                    value: process(v)
+                }
+            }
+            // generator already completed 
+            else {
+                return {
+                    done: true,
+                    value: undefined
+                };
+            }
+        },
+        "throw": function(e) {
+            // the only explicit error handling is in state 1 
+            if (state == 1) {
+                state = 3;
+                return {
+                    done: true,
+                    value: process(e)
+                }
+            }
+            // otherwise, an error won't be handled, so just throw it right back out 
+            else {
+                throw e;
+            }
+        }
+    }
+}
+```
+
+So how does this work? 
+
+1. The first call to the *iterator*'s `next()` call would move the generator from the unitialized state to state 1, and then call the `process()` function to handle that state. The return value from `request()`, which is a promise for the Ajax response, is returned back as the value property from the `next()` call. 
+2. If the Ajax request succeeds, the second call to `next()` should send in the Ajax response value, which moves our state to 2. `process()` is again called (with the passed in Ajax response value), and the value property returned from `next()` will be undefined. 
+3. However, if the Ajax request fials, `throw()` should be called with the error, which would move the state from 1 to 3 (instead of 2). Again, `process()` is called, this time with the error value. That `case` returns `false`, which is set as the value property returned from the `throw()` call. 
+
+* * * 
+
+# Review 
+
+Generators are a new ES6 function type that does not run-to-completion like normal functions. Instead, the generator can be paused in mid-completion (entirely preserving its state), and it can later be resumed from where it left off. 
+
+This pause/resume interchange is cooperative rather than preempetive, which means that the generator has the sole capability to pause itself, using `yield`.  Yet, the iterator that controls the generator has the sole capability to resume the generator. 
+
+The `yield/next` duality is not just a control mechanism, it's a two-way message passing mechanism. A `yield` expression pauses waiting for a value, and the next `next()` call passes a value (or implicit undefined) back to that paused yield expression. 
+
+The key benefit of generators related to async flow control is that the code inside a generator expresses a sequence of steps for the task in a naturally sync/sequesntial fashion. The trick is that we essentially hid epotential asynchrony behind the yield keyword - moving the asynchrony to the code where the generator's iterator is controller. 
+
+In other words, generators preserve a sequential, synchronous, blocking code pattern for async code, which lets our brains reason about the code much more naturally, addressing one of the two key drawbacks of callback based async. 
