@@ -5,8 +5,6 @@ tags: ['gulp', 'gulp 4', 'browsersync', 'javascript']
 description: 'Last week I cleared a personal blocker: getting Browsersync to work with Gulp 4, despite confusing documentation.'
 ---
 
-## Configuring Gulp 4 with Browsersync
-
 Last week my team began prototyping a small web app. The scope of the project was small enough to rule out a full Rails site or JavaScript framework, but we still wanted to have some tooling available such as [Sass](https://sass-lang.com/) and [Browsersync](https://www.browsersync.io/).  
 
 Our preferred way to bring these tools together is by using [Gulp](https://gulpjs.com/). But we always run into a gotcha when configuring Browsersync with Gulp - the Browsersync docs aren't updated for Gulp 4. 

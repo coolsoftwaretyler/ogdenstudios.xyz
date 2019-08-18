@@ -5,8 +5,6 @@ tags: ['RSpec', 'JSON', 'Routing']
 description: 'This week I learned a few tricks for testing JSON routes with Ruby on Rails'
 ---
 
-## Testing JSON Routes with RSpec
-
 This week I improved test coverage for our Rails controllers. We had 0% coverage on our JSON formats in the controller actions. After some troubleshooting, I was able to increase that to 100% coverage. Here are some tricks I learned along the way: 
 
 First, it's always nice to have the [RSpec docs handy](https://relishapp.com/rspec/rspec-rails/docs/request-specs/request-spec#requesting-a-json-response). 

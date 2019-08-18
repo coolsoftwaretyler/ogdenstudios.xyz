@@ -5,8 +5,6 @@ tags: ['rails', 'associations', 'has_one', 'defaults', 'database']
 description: 'This week I spent some time working with Rails has_one associations and setting default values for them.'
 ---
 
-## Default has_one associations in Rails 
-
 This week my team was working on a component that needs a default image. 
 
 We're using `has_one` to set up a relationship between the component and `imageable`. 
