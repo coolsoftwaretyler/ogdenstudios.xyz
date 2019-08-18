@@ -1,5 +1,6 @@
-$nav-breakpoint: 768px;
+$nav-breakpoint: 637px;
 nav {
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     margin: 0 auto;
@@ -14,8 +15,7 @@ nav {
         list-style: none;
         padding-left: 0;
         @media all and (max-width: $nav-breakpoint) {
-            flex-wrap: wrap;
-            justify-content: space-between;
+            display: block
         }
     }
     li {
@@ -24,10 +24,15 @@ nav {
             margin: 28px 56px 28px 0;
         }
     }
-    .brand {
-        height: 100px;
-        margin-left: 0;
-        margin-right: 48px;
-        width: 100px;
+    @media (max-width: $nav-breakpoint) {
+        background: $color__gray;
+        height: 100%;
+        left: -9999px;
+        position: absolute;
+        transition: left 0.1s ease-in-out;
+        width: 100%;
+        &.is-active {
+            left: 0;
+        }
     }
 }

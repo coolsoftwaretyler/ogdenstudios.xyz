@@ -1,13 +1,30 @@
 .home {
-    display: flex;
-    flex-wrap: wrap;
+    &__container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        @media (max-width: 787px) {
+            flex-direction: column-reverse;
+        }
+    }
     &__headshot {
-        background-image: url('/img/tyler.jpg');
-        background-size: cover !important;
-        background-repeat: no-repeat !important;
-        border-radius: 50%;
-        height: 100px;
-        margin: 0 1em 1em 0;
-        width: 100px;
+        margin-bottom: 1em;
+        min-width: 250px;
+        width: 33%;
+        img {
+            border-radius: 50%;
+        }
+    }
+    &__lead {
+        box-sizing: border-box;
+        padding-right: 1em;
+        width: 66%;
+        @media (max-width: 787px) {
+            padding-right: 0;
+            width: 100%;
+        }
+        p:first-of-type {
+            margin-top: 0;
+        }
     }
 }

@@ -1,10 +1,15 @@
 <header role="banner">
-    <nav>
-        <a href="/"><img class="brand" alt="" src="/img/ogden-transparent.png"></a>
+    <nav id="navbar">
         <ul>
+            <li><a href="/">Home</a></li>
             {% for page in (site.pages | sort: 'weight') %} {% if page.nav %}
             <li><a href="{{page.permalink}}">{{ page.title }}</a></li>
             {% endif %} {% endfor %}
         </ul>
     </nav>
+    <button id="hamburger" class="hamburger hamburger--slider" type="button">
+        <span class="hamburger-box hamburger--slider">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
 </header>
