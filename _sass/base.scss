@@ -31,5 +31,8 @@ img {
     box-sizing: border-box;
     margin: 0 auto;
     max-width: 900px;
-    padding: 1em;
+    padding: 0 1em 1em 1em;
+    h1:first-of-type {
+        margin-top: 0;
+    }
 }

@@ -4,6 +4,7 @@
 
 layout: page
 ---
+<h1>Ogden Studios</h1>
 <div class="home">
     <div class="home__container">
         <div class="home__lead">
