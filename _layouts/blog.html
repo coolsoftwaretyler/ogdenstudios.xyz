@@ -3,7 +3,7 @@ layout: default
 ---
 <div class="blog">
     <h1>Blog</h1>
-	{{ content }} 
+    {{ content }}
     {%- if site.posts.size > 0 -%}
     <ul class="post-list">
         {%- for post in site.posts -%}
@@ -12,9 +12,9 @@ layout: default
             {%- assign date_format = "%b %-d, %Y" -%}
             <h3>
                 <a class="post-link" href="{{ post.url | relative_url }}">
-              {{ post.title | escape }} {{ post.category}}
-            </a>
-            <p class="post-meta">{{ post.date | date: date_format }}</p>
+                    {{ post.title | escape }} {{ post.category}}
+                </a>
+                <p class="post-meta">{{ post.date | date: date_format }}</p>
             </h3>
             <p>{{post.description}}</p>
             {%- if site.show_excerpts -%} {{ post.excerpt }} {%- endif -%}
@@ -24,5 +24,3 @@ layout: default
     </ul>
     {%- endif -%}
 </div>
-
-
