@@ -3,37 +3,54 @@
   Position: Full Stack Web Developer 
   StartDate: November 2018 
   EndDate: null 
-  Description: "Since joining the team, I’ve helped build two websites from scratch: DigitalGlobe and Radiant Solutions. 
-Our websites are built with Ruby on Rails. We write semantic HTML5, CSS3 with Sass, and JavaScript in ES5. When ES5 doesn’t suffice, we create reactive UX with Vue.
-I write Capistrano, Nginx, and other configuration for our EC2 servers.
-I also maintain a Craft CMS installation for the Maxar blog."
+  Description: >
+  I work with the Maxar Creative Services team to develop full-stack web applications for internal and external use. We function as the in-house creative agency for Maxar and field requests for internal stakeholders.
+  We use the Ruby on Rails framework for most of our websites. When we aren't building sites in Rails, we write our apps with Vue, CraftCMS, or static site generators.
+  I've contributed to three of our corporate websites; DigitalGlobe, Maxar, and Radiant Solutions. I've also worked on standalone marketing assets; Space capabilities microsite (built in Nuxt), Building Footprints Slippy Map (static site with Mapbox), Automotive Slippy Map (static site with Mapbox). 
   Skills: ['Ruby on Rails', 'HTML', 'CSS', 'JavaScript', 'Vue', 'Capistrano', 'Nginx', 'TDD', 'EC2', 'Craft CMS', 'PHP', 'ES5', 'ES6', 'TravisCI', 'Mapbox', 'API', 'Ruby', 'Node']
   Projects:
-    - Title: Radiant Solutions 
-      Description: "I built the Radiant Solutions website from scratch using Ruby on Rails"
     - Title: Digital Globe 
       Description: "I built the DigitalGlobe website from scracth using Ruby on Rails"
     - Title: Maxar 1.5 
       Description: "I worked with the design team to update the current Maxar website with new brand guidelines and created modals and stuff"
     - Title: Maxar 2.0 
       Description: New Maxar website, block system, Vue 
-    - Title: GeoInt Conference Mapbox Demo 
-      Description: Mapbox demo for geoint 
+    - Title: Radiant Solutions 
+      Description: "I built the Radiant Solutions website from scratch using Ruby on Rails"
+    - Title: Space capabilities microsite
+      Description: I built a Nuxt app as a marketing asset to highlight Maxar's capabilities in space 
+    - Title: Automotive Slippy Map
+      Description: I built a slippy map using the Mapbox API to demonstrate Maxar's automotive industry capabilities
+    - Title: Building Footprints Coverage Slippy Map
+      Description: I built a slippy map using the Mapbox API to demonstrate Maxar's Building Footprints coverage 
       
 
-- Company:
-  Location:
-  Position:
-  StartDate:
-  EndDate:  
-  Description: ""
-  Skills: []
-
-Ogden Studios, LLC, Denver, CO                                                                          Principal and Freelance Web Developer                          August 2017 - Present
-In my spare time, I manage a freelance web development firm.
-Shaleen Title: Designed, built, and deployed Jekyll site with Forestry CMS and Netlify CDN.
-Sheila Vakharia: Designed and implemented custom WordPress theme for personal rebrand.
-The Atwater Group: Rebuilt website using Ruby on Rails.
+- Company: Ogden Studios, LLC
+  Location: Denver, CO
+  Position: Principal and Freelance Web Developer
+  StartDate: august 2017
+  EndDate: null
+  Description: In my spare time, I manage a freelance web development firm.
+  Skills: ['WordPress', 'Project requirements', 'Project scoping', 'Project management', 'Jekyll', 'Forestry', 'Ruby on Rails', 'SysAdmin', 'DNS', 'Nginx', 'Apache']
+  Projects:
+  - Title: American Journal of Medical Cannabis
+    Description:
+  - Title: Shaleen Title
+    Description: Designed, built, and deployed Jekyll site with Forestry CMS and Netlify CDN.
+  - Title: Sheila Vakharia
+    Description: Designed and implemented custom WordPress theme for personal rebrand.
+  - Title: The Atwater Group
+  Description: Rebuilt website using Ruby on Rails.
+  - Title: 
+  Description:
+  - Title: 
+    Description:
+  - Title: 
+    Description:
+  - Title: 
+    Description:
+  - Title: 
+    Description:
 
 SSDP Foundation, Denver, CO
 Website Administrator                                             July 2015 – October 2018
