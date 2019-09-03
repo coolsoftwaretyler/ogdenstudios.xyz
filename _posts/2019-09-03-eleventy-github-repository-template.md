@@ -19,7 +19,7 @@ First, I [created a new repository in Github](https://help.github.com/en/article
 
 Then, on my local machine, I created a new directory called `slippy-map-starter`. 
 
-*We use [Yarn](https://yarnpkg.com/lang/en/) at work, but [npm](https://www.npmjs.com/) will also wor*
+*We use [Yarn](https://yarnpkg.com/lang/en/) at work, but [npm](https://www.npmjs.com/) will also work here. It uses different syntax for the Eleventy commands.*
 
 I initialized the node project with:
 
