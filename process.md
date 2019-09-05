@@ -1,61 +1,91 @@
 ---
 layout: page
 title: My process
-nav: true
+nav: false
 permalink: /process/
 weight: 20
 ---
 
-# You want a website
+## You want a website
 
-You want a website but you don't really know where to start. That's my specialty. I'm a strong communicator with excellent technical skills and a wide breadth of experience. I'll help you make that thing.
+You want a website, but you don't know where to start. That's my specialty. I'm an experienced web developer with strong communication skills. I help non-technical people build and maintain websites. Here's a broad overview of what you get when you hire me. 
 
-# Start with your idea 
+## We start with an idea
 
-What do you want to do? Reach out to me. It's OK if it's vague, I'll work with you to formulate it. 
+<p>Reach out to me. You can <a href="mailto:tyler@ogdenstudios.xyz">email me</a> or <!-- Calendly link widget begin -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript"></script>
+<a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/ogdenstudios/new-project-request'});return false;">schedule time on my calendar</a>.</p>
+<!-- Calendly link widget end --> 
 
-Intake call. 
+It's okay if your idea is vague. When we talk, I'll help you articulate your idea into something actionable. At the end of the call, both you and I will have a clear picture of what you want from your website. 
 
-# Let me formalize the project scope
+## I formalize the project scope
 
-Scope of work document, I'll take your ideas and articulate them. Send the doc to you for revisions. Send me back any changes, and if we both agree, work will start. 
+If our intake call goes well, the next step is on me. I'll take your ideas, requirements, and specifications and turn them into a formal **scope of work document**. 
 
-# I'll make a playground
+That scope of work document is yours to keep and use, for free. You can use it to price shop with other developers and show to anyone else who may be collaborating with you. With the scope of work in hand, you will have an opportunity to make changes to the project, ask clarifying questions, and otherwise ask for the things you really want. 
 
-Set up the staging environment. I'll use the scope of work to determine appropriate technology. Often that means a WordPress site. Sometimes it's something else. I'll create a playground where I'll be able to show progress at different project milestones 
+Once we all agree on the scope of work, I will begin the project.
 
-# you send me the content 
+## I create a sandbox environment
 
-This is the most critical step of the whole process. Content is king on the web. It drives site navigation, layout, design, and functionality. The more content you send me, the more you will like the final product. 
+In the scope of work document, I'll determine the appropriate technology to meet your requirements. With that knowledge, I'll create a **staging environment**. The staging environment is a sandbox where I can do the web development work and send it to you to review at your convenience. Typically it's a live website you can view on any internet connected device.
 
-At this stage I may come back to you with questions about what you have sent over. I may ask for more details, examples, or material. 
+## You send me the content
 
-# I lay it all out 
+This is the most critical step of the whole process. **Content is king on the web**. It drives site navigation, layout, design, and functionality. The more content you send me, the more you will like the final product. 
 
-With the content in hand, I'll set up the site navigation and overall page layouts on the staging site. This is a big-picture stage. I'll stage it for your review. At that point I'll ask you to clarify site structure, navigation, and any missing gaps in the overall layout. 
+Send me any and all content you have. If you don't have all of it nailed down, that's fine. You can also send me examples of filler content that might make an appearance on your site. I'll be able to put this starter content on the staging site so we can develop, test, and review your website in a real world context. 
 
-# We'll give it some personality 
+This stage commonly takes the longest. I'll likely come back to you with clarifying questions and requests for additional information. The more we can get done up front, the smoother the rest of the process will be. 
 
-At this stage, I'll curate font selections, color selections, and other pieces of components for your review. I'll give you options based on my professional experience. You select what you like the best and I'll put it together with the content and layout. 
+## I lay out the website
 
-# We'll bring it to life
+With the content in hand, I'll set up the site navigation and overall page layouts on the staging site. This is a big-picture stage. We won't get into the weeds on look and feel. I'll let you know when the content is staged and laid out, and you'll be able to walk through the site navigation on your own. 
 
-After you approve content and design, I'll consult with you on hosting options. I can take care of the entire lifecycle for the deployment, and pass the keys to the site to you at the end.
+At this point, we'll likely identify gaps in content, missing pieces of functionality, and other missing items. We'll go back and forth to make sure we've covered all our bases, and you will have the opportunity to request changes to the site navigation and page layouts. 
 
-# Everything is always documented
+## We give the site personality 
 
-Projects change hands frequently. My goal is to hand you a finished product that you can hand off to another person on your team, or even a different web developer in the future. I'll provide documentation on the technical implementation and practical use of everything so you can use your site day-to-day, and have the power to maintain it in the long term. 
+With content, site navigation, and page layout squared away, the real design work starts here. For clean and simple website designs, I'll provide you with battle-tested fonts and color palettes to choose from to make your website stand out and **look good**. 
 
-# Maintenance
+If you want more artistic direction, I may recommend hiring a third party designer for that task. I work with talented designers of varying styles and can act as a liasion. If we go this route, I'll work with the designer on implementation of this phase. 
 
-I warranty all my work for 30 days of visual bugs and 90 days of critical bugs. 
+## I deploy the website, you own it all
 
-Depending on my availability and the scope of your project, we may be able to negotiate ongoing maintenance for a retainer fee.
+I'm an end-to-end developer. After you approve content, site layout, and design, I can consult with you about hosting options. I'll handle the deployment and set you up with the keys to everything. I never lock my clients into specific web hosts. You get full autonomy over your website after deploy.
 
-# Payment 
+## I document all my work
 
-When I provide the scope of work, I'll break out all of these steps into detailed milestones. Each milestone will be paired with a price. That price will never change. Excluding additional scope, you'll know precisely the cost of your project before we agree to start work. 
+I live by the principles of **documentation driven development**. I write the documentation for every new feature I add to a website *before* I implement that feature. This means at the end of the project, I'll hand you a set of well written materials that explain how everything works under the hood.
+
+My goal is to make my documentation clear enough that non-technical clients understand it. But for the bits and pieces that must be overly-technical, the end goal is a set of documentation you can hand off to an entirely different web developer in the future. I give you the power to make informed choices about ongoing maintenance and additional work to your site. 
+
+## Maintenance
+
+Visual bugs which render content looking incorrect can be fixed for free for a period of 30 days after the launch of the site. Major bugs which render content inaccessible can be fixed for free for 90 days after the launch of the site. 
+
+Depending on the scope of your project and my availability, I may offer extended support services for retainer fees. 
+
+## Payment 
+
+When I provide the scope of work, I'll break out each of these steps into detailed milestones. Each milestone will carry an associated price. That price will never change. You'll know precisely the cost of your project before we agree to start work. 
 
 Avoiding hourly charges incentivizes me to work quickly and meet deadlines. It also means you never have any billing surprises. 
 
-Finally, if at any time one of us decides to end the project early, you'll only owe for the completed milestones. You won't pay for unfinished work or long contracts. You will only pay for the deliverables you actually have on-hand. 
+Finally, if at any time one of us decides to leave the project early, you'll only owe for the completed milestones. You won't pay for unfinished work. You will only pay for the deliverables you actually have on-hand. 
+
+## I can't wait to hear from you
+
+<p>If you'd like to get started, <a href="mailto:tyler@ogdenstudios.xyz">email me</a> or <!-- Calendly link widget begin -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript"></script>
+<a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/ogdenstudios/new-project-request'});return false;">schedule time on my calendar</a>.</p>
+<!-- Calendly link widget end --> 
+
+<!-- Calendly badge widget begin -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript"></script>
+<script type="text/javascript">Calendly.initBadgeWidget({ url: 'https://calendly.com/ogdenstudios/new-project-request', text: 'Schedule time with me', color: '#00a2ff', textColor: '#ffffff', branding: true });</script>
+<!-- Calendly badge widget end -->
