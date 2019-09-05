@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Skills
-nav: true
+nav: false
 permalink: /skills/
 weight: 30
 ---

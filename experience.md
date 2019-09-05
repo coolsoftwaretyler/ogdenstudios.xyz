@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: projects
 title: Experience
 nav: true
 permalink: /experience/

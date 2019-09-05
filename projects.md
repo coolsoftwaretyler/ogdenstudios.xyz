@@ -1,7 +1,7 @@
 ---
 layout: projects
 title: Projects
-nav: true
+nav: false
 permalink: /projects/
 weight: 10 
 ---

@@ -1,7 +1,7 @@
 ---
 layout: page
-title: My process
-nav: false
+title: Process
+nav: true
 permalink: /process/
 weight: 20
 ---
