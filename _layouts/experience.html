@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-<h1>Projects</h1>
+<h1>Experience</h1>
 {%assign ordered_projects = site.projects | sort:"weight"%} {% for project in ordered_projects %} {% if project.live %}
 <div class="project">
     <a href="{{project.link}}" rel="noopener noreferrer" target="_blank">
@@ -22,3 +22,5 @@ layout: default
 </div>
 <hr>
 <br>{%endif%} {% endfor %}
+
+{{ content }}
