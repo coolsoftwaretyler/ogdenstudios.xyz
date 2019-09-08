@@ -315,3 +315,5 @@ Every system is built from domain-specific language designed by programmers to d
 The art of programming is and has always been the art of language design. 
 
 Master programmers think of systems as stories to be told rather than programs to be written. They use facilities of their programming language to construct a richer and more expressive language that can be used to tell that story.  
+
+Write functions that are short, well named, and well organized. But never forget that the real goal is to tell the story of the system, and the functions you write need to fit cleanly together into a precise language to help with that telling. 
