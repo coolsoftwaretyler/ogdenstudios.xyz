@@ -14,7 +14,7 @@ The `Map` component **only cares about map functionality**, and the `Content` co
 
 Practically speaking, it's likely the two components will occupy the same screen at once. Perhaps we have something like this: 
 
-![An image of a map on the left and content on the right](img/event-bus-blog/event-bus-side-by-side.png)
+![An image of a map on the left and content on the right](/img/event-bus-blog/event-bus-side-by-side.png)
 
 And while they manage state and individual functionality in isolation - if we were to toggle our `Content` component between being displayed and being hidden, we may need to tell your `Map` component to resize itself. This is the case if you're using [VueMapbox](https://soal.github.io/vue-mapbox/). 
 
