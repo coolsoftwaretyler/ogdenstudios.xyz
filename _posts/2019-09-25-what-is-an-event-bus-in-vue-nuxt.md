@@ -2,7 +2,7 @@
 layout: post
 title:  "What is an Event Bus in Vue? How do I use it in Nuxt?"
 tags: [vue, nuxt, javascript, eventbus, components]
-description: "In a Vue application, you can use an event bus for sibling components to communicate. Here's how to set one up in Nuxt."
+description: "In Vue, you can use an event bus for sibling component communication. Here's how to do that in Nuxt."
 ---
 
 Let's say we're building a [Nuxt](https://nuxtjs.org/) application and we have two major components: 
