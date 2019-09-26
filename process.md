@@ -12,11 +12,7 @@ You want a website, but you don't know where to start. That's my specialty. I'm 
 
 ## We start with an idea
 
-<p>Reach out to me. You can <a href="mailto:tyler@ogdenstudios.xyz">email me</a> or <!-- Calendly link widget begin -->
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript"></script>
-<a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/ogdenstudios/new-project-request'});return false;">schedule time on my calendar</a>.</p>
-<!-- Calendly link widget end --> 
+<p><a href="mailto:tyler@ogdenstudios.xyz">Send me an email</a> and we can get the conversation started.</p>
 
 It's okay if your idea is vague. When we talk, I'll help you articulate your idea into something actionable. At the end of the call, both you and I will have a clear picture of what you want from your website. 
 
@@ -78,14 +74,4 @@ Finally, if at any time one of us decides to leave the project early, you'll onl
 
 ## I can't wait to hear from you
 
-<p>If you'd like to get started, <a href="mailto:tyler@ogdenstudios.xyz">email me</a> or <!-- Calendly link widget begin -->
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript"></script>
-<a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/ogdenstudios/new-project-request'});return false;">schedule time on my calendar</a>.</p>
-<!-- Calendly link widget end --> 
-
-<!-- Calendly badge widget begin -->
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript"></script>
-<script type="text/javascript">Calendly.initBadgeWidget({ url: 'https://calendly.com/ogdenstudios/new-project-request', text: 'Schedule consultation', color: '#362136', textColor: '#ffffff', branding: true });</script>
-<!-- Calendly badge widget end -->
+<p>If you'd like to get started, <a href="mailto:tyler@ogdenstudios.xyz">email me</a> to schedule an intake</a>.</p>
