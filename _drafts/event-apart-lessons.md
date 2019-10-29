@@ -1,3 +1,5 @@
+[link](https://aneventapart.com/event/denver-2019)
+
 ## dynamic type
 [link](https://aneventapart.com/event/denver-2019#s17249)
 
@@ -58,3 +60,44 @@ let's do more with flexbox as well
 
 grid placement algorithms can allow us to do really cool stuff
 
+## mobile planet 
+
+[link](https://aneventapart.com/event/denver-2019#s16753)
+
+world pop: 5B people have mobile subscriptions, out of 5.6billion people 14 years old and up. that's w i l d
+
+4B have smartphones. 
+
+So we can pretty much reach every single person on their phones. 
+
+only 1.3B active PCs 
+
+a large responsibility to give people access to things across their phones. 
+
+people spending 3hrs a day on the pone, most of their time in native mobile apps, very little in browsers. 
+
+so there's a lot of investment in native mobile apps 
+
+but lots of people are downloading and not using it. almost 25% are abandoned after the first use.
+
+drop people directly into the core value - but again, grab the requirements before dropping people in there, but unobtrusively. 
+
+people treat overlays as things to avoid. people are task focused. the more different a UI looks, the more quick they are to dismiss it. even when there's helpful stuff. 
+
+product onboarding: get to product value asap, but not faster. ruthlessly edit distractions fro product value, teach in the moment with integrated UI
+
+mobile web is great for unique visitors. website have better audiences than new mobile apps. links and sharing is easier through that medium. Sure, people only use web browsers 11m out of 169, but that's because the first two apps take up th emost time. 
+
+unique actions happen on the web. 
+
+it's not necessary navitve vs the web. 
+
+web is good at reach, native apps are rich. 
+
+what do people dislike the most when browsing the web: 
+
+waiting for slow web pages 
+
+interstitials 
+
+mobile delays: more stressful than watching a horror movie. 
