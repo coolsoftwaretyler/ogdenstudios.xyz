@@ -74,4 +74,4 @@ Finally, if at any time one of us decides to leave the project early, you'll onl
 
 ## I can't wait to hear from you
 
-<p>If you'd like to get started, <a href="mailto:tyler@ogdenstudios.xyz">email me</a> to schedule an intake</a>.</p>
+<p>If you'd like to get started, <a href="mailto:tyler@ogdenstudios.xyz">email me</a> to schedule an intake.</p>
