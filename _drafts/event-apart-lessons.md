@@ -1,128 +1,79 @@
-[link](https://aneventapart.com/event/denver-2019)
+---
+layout: post
+title:  "Lessons from An Event Apart Denver"
+tags: [An Event Apart, conference]
+description: "A roundup of what I learned at An Event Apart Denver."
+---
 
-## dynamic type
-[link](https://aneventapart.com/event/denver-2019#s17249)
+It's been a little longer than I intended, but I attended [An Event Apart Denver](https://aneventapart.com/event/denver-2019) this year and had a blast. Thanks to my company for sponsoring me to go! 
 
-Variable fonts can be faster, trigger fewer requests
+Here are some bullet points and thoughts it sparked for me. Overall, seeing these presentations and spending time with other web developers and designers inspired met o learn more, push myself harder, and be a better developer. I want to make my projects look better, run faster, and contribute responsibly to the internet overall. 
 
-Some fonts are getting shipped with it by default 
+## Dynamic type
 
-We could set up a design that really focuses on specifc variables
+[Jason Pamental gave a talk about dynamic type](https://aneventapart.com/event/denver-2019#s17249). Some cool things I picked up here: 
 
-firefox font inspector 
+* Using [variable fonts](https://v-fonts.com/) can be faster and trigger fewer network requests. Since one font file has all the typographic variation you need, there are fewer additional files to load in for variation. 
+* There are some fonts out there that are being progressively shipped *as variable fonts* when loaded in from certain web font endpoints. I think that's really cool and a great way to provide progressive enhancement to customers. 
+* Firefox has a [fonts tab in web inspector](https://developer.mozilla.org/en-US/docs/Tools/Page_Inspector/How_to/Edit_fonts) that provides a ton of useful tools for working with variable fonts. 
 
-## third party software 
-[link](https://aneventapart.com/event/denver-2019#s17395)
+## Third party software 
 
-http://requestmap.webperf.tools/
+[Trent Walton gave a talk about third party software and the web](https://aneventapart.com/event/denver-2019#s17395).
 
-tag managers are a huge culprit
+* He showed us a really useful tool to [map your web requests](http://requestmap.webperf.tools/). 
+* Tag managers are a huge culprit in ever-increasing requests and bundle size. This is something I've absolutely encountered in my day-to-day. It's nice to hear it brought up at a conference.
+* If your website breaks without ad functionality, keep in mind the stats out there that say 20-40% of users are running ad blockers. What breaks for them? How can we deliver content that won't get blocked. 
 
-check out slide deck for the number of requests/size of requests of major websites
+## Generation style
 
-consider 24-40% of people are running ad blockers. what breaks for those people? How do we deliver content that won't get blocked
+[Eric Meyer's talk about generated content was one of my favorites](https://aneventapart.com/event/denver-2019#s16758). I use pseudo-elements every single day at work. They're one of my favorite CSS features. Even though I use them heavily, I learned a bunch during this talk:
 
-## generation style
-[link](https://aneventapart.com/event/denver-2019#s16758)
+* Pseudo-elements are treated as DOM children for flex/grid layout, but not always ::first-of-type and other CSS selectors.
+* Generated content is useful because you have one surface on which you can do things: content, styling, asset management
+* But generated content can be difficult to work with because *it's not always clear where content is coming from*. 
+* Also turns out [the double colon is the correct syntax](https://www.w3schools.com/CSS/css_pseudo_elements.asp), which was news to me. Fortunately, browsers respect the single colon for backwards compatibility.
 
-pseudo elements are treated as dom children for flex/grid layout, but perhaps not :first-of-type and other types of selectors
+## Redefining the techncial possibilites of CSS 
 
-useful because you have one surface on which you can do things
+[Rachel Andrew talked about redefining the possilities of CSS](https://aneventapart.com/event/denver-2019#s16765). And boy did it really blow me away. Her demos were really something else and made me think about: 
 
-difficult because it's not always clear where content is coming from 
+* Using scroll-snapping, view units, and grid to create screen experiences that behave like an app.
+* Using multi-col layout that smartly regenerated itself like physical media might. 
+* We can look to print media CSS standards for concepts like "I've got pages with fixed dimensions, so please just give me as many of those as I need". 
+* What are the possibilities for revisiting [css regions](https://webplatform.github.io/docs/tutorials/css-regions/)? This spec failed before, but perhaps there is something new and better on the horizon now that we have grid we can use with it. 
 
-double colon is the correct standard now, but single color is backwards compatible and just fine 
+## Intrinsic layouts
+
+[Jen Simmons gave a talk about intrinsic layouts](https://aneventapart.com/event/denver-2019#s16751). I've listened to her on podcasts before and read many of her articles. But seeing her in person was truly inspiring. Here's what I picked up about intrinsic layout:
 
 
-## redefining the techncial possibilites of css 
+* Intrinsic layout is going to be the next hotness. The step *past* responsive web design. It's time to start learning and using it. 
+* I hadn't really seen or used `min-content` or `max-content` before but they seem like really useful tools for better sizing in CSS.
+ layouts are the next hotness, past responsive web design
+* Overall, web devs need to use more grid. We can design a reasonable single column experience as a fallback that is enhanced progressively by grid. It's time to adopt and use it. 
+* In a similar vein, we can do more with flexbox. Grid doesn't need to replace it, but can in fact empower flexbox to be more expressive.
+* We can use grid placement algorithms to program layout in really cool and innovative ways. 
+* I need to watch [Layout Land](https://www.layout.land/) and [Mozilla Developer](https://www.youtube.com/MozillaDeveloper). 
 
-[link](https://aneventapart.com/event/denver-2019#s16765)
+I started doing some of the [exercises, examples, and studies from Jen](https://labs.jensimmons.com/) on my own. You can see me trying to emulate and learn from her over at my own [layout practice site](https://ogden-studios-layout-practice.netlify.com). Built with [Eleventy](https://www.11ty.io/).
 
-screen experiences that behave like an app
+## Mobile planet 
 
-what if we had multi-col layout that smartly regenerated itself and was like a page
+[Luke Wroblewski gave a talk about the state of mobile devices](https://aneventapart.com/event/denver-2019#s16753)
 
-look to print media for this concept of 'i have pages with fixed dimensions, give me as many as i need'
-
-we should use more scroll snapping 
-
-[css regions would be sweet](https://webplatform.github.io/docs/tutorials/css-regions/) and they failed before, but perhaps there is something new and better on the horizon now that we have grid 
-
-## intrinsic layouts
-
-intrinsic layouts are the next hotness, past responsive web design
-
-look into min-content, max-content for better sizing
-
-we need to use more grid. let's design a reasonable single column experience for a fallback that is enhanced progressively by grid. 
-
-let's do more with flexbox as well
-
-grid placement algorithms can allow us to do really cool stuff
-
-i'm going to watch layout land and mozilla developer 
-
-## mobile planet 
-
-[link](https://aneventapart.com/event/denver-2019#s16753)
-
-world pop: 5B people have mobile subscriptions, out of 5.6billion people 14 years old and up. that's w i l d
-
-4B have smartphones. 
-
-So we can pretty much reach every single person on their phones. 
-
-only 1.3B active PCs 
-
-a large responsibility to give people access to things across their phones. 
-
+* As a *rough* estimate, almost 90% of the world population 14 years old and up have mobile devices. That's a absolutely unfathomable. We can pretty much reach every single person in the world via smart phone. 
+* Compare that to something like 23% of the population that owns desktop computers. 
+* We have a responsibility to give people access to content over their phones. 
+* People spend most of their mobile time in native apps, and very little in browses. This has driven a lot of investment in mobile apps
+* **But!** People are downloading tons of apps and never using them. Almost 25% of apps are abaonded after first use.  
 people spending 3hrs a day on the pone, most of their time in native mobile apps, very little in browsers. 
+* The mobile web is great for *unique* visitors. Websites have better audients than new mobile apps. Sharing links is easier through the web. 
+* Even though people spend most of their time in mobile *apps*, they usually spend it in one or two apps. The other apps get almost no time. But mobile *web* serves a discovery purpose that apps can't really compete with. 
+* Web is good at reach, native apps are good at rich. 
+* Things people hate about browsing the web on mobile: slow web pages and interstitials
 
-so there's a lot of investment in native mobile apps 
-
-but lots of people are downloading and not using it. almost 25% are abandoned after the first use.
-
-drop people directly into the core value - but again, grab the requirements before dropping people in there, but unobtrusively. 
-
-people treat overlays as things to avoid. people are task focused. the more different a UI looks, the more quick they are to dismiss it. even when there's helpful stuff. 
-
-product onboarding: get to product value asap, but not faster. ruthlessly edit distractions fro product value, teach in the moment with integrated UI
-
-mobile web is great for unique visitors. website have better audiences than new mobile apps. links and sharing is easier through that medium. Sure, people only use web browsers 11m out of 169, but that's because the first two apps take up th emost time. 
-
-unique actions happen on the web. 
-
-it's not necessary navitve vs the web. 
-
-web is good at reach, native apps are rich. 
-
-what do people dislike the most when browsing the web: 
-
-waiting for slow web pages 
-
-interstitials 
-
-mobile delays: more stressful than watching a horror movie. 
-
-## the design of meaning 
-
-[link](https://aneventapart.com/event/denver-2019#s17248)
-
-we crave meaning, we thrive on it 
-
-let's not write off augmented reality yet, dependent on how we can add meaning to it. 
-
-meaning is about what matters. 
-
-to prepare humanity for a tech-driven future, we have to think about innovation about what is *going* to matter 
-
-meaning is waht matters, innovation is what is *going* to matter. 
-
-experience at scale changes culture, because experience at scale **is** culture
-
-We have to be thoughtful about the things we build at scale. 
-
-automation applied to a meaningful experience will magnify the meaning, and automation applied to an absurd experiences will magnify the absurdity
+There's a ton of opportunity in mobile web. Native apps don't have to supercede all of it, but we need to do better. 
 
 ## animation on the bleeding edge 
 
