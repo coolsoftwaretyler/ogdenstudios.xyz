@@ -24,6 +24,6 @@
     "background_color": "#F1EEEE",
     "start_url": "/",
     "description": "Practical solutions for pragmatic people",
-    "display": "browser",
+    "display": "minimal-ui",
     "orientation": "natural"
   }
