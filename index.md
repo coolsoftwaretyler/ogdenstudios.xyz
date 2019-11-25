@@ -13,7 +13,7 @@ layout: page
             <p>I'm particularly passionate about the lean web, accessibility, and security. I love developing with continuous deployment, and I believe in a free and open web.</p>
         </div>
         <div class="home__headshot">
-            <img src="/img/tyler.jpg" />
+            <img src="/img/tyler.jpg" alt=" "/>
         </div>
     </div>
     <div class="home__ctas">
