@@ -54,4 +54,36 @@ Looking at four rows:
 
 I notice that the number of items in each row is `2^N`. Which suggests to me there might be some bitwise solution here, which also feels right considering all the `0` and `1` values. 
 
+What's more, looking at the way that the pattern stacks (every row `N` is the beginning of the next row `N+1`), I don't think `N` really matters. I think there's something I can do with `K`. 
+
+I'm feeling really good about there being an existing binary operation I can do, but I just can't quite find it or reason about it. I've mentioned this in other posts, but I'm definitely weak when it comes to binary operations and using them for problem solving. This probably comes from my day-to-day in web development, where I'm just not using that kind of problem-solving tool. 
+
+So I looked up the discussion answer and I was absolutely on the right track. There is a single arithmetic I can do, in binary, and ignoring `N` completely. 
+
 ### Answer
+
+[Here's a Python one-liner](https://leetcode.com/problems/k-th-symbol-in-grammar/discuss/415514/Python-one-line-solution) which converts `K-1` into its binary representation, counts how many times `1` appears in that representation, and runs a bitwise AND operation on the result. 
+
+I couldn't quite grok what was going on and why, but I found [this explanation](https://leetcode.com/problems/k-th-symbol-in-grammar/discuss/113736/PythonJavaC%2B%2B-Easy-1-line-Solution-with-detailed-explanation) which helps more. 
+
+Basically, since we know the prefix of every row `N` is the same, we only care about how the new row `N+1` is going to generate its new string up to `K`, which will depend on the number `K-1`. 
+
+If we know what `K-1` in binary is, we'll know how many times the `01` and `10` pattern toggles back and forth before the number we care about, `K`. 
+
+So we convert it over, count up the `1s`, and convert that number into binary. We then run [bitwise AND](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators) against it to determine the `K`th value. 
+
+We don't have all the syntactic sugar that comes along with Python, Java, and C++ for bitwise operations, so here's a way to represent it in JavaScript: 
+
+```
+var kthGrammar = function(N, K) {
+    let binary = (K-1).toString(2);
+    let array = binary.split('');
+    let count = 0;
+    for (let i=0; i<array.length; i++) {
+        if (array[i] === '1') {
+            count++;
+        }
+    }
+    return count & 1;
+};
+```
