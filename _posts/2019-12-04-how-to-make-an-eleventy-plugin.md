@@ -58,7 +58,7 @@ eleventyConfig.addPlugin(markdownShortcode, {
 In any template or layout that allows universal shortcodes (Liquid, Nunjucks, Handlebars, or JavaScript), you can quickly include rendered markdown like so: 
 
 ```
-{% markdown '/path/to/markdown.md' %}
+<% markdown '/path/to/markdown.md' %> // Use { } instead of < > here - I had to substitute out so the liquid tags don't get processed
 ```
 
 Overall, it was a fun little project, and I hope it's made some peoples' Eleventy projects more convenient. It certainly has, for me. 
