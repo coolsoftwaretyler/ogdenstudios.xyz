@@ -32,6 +32,13 @@ And boy howdy have I been missing this. It's made my life so much easier.
 
 I won't go into detail about all the code here, but I thought it would be great to revisit my Twitter bot using the Serverless framework this time. 
 
+## Install serverless
+## Make permissions
+## Copy code over
+## Set configuration
+## Test it local
+## Deploy it up
+
 ## Remaining pain points
 
 Permissioning 
