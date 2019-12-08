@@ -18,3 +18,5 @@ HPE_INVALID_HEADER_TOKEN
 But the weird thing was when I visited those feeds in a browser, I didn't have a single problem. 
 
 So I searched for: "HPE_INVALID_HEADER_TOKEN node" and found [this open issue](https://github.com/nodejs/node/issues/27711). 
+
+[incapsula](https://github.com/kazuho/p5-http-parser-xs/issues/10)
