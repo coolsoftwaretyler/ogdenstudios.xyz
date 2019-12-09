@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ogdenstudios/ogdenstudios.xyz/issues"
   },
-  "homepage": "https://github.com/ogdenstudios/ogdenstudios.xyz#readme"
+  "homepage": "https://github.com/ogdenstudios/ogdenstudios.xyz#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^0.10.0-beta.1"
+  }
 }
