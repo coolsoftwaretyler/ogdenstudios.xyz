@@ -1,5 +1,5 @@
 ---
-layout: experience
+layout: layouts/experience
 title: Experience
 nav: true
 permalink: /experience/
