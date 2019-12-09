@@ -1,0 +1,19 @@
+{
+  "name": "ogdenstudios.xyz",
+  "version": "3.0.0",
+  "description": "Ogden Studios website v3 - built with Eleventy",
+  "main": "serviceworker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ogdenstudios/ogdenstudios.xyz.git"
+  },
+  "author": "Tyler Scott Williams",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ogdenstudios/ogdenstudios.xyz/issues"
+  },
+  "homepage": "https://github.com/ogdenstudios/ogdenstudios.xyz#readme"
+}
