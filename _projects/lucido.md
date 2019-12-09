@@ -4,5 +4,6 @@ description: I provided some basic tech support and web administration for Dr. F
 link: https://drfranklucido.com 
 live: true
 skills: ['CSS', 'HTML', 'PHP', 'WordPress']
+tags: project
 weight: 90
 ---

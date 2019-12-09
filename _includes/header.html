@@ -2,9 +2,9 @@
     <nav id="navbar">
         <ul>
             <li><a href="/">Home</a></li>
-            {% for page in (site.pages | sort: 'weight') %} {% if page.nav %}
-            <li><a href="{{page.permalink}}">{{ page.title }}</a></li>
-            {% endif %} {% endfor %}
+            {% for page in collections.topLevelPage %}
+            <li><a href="{{page.data.permalink}}">{{ page.data.title }}</a></li>
+{% endfor %}
         </ul>
     </nav>
     <button aria-label="Mobile navigation toggle" id="hamburger" class="hamburger hamburger--slider" type="button">

@@ -4,5 +4,6 @@ description: I worked with the Maxar Creative Team to build out the Digital Glob
 link: https://digitalglobe.com 
 live: true
 skills: ['CSS', 'HTML', 'JavaScript', 'jQuery', 'Ruby on Rails', 'Sass']
+tags: project
 weight: 10
 ---

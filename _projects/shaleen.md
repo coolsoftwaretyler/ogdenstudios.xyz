@@ -4,5 +4,6 @@ description: Shaleen Title is an Indian-American drug policy activist and attorn
 link: https://www.shaleentitle.com/
 live: true
 skills: ['Continuous deployment', 'CSS', 'DNS', 'HTML', 'Jekyll', 'Netlify', 'Sass', 'Forestry', 'CMS']
+tags: project
 weight: 40
 ---

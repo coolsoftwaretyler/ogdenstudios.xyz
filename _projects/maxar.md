@@ -4,5 +4,6 @@ description: I worked with the Maxar Creative Team to refresh the Maxar Corporat
 link: https://www.maxar.com 
 live: true
 skills: ['CSS', 'HTML', 'JavaScript', 'Ruby on Rails', 'Sass']
+tags: project
 weight: 21
 ---

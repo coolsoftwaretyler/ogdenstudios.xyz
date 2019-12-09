@@ -4,5 +4,6 @@ description: Sheila Vakharia is a researcher and activist at the Drug Policy All
 link: https://www.sheilavakharia.com/
 live: true
 skills: ['Graphic design', 'WordPress', 'WordPress themes', 'WordPress theme unit testing', 'HTML','CSS', 'JavaScript', 'PHP' ]
+tags: project
 weight: 30
 ---

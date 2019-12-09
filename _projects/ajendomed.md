@@ -4,5 +4,6 @@ description: AJEM is the first and only American medical authority committed to 
 link: https://ajendomed.com
 live: true
 skills: ['Graphic design', 'WordPress', 'WordPress themes', 'WordPress theme unit testing', 'HTML','CSS', 'JavaScript', 'PHP' ]
+tags: project
 weight: 28
 ---

@@ -5,5 +5,6 @@ github: https://github.com/ogdenstudios/atwater-rails
 link: https://theatwatergroup.com
 live: true
 skills: ['Amazon Web Services', 'Content management system', 'Continous deployment', 'CSS', 'DNS', 'Heroku', 'HTML', 'JavaScript', 'Ruby on Rails', 'Sass']
+tags: project
 weight: 60
 ---

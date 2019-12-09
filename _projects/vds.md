@@ -4,5 +4,6 @@ description: I built a site using Eleventy, fullPage, and Mapbox to demonstrate 
 link: https://microsites.maxar.com/vessel-detection-service/
 live: true
 skills: ['CSS', 'HTML', 'JavaScript', 'Mapbox', 'Eleventy']
+tags: project
 weight: 24
 ---

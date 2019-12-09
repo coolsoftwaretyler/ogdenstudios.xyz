@@ -4,5 +4,6 @@ description: Ellen Holland is the senior editor of Cannabis Now Magazine. I desi
 link: https://ellenholland.xyz
 live: true
 skills: ['Graphic design', 'WordPress', 'WordPress themes', 'WordPress theme unit testing', 'HTML','CSS', 'JavaScript', 'PHP' ]
+tags: project
 weight: 29
 ---
