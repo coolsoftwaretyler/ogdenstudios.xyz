@@ -69,3 +69,81 @@ Consistently set socket timeout only when the socket connects.
 ```
 
 So I'm wondering if my ECONNREFUSED error **stops the socket from connecting**. Which means we might need to catch that error elsewhere. I searched for "ECONNREFUSED node http" and found (a StackOverflow post)[https://stackoverflow.com/questions/8381198/catching-econnrefused-in-node-js-with-http-request] that might help. 
+
+This is a piece of code that helped me hone in on it: 
+
+```
+msg.on('socket', function(socket) { 
+        socket.setTimeout(2000, function () {   // set short timeout so discovery fails fast
+            var e = new Error ('Timeout connecting to ' + queryObj.ip));
+            e.name = 'Timeout';
+            badNews(e);
+            msg.abort();    // kill socket
+        });
+        socket.on('error', function (err) { // this catches ECONNREFUSED events
+            badNews(err);
+            msg.abort();    // kill socket
+        });
+    }); // handle connection events and errors
+```
+
+In the rss-parser library, I can do that like this: 
+
+```
+req.on('socket', function(socket) {
+    // Do things
+});
+```
+
+To see if that works, I dropped a `console.log(socket);` in the `socket` callback, and got a ton of output. I think I'm on to something here. 
+
+I'm going to just copy the error part, because I think that's what we want to hone in on here: 
+
+```
+req.on('socket', function(socket) {
+        socket.on('error', function (err) { // this catches ECONNREFUSED events
+            req.abort();    // kill socket
+        });
+});
+```
+
+Hmm, that didn't quite work. I'm getting the same fails in the tests as I was before. 
+
+So what if the `req.abort()` call isn't working? Or what if I have the wrong event? 
+
+I looked up the [socket documentation](https://nodejs.org/api/net.html) to see what events I can listen to on the socket. It looks like I'm getting the `lookup` event, but not the `connect` event. I can't access the `error` on the lookup event (or can i)
+
+So here's my fix: 
+
+```
+      // Need to get the timeout option but it's stuck on this 
+      let socketTimout = this.options.timeout;
+      req.on('socket', function(socket) {
+        setTimeout(() => {
+          if (socket.connecting) {
+            return reject(new Error("Request timed out after " + socketTimout + "ms"));
+          }
+        }, socketTimout)
+      })
+      ```
+
+
+I think the issue is that ECONNREFUSED doesn't throw an error where we can catch it. But we care about how long it takes to get it, so setting a timeout like this may be the only way to check if it's happened within time. 
+
+In order ot test it, I wrote this test: 
+
+```
+  it('should respect timeout option if the socket does not connect', function(done) {
+    var server = HTTP.createServer(function(req, res) {});
+    server.listen(function() {
+      var port = server.address().port;
+      var url = 'http://localhost:80';
+      var parser = new Parser({timeout: 1});
+      parser.parseURL(url, function(err, parsed) {
+        Expect(err).to.not.equal(null);
+        Expect(err.message).to.equal("Request timed out after 1ms. The connection may have been refused.");
+        done();
+      });
+    });
+  });
+```
