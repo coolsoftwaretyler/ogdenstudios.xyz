@@ -157,3 +157,5 @@ So I removed the socket call, removed the request timeout, and added the suggest
 I removed the additional test case and ran `npm test`. everything was passing and looked good. So I made the commit and pushed it back up for review. 
 
 Finally, I swapped out my specific url to `http://rss.leg.wa.gov/BillSummary/Home/Rss/2334/2017/House` locally, and all the tests started passing. 
+
+I pushed the changes back up to my branch and they got added to the PR. You can [read my PR and the back and forth here](https://github.com/rbren/rss-parser/pull/146).
