@@ -147,3 +147,13 @@ In order ot test it, I wrote this test:
     });
   });
 ```
+
+I pushed this work up in a PR. One of the tests was failing, I wasn't quite mocking the ECONNREFUSED error correctly. 
+
+The maintainer got back to me pretty quickly. I had included much of this information with the PR and he was happy with the detailed writeup. He suggested we skip the `socket` event and `req.setTimeout()` entirely and wrap the whole call in a timeout. That's pretty much what I was trying to get at but couldn't quite express. It was super helpful to have someone else look at it. 
+
+So I removed the socket call, removed the request timeout, and added the suggested code. 
+
+I removed the additional test case and ran `npm test`. everything was passing and looked good. So I made the commit and pushed it back up for review. 
+
+Finally, I swapped out my specific url to `http://rss.leg.wa.gov/BillSummary/Home/Rss/2334/2017/House` locally, and all the tests started passing. 

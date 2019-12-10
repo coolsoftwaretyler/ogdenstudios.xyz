@@ -5,6 +5,8 @@ tags: [eleventy, plugin]
 description: "Node 12 changed http parsing to be more strict about header values, and it broke my application."
 ---
 
+*Last updated: 2019-12-09*
+
 So I've got a Node app that scrapes over 5,000 RSS feeds. Originally I built it using Node 12. But every time I ran it, over 1,000 of my 5,000 RSS feeds were coming back with errors. 
 
 I expected to have some failed feeds, but over 20% is higher than anticipated and I assumed I had done something incorrectly. 
@@ -31,3 +33,7 @@ It also looks like [there is an incoming patch to allow insecure headers in Node
 I found some search results mentioning [Incapsula, which is now Imperva](https://www.imperva.com/). According to this [GitHub issue](https://github.com/kazuho/p5-http-parser-xs/issues/10), Imperva uses invalid unicode characters in its headers to prevent [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/). And that's fair: if I was feeling malicious, I could set up my RSS scraper to run millions of times against each feed and lock up their system. 
 
 So if you're hitting a bunch of different URLs in a Node script on Node 12+ and you find yourself failing on the headers - consider rolling back or watiing for the configuration option to land in the software. 
+
+## Update December 9, 2019 
+
+Looks like [the insecure flag has landed in the node repo](https://github.com/nodejs/node/pull/30567). Looking forward to upgrading again and using it. 
