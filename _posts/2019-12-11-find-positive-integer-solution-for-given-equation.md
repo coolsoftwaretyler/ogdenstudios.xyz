@@ -1,8 +1,8 @@
 ---
 layout: post
-title: ""
+title: "Leetcode problem: Find Positive Integer Solution for Given Equation"
 tags: []
-description: ""
+description: "An easy-level leetcode problem"
 ---
 
 
