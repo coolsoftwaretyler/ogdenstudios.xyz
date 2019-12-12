@@ -121,3 +121,9 @@ Interesting things happen at boundaries. Change is one of those things.
 Good software designa coomodate change without huge investments and rework.
 
 When we use code that is out of our control, special care must be taken to protect our investment and make sure future change is not too costly. 
+
+Code at the boundaries needs clear separation and tests that define expectations. We should avoid letting too mcuh of our code know about the third-party particulars. It's better to dpeend on something we control rather than soething we don't. 
+
+We manage third-party boundaries by having few places int he code that refer to them. We wrap them, or use an adapter. 
+
+Either way, our code speaks to us better. 
