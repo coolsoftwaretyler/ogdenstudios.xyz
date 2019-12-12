@@ -54,3 +54,70 @@ What if we took a different approach.
 Instead of experimenting and trying out the new sutff in our produciton code, we could write some tests to explore our understanding of the third-party code. Jim Newkirk calls this *learning tests*. 
 
 We call the third-party API, as we expect to us e it. We're essentially doing controlled experimens that check our undertsanding of that API. The tests focus on what we want out of the api. 
+
+## Learning log4j
+
+Let's say we want to use the apache `log4j` package rather than a custom logger. We write our first case, expecting it to write "hello" to the console. 
+
+```
+@Test 
+function testLogCreate() {
+    logger = Logger.getLogger("MyLogger");
+    logger.info("hello");
+}
+```
+
+but we get an error that says we need something called an `Appender`. We read a bit more and find there is a `ConsoleAppender`. So we create one and see if we got it: 
+
+```
+@Test 
+function testLogAddAppender() {
+    logger = Logger.getLogger("MyLogger");
+    appender = new ConsoleAppender();
+    logger.addAppender(appender);
+    logger.info("hello");
+}
+```
+
+Now we find the `Appender` has no output stream. We google and try the following: 
+
+```
+@Test 
+function testLogAddAppender() {
+    logger = Logger.getLogger("MyLogger");
+    logger.removeAllAppender();
+    logger.addAppender(new ConsoleAppender(
+        new PatternLayout("%p %t %m%n"),
+        ConsoleAppender.SYSTEM_OUT));
+    ));
+    logger.info("hhello");
+}
+```
+
+And it works! Now we know how to get a simple consoel logger initialized and we can encapsulate that knwoledge into our own logger class so the rest of the application is isolated from the `log4j` boundary interface. 
+
+## Learning tests are better than free 
+
+The learning tests end up costing nothing. We had to learn the API anyway, and writing those tests was an easy and isolated way to get the knwoledge. They are precise experiments that helped increase our understanding. 
+
+Not only are learning tests free, they have a positive ROI. When there are new releases of the package, we run them to see if there are behavioral differences. 
+
+We can use them to verify the third party packages we use work the way we expect them to. 
+
+**A clean boundary should be supported by a set of outbound tests that exercise the interface in the same way the production code does**. 
+
+Without these *boundary tests* to ease the migration, we may be tempted to stay with older versions longer than we should. 
+
+## Using code that does not yet exist
+
+There is another kind of boundary that separates the known form the unknown. 
+
+There are often places in code where our knowledge seems to drop off the edge. Sometimes what is on the other side is unknownable (at least right now). Sometimes we choose not to look into it. 
+
+## Clean boundaries 
+
+Interesting things happen at boundaries. Change is one of those things. 
+
+Good software designa coomodate change without huge investments and rework.
+
+When we use code that is out of our control, special care must be taken to protect our investment and make sure future change is not too costly. 
