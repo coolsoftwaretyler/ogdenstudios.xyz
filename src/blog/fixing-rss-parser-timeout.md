@@ -1,8 +1,9 @@
 ---
 layout: post
 title: "An Open Source Contribution to the rss-parser node package"
-tags: []
+tags: ['post']
 description: "I had a strange issue with the rss-parser package and its timeout function. It led me to creating a successful pull request in the project."
+date: 2019-12-13
 ---
 
 ## Background

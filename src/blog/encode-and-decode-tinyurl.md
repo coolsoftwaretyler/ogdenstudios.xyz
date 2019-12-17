@@ -1,8 +1,9 @@
 ---
 layout: post
 title: "Leetcode problem: Encode and Decode TinyURL"
-tags: [leetcode]
+tags: [leetcode, 'post']
 description: "A medium-level leetcode problem"
+date: 2019-12-13
 ---
 
 This came up in my Leetcode weekly email, and it's one I saw during a job interview once and failed. I wanted to take a crack at it again in a more controlled environment. 

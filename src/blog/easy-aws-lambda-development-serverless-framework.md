@@ -1,8 +1,9 @@
 ---
 layout: post
 title: "Easy Lambda Development with the Serverless Framework"
-tags: []
+tags: ['post']
 description: "I've built a handful of lambda functions before, but it's always been a pain. Then I found the Serverless Framework, and my life has changed for the better."
+date: 2019-12-13
 ---
 
 ## Lambda pain points 

@@ -1,8 +1,9 @@
 ---
 layout: post
 title: "Leetcode problem: Maximum Depth of N-ary Tree"
-tags: [leetcode]
+tags: [leetcode, 'post']
 description: "An easy-level leetcode problem"
+date: 2019-12-16
 ---
 
 
