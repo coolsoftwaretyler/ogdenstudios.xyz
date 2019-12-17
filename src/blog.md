@@ -4,5 +4,5 @@ title: Blog
 nav: true
 permalink: /blog/
 tags: topLevelPage
-weight: 40
+weight: 20
 ---

@@ -2,6 +2,13 @@ const CleanCSS = require("clean-css");
 
 module.exports = function (eleventyConfig) {
 
+  eleventyConfig.addCollection("topLevelPage", function(collection) {
+    let pages = collection.getFilteredByTag("topLevelPage");
+    return pages.sort(function(a, b){
+      return a.data.weight - b.data.weight;
+    })
+  });
+
   eleventyConfig.addLayoutAlias('default', 'layouts/default.html');
   eleventyConfig.addLayoutAlias('page', 'layouts/page.html');
   eleventyConfig.addLayoutAlias('post', 'layouts/post.html');
