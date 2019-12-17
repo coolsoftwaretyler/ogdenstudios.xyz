@@ -9,6 +9,13 @@ module.exports = function (eleventyConfig) {
     })
   });
 
+  eleventyConfig.addCollection("project", function(collection) {
+    let pages = collection.getFilteredByTag("project");
+    return pages.sort(function(a, b){
+      return a.data.weight - b.data.weight;
+    })
+  });
+
   eleventyConfig.addCollection("topLevelPage", function(collection) {
     let pages = collection.getFilteredByTag("topLevelPage");
     return pages.sort(function(a, b){

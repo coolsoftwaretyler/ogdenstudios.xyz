@@ -7,6 +7,8 @@ tags: topLevelPage
 weight: 40
 ---
 
+# Process
+
 ## You want a website
 
 You want a website, but you don't know where to start. That's my specialty. I'm an experienced web developer with strong communication skills. I help non-technical people build and maintain websites. Here's a broad overview of what you get when you hire me. 
