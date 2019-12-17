@@ -1,0 +1,17 @@
+---
+layout: default
+---
+
+<div class="blog">
+  <h1>Blog</h1>
+  {{ content }}
+  {% for post in collections.post %}
+    <article>
+      <h3>
+        <a href="{{ post.url | url }}">{{ post.data.title }}</a>
+      </h3>
+      <p class="post-meta">{{ post.date | date }}</p>
+      <p>{{post.data.description}}</p>
+    </article>
+  {% endfor %}
+</div>

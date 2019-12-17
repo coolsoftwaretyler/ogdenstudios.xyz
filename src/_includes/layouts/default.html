@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+  {%- include head.html -%}
+  <body>
+    <style>{{ css | cssmin | safe }}</style>
+    {%- include header.html -%}
+    <main class="page" aria-label="Content">
+        {{ content }}
+    </main>
+    {% capture hamburger %}{% include js/hamburger.js %}{% endcapture %}
+    <script>
+      {{ hamburger | jsmin | safe }}
+    </script>
+  </body>
+</html>
