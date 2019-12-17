@@ -4,7 +4,7 @@ description: THC Staffing Group is an organization dedicated to closing the gap 
 github: https://github.com/ogdenstudios/tsg-rebuild
 link: http://thcstaffinggroup.com 
 live: true
-skills: ['Bootstrap', 'Continuous deployment', 'CSS', 'HTML', 'Hugo', 'JavaScript', 'Sass', 'WCAG AA', 'WordPress']
+skills: ['Bootstrap', 'Continuous deployment', 'CSS', 'HTML', 'Hugo', 'JavaScript', 'Sass', 'WCAG AA', 'WordPress', 'project']
 tags: project
 weight: 50
 ---

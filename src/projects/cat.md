@@ -4,7 +4,7 @@ description: The SSDP Chapter Activity Tracker is a custom content management sy
 github: https://github.com/SSDP-Dev/chapter-activity-tracker
 link: https://cat.ssdp.org 
 live: true
-skills: [ 'CSS', 'Drupal', 'DNS', 'Flask', 'Heroku','HTML', 'JavaScript', 'Python', 'Ruby on Rails', 'WordPress']
+skills: [ 'CSS', 'Drupal', 'DNS', 'Flask', 'Heroku','HTML', 'JavaScript', 'Python', 'Ruby on Rails', 'WordPress', 'project']
 tags: project
 weight: 70
 ---

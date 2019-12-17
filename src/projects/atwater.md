@@ -4,7 +4,7 @@ description: The Atwater Group offers proofreading and editing services - all at
 github: https://github.com/ogdenstudios/atwater-rails
 link: https://theatwatergroup.com
 live: true
-skills: ['Amazon Web Services', 'Content management system', 'Continous deployment', 'CSS', 'DNS', 'Heroku', 'HTML', 'JavaScript', 'Ruby on Rails', 'Sass']
+skills: ['Amazon Web Services', 'Content management system', 'Continous deployment', 'CSS', 'DNS', 'Heroku', 'HTML', 'JavaScript', 'Ruby on Rails', 'Sass', 'project']
 tags: project
 weight: 60
 ---
