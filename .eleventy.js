@@ -1,24 +1,25 @@
 const CleanCSS = require("clean-css");
+const Terser = require("terser");
 
 module.exports = function (eleventyConfig) {
 
-  eleventyConfig.addCollection("post", function(collection) {
+  eleventyConfig.addCollection("post", function (collection) {
     let pages = collection.getFilteredByTag("post");
-    return pages.sort(function(a, b){
+    return pages.sort(function (a, b) {
       return b.date - a.date;
     })
   });
 
-  eleventyConfig.addCollection("project", function(collection) {
+  eleventyConfig.addCollection("project", function (collection) {
     let pages = collection.getFilteredByTag("project");
-    return pages.sort(function(a, b){
+    return pages.sort(function (a, b) {
       return a.data.weight - b.data.weight;
     })
   });
 
-  eleventyConfig.addCollection("topLevelPage", function(collection) {
+  eleventyConfig.addCollection("topLevelPage", function (collection) {
     let pages = collection.getFilteredByTag("topLevelPage");
-    return pages.sort(function(a, b){
+    return pages.sort(function (a, b) {
       return a.data.weight - b.data.weight;
     })
   });
@@ -27,7 +28,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addLayoutAlias('page', 'layouts/page.html');
   eleventyConfig.addLayoutAlias('post', 'layouts/post.html');
 
-  eleventyConfig.addLiquidFilter("date", function(date) { 
+  eleventyConfig.addLiquidFilter("date", function (date) {
     return new Date(date).toUTCString().split(' 00:00')[0];
   });
 
@@ -38,6 +39,15 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addFilter("cssmin", function (code) {
     return new CleanCSS({}).minify(code).styles;
+  });
+  eleventyConfig.addFilter("jsmin", function (code) {
+    let minified = Terser.minify(code);
+    if (minified.error) {
+      console.log("Terser error: ", minified.error);
+      return code;
+    }
+
+    return minified.code;
   });
 
   return {

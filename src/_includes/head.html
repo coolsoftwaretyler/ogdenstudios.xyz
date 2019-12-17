@@ -47,8 +47,6 @@
     <!-- Google Suite Verification -->
     <meta name="google-site-verification" content="Ay267gjaK2dbcK9EuGzYKc0xKCC-cNH8tc4D-rc5D2U" /> 
     {% capture css %}{% include css/style.css %}{% endcapture %}
-    <style>{{ css | cssmin | safe }}</style>
-    <script src="/js/hamburger.js"></script>
     <script>
         if ("serviceWorker" in navigator) {
             if (navigator.serviceWorker.controller) {
