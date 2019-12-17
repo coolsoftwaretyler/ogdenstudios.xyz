@@ -17,9 +17,17 @@
   },
   "homepage": "https://github.com/ogdenstudios/ogdenstudios.xyz#readme",
   "devDependencies": {
+<<<<<<< HEAD
     "@11ty/eleventy": "^0.10.0-beta.1"
   },
   "dependencies": {
     "clean-css": "^4.2.1"
+=======
+    "@11ty/eleventy": "^0.10.0-beta.1",
+    "gulp": "^4.0.2"
+  },
+  "dependencies": {
+    "gulp-sass": "^4.0.2"
+>>>>>>> 29b4c2025694af0b867d34b44cb1c2c55695898b
   }
 }
