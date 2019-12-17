@@ -1,26 +1,16 @@
 ---
 layout: default
 ---
+
 <div class="blog">
     <h1>Blog</h1>
     {{ content }}
-    {%- if site.posts.size > 0 -%}
-    <ul class="post-list">
-        {%- for post in site.posts -%}
-        {%- unless post.category -%}
-        <li>
-            {%- assign date_format = "%b %-d, %Y" -%}
-            <h3>
-                <a class="post-link" href="{{ post.url | relative_url }}">
-                    {{ post.title | escape }} {{ post.category}}
-                </a>
-                <p class="post-meta">{{ post.date | date: date_format }}</p>
-            </h3>
-            <p>{{post.description}}</p>
-            {%- if site.show_excerpts -%} {{ post.excerpt }} {%- endif -%}
-        </li>
-        {%- endunless -%}
-        {%- endfor -%}
-    </ul>
-    {%- endif -%}
+    {% for post in collections.post %}
+  <article>
+    <h1>
+      <a href="{{ post.url | url }}">{{ post.data.title }}</a>
+    </h1>
+    {{ post.date }}
+  </article>
+{% endfor %}
 </div>
