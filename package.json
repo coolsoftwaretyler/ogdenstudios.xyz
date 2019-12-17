@@ -18,8 +18,6 @@
   "homepage": "https://github.com/ogdenstudios/ogdenstudios.xyz#readme",
   "devDependencies": {
     "@11ty/eleventy": "^0.10.0-beta.1",
-    "clean-css": "^4.2.1",
-    "gulp": "^4.0.2",
-    "gulp-sass": "^4.0.2"
+    "clean-css": "^4.2.1"
   }
 }
