@@ -3,6 +3,7 @@ layout: post
 title:  "How do I get an A+ in Mozilla Observatory with WordPress?"
 tags: [blog, tutorial, wordpress, observatory, security, 'post']
 description: "Learn how to get an A+ grade through Mozilla Observatory using WordPress."
+date: 2019-03-11
 ---
 *Last updated March 11, 2019*
 

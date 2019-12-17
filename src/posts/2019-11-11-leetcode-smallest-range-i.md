@@ -2,7 +2,8 @@
 layout: post
 title:  "Leetcode problem: Smallest Range I"
 tags: [leetcode, 'post']
-description: "An easy-level leetcode problem "
+description: "An easy-level leetcode problem"
+date: 2019-11-11
 ---
 
 ## Problem description

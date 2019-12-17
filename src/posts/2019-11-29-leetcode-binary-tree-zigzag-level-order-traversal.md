@@ -3,6 +3,7 @@ layout: post
 title:  "Leetcode problem: Binary Tree Zigzag Level Order Traversal"
 tags: [leetcode, 'post']
 description: "A medium-level leetcode problem"
+date: 2019-11-29
 ---
 
 ## Problem description

@@ -3,6 +3,7 @@ layout: post
 title: 'Building a semantic, accessible, responsive, and reusable navigation element'
 tags: ['navigation', 'ux', 'mega-menus', 'html5', 'css', 'vanilla javascript', 'semantic html', 'accessibility', 'responsive web design', 'ruby on rails', 'post']
 description: 'Building website navigations can be difficult. This tutorial covers building a large site navigation that is semantic, accessible, responsive, and reusable.'
+date: 2019-04-01
 ---
 *Last updated Apr 5, 2019*
 

@@ -3,6 +3,7 @@ layout: post
 title: How do I get a random string in JavaScript and Ruby?
 tags: ["javascript", "ruby", 'post']
 description: "A quick tidbit about generating random strings in JS and Ruby"
+date: 2019-06-14
 ---
 
 At work we build almost all our sites in Ruby on Rails. As such, I'm writing JavaScript and Ruby day-to-day. Sometimes when we're prototyping and messing around, I just need a random string of characters. I know there are things like the Faker [gem](https://github.com/stympy/faker) and [node package](https://www.npmjs.com/package/faker), but we don't always have those dependencies available in our workflow, and sometimes *I just want the one-liner*.

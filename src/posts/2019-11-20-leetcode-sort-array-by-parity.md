@@ -3,6 +3,7 @@ layout: post
 title:  "Leetcode problem:  Sort Array By Parity II"
 tags: [leetcode, 'post']
 description: "An easy-level leetcode problem"
+date: 2019-11-20
 ---
 
 ## Problem description

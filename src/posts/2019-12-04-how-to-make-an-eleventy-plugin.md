@@ -3,6 +3,7 @@ layout: post
 title:  "The Markdown Shortcode Eleventy Plugin"
 tags: [eleventy, plugin, 'post']
 description: "Why and how I made an Eleventy plugin that adds a universal shortcode for rendering markdown."
+date: 2019-12-04
 ---
 
 ## Problem: I want to include markdown snippets in Eleventy

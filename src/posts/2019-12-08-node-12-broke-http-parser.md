@@ -3,6 +3,7 @@ layout: post
 title:  "HPE_INVALID_HEADER_TOKEN in Node 12+"
 tags: [eleventy, plugin, 'post']
 description: "Node 12 changed http parsing to be more strict about header values, and it broke my application."
+date: 2019-12-08
 ---
 
 So I've got a Node app that scrapes over 5,000 RSS feeds. Originally I built it using Node 12. But every time I ran it, over 1,000 of my 5,000 RSS feeds were coming back with errors. 

@@ -3,6 +3,7 @@ layout: post
 title:  "Leetcode problem: Single Number III"
 tags: [leetcode, 'post']
 description: "A medium-level leetcode problem"
+date: 2019-11-22
 ---
 
 ## Problem description

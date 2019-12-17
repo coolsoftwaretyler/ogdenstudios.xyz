@@ -3,6 +3,7 @@ layout: post
 title:  "How do I Deploy a Rails 6 app to Amazon EC2?"
 tags: [blog, tutorial, rails, aws, capistrano, nginx, 'post']
 description: "A step-by-step tutorial for creating a blank Rails 6 app and deploying it to an Amazon AWS EC2 instance with Capistrano."
+date: 2019-01-30
 ---
 *Last updated January 30, 2019*
 

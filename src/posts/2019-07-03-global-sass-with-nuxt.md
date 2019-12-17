@@ -3,6 +3,7 @@ layout: post
 title: How do I add Global Sass to a Nuxt project? 
 tags: ["Vue", 'post']
 description: "A quick tidbit about adding global Sass files to Nuxt"
+date: 2019-07-03
 ---
 
 My team is currently working on a [Nuxt](https://nuxtjs.org/) project. We like to use Vue and Nuxt when appropriate, but are primarily a Rails shop. Like many other Rails devs, we often rely on [Sass](https://sass-lang.com/) for our styles. We sometimes want to use a global `_variables.scss` or other application-wide stylesheets like we might with the Rails asset pipeline. 

@@ -3,6 +3,7 @@ layout: post
 title:  "Lessons from An Event Apart Denver"
 tags: [An Event Apart, conference, 'post']
 description: "A roundup of what I learned at An Event Apart Denver."
+date: 2019-11-23
 ---
 
 It's been a little longer than I intended, but I attended [An Event Apart Denver](https://aneventapart.com/event/denver-2019) this year and had a blast. Thanks to my company for sponsoring me to go! 

@@ -3,14 +3,15 @@ layout: default
 ---
 
 <div class="blog">
-    <h1>Blog</h1>
-    {{ content }}
-    {% for post in collections.post %}
-  <article>
-    <h1>
-      <a href="{{ post.url | url }}">{{ post.data.title }}</a>
-    </h1>
-    {{ post.date }}
-  </article>
-{% endfor %}
+  <h1>Blog</h1>
+  {{ content }}
+  {% for post in collections.post %}
+    <article>
+      <h3>
+        <a href="{{ post.url | url }}">{{ post.data.title }}</a>
+      </h3>
+      <p class="post-meta">{{ post.date }}</p>
+      <p>{{post.data.description}}</p>
+    </article>
+  {% endfor %}
 </div>

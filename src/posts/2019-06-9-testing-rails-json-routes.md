@@ -3,6 +3,7 @@ layout: post
 title: 'Testing JSON routes in Rails'
 tags: ['RSpec', 'JSON', 'Routing', 'post']
 description: 'This week I learned a few tricks for testing JSON routes with Ruby on Rails'
+date: 2019-06-09
 ---
 
 This week I improved test coverage for our Rails controllers. We had 0% coverage on our JSON formats in the controller actions. After some troubleshooting, I was able to increase that to 100% coverage. Here are some tricks I learned along the way: 

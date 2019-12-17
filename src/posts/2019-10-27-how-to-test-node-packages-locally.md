@@ -3,6 +3,7 @@ layout: post
 title:  "How to Use a Local Version of a Node Package"
 tags: [nodejs, npm, open source, 'post']
 description: "Here's how to make changes to a node package and try it out on your local machine."
+date: 2019-10-27
 ---
 
 Recently I wanted to contribute to one of my favorite projects: [Eleventy static site generator](https://www.11ty.io/).

@@ -3,6 +3,7 @@ layout: post
 title:  "Leetcode problem: K-th Symbol in Grammar"
 tags: [leetcode, 'post']
 description: "A medium-level leetcode problem"
+date: 2019-12-03
 ---
 
 ## Problem description

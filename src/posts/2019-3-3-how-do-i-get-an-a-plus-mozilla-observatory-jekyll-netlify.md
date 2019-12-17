@@ -3,6 +3,7 @@ layout: post
 title:  "How do I get an A+ in Mozilla Observatory with Jekyll and Netlify?"
 tags: [blog, tutorial, jekyll, netlify, observatory, security, JAMstack, 'post']
 description: "Learn how to get an A+ grade through Mozilla Observatory using Jekyll and Netlify."
+date: 2019-03-03
 ---
 *Last updated March 3, 2019*
 

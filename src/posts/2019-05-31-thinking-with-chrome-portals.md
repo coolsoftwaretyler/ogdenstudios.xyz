@@ -3,6 +3,7 @@ layout: post
 title: 'Thinking with portals'
 tags: ['Portals', 'Chrome', 'post']
 description: 'This week I played around with the new portal element in chrome.'
+date: 2019-05-31
 ---
 *Last updated May 31, 2019*
 

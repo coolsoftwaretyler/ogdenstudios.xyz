@@ -3,6 +3,7 @@ layout: post
 title: 'How to get Mapbox bounds'
 tags: ['JavaScript', 'Mapbox', 'GIS', 'post']
 description: 'This week I learned a bit about the Mapbox API and bounds'
+date: 2019-05-24
 ---
 *Last updated May 24, 2019*
 

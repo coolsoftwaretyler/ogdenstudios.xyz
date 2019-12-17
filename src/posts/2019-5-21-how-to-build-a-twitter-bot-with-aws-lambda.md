@@ -3,6 +3,7 @@ layout: post
 title: 'How to build a Twitter bot with AWS Lambda'
 tags: ['AWS', 'Lambda', 'JavaScript', 'Node.js', 'Twitter bot', 'API', 'post']
 description: 'A step by step tutorial for building a Twitter bot with JavaScript and Amazon Lambda'
+date: 2019-05-21
 ---
 *Last updated May 21, 2019*
 

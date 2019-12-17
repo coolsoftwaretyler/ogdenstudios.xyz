@@ -2,6 +2,13 @@ const CleanCSS = require("clean-css");
 
 module.exports = function (eleventyConfig) {
 
+  eleventyConfig.addCollection("post", function(collection) {
+    let pages = collection.getFilteredByTag("post");
+    return pages.sort(function(a, b){
+      return b.date - a.date;
+    })
+  });
+
   eleventyConfig.addCollection("topLevelPage", function(collection) {
     let pages = collection.getFilteredByTag("topLevelPage");
     return pages.sort(function(a, b){

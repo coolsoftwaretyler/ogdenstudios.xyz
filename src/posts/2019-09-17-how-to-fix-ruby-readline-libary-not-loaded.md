@@ -3,6 +3,7 @@ layout: post
 title:  "How to fix Ruby 'Library not loaded' error with Readline on Mac OSX"
 tags: [ruby, rails, error, fix, 'post']
 description: "Sometimes Ruby installations break when Homebrew updates. Reinstalling Ruby should fix the problem."
+date: 2019-09-17
 ---
 
 At this point, I've had this error happen to me twice. Each time I've fixed it, and each time I have forgotten how I fixed it the previous time. This post is mostly for posterity for my own sake. 

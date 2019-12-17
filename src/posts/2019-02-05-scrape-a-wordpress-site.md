@@ -3,6 +3,7 @@ layout: post
 title: How do I convert a WordPress site to a static site? 
 tags: ["WordPress", 'post']
 description: "A quick tidbit about scraping WordPress sites"
+date: 2019-02-05
 ---
 
 I had a WordPress site I used to manage that I wanted to archive and host statically. I tried multiple WordPress plugins to accomplish this job, including [Simply Static](https://wordpress.org/plugins/simply-static/) and [WP2Static](https://wordpress.org/plugins/static-html-output-plugin/). Neither of which worked very well: Simply Static hadn't been tested with the latest WordPress version and didn't correctly scrape all the files. WP2Static took too long to analyze and scrape my site. 

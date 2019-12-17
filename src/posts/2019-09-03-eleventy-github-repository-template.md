@@ -3,6 +3,7 @@ layout: post
 title: 'Using Github Repository Templates with Eleventy'
 tags: ['github', 'git', 'templates', 'eleventy', 'post']
 description: 'If you use Github repository templates with static site generators like Eleventy, you can optimize your workflow.'
+date: 2019-09-03
 ---
 
 This year, Github released [repository templates](https://github.blog/2019-06-06-generate-new-repositories-with-repository-templates/). I love this feature, particularly for static sites. 

@@ -3,6 +3,7 @@ layout: post
 title: 'Default has_one associations in Rails'
 tags: ['rails', 'associations', 'has_one', 'defaults', 'database', 'post']
 description: 'This week I spent some time working with Rails has_one associations and setting default values for them.'
+date: 2019-06-14
 ---
 
 This week my team was working on a component that needs a default image. 
