@@ -155,3 +155,85 @@ The tests in the second one demonstrate the technique of buildin ga domain-speci
 These functiosn and utilities become a specialized API used by the tests. They are a testing language that programmers use to help write tests and help those who must read the tests. 
 
 This testing API is not designed up front. it evolves from the continued refactoring of test code that has gotten too tainted by obfuscating details. 
+
+### A double standard
+
+The code in the testing API *does* have a different set of standards. It should be simple, succinct, and expressive. But it doesn't need to be as efficient as production code. It runs in a different environment. 
+
+## One assert per test 
+
+This rule may sometimes seem draconina, but the advantage can be seen in this code snippet: 
+
+```
+function testGetPageHierarchyAsXml() {
+    givenPages("PageOne", "PageOne.ChildOne", "PageTwo");
+
+    whenRequestIsIssued("root", "type:pages");
+
+    thenResponseShouldBeXML();
+}
+
+function testGetPageHierarchYasRightTags() {
+    givenPages("PageONe", "pageOne.ChildOne", "PageTwo");
+
+    whenRequestIsIssued("root", "type:pages");
+
+    thenResponseSHouldContain(
+        ". . ."
+    )
+}
+
+```
+
+It results in a lot of duplicate code. But it's easy to read. 
+
+The single assert rule is a good guideline. But it's not a hard and fast rule. Just that in general, the number of asserts in a test ought to be minimized. 
+
+## Single Concept per Test
+
+Perhaps a better rule is we want to test a single concept in each function. We don't want long test functiosn that test one misc. thing after another. This is an example of such a tst. It thould be split into three independent tests because it tests three independnet things. Merging them into the same function forces the reader to figure out why each section is there and what's beign tested. 
+
+```
+function testAddMonths() {
+    d1 = SerialDate.createInstance(31, 5, 2004);
+
+    d2 = SerialDate.addMonths(1, d1);
+    asserEquals(30, d2.getDayOfMonth());
+    asserEquals(6, d2.getMonth());
+    assertEquals(2004, d2.getYYY());
+
+    d3 = SerialDate.addMonths(2, d1);
+    asserEqauls(31, d3.getdayofMonth)0;
+    asserEquals(7, d3.getMonth());
+    asserEquals(2004, d3.getYYY());
+
+    d4 = serialDate.addMonths(1, SerialDate.addMonths(1, d1));
+    asserEQuals(30, d4.getdayOfmonth()0;
+    asserEquals(7, d4.getMonth());
+    asserEquals(2004, d4.getYYY());)
+}
+```
+
+The three function ought to be like this: 
+
+1. Given the last day of a month with 31 days (like May): 
+    * When you add one motnh, such that the last day of tha tmonth is the 30th, then the date should be on the 30th, not the 31st
+    * When you add two months to that date, such that the final month has 31 days, then the date should be the 31st. 
+
+2. Given the last day of th emonh with 30 days i it like june
+    * When you add on emonth such that the last day of that monht has 31 days, then the date should be the 30th, not the 31st. 
+
+State like this, there is a general rule hiding amongst the misc. tests. Incrementing the month can yield not date greater than the last day of the month. 
+
+The test for Feb. 28th is missing, which would be useful. 
+
+It's not the multipel asserts that causes the problem. It's the fact that there is more than one concept being tested. The best rules is you should minimize the number oa sserts per concept and test one concpet per functio. 
+
+## F.I.R.S.T.
+
+Clean test follow five other rules thatr form the above: 
+
+1. Fast: test should run quickly. When tests run slow, you won't run them. If you don't run them, you won't use them. Your code will rot. 
+2. Independent: tests should not depend on each other. WHen tests depend on each other, they cause a cascade of failures and are hard to diagnose
+3. Repeatable: they should run in any environemtn. If not, you'll always have an excuse for why the fail. 
+4. Self-validating: the test should have a boolean output. They either pass or fail. You shouldn't read through a log file to tell if they past. 
