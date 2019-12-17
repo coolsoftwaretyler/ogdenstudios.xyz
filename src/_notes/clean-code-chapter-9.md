@@ -237,3 +237,5 @@ Clean test follow five other rules thatr form the above:
 2. Independent: tests should not depend on each other. WHen tests depend on each other, they cause a cascade of failures and are hard to diagnose
 3. Repeatable: they should run in any environemtn. If not, you'll always have an excuse for why the fail. 
 4. Self-validating: the test should have a boolean output. They either pass or fail. You shouldn't read through a log file to tell if they past. 
+5. Timely: you need to write them in a timely fashion. Unit tests should be written *just before* produciton code that maeks them past. If you write them after prod code, the production code will be hard to test. You may not test some. 
+
