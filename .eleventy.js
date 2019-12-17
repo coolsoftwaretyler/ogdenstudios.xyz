@@ -20,6 +20,10 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addLayoutAlias('page', 'layouts/page.html');
   eleventyConfig.addLayoutAlias('post', 'layouts/post.html');
 
+  eleventyConfig.addLiquidFilter("date", function(date) { 
+    return new Date(date).toUTCString().split(' 00:00')[0];
+  });
+
   eleventyConfig.addPassthroughCopy("src/fonts");
   eleventyConfig.addPassthroughCopy("src/img");
   eleventyConfig.addPassthroughCopy("src/manifest.json");
