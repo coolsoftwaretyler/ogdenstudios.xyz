@@ -80,4 +80,43 @@ The original EJB1 and EJB2 architectures did not separate concerns appropriately
 
 First, you had to define a local (in process) or remote (separate JVM) interface, which clients would use. Here's a possible interface: 
 
-```
+## Test drive the system architecture
+
+Separatin gconcerns with aspect-like approaches is powerful. If you can write your domain logic in plain old objects, decoupled from any architectural concerns at the code level, it's possible to test drive your architecture. You can evolve from simple to sophisticaed, as needed, by adopting new technology on demand. It isn't necessary to do a Big Design Up Front. In fact, BDUF is harmful becasue it inhibits adapting to change, due to psychological resistance to discarding prior effort, and becasue of the way architecture choices influence subsequent thinking about the design. 
+
+Building architects have to do BDUF because it's not feasible to make radical changes to a large structure once construction is underway. While there are some constraints on software, it is still economically feasible to to make changes, if the structure separates its concerns effectively. 
+
+This means we can start projects with a naively simple, butnicely decoupled architecture. It delivers working user stories quickly, then adds more infrastructure as we scale up. Some of the world's largets web sites have achieved high availability and performance, using sophisticated caching, security, virtualization, and so forth. They have done so efficiently and flexibly because of minimally coupled designs that are appropriately simple at each level of abstraction and scope. 
+
+This doesn't mean we go into a project "rudderless". We have some expectations of the general scope, goals, and schedule for the project. AS well as the general structure of the resulting system. However, we have to maintain the ability to change course in response to evolving circumstances. 
+
+even well-designed APIs can be overkill when they aren't really needed. A good API should largely disappear from view most of the time, so the team spends most of its creative efforts focused on the user stories being implemented. If not, then the architectureal constraints will inhibit efficient delivery of optimal value. 
+
+To recap: 
+
+> An optimal system architecture consists of modularized domains of concern, each of which is implemented with Plain Old Java (or other) Objects. The different domains are integrated together with minimall invasive Aspects or Aspect-like tools. This architecture can be test-driven, just like the code. 
+
+## Optimize Decision Making 
+
+Modularity and separation of concerns make decentralized managemtn and decision making possible. In a sufficiently large system, wheter it is a city or a software project,no one person cn make all the decisions. We all know it is best to give responsibilities to the most qualified persons. What we often forget is it is best to *postpone decisions until the last possible moment*. This isn't lazy or irresponsible. It lets us make choices with the best possible information. A premature decision is a decision made with suboptimal knowelde. We will have less customer feedback, mental reflection on the project, and experience with th eimplementation choices if we decide too soon. 
+
+## Use standards wisely, when they add demonstrable value
+
+Standards make it easier to reuse ideas and components, recruit people with relevant experience, encapsulate good ideas, and wire components together. However, the process of creating standards can sometimes take too long for the industry to wait, and some standards lose touch with the real needs of the adopters they are intended to serve.
+
+
+## Systems need domain-specific languages 
+
+Building construction, like most domains, has developed a rich language with a vocabulary, idioms, and patterns that convey essential information clearly and concisely. In software, there has been renewed interest in creating *Domain-Specific Languages* (DSLs) which are separate, small scripting lnaguages or APIs in standard languages that permit code to be written so it reads like a structured form of prose that a domain expert might write. 
+
+A good DSL minimizes the communication gap between a domain concept and the code that implements it, just as agile practices optimize the communication within a team and with the project's stakeholders. If you are implementing domain logic in the same language that a domain exper uses, there is less risk you will incorrectly translate the domain into the implementation. 
+
+DSLs, when used effectively, raise the abstraction level above code idioms and design patterns. They allow the developer to reveal the intent of the code at the appropriate level of abstraction. 
+
+## Conclusion 
+
+Systems must be clean too. An invasive architecutre overwhelms the domain logic and impacts agility. When the domain logic is obscured, quality suffers becasue bugs find it easier to hide and stories become harder to implement. If agility is compromised, productivity suffers, and the benefits of TDD are lost. 
+
+At all levels of abstraction, intent should be clear. This will only happen if you write POJOs and you use aspect-like mechanisms to incorporate other implementation concerns noninvasively. 
+
+Whether you are desiging systems or individual modules, never forget to use the simplest thing that can possible work. 
