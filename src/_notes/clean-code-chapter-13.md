@@ -65,3 +65,40 @@ A quick answer is that there are 12,80 possible exuection paths for thoset two t
 
 ## Concurrency defense principles. 
 
+### Single Responsibility principle
+
+A given method/class/component should have a single reason to change. Concurrency design is complex enough to be a reason to change in its own right. It deserves to be separated from the rest of the code. 
+
+Often, concurrency implementation details get embedded directly into other production code. Consider: 
+
+* Concurrency-related code has its own life cycle of development, change, and tuning
+* Concurrency-related code has its own challenge, which are different from, and often more difficult than nonconcurrency related code. 
+* The number of ways a miswritten concurrency based code can fil makes it challenging even without added burden of application code
+
+**Keep your concurrency related code separate from other code**. 
+
+### Corollary: limit the scope of data
+
+Two threads modifying the same field of a shared object can interfere with each other. It is important to restrict the number of criticla sections. The more places shared data can get updated, the more likely: 
+
+* you will forget to protect one or more of those places 
+* There will be duplication of effort required to make everything guarded
+* It will be difficult to determine the source of failures, which are hard enough to find. 
+
+**Take data encapuslation to heart; severely limit the access of any data that may be shared**. 
+
+### Corollary: use copies of data
+
+A good way to avoid shared data is to avoid sharing the data in the first place. If it is possible to copy objects and treat them as read only, that helps. 
+
+In other cases, you may be able to copy objects, collect results from multiple threads, and merge the results in a single thread. 
+
+If there's an easy way to avoid sharing objects, the code will be less likely to casue problems. 
+
+### Corollary: threads should be as independent as possible
+
+Consider writing threaded code such that ecah thread exists in its own world, sharing no data with any other thread. Eachthread processes one client request, with all of its required data coming from an unshared source and stored as local variables. This makes each thread behave as if it were the only thread and there are no synch requirements. 
+
+**Attempt to partition data into independent subsets that can be operated on by independent threads, possibly in different processors**
+
+## Know your
