@@ -75,7 +75,7 @@ class Tree {
         return y;
     }
     insert(node) {
-        let y;
+        let y = null;
         let x = this.root;
         while (x !== null) {
             y = x;
