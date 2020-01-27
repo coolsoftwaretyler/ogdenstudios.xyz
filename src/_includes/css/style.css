@@ -301,9 +301,17 @@ nav li {
 
 .two-column aside {
     background: #5c5552;
+    box-sizing: border-box;
     color: white;
     display: flex;
     justify-content: flex-end;
+    min-width: 500px;
+}
+
+@media (max-width: 1280px) {
+    .two-column aside {
+        transform: translateX(-100%);
+    }
 }
 
 .two-column aside .content {
