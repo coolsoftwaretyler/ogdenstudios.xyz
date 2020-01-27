@@ -13,6 +13,11 @@ html {
     line-height: 1.75;
 }
 
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
 h1 {
     text-transform: uppercase;
 }
@@ -279,4 +284,22 @@ nav li {
 
 .post-list li {
     margin-bottom: 3em;
+}
+
+/* Two Column Layout */
+
+.two-column {
+    display: grid;
+    grid-template-columns: 500px 1fr;
+    min-height: 100vh;
+}
+
+.two-column aside {
+    background: #5c5552;
+    color: white;
+    padding: 1em;
+}
+
+.two-column main {
+    padding: 1em;
 }

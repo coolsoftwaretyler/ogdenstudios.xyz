@@ -5,6 +5,8 @@
     <style>{{ css | cssmin | safe }}</style>
     {%- include header.html -%}
     <main class="page" aria-label="Content">
+    <aside>
+    </aside>
         {{ content }}
     </main>
     {% capture hamburger %}{% include js/hamburger.js %}{% endcapture %}

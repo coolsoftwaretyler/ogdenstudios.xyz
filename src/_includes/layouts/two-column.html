@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+  {%- include head.html -%}
+<style>{{ css | cssmin | safe }}</style>
+  <body class="two-column" >    
+    <aside>
+        <h1>Ogden Studios</h1>
+        <p>I'm Tyler Williams, Principal Developer at Ogden Studios. I build practical solutions for pragmatic people.</p>
+        <a href="https://github.com/ogdenstudios">GitHub</a><br>
+        <a href="https://www.linkedin.com/in/tylerwilliamsct">LinkedIn</a><br>
+        <a href="mailto:tyler@ogdenstudios.xyz">tyler@ogdenstudios.xyz</a><br>
+        <a href="https://ko-fi.com/ogdenstudios">Buy me a coffee</a>
+    </aside>
+    <main aria-label="Content">
+        {{ content }}
+    </main>
+    {% capture hamburger %}{% include js/hamburger.js %}{% endcapture %}
+    <script>
+      {{ hamburger | jsmin | safe }}
+    </script>
+  </body>
+</html>
