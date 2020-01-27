@@ -4,15 +4,28 @@
 <style>{{ css | cssmin | safe }}</style>
   <body class="two-column" >    
     <aside>
+    <div class="content">
+        <nav id="navbar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                {% for page in collections.topLevelPage %}
+                <li><a href="{{page.data.permalink}}">{{ page.data.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
         <h1>Ogden Studios</h1>
+        <img class="headshot" src="/img/tyler.jpg" alt=" " />
         <p>I'm Tyler Williams, Principal Developer at Ogden Studios. I build practical solutions for pragmatic people.</p>
         <a href="https://github.com/ogdenstudios">GitHub</a><br>
         <a href="https://www.linkedin.com/in/tylerwilliamsct">LinkedIn</a><br>
         <a href="mailto:tyler@ogdenstudios.xyz">tyler@ogdenstudios.xyz</a><br>
         <a href="https://ko-fi.com/ogdenstudios">Buy me a coffee</a>
+        </div>
     </aside>
     <main aria-label="Content">
+        <div class="copy">
         {{ content }}
+        </div>
     </main>
     {% capture hamburger %}{% include js/hamburger.js %}{% endcapture %}
     <script>

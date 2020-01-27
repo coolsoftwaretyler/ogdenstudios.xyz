@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: layouts/two-column.html
 title: Process
 nav: true
 permalink: /process/

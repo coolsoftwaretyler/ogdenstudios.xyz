@@ -100,7 +100,7 @@ nav {
     align-items: center;
     margin: 0 auto;
     max-width: 900px;
-    padding: 1em;
+    padding: 0 1em 1em 0;
 }
 
 nav ul {
@@ -290,16 +290,41 @@ nav li {
 
 .two-column {
     display: grid;
-    grid-template-columns: 500px 1fr;
-    min-height: 100vh;
+    grid-template-columns: 45% 1fr;
+    height: 100vh;
+}
+
+.two-column h1:first-of-type,
+.two-column p:first-of-type {
+    margin-top: 0;
 }
 
 .two-column aside {
     background: #5c5552;
     color: white;
-    padding: 1em;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.two-column aside .content {
+    max-width: 500px;
+    padding: 2em;
+}
+
+.two-column aside a {
+    color: #C3DAC3;
+}
+
+.headshot {
+    /* border-radius: 50%; */
+    width: 200px;
 }
 
 .two-column main {
-    padding: 1em;
+    padding: 2em;
+    overflow-y: auto;
+}
+
+.two-column .copy {
+    max-width: 500px;;
 }
