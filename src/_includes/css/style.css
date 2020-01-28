@@ -13,7 +13,8 @@ html {
     line-height: 1.75;
 }
 
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
 }
@@ -294,6 +295,30 @@ nav li {
     height: 100vh;
 }
 
+@media (max-width: 1280px) {
+    .two-column {
+        grid-template-columns: 1fr;
+    }
+    .two-column aside {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translateX(-100%);
+    }
+
+    .two-column aside:after {
+        background: #5c5552;
+        content: '';
+        height: 40px;
+        width: 40px;
+        position: absolute;
+        top: 0;
+        right: -40px;
+
+    }
+}
+
+
 .two-column h1:first-of-type,
 .two-column p:first-of-type {
     margin-top: 0;
@@ -306,12 +331,6 @@ nav li {
     display: flex;
     justify-content: flex-end;
     min-width: 500px;
-}
-
-@media (max-width: 1280px) {
-    .two-column aside {
-        transform: translateX(-100%);
-    }
 }
 
 .two-column aside .content {
@@ -334,5 +353,6 @@ nav li {
 }
 
 .two-column .copy {
-    max-width: 500px;;
+    max-width: 500px;
+    ;
 }
