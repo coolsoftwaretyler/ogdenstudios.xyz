@@ -30,7 +30,7 @@ Our first intuition might be to use [fragment caching](https://guides.rubyonrail
 
 This will yield some benefits because it caches the render output of the `component` partial. 
 
-But if `@sample_object.external_components` takes some non-trivial amount of time to run its operations, we haven't quite solved all our caching problems. 
+But if `@sample_object.external_components` takes some non-trivial amount of time to run its operations, we haven't quite solved all our caching problems. The call to that method happens outside of the cache. Every time we render this view, we'll invoke `external_components` and slow things down, even with the cached partials. 
 
 ## Low-level caching
 
