@@ -46,13 +46,13 @@ end
 
 This is a great candidate for [low-level caching](https://guides.rubyonrails.org/caching_with_rails.html#low-level-caching). 
 
-We can refactor `external_components` like this: 
+We can rewrite `external_components` like this: 
 
 ```
 class SampleObject < ApplicationRecord
    def external_components 
      Rails.cache.fetch("#{cache_key_with_version}/components", expires_in: 12.hours) do
-     # Some long running task that fetches "components"
+     # Some long running task that returns `components`
     end
   end
 end
