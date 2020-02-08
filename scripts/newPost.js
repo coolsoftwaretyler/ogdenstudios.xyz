@@ -9,5 +9,5 @@ title:
 tags: ['post']
 description:
 date:
----`
+---`;
 fs.writeFile(filePath, content, { flag: 'w+' }, () => {});
