@@ -8,6 +8,6 @@ layout: post
 title: 
 tags: ['post']
 description:
-date: 2019-09-03
+date:
 ---`
 fs.writeFile(filePath, content, { flag: 'w+' }, () => {});
