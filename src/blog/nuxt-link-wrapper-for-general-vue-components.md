@@ -1,22 +1,22 @@
 ---
 layout: post
-title: Wrap nuxt-link for general use in components agnostic of Vue.js frameworks.
+title: Wrapping nuxt-links to make your Vue.js components Nuxt.js agnostic.
 tags: ['post']
-description: The nuxt-link component is a core feature of Nuxt.js. But if you're building a general Vue.js framework for use in Nuxt, you may want some more flexibility.
+description: The nuxt-link component is a core feature of Nuxt.js. If you're building a general Vue.js library that might be used either in or outside of Nuxt, you can be flexible by building a wrapper component around it.
 date: 2020-03-23
 ---
 
-At work we've got a component library built in [Vue.js](https://vuejs.org/). It's great because we can take the work our designers do, build it once, and then ship it to any project that needs those components. 
+At work we've got a component library built in [Vue.js](https://vuejs.org/). It's great because we can take the components our designers create, build them once, and then ship them to any project.
 
-Most, but not all of our projects end up using the [Nuxt.js](https://nuxtjs.org/) framework. We like it because it gives us the ability to build sites with server-side rendering, static site generation, or even single-page applications.
+Most, but not all, of our projects use [Nuxt.js](https://nuxtjs.org/). We like it because it gives us the ability to build sites with server-side rendering, static site generation, or single-page applications as needed.
 
 ## Building the components for Nuxt 
 
-We have a few navigational components in our library, like a `Navbar` component and a `Footer` component. Since these components typically direct users around internal pages on our Nuxt projects, we should use the `nuxt-link` component to get the most out of the framework. 
+We have navigational components in our library like a `Navbar` component and a `Footer` component. Since these components typically direct users around internal pages on our Nuxt projects, we want to use the `nuxt-link` component to get the most out of the framework. 
 
-The [nuxt-link](https://nuxtjs.org/api/components-nuxt-link/) allows users to navigate the application like they might expect with a `router-link`. It is itself an extension of [router-link](https://router.vuejs.org/api/#router-link). 
+[nuxt-link](https://nuxtjs.org/api/components-nuxt-link/) allows users to navigate the application like they might expect with a `router-link`. It is itself an extension of [router-link](https://router.vuejs.org/api/#router-link). 
 
-But to use `nuxt-link`, the component needs to be used *inside a Nuxt project*. Usually that's fine, but sometimes we don't use Nuxt, so we don't have it available as a component, and things break. In those cases, we want to be using a regular HTML `a` tag. 
+But to use `nuxt-link`, the component needs to be used *inside a Nuxt project*. In Nuxt projects that's fine, but what do we do when we aren't using Nuxt? In those cases, we may want to use a regular HTML `a` tag. 
 
 ## Wrapping nuxt-link
 
@@ -112,4 +112,4 @@ navbar: {
 
 The `/about` link will act as a Nuxt link, and the `https://www.partner.com` link will act like a normal anchor link. 
 
-Hope that's helpful to someone out there!
+Fun!
