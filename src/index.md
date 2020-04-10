@@ -9,7 +9,7 @@ layout: page
     <div class="home__container">
         <div class="home__lead">
             <p>I'm Tyler Williams, Principal Developer at Ogden Studios. I build practical solutions for pragmatic people.</p>
-            <p>I'm a full stack web developer with a strong background in Ruby on Rails, WordPress, and JAMstack. While I'm most comfortable working in these environments, I'm language and framework agnostic. For every project I take on, I choose the right tools for the job and provide excellent results using appropriate technologies.</p>
+            <p>I'm a full stack web developer with a strong background in Ruby on Rails, WordPress, and Jamstack. While I'm most comfortable working in these environments, I'm language and framework agnostic. For every project I take on, I choose the right tools for the job and provide excellent results using appropriate technologies.</p>
             <p>I'm particularly passionate about the lean web, accessibility, and security. I love developing with continuous deployment, and I believe in a free and open web.</p>
         </div>
         <div class="home__headshot">
