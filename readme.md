@@ -7,3 +7,9 @@ Built in Jekyll. Converted to Eleventy. Serves as a living resume, CV, portfolio
 ## Layout Aliasing 
 
 When I converted to Eleventy, I used [layout aliasing](https://www.11ty.dev/docs/layouts/#layout-aliasing) to update some of the common layouts.
+
+## New blog post 
+
+```
+npm run newpost name-of-post
+```
