@@ -39,7 +39,7 @@ Use the form below to pay your invoice.
         <label for="email" data-tid="form.email_label">Email</label>
         <input id="email" data-tid="form.email_placeholder" type="email" placeholder="janedoe@gmail.com" required="" autocomplete="email"><br>
         <label for="invoice" data-tid="form.invoice_label">Invoice</label>
-        <input id="invoice" data-tid="form.invoice_placeholder" type="tel" placeholder="XXXX-XXX" required="" autocomplete="tel"><br>
+        <input id="invoice" data-tid="form.invoice_placeholder" type="tel" placeholder="XXXX-XXX" autocomplete="tel"><br>
         <label for="amount" data-tid="form.amount_label">Amount (USD)</label>
         <input id="amount" data-tid="form.amount_placeholder" type="text" placeholder="100.00" required="" autocomplete="amount" pattern="^\d+\.\d{2}$"><br>
     </fieldset>
@@ -81,7 +81,7 @@ form.addEventListener('submit', function(event) {
   var name = document.getElementById('name').value
   var email = document.getElementById('email').value
   var invoice = document.getElementById('invoice').value
-  var amount = document.getElementById('amount').value 
+  var amount = document.getElementById('amount').value * 100
   var paymentInformation = {
       name: name,
       email: email,
@@ -120,13 +120,11 @@ function confirmPayment(clientSecret, paymentInformation) {
     }
   }).then(function(result) {
     if (result.error) {
-      // Show error to your customer (e.g., insufficient funds)
-      console.log(result.error.message);
       window.alert(result.error.message);
     } else {
       // The payment has been processed!
       if (result.paymentIntent.status === 'succeeded') {
-        window.alert('Payment successful!')
+        window.alert('Your payment for $' + result.paymentIntent.amount / 100 + ' was successful. Thank you!')
         // Show a success message to your customer
         // There's a risk of the customer closing the window before callback
         // execution. Set up a webhook or plugin to listen for the
