@@ -2,8 +2,9 @@
 <html lang="{{ page.lang | default: site.lang | default: "en" }}">
   {%- include head.html -%}
 <style>{{ css | cssmin | safe }}</style>
-  <body class="two-column" >    
-    <aside>
+  <body class="two-column">  
+    <button id="hamburger" aria-label="Toggle menu">Toggle Menu</button>  
+    <aside id="aside">
     <div class="content">
         <nav id="navbar">
             <ul>

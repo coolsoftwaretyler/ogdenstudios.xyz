@@ -3,7 +3,7 @@
     var navbar;
     document.addEventListener('DOMContentLoaded', function () {
         hamburger = document.getElementById('hamburger');
-        navbar = document.getElementById('navbar');
+        navbar = document.getElementById('aside');
         hamburger.addEventListener('click', toggle);
     });
 
