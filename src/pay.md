@@ -87,13 +87,23 @@ form.addEventListener('submit', function(event) {
       name: name,
       email: email,
       invoice: invoice, 
-      amount: amount
+      amount: amount,
       card: card
   }
-  // Get clientSecret and then confirm the payment
-  fetch('/purchase')
+  fetch('/.netlify/functions/purchase', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(paymentInformation)
+  })
   .then(function(response) {
-      confirmPayment(response, paymentInformation);
+      response.json().then(
+          function(json) {
+              var clientSecret = json.client_secret
+              confirmPayment(clientSecret, paymentInformation)
+          }
+      )
   });
 });
 
@@ -113,9 +123,11 @@ function confirmPayment(clientSecret, paymentInformation) {
     if (result.error) {
       // Show error to your customer (e.g., insufficient funds)
       console.log(result.error.message);
+      window.alert(result.error.message);
     } else {
       // The payment has been processed!
       if (result.paymentIntent.status === 'succeeded') {
+        window.alert('Payment successful!')
         // Show a success message to your customer
         // There's a risk of the customer closing the window before callback
         // execution. Set up a webhook or plugin to listen for the

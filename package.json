@@ -25,6 +25,7 @@
     "terser": "^4.4.3"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "stripe": "^8.44.0"
   }
 }
