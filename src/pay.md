@@ -39,9 +39,9 @@ Use the form below to pay your invoice.
         <label for="email" data-tid="form.email_label">Email</label>
         <input id="email" data-tid="form.email_placeholder" type="email" placeholder="janedoe@gmail.com" required="" autocomplete="email"><br>
         <label for="invoice" data-tid="form.invoice_label">Invoice</label>
-        <input id="invoice" data-tid="form.invoice_placeholder" type="tel" placeholder="2020-000" required="" autocomplete="tel"><br>
-        <label for="amount" data-tid="form.amount_label">Amount ($USD)</label>
-        <input id="amount" data-tid="form.amount_placeholder" type="text" placeholder="100.00" required="" autocomplete="amount"><br>
+        <input id="invoice" data-tid="form.invoice_placeholder" type="tel" placeholder="XXXX-XXX" required="" autocomplete="tel"><br>
+        <label for="amount" data-tid="form.amount_label">Amount (USD)</label>
+        <input id="amount" data-tid="form.amount_placeholder" type="text" placeholder="100.00" required="" autocomplete="amount" pattern="^\d+\.\d{2}$"><br>
     </fieldset>
     <fieldset>
         <div id="card-element">
