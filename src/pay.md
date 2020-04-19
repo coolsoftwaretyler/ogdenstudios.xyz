@@ -1,8 +1,7 @@
 ---
 layout: layouts/two-column.html
-title: Pay
+stripe: true
 ---
-<script src="https://js.stripe.com/v3/"></script>
 <style>
 fieldset {
     border: none;
