@@ -13,6 +13,12 @@ html {
     line-height: 1.75;
 }
 
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
 h1 {
     text-transform: uppercase;
 }
@@ -95,7 +101,7 @@ nav {
     align-items: center;
     margin: 0 auto;
     max-width: 900px;
-    padding: 1em;
+    padding: 0 1em 1em 0;
 }
 
 nav ul {
@@ -106,149 +112,6 @@ nav ul {
 
 nav li {
     margin-right: 48px;
-}
-
-@media (max-width: 637px) {
-    nav {
-        flex-wrap: wrap;
-        background: hsla(0, 10%, 94%, 1);
-        height: 100%;
-        left: -9999px;
-        position: absolute;
-        transition: left 0.3s ease-in-out;
-        width: 100%;
-    }
-
-    nav.is-active {
-        left: 0;
-        transition: left 0.3s ease-in-out;
-    }
-
-    nav ul {
-        display: block;
-        width: 100%;
-    }
-
-    nav li {
-        margin: 28px 0;
-        text-align: center;
-        width: 100%;
-    }
-}
-
-/* Hamburger */
-
-/*!
- * Hamburgers
- * @description Tasty CSS-animated hamburgers
- * @author Jonathan Suh @jonsuh
- * @site https://jonsuh.com/hamburgers
- * @link https://github.com/jonsuh/hamburgers
- */
-.hamburger {
-    padding: 15px 15px;
-    display: none;
-    cursor: pointer;
-    transition-property: opacity, filter;
-    transition-duration: 0.15s;
-    transition-timing-function: linear;
-    font: inherit;
-    color: inherit;
-    text-transform: none;
-    background-color: transparent;
-    border: 0;
-    margin: 0;
-    overflow: visible;
-    width: 100%;
-}
-
-@media (max-width: 637px) {
-    .hamburger {
-        display: inline-block;
-    }
-}
-
-.hamburger:hover {
-    opacity: 0.7;
-}
-
-.hamburger.is-active:hover {
-    opacity: 0.7;
-}
-
-.hamburger.is-active .hamburger-inner,
-.hamburger.is-active .hamburger-inner::before,
-.hamburger.is-active .hamburger-inner::after {
-    background-color: #000;
-}
-
-.hamburger-box {
-    width: 40px;
-    height: 24px;
-    display: inline-block;
-    position: relative;
-    float: right;
-}
-
-.hamburger-inner {
-    display: block;
-    top: 50%;
-    margin-top: -2px;
-}
-
-.hamburger-inner,
-.hamburger-inner::before,
-.hamburger-inner::after {
-    width: 40px;
-    height: 4px;
-    background-color: #000;
-    border-radius: 4px;
-    position: absolute;
-    transition-property: transform;
-    transition-duration: 0.15s;
-    transition-timing-function: ease;
-}
-
-.hamburger-inner::before,
-.hamburger-inner::after {
-    content: "";
-    display: block;
-}
-
-.hamburger-inner::before {
-    top: -10px;
-}
-
-.hamburger-inner::after {
-    bottom: -10px;
-}
-
-.hamburger--slider .hamburger-inner {
-    top: 2px;
-}
-
-.hamburger--slider .hamburger-inner::before {
-    top: 10px;
-    transition-property: transform, opacity;
-    transition-timing-function: ease;
-    transition-duration: 0.15s;
-}
-
-.hamburger--slider .hamburger-inner::after {
-    top: 20px;
-}
-
-.hamburger--slider.is-active .hamburger-inner {
-    transform: translate3d(0, 10px, 0) rotate(45deg);
-}
-
-.hamburger--slider.is-active .hamburger-inner::before {
-    transform: rotate(-45deg) translate3d(-5.71429px, -6px, 0);
-    opacity: 0;
-}
-
-.hamburger--slider.is-active .hamburger-inner::after {
-    transform: translate3d(0, -20px, 0) rotate(-90deg);
 }
 
 /* Experience */
@@ -279,4 +142,105 @@ nav li {
 
 .post-list li {
     margin-bottom: 3em;
+}
+
+/* Two Column Layout */
+
+.two-column {
+    display: grid;
+    grid-template-columns: 45% 1fr;
+    height: 100vh;
+}
+
+#hamburger {
+    display: none;
+}
+
+.two-column h1:first-of-type,
+.two-column p:first-of-type {
+    margin-top: 0;
+}
+
+.two-column aside {
+    background: #5c5552;
+    box-sizing: border-box;
+    color: white;
+    display: flex;
+    justify-content: flex-end;
+    min-width: 500px;
+}
+
+.two-column aside .content {
+    max-width: 500px;
+    padding: 2em;
+}
+
+.two-column aside a {
+    color: #C3DAC3;
+}
+
+.two-column main {
+    padding: 2em;
+    overflow-y: auto;
+}
+
+.two-column .copy {
+    max-width: 500px;
+}
+
+@media (max-width: 1280px) {
+    .two-column {
+        grid-template-columns: 100%;
+    }
+
+    .two-column aside {
+        box-sizing: border-box;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        min-width: unset;
+        width: 100vw;
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+        z-index: 1;
+    }
+
+    .two-column aside .content {
+        box-sizing: border-box;
+        max-width: 100%;
+    }
+
+    .two-column aside.is-active {
+        transform: translateX(0%);
+    }
+
+    #hamburger {
+        background: transparent;
+        background-image: url('/img/hamburger.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        border: none;
+        box-sizing: border-box;
+        color: transparent;
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 50px;
+        width: 50px;
+        padding: 0;
+        z-index: 2;
+        overflow: auto;
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+}
+
+.headshot {
+    /* border-radius: 50%; */
+    width: 200px;
 }
