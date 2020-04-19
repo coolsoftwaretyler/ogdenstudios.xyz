@@ -204,6 +204,7 @@ nav li {
         transform: translateX(100%);
         transition: transform 0.3s ease-in-out;
         z-index: 1;
+        overflow: auto;
     }
 
     .two-column aside .content {
@@ -232,7 +233,6 @@ nav li {
         width: 50px;
         padding: 0;
         z-index: 2;
-        overflow: auto;
     }
 
     nav ul {
