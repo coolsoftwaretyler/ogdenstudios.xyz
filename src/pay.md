@@ -13,11 +13,18 @@ input[type="text"],
 input[type="email"],
 input[type="tel"],
 #submit,
-#statusClose {
+#statusClose,
+#card-element {
+    box-sizing: border-box;
     font-size: 18px;
-    height: 1.5em;
+    height: 2.25em;
     margin: 0.5em 0;
+    padding-left: 0.25em;
     width: 100%;
+}
+
+#card-element {
+  margin-bottom: 0;
 }
 
 #submit,
@@ -27,6 +34,7 @@ input[type="tel"],
     border-radius: 5px;
     color: white;
     margin-top: 1em;
+    padding-left: 0;
 }
 
 #statusClose {
