@@ -125,7 +125,7 @@ Use the form below to pay your invoice.
 </div>
 
 <script>
-var stripe = Stripe('pk_test_id24CfaEav8k0e7CumOaGRTY00QQBG5gdL');
+var stripe = Stripe('pk_live_ffjygMF2UT4JlS3VPOUrOXnh00c71u6hkV');
 var elements = stripe.elements();
 
 var style = {
