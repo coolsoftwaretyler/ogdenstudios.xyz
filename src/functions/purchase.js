@@ -26,6 +26,7 @@ exports.handler = async function (event, context, callback) {
             integration_check: 'accept_a_payment',
             invoice: data.invoice
          },
+         receipt_email: data.email
     });
     return {
         statusCode: 200,
