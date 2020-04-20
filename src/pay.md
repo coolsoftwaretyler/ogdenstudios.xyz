@@ -103,14 +103,14 @@ Use the form below to pay your invoice.
 
 <form id="payment-form">
     <fieldset>
-        <label for="name" data-tid="form.name_label">Name</label>
+        <label for="name" data-tid="form.name_label">Name*</label>
         <input id="name" data-tid="form.name_placeholder" type="text" placeholder="Jane Doe" required="" autocomplete="name"><br>
-        <label for="email" data-tid="form.email_label">Email</label>
+        <label for="email" data-tid="form.email_label">Email*</label>
         <input id="email" data-tid="form.email_placeholder" type="email" placeholder="janedoe@gmail.com" required="" autocomplete="email"><br>
         <label for="invoice" data-tid="form.invoice_label">Invoice</label>
         <input id="invoice" data-tid="form.invoice_placeholder" type="tel" placeholder="XXXX-XXX" autocomplete="tel"><br>
-        <label for="amount" data-tid="form.amount_label">Amount (USD)</label>
-        <input id="amount" data-tid="form.amount_placeholder" type="text" placeholder="100.00" required="" autocomplete="amount" pattern="(?=.*?\d)^\$?(([1-9]\d{0,2}(\d{3})*)|\d+)?(\.\d{1,2})?$"><br>
+        <label for="amount" data-tid="form.amount_label">Amount (USD)*</label>
+        <input id="amount" data-tid="form.amount_placeholder" type="tel" placeholder="100.00" required="" autocomplete="tel" pattern="(?=.*?\d)^\$?(([1-9]\d{0,2}(\d{3})*)|\d+)?(\.\d{1,2})?$"><br>
     </fieldset>
     <fieldset>
         <div id="card-element">
@@ -122,6 +122,8 @@ Use the form below to pay your invoice.
     </fieldset>
 </form>
 
+<p>Having issues? Send an email to <a href="mailto:tyler@ogdenstudios.xyz">tyler@ogdenstudios.xyz</a></p>
+
 <div id="status">
   <div class="info">
     <p id="statusMessage">Payment processing</p>
@@ -131,7 +133,7 @@ Use the form below to pay your invoice.
 </div>
 
 <script>
-var stripe = Stripe('pk_test_id24CfaEav8k0e7CumOaGRTY00QQBG5gdL');
+var stripe = Stripe('pk_live_ffjygMF2UT4JlS3VPOUrOXnh00c71u6hkV');
 var elements = stripe.elements();
 
 var style = {
