@@ -22,7 +22,10 @@ exports.handler = async function (event, context, callback) {
         amount: data.amount,
         currency: 'usd',
         // Verify your integration in this guide by including this parameter
-        metadata: { integration_check: 'accept_a_payment' },
+        metadata: { 
+            integration_check: 'accept_a_payment',
+            invoice: data.invoice
+         },
     });
     return {
         statusCode: 200,
