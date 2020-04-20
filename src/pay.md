@@ -195,6 +195,7 @@ function confirmPayment(clientSecret, paymentInformation) {
         email: paymentInformation.email
        }
     },
+    receipt_email: paymentInformation.email
   }).then(function(result) {
     document.querySelector(".lds-dual-ring").style.display = 'none';
     document.querySelector("#statusClose").style.display = 'block';
