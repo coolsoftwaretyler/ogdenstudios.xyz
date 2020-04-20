@@ -237,6 +237,7 @@ nav li {
 
     nav ul {
         flex-direction: column;
+        margin-top: 0;
     }
 }
 
