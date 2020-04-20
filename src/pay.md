@@ -193,10 +193,10 @@ function confirmPayment(clientSecret, paymentInformation) {
       billing_details: {
         name: paymentInformation.name,
         email: paymentInformation.email
-       },
-        metadata: {
-            invoice: paymentInformation.invoice
-        }
+       }
+    },
+    metadata: {
+      invoice: paymentInformation.invoice
     }
   }).then(function(result) {
     document.querySelector(".lds-dual-ring").style.display = 'none';
