@@ -102,7 +102,7 @@ Use the form below to pay your invoice.
         <label for="invoice" data-tid="form.invoice_label">Invoice</label>
         <input id="invoice" data-tid="form.invoice_placeholder" type="tel" placeholder="XXXX-XXX" autocomplete="tel"><br>
         <label for="amount" data-tid="form.amount_label">Amount (USD)</label>
-        <input id="amount" data-tid="form.amount_placeholder" type="text" placeholder="100.00" required="" autocomplete="tel" pattern="(?=.*?\d)^\$?(([1-9]\d{0,2}(\d{3})*)|\d+)?(\.\d{1,2})?$"><br>
+        <input id="amount" data-tid="form.amount_placeholder" type="tel" placeholder="100.00" required="" autocomplete="tel" pattern="(?=.*?\d)^\$?(([1-9]\d{0,2}(\d{3})*)|\d+)?(\.\d{1,2})?$"><br>
     </fieldset>
     <fieldset>
         <div id="card-element">
