@@ -2,7 +2,7 @@
 layout: post
 title: PG::ConnectionBad - could not connect to server No such file or directory (Mac OSX)
 tags: ["postgres", 'post', 'rails', 'tidbit']
-description: "Sometimes my Rails server doesn't connect to PostgreSQL. This is usually the queick fix for my environment on OSX."
+description: "Sometimes my Rails server doesn't connect to PostgreSQL. This is usually the quick fix for my environment on OSX."
 date: 2019-12-27
 ---
 
