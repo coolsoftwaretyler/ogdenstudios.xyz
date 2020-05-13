@@ -6,25 +6,25 @@ description: I find myself writing the same Stripe functionality frequently. To 
 date: 2020-05-13
 ---
 
-I maintain a handful of Ruby on Rails applications for my clients, and most of them end up wanting to process payments at some point or another. My go-to payment processor is [Stripe](https://stripe.com/). Stripe really makes payments easy, but it still requires some setup and configuration. At this point I've written the same one-time payment feature about five times with slight variations. I wanted to make it easier to repeat.
+I maintain a handful of Ruby on Rails applications for my clients. Most of them need to handle payments. My go-to payment processor is [Stripe](https://stripe.com/). Stripe makes payments easy, but still requires some setup and configuration. I've written the same one-time payment feature about five times with slight variations, so I wanted to make it easier to repeat.
 
-I figured this sort of abstraction is a great candidate for a [Rails engine](https://guides.rubyonrails.org/engines.html). 
+This sort of abstraction is a good candidate for a [Rails engine](https://guides.rubyonrails.org/engines.html). 
 
-Engines are basically sub-applications that provide functionality to a host application. They're great if you have some set of features that could reasonably be separated into their own application, but require a good amount of interoperability with your main application. (Thanks to [Noah Gibbs](https://codefol.io/) for the vocab on that one).
+Engines are basically sub-applications that provide functionality to a host application. They're great if you have some set of features that could reasonably be separated into their own application, but require a high amount of interoperability with your main application. (Thanks to [Noah Gibbs](https://codefol.io/) for the phrasing on that one).
 
-Here's how I wrote a proof-of-concept engine that: 
+I wrote a proof-of-concept engine that: 
 
 1. Takes custom payment amounts
 2. Takes credit cards from customers
 3. Creates charges using Stripe
 
-With that engine in hand, I can include it in any future project, provide my Stripe credentials, and save myself quite a bit of time. 
+With that engine in hand, I can include it in any future project, provide the Stripe credentials, and save quite a bit of time. 
 
 Here's how you can do something similar.
 
 ## Generate the engine
 
-In the command line:
+In the command line, run the [rails plugin generator](https://guides.rubyonrails.org/engines.html#generating-an-engine) with the `--mountable` flag.
 
 ```sh
 rails plugin new payments --mountable 
@@ -44,11 +44,11 @@ The engine gemspec will have some `TODO` items in `payments.gemspec`. Fill them 
 # . . . the rest of the gemspec 
 ```
 
-Then run `bundle`. Once the installation is complete, you can check the engine is running by running `rails s` in the console and visiting `localhost:3000`. You should see the standard Rails welcome page. 
+Then run `bundle`. Once the installation is complete, check the engine is running by running `rails s` in the console and visiting `localhost:3000`. The standard Rails welcome page should appear. 
 
 ## Add the Stripe gem
 
-Adding gems to a Rails engine is a little different than adding them to a Rails app. You'll have to use the `gemspec` instead of a `Gemfile`. To add the [Stripe gem](https://github.com/stripe/stripe-ruby) to the engine, update `payments.gemspec`.
+Adding gems to a Rails engine is a little different than adding them to a Rails app. We have to use the `gemspec` instead of a `Gemfile`. To add the [Stripe gem](https://github.com/stripe/stripe-ruby) to the engine, update `payments.gemspec`.
 
 ```rb
 # payments.gemspec 
@@ -61,7 +61,7 @@ Then `bundle` again.
 
 ## Create the payment_intents controller
 
-Stripe uses [PaymentIntents](https://stripe.com/docs/api/payment_intents) to process payments. The idea is to take some information from the customer, combine it with your credentials, and pass back an object that represents an intent to make a payment. Then you submit that intention to Stripe. Stripe verifies all the information is correctly formatted, and handles the final processing. 
+Stripe uses [PaymentIntents](https://stripe.com/docs/api/payment_intents) to process payments. The idea is to take some information from the customer, combine it with your credentials, and pass back an object that represents an intent to make a payment. Then we submit that intention to Stripe. Stripe verifies all the information is correctly formatted, and handles the final processing. 
 
 Let's make a `PaymentIntentsController`. This controller will only have one method for now, the `create` method. We'll use it to create a PaymentIntent and return it as a JSON response to our engine's view, which will then pass that PaymentIntent to Stripe for processing.
 
@@ -365,3 +365,11 @@ From within the `hostapp` directory:
 2. Visit localhost:3000/payments/checkouts/new 
 3. Input an amount, fill in a [test card number](https://stripe.com/docs/testing#cards), 
 4. Submit the form and check your Stripe dashboard for the test charges.
+
+## Next steps
+
+This engine isn't quite ready for primetime. This is mostly a proof-of-concept that I plan to expand on for personal use. Here are some things I might do to make it a little more versatile: 
+
+* Create an installation rake task to handle the routing and asset linking with a command like `rails generate payments:install`
+* Create some generators to render the views and controllers for further configuration, like [Devise does](https://github.com/heartcombo/devise#configuring-views). 
+* Handle the client-side JavaScript more gracefully. I don't love writing it inline, but I had trouble including the JavaScript correctly through the generator. I need to learn how to do that, or consider packaging it up separately to drop in as a separate JS dependency. 
