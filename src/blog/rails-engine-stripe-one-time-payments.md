@@ -97,7 +97,7 @@ Payments::Engine.routes.draw do
 end
 ```
 
-## Add a Checkout Controller
+## Add a checkout controller
 
 `PaymentIntentsController` only handles creating the PaymentIntent. We also need a view for users to interact with the engine and make payments. We can call that a `Checkout`, and manage it through a `CheckoutsController`. Create a file at `app/controllers/payments/checkouts_controller.rb`.
 
@@ -113,7 +113,7 @@ end
 
 This controller is only responsible for rendering the view that creates a new checkout, so we only need the `new` method. 
 
-## Route to the Checkouts Controller
+## Route to the checkouts controller
 
 Update `config/routes.rb` so it looks like this:
 
@@ -125,7 +125,7 @@ Payments::Engine.routes.draw do
 end
 ```
 
-## Create a View for New Checkout
+## Create a view for new checkout
 
 This is where users will make payments. Create a file at `app/views/payments/checkouts/new.html.erb` and use the boilerplate form provided through the [Stripe docs](https://stripe.com/docs/payments/accept-a-payment). Stripe assumes you have hard-coded prices for your one-time payments. This engine allows users to provide a custom amount, so we add the `amount` input, which we'll use to create the PaymentIntent. It also has a custom [pattern](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern) to format the input and require only numbers (with up to two decimal places).  
 
