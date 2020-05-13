@@ -273,19 +273,95 @@ amount: document.getElementById('amount').value * 100
 
 This is because Stripe handles amounts as integer values in cents. The input is formatted for dollars, so we multiply by 100 to get the correct amount of cents to pass to the `create` method in `PaymentIntentsController`. 
 
-## Try it out in the dummy application
+## Try it out in a host application 
 
-Rails engines provide a [dummy application](https://guides.rubyonrails.org/engines.html#test-directory). The dummy application mounts the engine and runs when you run `rails s`. All the engine functionality should run within the dummy application if we start it up. We just need to provide it with the missing configuration. If you recall, we provide the Stripe secret key to the `PaymentIntentsController`, and the Stripe publishable key through a `meta` tag in the application layout. They come from the [Rails configuration object](https://blog.arkency.com/custom-application-configuration-variables-in-rails-4-and-5/), which allows us to provide custom settings. 
+Make a new Rails application. In the console: 
 
-Provide test keys to the dummy application in `test/dummy/config/environments/development.rb`
-
-```rb
-  # test/dummy/config/environments/development.rb
-  # . . . Other config before
-  config.x.stripe.publishableKey = 'your_test_publishable_key'
-  config.x.stripe.secret = 'your_test_secret_key'
+```sh
+cd ..
+rails new hostapp
+cd hostapp
 ```
 
-**Important:** make sure you don't actually check these keys into version control. I couldn't figure out how to provide custom environment variables to the dummy app. Usually managing sensitive information should be done with environment variables. Including them directly is just a quick way to test everything out. And of course, as long as you're just using the test keys from Stripe, you aren't playing around with anything terribly dangerous. 
+[Mount the engine](https://guides.rubyonrails.org/engines.html#mounting-the-engine). In `hostapp/Gemfile`: 
 
-Run `rails s`, visit localhost:3000/payments/checkouts/new, input an anount, fill in a [test card number](https://stripe.com/docs/testing#cards), and your test payment will go through! 
+```
+gem 'payments', path: 'full/path/to/payments'
+```
+
+Run `bundle` in the command line to install everything. 
+
+## Set up the engine routes
+
+In `hostapp/config/routes.rb`, add the routes: 
+
+```rb
+# hostapp/config/routes.rb
+Rails.application.routes.draw do
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  mount Payments::Engine, at: "/payments"
+end
+```
+
+## Link the engine stylesheet
+
+The stylesheet from the engine needs to be linked to the hostapp for asset compilation. In `hostapp/app/assets/stylesheets/application.css`, add `//= link payments/application.css`.
+
+The file should look like this entirely: 
+
+```css
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ //= link payments/application.css
+ */
+ ```
+
+## Securely store your Stripe API keys
+
+Use [Rails credentials](https://medium.com/cedarcode/rails-5-2-credentials-9b3324851336) to store your Stripe keys. For now, we can just the the test publishable key and the test secret key. 
+
+In the command line: 
+
+```sh
+EDITOR="vim" rails credentials:edit
+```
+
+Then edit the file to add the following YAML: 
+
+```yml
+stripe:
+    test_publishable_key: your_key_here
+    test_secret_key: your_key_here
+```
+
+## Add the test keys to the development environment
+
+In `hostapp/config/environments/development.rb`:
+
+```rb
+# `hostapp/config/environments/development.rb`
+# . . . other configuration here
+  config.x.stripe.publishableKey = Rails.application.credentials.stripe[:test_publishable_key] 
+  config.x.stripe.secret = Rails.application.credentials.stripe[:test_secret_key]
+```
+
+## Test it out
+
+From within the `hostapp` directory: 
+
+1. Run `rails s`
+2. Visit localhost:3000/payments/checkouts/new 
+3. Input an amount, fill in a [test card number](https://stripe.com/docs/testing#cards), 
+4. Submit the form and check your Stripe dashboard for the test charges.
