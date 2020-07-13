@@ -11,5 +11,3 @@ weight: 3
 [Ellen Holland](https://ellenholland.xyz) is the senior editor of Cannabis Now Magazine. I designed, built, and deployed her personal website. 
 
 I worked with [Jason Hernandez](https://www.getclemencynow.org/about-the-author) to organize, design, and deploy a Wix site to distribute his book, [Get Clemency Now](https://www.getclemencynow.org/), which helps incarcerated people pursue clemency.
-
-In 2015, I co-founded the [This Week in Drugs](https://thisweekindrugs.org ) podcast. As a technical co-founder, I provided a variety of services to the podcast organization including audio editing, web design, web administration, and podcast publishing.
