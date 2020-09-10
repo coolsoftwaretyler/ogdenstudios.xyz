@@ -1,6 +1,6 @@
 ---
 title: Jamstack solutions
-description: In many cases, the clients I work with are best served with Jamstack solutions. Building static websites for them preovides excellent performance and value.
+description: In many cases, the clients I work with are best served with Jamstack solutions. Building static websites for them provides excellent performance and value.
 live: true
 tags: project
 weight: 2
