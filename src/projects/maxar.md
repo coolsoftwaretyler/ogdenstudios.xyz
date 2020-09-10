@@ -15,6 +15,6 @@ In addition to our corporate web properties, I build interactive applications fo
 
 * [Alaskan Resilience](https://microsites.maxar.com/alaskan-resilience/)
 * [Explore Space with Maxar](https://explorespace.maxar.com)
-* Interactive maps that [tell stories about COVID-19 data](https://microsites.maxar.com/human-landscapes/), [demonstrate why accuracy matters](https://microsites.maxar.com/imagery-leadership/accuracy-game/), and showcase [our capabilities](https://microsites.digitalglobe.com/interactive/footprints-coverage/)
+* Interactive maps that [tell stories about COVID-19 data](https://microsites.maxar.com/human-landscapes/), [the 2020 California Wildfires](https://microsites.maxar.com/2020-california-wildfires/), and showcase [our capabilities](https://microsites.digitalglobe.com/interactive/footprints-coverage/)
 
 We build our projects on top of Amazon Web Services and use Ruby on Rails, Vue.js, and Nuxt.js as appropriate. On any given day, I spend time writing HTML/CSS/JS, Vue.js, Ruby, SQL, and some configuration DSLs. 
