@@ -1,4 +1,5 @@
 ---
+layout: layouts/two-column.html
 title: Home
 ---
 
