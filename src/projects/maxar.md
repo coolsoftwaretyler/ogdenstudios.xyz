@@ -14,7 +14,7 @@ For all of our corporate websites, I have consulted and made decisions about our
 In addition to our corporate web properties, I build interactive applications to meet marketing goals in brand awareness and demand generation:
 
 * [Explore Space with Maxar](https://explorespace.maxar.com)
-* [Foundational Maps](https://microsites.maxar.com/mapping/foundational-maps/0)
+* [2020 California Wildfires](https://blog.maxar.com/news-events/2020/maxar-and-mapbox-release-interactive-swir-imagery-map-of-california-wildfires)
 * [Human Landscapes and COVID-19](https://microsites.maxar.com/human-landscapes/)
 
 I've dramatically improved our team's turnaround time on these kinds of projects by building a mapping library with Vue.js, and a tool that allows our GIS team to import data and generate basic interactive maps.
