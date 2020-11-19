@@ -276,12 +276,74 @@ Here, in the bad example, the `Game` object violates the Law of Demeter by reach
 
 By allowing `Player` to respond to the request for `rank`, if we ever change the implementation of those rankings, we only have to change it in `PerformanceHistory`, and adapt to it in `Player` (notice the message to *its* collaborator is isolated in a method). `Game` never needs to know the change has happened. 
 
+## Use the `private` keyword to create intentionally designed public interfaces
+
+One of the easiest things you can do to improve your overall design is communicate your public interfaces clearly. Ruby provides the `private` keyword to aid you in this pursuit. Any methods defined after `private` can only be called by an instance of that class. This simple delineation in your class definition tells other developers (including yourself-from-the-future) that the following methods are internal only, and should not be used or depended upon elsewhere in the codebase. 
+
+```rb
+# Bad
+class Dealer
+    attr_reader :deck
+
+    def initialize
+        # Assume we set the deck to some full set of playing cards
+        deck = [card1..card52]
+    end
+
+    def next_card
+        deck.pop
+    end
+
+    def shuffle_deck
+        # Shuffle deck with Fisher-Yates
+        (0..deck.size - 1).each do |i|
+            j = rand(deck.size - 1)
+            tempi = deck[i]
+            tempj = deck[j]
+            deck[i] = tempj
+            deck[j] = tempi
+        end
+    end
+end 
+
+# Good
+class Dealer
+    attr_reader :deck
+
+    def initialize
+        # Assume we set the deck to some full set of playing cards
+        deck = [card1..card52]
+    end
+
+    def next_card
+        deck.pop
+    end
+
+    private 
+
+    def shuffle_deck
+        # Shuffle deck with Fisher-Yates
+        # https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+        (0..deck.size - 1).each do |i|
+            j = rand(deck.size - 1)
+            tempi = deck[i]
+            tempj = deck[j]
+            deck[i] = tempj
+            deck[j] = tempi
+        end
+    end
+end 
+```
+
+Here, the `Dealer` object is responsible for maintaining the deck, shuffling the deck, and providing the `next_card`. However, we don't want to allow other objects to instruct a `Dealer` to shuffle the deck. The `Dealer` should be fully in charge of when it shuffles the deck. By defining `shuffle_deck` after `private`, we make this intention clear, and we set up some language-level restrictions on which objects can send the `shuffle_deck` method to a `Dealer`. 
+
+Moreover, we communicate to other developers not to rely on the logic in `shuffle_deck` elsewhere. Today we shuffle using Fisher-Yates. Tomorrow we may choose some new method of doing so. Regardless of those implementation details, a `Dealer`'s public interface should always respond to `next_card`. That's much less likely to change, and other developers can rest easy asking `Dealer` objects for the `next_card` long into the future. 
+
 ## Use simple dependency injection by passing collaborating objects as arguments to methods
 ## Use duck typing when you see: case statements that switch on `class`, or methods that ask `is_a?` or `kind_of?`
 ## Use inheritance when you are conditionally sending messages to `self` based on some attribute of `self`
 ## Any super class that uses the template method pattern must implement every message it sends, even if the implementation is just an error about not being implemented
 ## Promote code up to superclasses rather than down to subclasses. If you're creating inheritance, build out one new abstract class and move up what you need instead of adapting an existing class to be the superclass
-## Use the `private` keyword to create intentionally designed public interfaces
 ## Every class should have a one sentence description, no conjunctions allowed
 ## If you rephrase your class methods as questions to the object, each question should make sense; it should be related to the purpose of the class
 ## Messages should ask for "what" instead of dictating "how"
