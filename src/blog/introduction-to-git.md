@@ -81,7 +81,7 @@ It's a substantial change! But fear not, because Git knows what the first versio
 
 ### A quick demonstration
 
-That was a pretty abstract rundown of what version control is, and what Git does to accomplish version control. Let's look at it in context in a screen recording: 
+That was a pretty abstract rundown of what version control is, and what Git does to accomplish version control. Let's look at it in context in a [screen recording](https://www.youtube.com/watch?v=tZKZVBEAiN0): 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/tZKZVBEAiN0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
