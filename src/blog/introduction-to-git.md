@@ -51,7 +51,7 @@ else:
        print(fibonacci(i))
 ```
 
-Coding the Fibonacci sequence is a class Computer Science challenge to demonstrate principles of recursion, and usually the next step in CS courses is to demonstrate how to write it *without* recursion. 
+Coding the Fibonacci sequence is a classic Computer Science challenge to demonstrate principles of recursion, and usually the next step in CS courses is to demonstrate how to write it *without* recursion. 
 
 So if you were in an intro computer science class, and it took you a week to come up with a Fibonacci program like the one above, and you wanted to try a different approach without losing your week's worth of work, how might you do that?
 
