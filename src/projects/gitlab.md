@@ -6,5 +6,3 @@ live: true
 tags: project
 weight: 0
 ---
-
-I recently joined [GitLab](https://about.gitlab.com) as a [Website Full Stack Developer](https://about.gitlab.com/job-families/marketing/marketing-full-stack-developer/). I haven't yet begun many role-specific tasks, but I'm excited to contribute to our design system, component library, and ongoing web projects. 
