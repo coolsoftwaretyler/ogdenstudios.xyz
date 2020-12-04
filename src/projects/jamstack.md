@@ -3,7 +3,7 @@ title: Jamstack solutions
 description: In many cases, the clients I work with are best served with Jamstack solutions. Building static websites for them provides excellent performance and value.
 live: true
 tags: project
-weight: 2
+weight: 30
 ---
 
 I built a home page for [Shaleen Title](https://www.shaleentitle.com), one of five commissioners on the Massachusetts Cannabis Control Commission. It's built with Jekyll as a static site generator, Forestry for content management, and is hosted with Netlify.

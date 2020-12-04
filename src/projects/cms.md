@@ -3,7 +3,7 @@ title: Traditional content management systems
 description: For some clients, traditional CMS solutions like WordPress or Wix are a best fit. These options allow clients to have full control over their web hosting, content, and even look and feel. 
 live: true
 tags: project
-weight: 3
+weight: 40
 ---
 
 [Sheila Vakharia](https://www.sheilavakharia.com/) is a researcher and activist at the Drug Policy Alliance. She asked for a custom WordPress theme for her website. I designed and implemented a WordPress theme from scratch for her. I did all the design work and tested the theme against the WordPress theme unit test and other WordPress theme requirements.

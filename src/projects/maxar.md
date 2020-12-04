@@ -4,7 +4,7 @@ description: As a Software Development Engineer at Maxar, I collaborate with a t
 link: https://www.maxar.com 
 live: true
 tags: project
-weight: 0
+weight: 10
 ---
 
 I was part of the [Radiant Solutions](https://www.radiantsolutions.com/) website rebuild, [DigitalGlobe](https://www.digitalglobe.com/) website rebuild, and most recently the rebuild of the [Maxar corporate website](https://www.maxar.com/). 
