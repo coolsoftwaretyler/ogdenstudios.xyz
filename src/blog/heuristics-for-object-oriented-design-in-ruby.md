@@ -36,8 +36,8 @@ These items can be identified in any Ruby file. They are often the most straight
 
 These items are harder to identify in code alone, but looking for them will help you find opportunities to improve the structure of your program holistically. 
 
-. Use the `private` keyword to create intentionally designed public interfaces (Metz, 2019, p. 64).
-. Use simple dependency injection by passing collaborating objects as arguments to methods (Metz, 2019, p. 43).
+6. Use the `private` keyword to create intentionally designed public interfaces (Metz, 2019, p. 64).
+7. Use simple dependency injection by passing collaborating objects as arguments to methods (Metz, 2019, p. 43).
 . Use duck typing when you see: case statements that switch on `class`, or methods that ask `is_a?` or `kind_of?` (Metz, 2019, p. 118). 
 . Use inheritance when you are conditionally sending messages to `self` based on some attribute of `self` (Metz, 2019, p. 134).
 . Promote code up to superclasses rather than down to subclasses. If you're creating inheritance, build out one new abstract class and move up what you need instead of adapting an existing class to be the superclass (Metz, 2019, p. 143).
@@ -339,7 +339,47 @@ Here, the `Dealer` object is responsible for maintaining the deck, shuffling the
 
 Moreover, we communicate to other developers not to rely on the logic in `shuffle_deck` elsewhere. Today we shuffle using Fisher-Yates. Tomorrow we may choose some new method of doing so. Regardless of those implementation details, a `Dealer`'s public interface should always respond to `next_card`. That's much less likely to change, and other developers can rest easy asking `Dealer` objects for the `next_card` long into the future. 
 
-## Use simple dependency injection by passing collaborating objects as arguments to methods
+## Use dependency injection by passing collaborating objects as arguments to methods
+
+The term "dependency injection" is a loaded one. I'll be honest - I've avoided reading about it whenever it comes up. Sandi Metz makes the concept approachable. I hope to do the same. Here's what dependency injection means to me. 
+
+If a `Game` object needs to collaborate with a `Dealer` object, the `Game` object shouldn't directly instantiate the `Dealer`. Rather, we should pass some object to the `Game` object that _represents_ the `Dealer` object. 
+
+```rb
+# Bad
+class Game
+    attr_reader :dealer, :players
+
+    def create_dealer
+        @dealer = Dealer.new
+    end
+    
+    def deal_hole_cards
+        create_dealer
+        players.each do |p|
+            first_card = dealer.next_card
+            second_card = dealer.next_card
+            p.update!(hole_cards: [first_card, second_card])
+        end
+    end
+end
+
+# Good
+class Game
+    def deal_hole_cards(dealer:, players:)
+        players.each do |p|
+            first_card = dealer.next_card
+            second_card = dealer.next_card
+            p.update!(hole_cards: [first_card, second_card])
+        end
+    end
+end
+```
+
+In the bad example, we follow an earlier directive by wrapping an object instantiation inside a method. That's good. But then we set that instance as an instance variable, and access it directly from the `deal_hole_cards` method. However, this approach leaves us with a dependency. `Game` needs to know about the `dealer` object it stored in the instance variable. It also needs to know about the `players` it stores as an instance variable
+
+In the good example, we design `Game` to expect some `dealer` and `players` arguments to its `deal_hole_cards` method. Now we can call that method and provide any objects that respond to `next_card` (for the dealer argument) and `update!` (for the players). It provides us with flexibility, and we _inject_ those object dependencies into the `Game` class. 
+
 ## Use duck typing when you see: case statements that switch on `class`, or methods that ask `is_a?` or `kind_of?`
 ## Use inheritance when you are conditionally sending messages to `self` based on some attribute of `self`
 ## Any super class that uses the template method pattern must implement every message it sends, even if the implementation is just an error about not being implemented
