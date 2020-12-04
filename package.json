@@ -22,6 +22,7 @@
   "devDependencies": {
     "@11ty/eleventy": "^0.10.0-beta.2",
     "clean-css": "^4.2.1",
+    "markdown-it-anchor": "^6.0.1",
     "terser": "^4.4.3"
   },
   "dependencies": {

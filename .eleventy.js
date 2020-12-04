@@ -51,6 +51,12 @@ module.exports = function (eleventyConfig) {
     return minified.code;
   });
 
+  // Generate IDs on headings
+  const markdownIt = require("markdown-it");
+  const markdownItAnchor = require("markdown-it-anchor");
+  const markdownLib = markdownIt({ html: true }).use(markdownItAnchor);
+  eleventyConfig.setLibrary("md", markdownLib);
+  
   return {
     dir: {
       input: "src"
