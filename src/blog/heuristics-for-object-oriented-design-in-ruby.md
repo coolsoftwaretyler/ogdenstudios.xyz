@@ -26,33 +26,33 @@ Starting with (what I consider) the simplest items, work you way towards the mor
 
 These items can be identified in any Ruby file. They are often the most straightforward to resolve. At the very least, these items may prompt you to consult with an item further down in the list.
 
-1. Use named args to remove order dependencies (Metz, 2019, p. 48).
-2. Hide all instance variables behind methods (Metz, 2019, p. 24).
-3. Isolate new instances of objects behind methods (Metz, 2019, p. 44).
-4. If an object must send messages to any object other than `self`, isolate sending that message in one single method (Metz, 2019, p. 45).
-5. Obey the Law of Demeter (Metz, 2019, p. 81).
+1. [Use named args to remove order dependencies](#use-named-args-to-remove-order-dependencies) (Metz, 2019, p. 48).
+2. [Hide all instance variables behind methods](#hide-all-instance-variables-behind-methods) (Metz, 2019, p. 24).
+3. [Isolate new instances of objects behind methods](#isolate-new-instances-of-objects-behind-methods) Metz, 2019, p. 44).
+4. [If an object must send messages to any object other than `self`, isolate sending that message in one single method](#if-an-object-must-send-messages-to-any-object-other-than-self%2C-isolate-sending-that-message-in-one-single-method) (Metz, 2019, p. 45).
+5. [Obey the Law of Demeter](#obey-the-law-of-demeter) (Metz, 2019, p. 81).
 
 ### Code organization 
 
 These items are harder to identify in code alone, but looking for them will help you find opportunities to improve the structure of your program holistically. 
 
-6. Use the `private` keyword to create intentionally designed public interfaces (Metz, 2019, p. 64).
-7. Use simple dependency injection by passing collaborating objects as arguments to methods (Metz, 2019, p. 43).
-8. Use duck typing when you see: case statements that switch on `class`, or methods that ask `is_a?` or `kind_of?` (Metz, 2019, p. 95). 
-9. Use inheritance when you are conditionally sending messages to `self` based on some attribute of `self` (Metz, 2019, p. 134).
-10. Promote code up to superclasses rather than down to subclasses. If you're creating inheritance, build out one new abstract class and move up what you need instead of adapting an existing class to be the superclass (Metz, 2019, p. 143).
+6. [Use the `private` keyword to create intentionally designed public interfaces](#use-the-private-keyword-to-create-intentionally-designed-public-interfaces) (Metz, 2019, p. 64).
+7. [Use simple dependency injection by passing collaborating objects as arguments to methods](#use-dependency-injection-by-passing-collaborating-objects-as-arguments-to-methods) (Metz, 2019, p. 43).
+8. [Use duck typing when you see: case statements that switch on `class`, or methods that ask `is_a?` or `kind_of?`](#use-duck-typing-when-you-see%3A-case-statements-that-switch-on-class%2C-or-methods-that-ask-is_a%3F-or-kind_of%3F) (Metz, 2019, p. 95). 
+9. [Use inheritance when you are conditionally sending messages to `self` based on some attribute of `self`](#use-inheritance-when-you-are-conditionally-sending-messages-to-self-based-on-some-attribute-of-self) (Metz, 2019, p. 134).
+10. [Promote code up to superclasses rather than down to subclasses](#promote-code-up-to-superclasses-rather-than-down-to-subclasses) (Metz, 2019, p. 143).
 
 ### Abstraction considerations 
 
 These items are concerned with the way in which your code models the problem domain at hand. They are more subjective, but remain useful even in quick code reviews. 
 
-11. Every class should have a one sentence description, no conjunctions allowed (Metz, 2019, p. 22).
-12. If you rephrase your class methods as questions to the object, each question should make sense; it should be related to the purpose of the class (Metz, 2019, p. 22).
-13. Messages should ask for "what" instead of dictating "how" (Metz, 2019, p. 70).
-14. Enforce good dependency direction (Metz, 2019, p. 55).
-15. Depend on abstractions before depending on concrete classes (Metz, 2019, p. 57).
-16. Default to composition over inheritance (Metz, 2019, p. 209).
-17. Create shallow hierarchies (Metz, 2019, p. 183).
+11. [Every class should have a one sentence description, no conjunctions allowed](#every-class-should-have-a-one-sentence-description%2C-no-conjunctions-allowed) (Metz, 2019, p. 22).
+12. [If you rephrase your class methods as questions to the object, each question should make sense; it should be related to the purpose of the class](#if-you-rephrase-your-class-methods-as-questions-to-the-object%2C-each-question-should-make-sense%3B-it-should-be-related-to-the-purpose-of-the-class) (Metz, 2019, p. 22).
+13. [Messages should ask for "what" instead of dictating "how"](#messages-should-ask-for-%22what%22-instead-of-dictating-%22how%22) (Metz, 2019, p. 70).
+14. [Enforce good dependency direction](#enforce-good-dependency-direction) (Metz, 2019, p. 55).
+15. [Depend on abstractions before depending on concrete classes](#depend-on-abstractions-before-depending-on-concrete-classes) (Metz, 2019, p. 57).
+16. [Default to composition over inheritance](#default-to-composition-over-inheritance) (Metz, 2019, p. 209).
+17. [Create shallow hierarchies](#create-shallow-hierarchies) (Metz, 2019, p. 183).
 
 ## Use named args to remove order dependencies
 
@@ -505,3 +505,7 @@ Duck typing and other methods of composition are easier to maintain and reason a
 ## Create shallow hierarchies
 
 When you _do_ find that inheritance is the right choice for your design, do your best to keep your inheritance hierarchy shallow. As a general guideline, it's good to stop at one or two levels of inheritance. Any deeper should be an indication to you that you may have missed some opportunity for composition somewhere along the line. 
+
+## Thanks
+
+Thanks for reading! I hope my heuristics are useful to you. I find that by rigorously applying them during code review, I've developed a better sensibility around object oriented design. And a special thanks to Sandi Metz, for all her thought leadership and pioneering in object oriented design and Ruby programming.
