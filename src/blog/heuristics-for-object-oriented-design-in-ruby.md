@@ -38,21 +38,21 @@ These items are harder to identify in code alone, but looking for them will help
 
 6. Use the `private` keyword to create intentionally designed public interfaces (Metz, 2019, p. 64).
 7. Use simple dependency injection by passing collaborating objects as arguments to methods (Metz, 2019, p. 43).
-. Use duck typing when you see: case statements that switch on `class`, or methods that ask `is_a?` or `kind_of?` (Metz, 2019, p. 118). 
-. Use inheritance when you are conditionally sending messages to `self` based on some attribute of `self` (Metz, 2019, p. 134).
-. Promote code up to superclasses rather than down to subclasses. If you're creating inheritance, build out one new abstract class and move up what you need instead of adapting an existing class to be the superclass (Metz, 2019, p. 143).
+8. Use duck typing when you see: case statements that switch on `class`, or methods that ask `is_a?` or `kind_of?` (Metz, 2019, p. 95). 
+9. Use inheritance when you are conditionally sending messages to `self` based on some attribute of `self` (Metz, 2019, p. 134).
+10. Promote code up to superclasses rather than down to subclasses. If you're creating inheritance, build out one new abstract class and move up what you need instead of adapting an existing class to be the superclass (Metz, 2019, p. 143).
 
 ### Abstraction considerations 
 
 These items are concerned with the way in which your code models the problem domain at hand. They are more subjective, but remain useful even in quick code reviews. 
 
-. Every class should have a one sentence description, no conjunctions allowed (Metz, 2019, p. 22).
-. If you rephrase your class methods as questions to the object, each question should make sense; it should be related to the purpose of the class (Metz, 2019, p. 22).
-. Messages should ask for "what" instead of dictating "how" (Metz, 2019, p. 70).
-. Enforce good dependency direction. Never depend on anything that will change more than you (Metz, 2019, p. 55).
-. Depend on abstractions before depending on concrete classes (Metz, 2019, p. 57).
-. If you have a problem that can be solved by composition, default to composition. Only use inheritance when the benefits of using it are clear (Metz, 2019, p. 209).
-. Create shallow hierarchies (Metz, 2019, p. 183).
+11. Every class should have a one sentence description, no conjunctions allowed (Metz, 2019, p. 22).
+12. If you rephrase your class methods as questions to the object, each question should make sense; it should be related to the purpose of the class (Metz, 2019, p. 22).
+13. Messages should ask for "what" instead of dictating "how" (Metz, 2019, p. 70).
+14. Enforce good dependency direction (Metz, 2019, p. 55).
+15. Depend on abstractions before depending on concrete classes (Metz, 2019, p. 57).
+16. Default to composition over inheritance (Metz, 2019, p. 209).
+17. Create shallow hierarchies (Metz, 2019, p. 183).
 
 ## Use named args to remove order dependencies
 
@@ -381,13 +381,127 @@ In the bad example, we follow an earlier directive by wrapping an object instant
 In the good example, we design `Game` to expect some `dealer` and `players` arguments to its `deal_hole_cards` method. Now we can call that method and provide any objects that respond to `next_card` (for the dealer argument) and `update!` (for the players). It provides us with flexibility, and we _inject_ those object dependencies into the `Game` class. 
 
 ## Use duck typing when you see: case statements that switch on `class`, or methods that ask `is_a?` or `kind_of?`
+
+Duck typing is useful for designing different classes that respond to the same message in order to treat them similarly. "Duck" comes from the saying "if it looks like a duck, walks like a duck, and quacks like a duck", with the implication being "it's a duck". 
+
+Sometimes you want similar classes to respond to a message slightly differently based on what they are. Say you have a `TexasHoldEm` class, which deals two cards to each player for their hole cards, and a `FiveCardDraw` class, which deals five cards. Here are two ways you could implement that: 
+
+```rb
+# Bad
+class Table 
+    attr_accessor :game
+
+    def begin_hand
+        if game.kind_of?(TexasHoldEm)
+            game.deal_two_hole_cards
+        elsif game.kind_of(FiveCardDraw)
+            game.deal_five_hole_cards
+        end
+    end
+end
+
+# Good
+class Table 
+    attr_accessor :game
+
+    def begin_hand
+        game.deal_hole_cards
+    end
+end
+```
+
+Here we replaced two different, but similar, methods with one duck type. In the bad example, we ask the `game` object to `deal_two_hole_cards` if it's a `TexasHoldEm` object, or to `deal_five_hole_cards` if it's a `FiveCardDraw` object. We can make that cleaner by defining one method on each class, with the same name: `deal_hole_cards`, and deal the appropriate number of cards in each class-specific implementation. 
+
 ## Use inheritance when you are conditionally sending messages to `self` based on some attribute of `self`
-## Any super class that uses the template method pattern must implement every message it sends, even if the implementation is just an error about not being implemented
-## Promote code up to superclasses rather than down to subclasses. If you're creating inheritance, build out one new abstract class and move up what you need instead of adapting an existing class to be the superclass
+
+Duck typing is good way to improve your design when you already have multiple objects that respond to similar messages. But sometimes you end up with a class that could benefit from inheritance. One sign your design might be in need of inheritance is when messages are being conditionally sent based on some internal attribute. 
+
+```rb
+# Bad
+class Game 
+    attr_reader :dealer, :game_type, :players
+
+    def deal_hole_cards
+        if game_type == 'texas_hold_em'
+            number_of_cards = 2
+        elsif game_type = 'five_card_draw'
+            number_of_cards = 5
+        end
+        players.each do |player|
+            cards = dealer.deal_cards(number_of_cards)
+            player.update!(hole_cards: cards)
+        end
+    end
+end
+
+# Good 
+class Game 
+    attr_reader :dealer, :players
+end
+
+class TexasHoldEm < Game
+    def deal_hole_cards
+        players.each do |player|
+            cards = dealer.deal_cards(2)
+            player.update!(hole_cards: cards)
+        end
+    end
+end
+
+class FiveCardDraw < Game
+    def deal_hole_cards
+        players.each do |player|
+            cards = dealer.deal_cards(5)
+            player.update!(hole_cards: cards)
+        end
+    end
+end
+```
+
+Here, we start with a `Game` class that could benefit from some refactoring. It conditionally deals a different number of cards based on whether or not its `game_type` is `texas_hold_em` or `five_card_draw`. By creating a `TexasHoldEm` class and a `FiveCardDraw` class, we can implement their respective `deal_hole_cards` methods appropriately for each type of game, and track one less instance variable in the `Game` superclass. 
+
+## Promote code up to superclasses rather than down to subclasses
+
+In the previous example, I hand-waved the restructuring of the classes. If you're going through the process of creating inheritance in your project where there was none to begin, keep in mind it is much easier to identify shared functions from subclasses and move them up, rather than figure out what might be different for subclasses by looking at the parent class. 
+
+All that to say, if you're creating inheritance, build out one new empty abstract class and move up what you need instead of adapting an existing class to be the superclass. 
+
 ## Every class should have a one sentence description, no conjunctions allowed
+
+The first of the [SOLID](https://en.wikipedia.org/wiki/SOLID) design principles is the [single-responsibility principle](https://en.wikipedia.org/wiki/Single-responsibility_principle). Volumes have been written about this principle alone. For these object-oriented heuristics, here's what you should ask yourself while reviewing your code: 
+
+"Can I describe what this class does in one sentence, without using any conjunctions?"
+
+If the answer is no, your class could likely benefit from being split up into separate objects. It is probably responsible for too many things.
+
 ## If you rephrase your class methods as questions to the object, each question should make sense; it should be related to the purpose of the class
+
+Once you feel confident your class can be described with a single sentence, you can take the single-responsibility principle one step further by inspecting each method and rephrasing the method as a question to that class. Say it out loud and ask yourself: "does it make sense for me to ask this specific question of this specific object, given its purpose?" 
+
+If the answer is no, you should consider moving this method to a different class. Or perhaps your class could still benefit from being separated into different objects. 
+
 ## Messages should ask for "what" instead of dictating "how"
-## Enforce good dependency direction. Never depend on anything that will change more than you
+
+The prior exercise, rephrasing methods into questions, sets us up for this next item: methods should represent messages sent _to_ the object. The object should receive the method call, and then _answer the question_. T
+
+In order for your object to determine the response, it should have freedom to do so however it likes. Method calls should not dictate the internal behavior of the object. They should work as interfaces for other objects to retrieve relevant information. Keep in mind the distinction between public and private methods. An object's public methods should represent a set of questions it will respond to. Its `private` methods are an appropriate place to store implementation details, which are more likely to change than the kinds of questions the object will be asked.
+
+## Enforce good dependency direction
+
+In earlier heuristics, we've looked at how to eliminate dependencies, or manage them responsibly. In any non-trivial software, it's impossible to eliminate *all* dependencies. Objects must collaborate and rely on one another. When you identify these necessary dependencies (and put safe guards around them), you will need to decide which object depends on which. This is the _direction_ of your dependencies. 
+
+Generally speaking, objects should not depend on other objects that are likely to change more than themselves. When you use a framework liek Rails, you can remain somewhat assured that framework APIs will change less frequently than your code. It's responsible for your models to inherit from [ActiveRecord](https://guides.rubyonrails.org/active_record_basics.html). 
+
+Evaluate your own objects and determine which seem most stable. Have other objects depend on them, and so forth. 
+
 ## Depend on abstractions before depending on concrete classes
-## If you have a problem that can be solved by composition, default to composition. Only use inheritance when the benefits of using it are clear
+
+For a more practical application of good dependency direction, consider the difference between abstract classes and concrete classes. In `Game` inheritance example, we had `TexasHoldEm` and `FiveCardDraw` depend on `Game`, rather than one another. If you are having trouble identifying which classes are most stable and best to depend on, look for the superclasses in your inheritance hierarchy to guide you. 
+
+## Default to composition over inheritance
+
+Duck typing and other methods of composition are easier to maintain and reason about than inheritance. When you are refactoring your code and splitting up objects into smaller pieces, you should strive to create small, composable objects, rather than an overly-nested inheritance tree. 
+
 ## Create shallow hierarchies
+
+When you _do_ find that inheritance is the right choice for your design, do your best to keep your inheritance hierarchy shallow. As a general guideline, it's good to stop at one or two levels of inheritance. Any deeper should be an indication to you that you may have missed some opportunity for composition somewhere along the line. 
