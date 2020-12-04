@@ -10,7 +10,7 @@ Any Rubyist should read and study [Practical Object Oriented Design, An Agile Pr
 
 Personally, I've read through the book three times. Each time I read it, I find new insights that improve my work as a Ruby programmer, and as a software engineer in general. POODR walks through fundamental object-oriented concepts and pairs them with practical examples in Ruby. Over the course of the book, Metz builds and refactors a sample program that demonstrates these principles.
 
-Despite the book's clarity and practicality (it's a short, to-the-point read), it's hard to keep all of the lessons in your head when you sit down to apply them in your own work. To help myself accomplish that very task, I put together a checklist I call *Heuristics of Object-Oriented Design in Ruby*. Here's how I use it: 
+Despite the book's clarity and practicality (it's a short, to-the-point read), it's hard to keep all of the lessons in your head when you sit down to apply them in your own work. To help myself accomplish that very task, I put together a checklist I call *Heuristics for Object-Oriented Design in Ruby*. Here's how I use it: 
 
 1. I do my work and solve the challenge at hand
 2. I take a break, and step away from the code I've written
