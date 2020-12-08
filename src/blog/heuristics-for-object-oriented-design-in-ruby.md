@@ -482,7 +482,7 @@ If the answer is no, you should consider moving this method to a different class
 
 ## Messages should ask for "what" instead of dictating "how"
 
-The prior exercise, rephrasing methods into questions, sets us up for this next item: methods should represent messages sent _to_ the object. The object should receive the method call, and then _answer the question_. T
+The prior exercise, rephrasing methods into questions, sets us up for this next item: methods should represent messages sent _to_ the object. The object should receive the method call, and then _answer the question_.
 
 In order for your object to determine the response, it should have freedom to do so however it likes. Method calls should not dictate the internal behavior of the object. They should work as interfaces for other objects to retrieve relevant information. Keep in mind the distinction between public and private methods. An object's public methods should represent a set of questions it will respond to. Its `private` methods are an appropriate place to store implementation details, which are more likely to change than the kinds of questions the object will be asked.
 
