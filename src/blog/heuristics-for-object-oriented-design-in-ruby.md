@@ -490,7 +490,7 @@ In order for your object to determine the response, it should have freedom to do
 
 In earlier heuristics, we've looked at how to eliminate dependencies, or manage them responsibly. In any non-trivial software, it's impossible to eliminate *all* dependencies. Objects must collaborate and rely on one another. When you identify these necessary dependencies (and put safe guards around them), you will need to decide which object depends on which. This is the _direction_ of your dependencies. 
 
-Generally speaking, objects should not depend on other objects that are likely to change more than themselves. When you use a framework liek Rails, you can remain somewhat assured that framework APIs will change less frequently than your code. It's responsible for your models to inherit from [ActiveRecord](https://guides.rubyonrails.org/active_record_basics.html). 
+Generally speaking, objects should not depend on other objects that are likely to change more than themselves. When you use a framework like Rails, you can remain somewhat assured that framework APIs will change less frequently than your code. It's responsible for your models to inherit from [ActiveRecord](https://guides.rubyonrails.org/active_record_basics.html). 
 
 Evaluate your own objects and determine which seem most stable. Have other objects depend on them, and so forth. 
 
