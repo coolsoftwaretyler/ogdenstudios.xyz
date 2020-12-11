@@ -1,8 +1,8 @@
 ---
 layout: post
-title: How to Get Better at Coding Efficiently and Fearlessly
+title: Fearlessly Become a Better Software Professional
 tags: ['post']
-description: Efficient software improvement is hard to achieve because of discriminatory attitudes in the industry and high pressure. Here's how I think about software improvement exercises.
+description: It is hard to improve software skills because of discriminatory attitudes in the industry and high stakes. This is my framework for fearlessly and efficiently improving my own skills.
 date: 2020-12-11
 ---
 
