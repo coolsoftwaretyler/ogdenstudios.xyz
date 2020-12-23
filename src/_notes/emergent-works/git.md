@@ -1,7 +1,4 @@
----
-layout: post
-title:  "Crash course in Git and GitHub"
----
+# Git and GitHub Crash Course
 
 There is a *lot* of depth to [Git](https://git-scm.com/) and [GitHub](https://github.com/). The good news is you really don't need to know it all to be very productive. Most software professionals only use a few key commands in their day-to-day. This document will go over those commands somewhat quickly. 
 
