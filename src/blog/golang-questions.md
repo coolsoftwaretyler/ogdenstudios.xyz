@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 
-tags: ['post']
+tags: 
 description:
 date:
 ---
