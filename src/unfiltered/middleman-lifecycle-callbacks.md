@@ -9,6 +9,13 @@ description: "Open source empowers you to learn beyond existing documentation. G
 tags: open source, tutorial, workflow
 ---        
 
+{::options parse_block_html="true" /}
+
+<i class="fab fa-gitlab" style="color:rgb(107,79,187); font-size:.85em" aria-hidden="true"></i>&nbsp;&nbsp;
+This blog post is [Unfiltered](/handbook/marketing/blog/unfiltered/#legal-disclaimer)
+&nbsp;&nbsp;<i class="fab fa-gitlab" style="color:rgb(107,79,187); font-size:.85em" aria-hidden="true"></i>
+{: .alert .alert-webcast}
+
 ## Why read open source? 
 
 When folks write about open source, I think there is a strong emphasis on contributing to open source projects, which makes sense. Many software professionals are excited to give back to the community. 
