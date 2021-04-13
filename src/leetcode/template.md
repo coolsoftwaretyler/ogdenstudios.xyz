@@ -1,5 +1,7 @@
 # Title
 
+Blind 75: https://leetcode.com/list/xoqag3yj/
+
 [Description]
 
 **Example 1:**
