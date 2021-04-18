@@ -1,5 +1,5 @@
 ---
-title: Duplicate Zeros
+title: Duplicate Zeros - Naive
 date: 2021-04-18
 description: The naive solution to an array-based easy level LeetCode problem, duplicating zeros in an array.
 leetcode_link: https://leetcode.com/problems/duplicate-zeros
