@@ -4,6 +4,7 @@ title:  "My GitHub Templates blog post on CSS Tricks"
 tags: [github templates, css tricks, cross-post, 'post']
 description: "Just a celebratory post about my article on CSS Tricks"
 date: 2019-10-04
+canonical_url: 'https://coolsoftware.dev/my-github-templates-blog-post-on-css-tricks/'
 ---
 
 I'm so excited to say I got a blog post published on CSS Tricks: [Using GitHub Template Repos to Jump-Start Static Site Projects](https://css-tricks.com/using-github-template-repos-to-jump-start-static-site-projects/).

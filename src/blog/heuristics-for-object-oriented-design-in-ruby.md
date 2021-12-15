@@ -4,6 +4,7 @@ title: Heuristics for Object Oriented Design in Ruby
 tags: ['post']
 description: A distillation of Sandi Metz's Pratical Object-Oriented Design (POODR), useful for quick refactoring and long term coding improvement. 
 date: 2020-12-03
+canonical_url: 'https://coolsoftware.dev/heuristics-for-object-oriented-design-in-ruby/'
 ---
 
 Any Rubyist should read and study [Practical Object Oriented Design, An Agile Primer Using Ruby (POODR)](https://www.poodr.com/), by Sandi Metz. 

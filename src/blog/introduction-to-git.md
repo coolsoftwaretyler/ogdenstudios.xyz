@@ -4,6 +4,7 @@ title: Introduction to Version Control with Git
 tags: ['post']
 description: A high level primer and overview of version control and Git - for beginners just getting started.
 date: 2020-11-27
+canonical_url: 'https://coolsoftware.dev/introduction-to-version-control-with-git/'
 ---
 
 Software development is a collaborative exercise at its core. When you plan and write software, you'll have to collaborate with at least one or two of the following: 

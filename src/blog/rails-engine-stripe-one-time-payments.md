@@ -4,6 +4,7 @@ title: Build a Rails Engine to Accept Stripe One-time Payments
 tags: ['post']
 description: I find myself writing the same Stripe functionality frequently. To save time, I wrote a Rails Engine to handle one-time payments. 
 date: 2020-05-13
+canonical_url: 'https://coolsoftware.dev/build-a-rails-engine-to-accept-stripe-one-time-payments/'
 ---
 
 I maintain a handful of Ruby on Rails applications for my clients. Most of them need to handle payments. My go-to payment processor is [Stripe](https://stripe.com/). Stripe makes payments easy, but still requires some setup and configuration. I've written the same one-time payment feature about five times with slight variations, so I wanted to make it easier to repeat.
